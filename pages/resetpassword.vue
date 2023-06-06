@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="mt-12 text-center">Navbar</div>
+  <div>reset passowrd</div>
 </template>
 
 <style scoped></style>

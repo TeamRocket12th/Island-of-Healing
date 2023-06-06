@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>Footer</div>
+  <div class="text-center">Footer</div>
 </template>
 
 <style scoped></style>
