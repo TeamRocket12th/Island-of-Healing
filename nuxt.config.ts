@@ -6,5 +6,11 @@ export default defineNuxtConfig({
   },
   pinia: {
     autoImports: ['defineStore', ['defineStore', 'definePiniaStore']]
-  }
+  },
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false
+    }
+  ]
 })
