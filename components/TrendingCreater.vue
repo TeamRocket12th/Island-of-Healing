@@ -1,0 +1,28 @@
+<script setup>
+const data = [
+  { photo: '', name: '001' },
+  { photo: '', name: '002' },
+  { photo: '', name: '003' },
+  { photo: '', name: '004' },
+  { photo: '', name: '005' },
+  { photo: '', name: '006' }
+]
+</script>
+
+<template>
+  <div class="container">
+    <div class="-ml-3 -mr-3 pl-[300px] pr-[300px]">
+      <h2 class="mb-4">熱門創作者</h2>
+      <ul class="flex h-[250px] items-center gap-4">
+        <li v-for="(item, index) in data" :key="index" class="w-[200px]">
+          <div class="m-auto mb-4 h-[95px] w-[95px] rounded-full bg-[#D9D9D9]"></div>
+          <p class="mb-1 text-center">{{ item.name }}</p>
+          <p class="mb-4 text-center">心理諮商師</p>
+          <button class="m-auto block rounded border border-[#D9D9D9] px-6 py-[7px]">
+            <p>追蹤</p>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>

@@ -3,5 +3,6 @@
 <template>
   <div class="container">
     <BannerArea />
+    <TrendingCreater />
   </div>
 </template>
