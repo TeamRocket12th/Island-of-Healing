@@ -8,8 +8,7 @@ module.exports = {
         sm: '0.75rem',
         lg: '0.75rem',
         xl: '0.75rem',
-        '2xl': '0.75rem',
-        '3xl': '0.75rem'
+        '2xl': '0.75rem'
       },
       screens: {
         sm: '640px',
@@ -17,7 +16,12 @@ module.exports = {
         lg: '1024px',
         xl: '1280px',
         '2xl': '1536px',
-        '3xl': '1944px'
+        '3xl': '1920px'
+      }
+    },
+    extend: {
+      screens: {
+        '3xl': '1920px'
       }
     }
   },

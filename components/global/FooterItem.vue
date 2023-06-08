@@ -1,7 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div></div>
+  <footer class="bg-[#CDCDCD]">
+    <div class="container"></div>
+  </footer>
 </template>
 
 <style scoped></style>

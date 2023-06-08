@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="container">
+  <div>
     <BannerArea />
     <TrendingCreater />
   </div>
