@@ -2,8 +2,8 @@
 <template>
   <section class="flex items-center justify-center px-[300px] py-[100px] 3xl:p-[300px]">
     <div class="flex h-[700px] w-[1320px]">
-      <div class="w-[660px] bg-[#CDCDCD]"></div>
-      <div class="flex w-[660px] flex-col justify-center border border-[#D9D9D9] px-[180px]">
+      <div class="w-1/2 bg-[#CDCDCD]"></div>
+      <div class="flex w-1/2 flex-col justify-center border border-[#D9D9D9] px-[180px]">
         <h2 class="py-2 text-[24px] font-bold">忘記密碼</h2>
         <p class="mt-4">請輸入您常用的電子信箱</p>
         <form action="" class="w-full">

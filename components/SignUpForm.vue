@@ -2,9 +2,9 @@
 <template>
   <section class="flex items-center justify-center px-[300px] py-[100px] 3xl:p-[300px]">
     <div class="flex h-[700px] w-[1320px]">
-      <div class="w-[660px] bg-[#CDCDCD]"></div>
+      <div class="w-1/2 bg-[#CDCDCD]"></div>
       <div
-        class="flex w-[660px] flex-col items-center justify-center border border-[#D9D9D9] px-[180px]"
+        class="flex w-1/2 flex-col items-center justify-center border border-[#D9D9D9] px-[180px]"
       >
         <div class="tabs flex w-full items-center justify-center font-bold">
           <NuxtLink to="/login" class="tab-bordered tab h-[52px] w-1/2 flex-nowrap py-2 text-[24px]"
