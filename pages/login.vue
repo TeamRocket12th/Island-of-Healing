@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <div>login page</div>
+  <LoginForm />
 </template>
 
 <style scoped></style>
