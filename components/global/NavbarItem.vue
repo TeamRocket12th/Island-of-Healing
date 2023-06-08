@@ -40,7 +40,7 @@ const toggleshowCategory = () => {
             </ul>
           </li>
           <li><NuxtLink to="/">AI告解室</NuxtLink></li>
-          <li><NuxtLink to="/">論壇</NuxtLink></li>
+          <li><NuxtLink to="/">留言板</NuxtLink></li>
           <li><NuxtLink to="/">訂閱方案</NuxtLink></li>
           <li><NuxtLink to="/login">登入</NuxtLink></li>
           <li><NuxtLink to="/signup">註冊</NuxtLink></li>
