@@ -19,10 +19,11 @@ const data = [
           <p class="mb-1 text-center">{{ item.name }}</p>
           <p class="mb-4 text-center">心理諮商師</p>
           <button class="m-auto block rounded border border-[#D9D9D9] px-6 py-[7px]">
-            <p>追蹤</p>
+            <span>追蹤</span>
           </button>
         </li>
       </ul>
     </div>
   </div>
+  <div></div>
 </template>
