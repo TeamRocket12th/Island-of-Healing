@@ -11,9 +11,19 @@
 
           <div class="relative mt-2">
             <input
-              type="email"
+              type="password"
               placeholder="name@example.com"
               class="input-bordered input w-full rounded border-[#BDBDBD] focus:outline-none"
+            />
+            <!-- <Icon
+              name="ic:outline-remove-red-eye"
+              size="25"
+              class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer text-[#6B6B6B]"
+            /> -->
+            <Icon
+              name="material-symbols:visibility-off-outline"
+              size="25"
+              class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer text-[#6B6B6B]"
             />
           </div>
           <div class="mt-[10px] flex items-center">
@@ -24,9 +34,19 @@
           <p class="mt-6 text-[16px]">重新輸入新密碼 :</p>
           <div class="relative mt-2">
             <input
-              type="email"
+              type="password"
               placeholder="name@example.com"
               class="input-bordered input w-full rounded border-[#BDBDBD] focus:outline-none"
+            />
+            <!-- <Icon
+              name="ic:outline-remove-red-eye"
+              size="25"
+              class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer text-[#6B6B6B]"
+            /> -->
+            <Icon
+              name="material-symbols:visibility-off-outline"
+              size="25"
+              class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer text-[#6B6B6B]"
             />
           </div>
           <div class="relative mt-4">

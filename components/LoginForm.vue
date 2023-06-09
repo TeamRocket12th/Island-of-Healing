@@ -43,16 +43,16 @@
               placeholder="密碼"
               class="input-bordered input w-full rounded border-[#BDBDBD] pl-12 focus:outline-none"
             />
-            <Icon
+            <!-- <Icon
               name="ic:outline-remove-red-eye"
               size="25"
               class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer text-[#6B6B6B]"
-            />
-            <!-- <Icon
+            /> -->
+            <Icon
               name="material-symbols:visibility-off-outline"
               size="25"
-              class="absolute right-3 top-1/2  translate-y-[-50%] cursor-pointer text-[#6B6B6B]"
-            /> -->
+              class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer text-[#6B6B6B]"
+            />
           </div>
           <div class="relative mt-4">
             <button
