@@ -4,6 +4,6 @@
   <div>
     <BannerArea />
     <TrendingCreater />
-    <ArticleCard />
+    <HomeArticleCard />
   </div>
 </template>
