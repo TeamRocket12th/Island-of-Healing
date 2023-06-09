@@ -3,8 +3,8 @@
   <div class="container 3xl:pl-[300px] 3xl:pr-[300px]">
     <div class="mb-[296px] border">
       <h2 class="my-9 pl-4">精選文章</h2>
-      <ul class="flex h-[424px] border-b border-t">
-        <li class="w-1/3 px-4 pt-4">
+      <ul class="flex border-b border-t">
+        <li class="w-1/3 px-4 py-4">
           <div>
             <div class="relative mb-2 h-[247px] bg-[#CDCDCD]">
               <Icon
@@ -15,9 +15,11 @@
             </div>
           </div>
           <div>
-            <div class="mb-2 flex gap-2">
-              <button class="bg-[#CDCDCD]"><span class="text-sm">情緒察覺</span></button>
-              <p>打破 3 種常見的「認知偏見」，從自我覺察開始</p>
+            <div class="mb-2 flex">
+              <div class="flex w-[20%] items-center justify-center bg-[#CDCDCD]">
+                <span class="text-sm">情緒察覺</span>
+              </div>
+              <p class="w-[80%] pl-2">打破 3 種常見的「認知偏見」，從自我覺察開始</p>
             </div>
             <p>
               心理學家 Amos Tversky 和 Daniel Kahneman 在 1970
@@ -44,9 +46,11 @@
             </div>
           </div>
           <div>
-            <div class="mb-2 flex gap-2">
-              <button class="bg-[#CDCDCD]"><span class="text-sm">情緒察覺</span></button>
-              <p>打破 3 種常見的「認知偏見」，從自我覺察開始</p>
+            <div class="mb-2 flex">
+              <div class="flex w-[20%] items-center justify-center bg-[#CDCDCD]">
+                <span class="text-sm">情緒察覺</span>
+              </div>
+              <p class="w-[80%] pl-2">打破 3 種常見的「認知偏見」，從自我覺察開始</p>
             </div>
             <p>
               心理學家 Amos Tversky 和 Daniel Kahneman 在 1970
@@ -73,9 +77,11 @@
             </div>
           </div>
           <div>
-            <div class="mb-2 flex gap-2">
-              <button class="bg-[#CDCDCD]"><span class="text-sm">情緒察覺</span></button>
-              <p>打破 3 種常見的「認知偏見」，從自我覺察開始</p>
+            <div class="mb-2 flex">
+              <div class="flex w-[20%] items-center justify-center bg-[#CDCDCD]">
+                <span class="text-sm">情緒察覺</span>
+              </div>
+              <p class="w-[80%] pl-2">打破 3 種常見的「認知偏見」，從自我覺察開始</p>
             </div>
             <p>
               心理學家 Amos Tversky 和 Daniel Kahneman 在 1970
