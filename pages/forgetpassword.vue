@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <div>forget password</div>
+  <ForgetPasswordForm />
 </template>
 
 <style scoped></style>

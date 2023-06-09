@@ -1,6 +1,6 @@
 <script setup></script>
 <template>
-  <div>signup page</div>
+  <SignUpForm />
 </template>
 
 <style scoped></style>

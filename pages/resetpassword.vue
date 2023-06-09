@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>reset passowrd</div>
+  <ResetPasswordForm />
 </template>
 
 <style scoped></style>
