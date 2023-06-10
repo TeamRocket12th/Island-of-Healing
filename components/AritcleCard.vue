@@ -3,19 +3,19 @@ const data = [
   {
     image: '',
     title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    author: '李柚子',
+    writer: '李柚子',
     date: '2023-03-20'
   },
   {
     image: '',
     title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    author: '李柚子',
+    writer: '李柚子',
     date: '2023-03-20'
   },
   {
     image: '',
     title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    author: '李柚子',
+    writer: '李柚子',
     date: '2023-03-20'
   }
 ]
@@ -43,7 +43,7 @@ const data = [
             <div class="flex justify-between">
               <div>
                 <p>
-                  {{ item.author }}
+                  {{ item.writer }}
                 </p>
                 <p>
                   {{ item.date }}
