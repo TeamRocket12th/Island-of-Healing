@@ -1,9 +1,9 @@
 <script setup></script>
 
 <template>
-  <div>
-    特定文章頁面
+  <div class="container grid grid-cols-12 gap-6 pt-[60px] 3xl:px-[300px]">
     <ArticleDetail />
+    <TrendingList />
   </div>
 </template>
 
