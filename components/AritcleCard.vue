@@ -22,12 +22,12 @@ const data = [
 </script>
 
 <template>
-  <div class="container 3xl:pl-[300px] 3xl:pr-[300px]">
+  <div>
     <div>
       <ul class="flex gap-6">
         <li v-for="(item, index) in data" :key="index" class="w-1/3 border">
           <div>
-            <div class="relative mb-2 h-[247px] bg-[#CDCDCD]">
+            <div class="relative h-[157px] bg-[#CDCDCD]">
               <Icon
                 name="material-symbols:favorite-outline-rounded"
                 size="24"
@@ -35,18 +35,21 @@ const data = [
               />
             </div>
           </div>
-          <div>
-            <div class="mb-2">
+          <div class="px-3 py-3">
+            <div class="mb-3">
               <p class="">{{ item.title }}</p>
             </div>
-            <p>
-              {{ item.author }}
-            </p>
+
             <div class="flex justify-between">
-              <p>
-                {{ item.date }}
-              </p>
-              <div class="flex justify-end gap-2">
+              <div>
+                <p>
+                  {{ item.author }}
+                </p>
+                <p>
+                  {{ item.date }}
+                </p>
+              </div>
+              <div class="flex items-end justify-end gap-2">
                 <div class="flex h-9 w-9 items-center justify-center rounded-full bg-[#CDCDCD]">
                   <Icon name="material-symbols:bookmark-outline-rounded" size="16" />
                 </div>
