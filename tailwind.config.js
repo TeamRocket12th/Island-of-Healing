@@ -28,6 +28,7 @@ module.exports = {
   plugins: [require('daisyui')],
   content: [
     './components/**/*.{vue,js,ts}',
+    './containers/**/*.{vue,js,ts}',
     './layouts/**/*.vue',
     './pages/**/*.vue',
     './composables/**/*.{js,ts}',
