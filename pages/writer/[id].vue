@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="container flex gap-[27px] pt-[60px] 3xl:pl-[300px] 3xl:pr-[300px]">
+  <div class="container flex gap-[27px] pt-[60px]">
     <WriterCard />
     <WriterWorkCard />
   </div>

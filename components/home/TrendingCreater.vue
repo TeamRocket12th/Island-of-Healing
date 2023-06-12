@@ -10,7 +10,7 @@ const data = [
 </script>
 
 <template>
-  <div class="container mb-6 3xl:pl-[300px] 3xl:pr-[300px]">
+  <section class="container mb-6">
     <h2 class="py-4 pl-4">熱門創作者</h2>
     <ul class="flex h-[250px] items-center gap-4">
       <li v-for="(item, index) in data" :key="index" class="grow">
@@ -22,6 +22,5 @@ const data = [
         </button>
       </li>
     </ul>
-  </div>
-  <div></div>
+  </section>
 </template>

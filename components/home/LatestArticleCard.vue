@@ -51,7 +51,7 @@ const data = [
 ]
 </script>
 <template>
-  <div class="container mb-6 3xl:px-[300px]">
+  <section class="container mb-6">
     <h2 class="mb-4 text-[24px] font-bold">最新文章</h2>
     <ul class="flex flex-wrap gap-4">
       <li
@@ -87,5 +87,5 @@ const data = [
         </div>
       </li>
     </ul>
-  </div>
+  </section>
 </template>
