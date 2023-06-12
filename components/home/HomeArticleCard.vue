@@ -38,13 +38,12 @@ const data = [
           <div>
             <div class="mb-2 flex">
               <div class="flex w-[20%] items-center justify-center bg-[#CDCDCD]">
-                <span class="text-sm">情緒察覺</span>
+                <span class="text-sm">{{ item.type }}</span>
               </div>
-              <p class="w-[80%] pl-2">打破 3 種常見的「認知偏見」，從自我覺察開始</p>
+              <p class="w-[80%] pl-2">{{ item.title }}</p>
             </div>
             <p>
-              心理學家 Amos Tversky 和 Daniel Kahneman 在 1970
-              年代發展出認知偏見的理論，描述因為人類對於資訊處理上有一定的限度，所以在某些情境下會難以理性及有...
+              {{ item.description }}
             </p>
             <div class="flex justify-end gap-2">
               <div class="flex h-9 w-9 items-center justify-center rounded-full bg-[#CDCDCD]">
