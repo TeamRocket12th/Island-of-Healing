@@ -8,7 +8,7 @@ const data = {
 }
 </script>
 <template>
-  <div class="w-1/3 border px-7 pt-[60px]">
+  <div class="h-[588px] w-1/3 border px-7 pt-[60px]">
     <div class="m-auto mb-6 h-[100px] w-[100px] rounded-full bg-[#CDCDCD]"></div>
     <h2 class="text-center text-2xl">{{ data.writerName }}</h2>
     <p class="my-6 text-[#9F9F9F]">{{ data.introduction }}</p>
