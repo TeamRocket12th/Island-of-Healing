@@ -3,6 +3,7 @@
 <template>
   <div>
     <BannerArea />
+    <LatestArticleCard />
     <TrendingCreater />
     <HomeArticleCard />
   </div>

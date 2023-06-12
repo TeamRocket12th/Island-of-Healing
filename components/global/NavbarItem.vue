@@ -7,7 +7,7 @@ const toggleshowCategory = () => {
 
 <template>
   <header class="bg-[#CDCDCD]">
-    <div class="container 3xl:pl-[300px] 3xl:pr-[300px]">
+    <div class="container">
       <nav class="relative flex h-16 items-center justify-between">
         <h1 class="text-2xl font-bold"><NuxtLink to="/">小島聊癒所</NuxtLink></h1>
         <ul class="flex gap-6 text-xl font-medium">

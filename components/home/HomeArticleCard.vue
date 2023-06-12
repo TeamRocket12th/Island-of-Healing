@@ -21,7 +21,7 @@ const data = [
 ]
 </script>
 <template>
-  <div class="container 3xl:pl-[300px] 3xl:pr-[300px]">
+  <section class="container">
     <div class="mb-[296px] border-r">
       <h2 class="border-l border-t py-9 pl-4">精選文章</h2>
       <ul class="flex border-b border-t">
@@ -61,5 +61,5 @@ const data = [
         <Icon name="ic:round-chevron-right" size="24" />
       </div>
     </div>
-  </div>
+  </section>
 </template>

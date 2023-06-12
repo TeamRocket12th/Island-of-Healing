@@ -2,7 +2,7 @@
 
 <template>
   <footer class="bg-[#CDCDCD]">
-    <div class="container grid h-[582px] grid-cols-12 py-52 3xl:pl-[300px] 3xl:pr-[300px]">
+    <div class="container grid h-[582px] grid-cols-12 py-52">
       <div class="col-span-5 border-r border-gray-500 py-7 pr-12">
         <h2 class="mb-4 text-4xl font-bold">小島聊癒所</h2>
         <p>
