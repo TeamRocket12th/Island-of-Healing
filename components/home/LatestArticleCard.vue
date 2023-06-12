@@ -52,7 +52,10 @@ const data = [
 </script>
 <template>
   <section class="container mb-6">
-    <h2 class="mb-4 text-[24px] font-bold">最新文章</h2>
+    <div class="mb-4 flex items-center justify-between">
+      <h2 class="text-[24px] font-bold">最新文章</h2>
+      <SearchInput />
+    </div>
     <ul class="flex flex-wrap gap-4">
       <li
         v-for="(item, index) in data"
