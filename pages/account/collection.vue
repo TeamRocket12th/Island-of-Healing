@@ -1,6 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import CollectionList from '~/containers/CollectionList.vue'
+</script>
 <template>
-  <div></div>
+  <div>
+    <CollectionList />
+  </div>
 </template>
 
 <style scoped></style>
