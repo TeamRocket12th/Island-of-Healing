@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <section class="container flex items-center justify-center py-[100px] 3xl:px-[300px]">
+  <section class="container flex items-center justify-center py-[100px]">
     <div class="flex h-[700px] w-full">
       <div class="w-1/2 bg-[#CDCDCD]"></div>
       <div class="flex w-1/2 flex-col justify-center border border-[#D9D9D9] px-28 3xl:px-[180px]">
