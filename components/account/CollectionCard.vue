@@ -41,7 +41,7 @@ const data = [
         </div>
         <div class="flex gap-3 px-6">
           <div>
-            <div class="w-5/6">
+            <div class="w-4/5">
               <h3 class="mb-2 font-bold">{{ item.articleTitle }}</h3>
               <p class="mb-2 text-[#828282]">{{ item.articleSummary }}</p>
             </div>
