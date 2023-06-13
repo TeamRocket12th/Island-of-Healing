@@ -3,11 +3,10 @@
     <NavbarItem class="mb-10" />
     <div class="flex flex-grow">
       <SettingSidebar />
-      <main id="content" class="conatinaer">
+      <main id="content" class="container">
         <slot />
       </main>
     </div>
-
     <FooterItem />
   </div>
 </template>
