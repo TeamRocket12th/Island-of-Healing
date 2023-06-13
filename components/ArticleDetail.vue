@@ -45,11 +45,18 @@ const articleDetail = {
       最後，教育和學習也是重要的。瞭解並學習關於不同文化、價值觀和社會議題的知識，可以幫助我們更全面地看待世界。這包括閱讀、參加工作坊、與專業人士討論等等。透過不斷學習，我們能夠消除偏見。
     </p>`,
   writer: '作家姓名',
-  aboutMe: '作家自介',
   createdTime: '2023-05-23 17:43',
   category: '個人成長',
   tags: ['日常練習', '自我察覺', '個人成長']
 }
+const writerInfo = [
+  {
+    name: '作家姓名',
+    id: '1',
+    bio: '作家自介',
+    imgUrl: 'https://picsum.photos/60'
+  }
+]
 </script>
 <template>
   <section class="col-span-9">
@@ -88,7 +95,7 @@ const articleDetail = {
         </div>
       </div>
     </div>
-    <WriterCardWide :article-detail="articleDetail" />
+    <WriterCardWide :writer-info="writerInfo" />
   </section>
 </template>
 
