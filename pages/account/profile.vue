@@ -4,7 +4,7 @@ definePageMeta({
 })
 </script>
 <template>
-  <div></div>
+  <div><ProfileForm /></div>
 </template>
 
 <style scoped></style>
