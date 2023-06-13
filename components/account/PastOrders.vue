@@ -32,7 +32,7 @@ const pastorders = [
 </script>
 <template>
   <section class="container">
-    <div class="bg-white py-10 md:px-10">
+    <div class="bg-white p-10">
       <h2 class="mb-10 text-2xl font-bold">歷史訂單</h2>
       <table class="w-full table-fixed border border-slate-300 text-center">
         <thead class="bg-[#F5F5F5]">
