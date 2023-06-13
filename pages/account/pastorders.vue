@@ -1,6 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+definePageMeta({
+  layout: 'userlayout'
+})
+</script>
 <template>
-  <div></div>
+  <div>
+    <PastOrders />
+  </div>
 </template>
 
 <style scoped></style>
