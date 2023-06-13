@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <div class="col-span-3">
+  <div>
     <h3 class="mb-3 font-bold">熱門文章</h3>
 
     <div class="mb-3 pb-1 underline decoration-1 underline-offset-4">

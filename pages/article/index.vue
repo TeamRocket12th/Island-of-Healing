@@ -10,9 +10,7 @@ import ArticleSideBar from '~/containers/ArticleSideBar.vue'
       <ArticleList title="精選文章" />
       <ArticleList title="你可能會喜歡" />
     </div>
-    <div class="col-span-3">
-      <ArticleSideBar />
-    </div>
+    <ArticleSideBar />
   </div>
 </template>
 
