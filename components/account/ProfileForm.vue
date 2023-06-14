@@ -56,7 +56,6 @@ const formattedDate = computed(() => {
                   id="password"
                   v-model="userData.password"
                   type="password"
-                  placeholder="09-00000000"
                   class="w-full rounded-sm border border-[#D9D9D9] py-[7px] pl-3 text-[#7B7B7B] outline-none"
                 />
               </div>
@@ -83,18 +82,24 @@ const formattedDate = computed(() => {
             <div class="mb-4 flex gap-4">
               <div class="w-1/2">
                 <label for="birthday" class="mb-2 block">生日</label>
-                <div class="flex justify-between border">
-                  <input
-                    id="birthday"
-                    type="text"
-                    class="rounded-sm border-[#D9D9D9] py-[7px] pl-3 text-[#7B7B7B] outline-none"
-                    :value="formattedDate"
-                  />
-                  <VDatePicker v-model="date">
+                <div class="w-full cursor-pointer rounded-sm border border-[#D9D9D9]">
+                  <VDatePicker v-model="date" expanded>
                     <template #default="{ togglePopover }">
-                      <button class="mr-4" @click="handleDateClick(togglePopover)">
-                        <Icon name="material-symbols:keyboard-arrow-down-rounded" size="16" />
-                      </button>
+                      <div
+                        class="flex cursor-pointer justify-between"
+                        @click="handleDateClick(togglePopover)"
+                      >
+                        <input
+                          id="birthday"
+                          type="text"
+                          class="cursor-pointer py-[7px] pl-3 text-[#7B7B7B] outline-none"
+                          :value="formattedDate"
+                          readonly="readonly"
+                        />
+                        <button class="mr-4">
+                          <Icon name="material-symbols:keyboard-arrow-down-rounded" size="16" />
+                        </button>
+                      </div>
                     </template>
                   </VDatePicker>
                 </div>
