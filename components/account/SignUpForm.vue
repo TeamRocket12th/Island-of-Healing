@@ -1,4 +1,28 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+
+interface UserResponse {
+  user?: string
+  [key: string]: any
+}
+
+const res = ref<UserResponse>({})
+
+const user = reactive({
+  account: '',
+  password: ''
+})
+
+const handleSignUp = async () => {
+  const { data }: { data: any } = await useFetch(`${apiBase}/signup`, {
+    headers: { 'Content-type': 'application/json' },
+    method: 'POST',
+    body: user
+  })
+  res.value = data.value.data
+}
+</script>
 <template>
   <section class="container flex items-center justify-center py-[100px]">
     <div class="flex h-[700px] w-full">
@@ -16,7 +40,7 @@
             >註冊
           </NuxtLink>
         </div>
-        <form action="" class="w-full">
+        <form class="w-full">
           <div class="relative mt-4">
             <Icon
               name="mdi:email-outline"
@@ -24,6 +48,7 @@
               class="absolute left-3 top-1/2 translate-y-[-50%] text-[#6B6B6B]"
             />
             <input
+              v-model="user.account"
               type="email"
               placeholder="信箱"
               class="input-bordered input w-full rounded border-[#BDBDBD] pl-12 focus:outline-none"
@@ -37,6 +62,7 @@
               class="absolute left-3 top-1/2 translate-y-[-50%] text-[#6B6B6B]"
             />
             <input
+              v-model="user.password"
               type="password"
               placeholder="密碼"
               class="input-bordered input w-full rounded border-[#BDBDBD] pl-12 focus:outline-none"
@@ -77,7 +103,9 @@
           </div>
           <div class="relative mt-4">
             <button
+              type="button"
               class="btn w-full rounded bg-[#9F9F9F] text-[16px] font-bold text-white hover:bg-slate-600"
+              @click.prevent="handleSignUp"
             >
               註冊
             </button>

@@ -1,4 +1,44 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useUserStore } from '~/stores/user'
+const userStore = useUserStore()
+
+const { userLogin, getUserRole } = userStore
+
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+
+const router = useRouter()
+
+interface UserResponse {
+  [key: string]: any
+}
+let res: UserResponse = {}
+
+const user = reactive({
+  account: 'example@mail.com',
+  password: 'Test0000'
+})
+
+const handleLogin = async () => {
+  const { data, error } = await useFetch(`${apiBase}/login`, {
+    headers: { 'Content-type': 'application/json' },
+    method: 'POST',
+    body: user
+  })
+  if (data.value) {
+    console.log('Login success', data.value)
+    res = data.value
+    if (res.statusCode === 200) {
+      console.log(res.data.user)
+      userLogin()
+      getUserRole(res.data.user.role)
+      router.push('/')
+    }
+  } else if (error.value) {
+    console.log('Login error', error.value)
+  }
+}
+</script>
 <template>
   <section class="container flex items-center justify-center py-[100px]">
     <div class="flex h-[700px] w-full">
@@ -18,7 +58,7 @@
             >註冊</NuxtLink
           >
         </div>
-        <form action="" class="w-full">
+        <form class="w-full">
           <div class="relative mt-4">
             <Icon
               name="mdi:account-outline"
@@ -26,6 +66,7 @@
               class="absolute left-3 top-1/2 translate-y-[-50%] text-[#6B6B6B]"
             />
             <input
+              v-model="user.account"
               type="email"
               placeholder="帳號"
               class="input-bordered input w-full rounded border-[#BDBDBD] pl-12 focus:outline-none"
@@ -39,6 +80,7 @@
               class="absolute left-3 top-1/2 translate-y-[-50%] text-[#6B6B6B]"
             />
             <input
+              v-model="user.password"
               type="password"
               placeholder="密碼"
               class="input-bordered input w-full rounded border-[#BDBDBD] pl-12 focus:outline-none"
@@ -56,7 +98,9 @@
           </div>
           <div class="relative mt-4">
             <button
+              type="button"
               class="btn w-full rounded bg-[#9F9F9F] text-[16px] font-bold text-white hover:bg-slate-600"
+              @click.prevent="handleLogin"
             >
               登入
             </button>

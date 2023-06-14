@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
+
+const userStore = useUserStore()
+const { isLogin } = storeToRefs(userStore)
+const { userLogout } = userStore
+
 const showCategory = ref(false)
 const toggleshowCategory = () => {
   showCategory.value = !showCategory.value
@@ -8,9 +15,9 @@ const toggleshowCategory = () => {
 <template>
   <header class="bg-[#CDCDCD]">
     <div class="container">
-      <nav class="relative flex h-16 items-center justify-between">
+      <nav class="relative flex h-14 items-center justify-between">
         <h1 class="text-2xl font-bold"><NuxtLink to="/">小島聊癒所</NuxtLink></h1>
-        <ul class="flex gap-6 text-xl font-medium">
+        <ul class="flex items-center gap-6 text-xl font-medium">
           <li>
             <button @click="toggleshowCategory">
               精選文章 <Icon name="ic:round-arrow-drop-down" size="24" />
@@ -42,8 +49,45 @@ const toggleshowCategory = () => {
           <li><NuxtLink to="/">AI告解室</NuxtLink></li>
           <li><NuxtLink to="/">留言板</NuxtLink></li>
           <li><NuxtLink to="/">訂閱方案</NuxtLink></li>
-          <li><NuxtLink to="/login">登入</NuxtLink></li>
-          <li><NuxtLink to="/signup">註冊</NuxtLink></li>
+          <li v-if="isLogin">
+            <div class="dropdown-end dropdown">
+              <label tabindex="0" class="btn-ghost btn-circle avatar btn">
+                <div class="h-9 w-9 rounded-full">
+                  <img
+                    src="https://i.pinimg.com/564x/1f/37/39/1f373917adfdf156ad811330355e4456.jpg"
+                  />
+                </div>
+              </label>
+              <ul
+                tabindex="0"
+                class="dropdown-content menu rounded-box relative top-[105%] z-10 w-52 bg-base-100 p-2 shadow"
+              >
+                <li>
+                  <NuxtLink to="/account/profile" class="cursor-pointer">會員設定</NuxtLink>
+                </li>
+                <li>
+                  <NuxtLink to="/account/collection" class="cursor-pointer">我的收藏</NuxtLink>
+                </li>
+                <li>
+                  <NuxtLink to="/account/following" class="cursor-pointer">我的追蹤</NuxtLink>
+                </li>
+                <li>
+                  <NuxtLink to="/account/messages" class="cursor-pointer">我的訊息</NuxtLink>
+                </li>
+                <li>
+                  <NuxtLink to="/account/myplan" class="cursor-pointer">訂閱管理</NuxtLink>
+                </li>
+                <li>
+                  <NuxtLink to="/account/pastorders" class="cursor-pointer">歷史訂單</NuxtLink>
+                </li>
+                <li>
+                  <button type="button" @click="userLogout">登出</button>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li v-if="!isLogin"><NuxtLink to="/login">登入</NuxtLink></li>
+          <li v-if="!isLogin"><NuxtLink to="/signup">註冊</NuxtLink></li>
         </ul>
       </nav>
     </div>
