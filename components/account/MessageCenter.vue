@@ -65,7 +65,7 @@ function messageRender(message: Message): void {
             :key="message.id"
             :class="{ active: message.id === messageId }"
             class="cursor-pointer px-6 active:bg-[#CDCDCD]"
-            @click="messageRender(message)"
+            @mousedown="messageRender(message)"
           >
             <div class="flex py-3">
               <div class="h-[48px] w-[48px] rounded-full bg-[#D9D9D9]"></div>
