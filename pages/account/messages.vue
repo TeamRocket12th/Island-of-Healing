@@ -7,7 +7,7 @@ definePageMeta({
 })
 </script>
 <template>
-  <div></div>
+  <div><MessageCenter /></div>
 </template>
 
 <style scoped></style>
