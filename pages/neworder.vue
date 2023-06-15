@@ -1,7 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>送出訂單確認頁面</div>
+  <main>
+    <OrderForm />
+  </main>
 </template>
 
 <style scoped></style>
