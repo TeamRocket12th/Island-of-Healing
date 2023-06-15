@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 
 const userStore = useUserStore()
-const { isLogin } = storeToRefs(userStore)
+const { isLogin, userData } = storeToRefs(userStore)
 const { userLogout } = userStore
 
 const showCategory = ref(false)
@@ -53,14 +53,12 @@ const toggleshowCategory = () => {
             <div class="dropdown-end dropdown">
               <label tabindex="0" class="btn-ghost btn-circle avatar btn">
                 <div class="h-9 w-9 rounded-full">
-                  <img
-                    src="https://i.pinimg.com/564x/1f/37/39/1f373917adfdf156ad811330355e4456.jpg"
-                  />
+                  <img :src="userData.avatar" />
                 </div>
               </label>
               <ul
                 tabindex="0"
-                class="dropdown-content menu rounded-box relative top-[105%] z-10 w-52 bg-base-100 p-2 shadow"
+                class="dropdown-content menu rounded-box relative top-[105%] z-10 w-52 bg-base-100 p-2 text-base shadow"
               >
                 <li>
                   <NuxtLink to="/account/profile" class="cursor-pointer">會員設定</NuxtLink>

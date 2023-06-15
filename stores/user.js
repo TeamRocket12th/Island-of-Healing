@@ -4,22 +4,27 @@ export const useUserStore = defineStore(
   'auth',
   () => {
     const isLogin = ref(false)
-    const userRole = ref('guest')
+    const userData = ref({
+      role: 'guest',
+      avatar: ''
+    })
 
     const userLogin = () => {
       isLogin.value = true
     }
 
-    const getUserRole = (role) => {
-      userRole.value = role
+    const getUserInfo = (user) => {
+      userData.value.role = user.role
+      userData.value.avatar = user.imgUrl
     }
 
     const userLogout = () => {
       const authCookie = useCookie('auth')
       authCookie.value = null
+      location.reload()
     }
 
-    return { isLogin, userRole, userLogin, getUserRole, userLogout }
+    return { isLogin, userData, userLogin, getUserInfo, userLogout }
   },
   {
     persist: true

@@ -1,26 +1,36 @@
 <script setup lang="ts">
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
+const router = useRouter()
 
 interface UserResponse {
-  user?: string
   [key: string]: any
 }
 
-const res = ref<UserResponse>({})
+let res: UserResponse = {}
 
 const user = reactive({
-  account: '',
-  password: ''
+  account: 'example@mail.com',
+  password: 'Test0000',
+  confirmpwd: 'Test0000'
 })
 
 const handleSignUp = async () => {
-  const { data }: { data: any } = await useFetch(`${apiBase}/signup`, {
+  const { data, error } = await useFetch(`${apiBase}/signup`, {
     headers: { 'Content-type': 'application/json' },
     method: 'POST',
     body: user
   })
-  res.value = data.value.data
+  if (data.value) {
+    res = data.value
+    console.log(res)
+    if (res.statusCode === 200) {
+      console.log(res.message)
+      router.push('/login')
+    }
+  } else if (error.value) {
+    console.log(error.value.data)
+  }
 }
 </script>
 <template>
@@ -85,6 +95,7 @@ const handleSignUp = async () => {
               class="absolute left-3 top-1/2 translate-y-[-50%] text-[#6B6B6B]"
             />
             <input
+              v-model="user.confirmpwd"
               type="password"
               placeholder="再次輸入密碼"
               class="input-bordered input w-full rounded border-[#BDBDBD] pl-12 focus:outline-none"

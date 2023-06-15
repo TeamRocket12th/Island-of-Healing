@@ -2,7 +2,7 @@
 import { useUserStore } from '~/stores/user'
 const userStore = useUserStore()
 
-const { userLogin, getUserRole } = userStore
+const { userLogin, getUserInfo } = userStore
 
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
@@ -31,11 +31,11 @@ const handleLogin = async () => {
     if (res.statusCode === 200) {
       console.log(res.data.user)
       userLogin()
-      getUserRole(res.data.user.role)
+      getUserInfo(res.data.user)
       router.push('/')
     }
   } else if (error.value) {
-    console.log('Login error', error.value)
+    console.log('Login error', error.value.data)
   }
 }
 </script>
