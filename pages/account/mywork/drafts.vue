@@ -1,6 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import isWriter from '~/middleware /isWriter'
+import MyWorkList from '~/containers/MyWorkList.vue'
+definePageMeta({
+  middleware: [isWriter],
+  layout: 'userlayout'
+})
+</script>
 <template>
-  <div>草稿列表</div>
+  <div>
+    <h2 class="text-2xl font-bold">我的草稿</h2>
+    <MyWorkList />
+  </div>
 </template>
 
 <style scoped></style>
