@@ -3,6 +3,10 @@ const plan = {
   name: '月付讀到飽專案',
   price: 120
 }
+const emits = defineEmits(['custom-order'])
+const sentOrder = (value: boolean) => {
+  emits('custom-order', value)
+}
 </script>
 
 <template>
@@ -22,7 +26,6 @@ const plan = {
             class="mb-2 block w-full rounded border border-[#D9D9D9] px-3 py-2"
           />
         </div>
-
         <div>
           <label for="email" class="mb-2 block">電子郵件:</label>
           <input
@@ -33,7 +36,6 @@ const plan = {
             class="mb-2 block w-full rounded border border-[#D9D9D9] px-3 py-2"
           />
         </div>
-
         <div>
           <label for="phone" class="mb-2 block">電話號碼:</label>
           <input
@@ -62,6 +64,7 @@ const plan = {
         <button
           type="button"
           class="block w-full rounded-[4px] bg-[#C1C1C1] py-3 text-white hover:bg-slate-400"
+          @click="sentOrder(true)"
         >
           同意並送出
         </button>
