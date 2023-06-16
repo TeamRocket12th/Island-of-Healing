@@ -4,7 +4,7 @@ const plan = {
   price: 120
 }
 const emits = defineEmits(['custom-order'])
-const sentOrder = (value: Boolean) => {
+const sentOrder = (value: boolean) => {
   emits('custom-order', value)
 }
 </script>

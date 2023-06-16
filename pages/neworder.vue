@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const orderStatus = ref()
-const orderForm = (value: Boolean) => {
+const orderStatus = ref(false)
+const orderForm = (value: boolean) => {
   orderStatus.value = value
 }
 </script>
