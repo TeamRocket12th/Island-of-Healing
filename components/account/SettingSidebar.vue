@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useUIStore } from '~/stores/ui'
 
 const userStore = useUserStore()
+const uiStore = useUIStore()
 const { userData } = storeToRefs(userStore)
+const { isWriterExpanded } = storeToRefs(uiStore)
+const { toggleWriterSettings } = uiStore
 </script>
+
 <template>
   <div class="mx-5">
     <div class="mb-2 flex items-center justify-center gap-2 px-4">
@@ -46,38 +51,49 @@ const { userData } = storeToRefs(userStore)
           </div>
         </NuxtLink>
       </li>
-      <li class="px-4">
-        <div class="flex w-full cursor-pointer items-center px-6 py-3 hover:bg-gray-200">
+      <li v-if="userData.role === 'writer'" class="px-4">
+        <div
+          class="flex w-full cursor-pointer items-center px-6 py-3 hover:bg-gray-200"
+          @click="toggleWriterSettings"
+        >
           <Icon name="material-symbols:clarify-outline" size="24" class="mr-2" />
           <div class="flex items-center">
             <span>我的文章</span>
-            <Icon name="ic:outline-expand-more" size="24" />
+            <Icon
+              name="ic:outline-expand-more"
+              size="24"
+              class="duration-200"
+              :class="{ 'rotate-180': isWriterExpanded }"
+            />
           </div>
         </div>
-        <ul class="flex flex-col items-center">
+        <ul
+          class="flex flex-col items-center overflow-hidden transition-all duration-500"
+          :class="isWriterExpanded ? 'max-h-96' : 'max-h-0'"
+        >
           <li class="w-full">
-            <NuxtLink to="/" class="block px-6 py-3 hover:bg-gray-200">
+            <NuxtLink to="/account/mywork" class="block px-6 py-3 hover:bg-gray-200">
               <div class="flex items-center">
                 <span class="ml-2 mr-4 block h-1 w-1 rounded-full bg-slate-600"></span> 文章列表
               </div>
             </NuxtLink>
           </li>
           <li class="w-full">
-            <NuxtLink to="/" class="block px-6 py-3 hover:bg-gray-200">
+            <NuxtLink to="/account/mywork/progress" class="block px-6 py-3 hover:bg-gray-200">
               <div class="flex items-center">
                 <span class="ml-2 mr-4 block h-1 w-1 rounded-full bg-slate-600"></span> 審核進度
               </div>
             </NuxtLink>
           </li>
           <li class="w-full">
-            <NuxtLink to="/" class="block px-6 py-3 hover:bg-gray-200">
+            <NuxtLink to="/account/mywork/drafts" class="block px-6 py-3 hover:bg-gray-200">
               <div class="flex items-center">
                 <span class="ml-2 mr-4 block h-1 w-1 rounded-full bg-slate-600"></span> 我的草稿
               </div>
             </NuxtLink>
           </li>
           <li class="w-full">
-            <NuxtLink to="/" class="block px-6 py-3 hover:bg-gray-200">
+            <NuxtLink to="/account/mywork/dashboard" class="block px-6 py-3 hover:bg-gray-200">
               <div class="flex items-center">
                 <Icon name="material-symbols:bar-chart" size="24" class="mr-2" />
                 <span>後台數據</span>
@@ -106,4 +122,19 @@ const { userData } = storeToRefs(userStore)
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.accordion-enter-active {
+  transition: height 0.3s ease-in-out;
+}
+.accordion-leave-active {
+  transition: height 0.3s ease-in-out;
+}
+.accordion-enter-from,
+.accordion-leave-to {
+  height: 0;
+}
+.accordion-enter-to,
+.accordion-leave-from {
+  height: auto;
+}
+</style>
