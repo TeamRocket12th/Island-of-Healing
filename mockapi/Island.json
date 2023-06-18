@@ -1,0 +1,218 @@
+{
+  "uuid": "8db57b02-bb16-458d-be35-e5cd2b32bcaf",
+  "lastMigration": 27,
+  "name": "Island",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 4000,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "1d765a49-cc9b-415a-b403-c982fe5ff1bf",
+      "type": "http",
+      "documentation": "島民註冊",
+      "method": "post",
+      "endpoint": "signup",
+      "responses": [
+        {
+          "uuid": "3336a112-b9a6-4910-8cb3-b8811deec7ad",
+          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"註冊成功\",\n   \"status\":\"success\",\n   \"data\": {\n       \"user\": {\n           \"id\": 1,\n           \"username\": \"島民\",\n           \"email\": \"example@mail.com\"\n       },\n       \"token\": \"jwt.token.here\"\n   }\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "回傳註冊成功",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "account",
+              "value": "\" \"",
+              "invert": true,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "password",
+              "value": "\" \"",
+              "invert": true,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "fbabc12b-7f17-4723-8a5c-4b6aad6871e2",
+          "body": "{\n   \"statusCode\": 401,\n   \"message\": \"登入失敗\",\n   \"status\":\"failed\"\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "回傳註冊失敗",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "3d5501a8-08b5-4687-aae2-6d6fab1a42a3",
+      "type": "http",
+      "documentation": "島民登入",
+      "method": "post",
+      "endpoint": "login",
+      "responses": [
+        {
+          "uuid": "5c85581d-4399-4469-a014-a281e02036da",
+          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"登入成功\",\n   \"status\":\"success\",\n   \"data\": {\n       \"user\": {\n           \"nickName\": \"島民\",\n           \"email\": \"{{body 'account'}}\",\n           \"imgUrl\":\"https://i.pinimg.com/564x/1f/37/39/1f373917adfdf156ad811330355e4456.jpg\",\n           \"role\": \"commonUser\"\n       },\n       \"token\": \"jwt.token.here\"\n   }\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "回傳一般島民登入成功",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "account",
+              "value": "user@mail.com",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "password",
+              "value": "Test0000",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "47b3ea54-e175-4adf-b08b-942f43acf2e3",
+          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"登入成功\",\n   \"status\":\"success\",\n   \"data\": {\n       \"user\": {\n           \"nickName\": \"島民(作家)\",\n           \"email\": \"{{body 'account'}}\",\n           \"imgUrl\":\"https://avatars.githubusercontent.com/u/6178622?v=4\",\n           \"role\": \"writer\"\n       },\n       \"token\": \"jwt.token.here\"\n   }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "回傳島民作家登入成功",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "account",
+              "value": "writer@mail.com",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "password",
+              "value": "Test0000",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "36099143-f9ba-4032-9165-489c85d5b9a5",
+          "body": "{\n   \"statusCode\": 401,\n   \"message\": \"登入失敗\",\n   \"status\":\"failed\"\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "回傳登入失敗",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "1d765a49-cc9b-415a-b403-c982fe5ff1bf"
+    },
+    {
+      "type": "route",
+      "uuid": "3d5501a8-08b5-4687-aae2-6d6fab1a42a3"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": []
+}

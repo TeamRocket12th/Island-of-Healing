@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import MessageCenter from '../../components/account/MessageCenter.vue'
+import auth from '~/middleware /auth'
+
 definePageMeta({
+  middleware: [auth],
   layout: 'userlayout'
 })
 </script>

@@ -4,15 +4,15 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 // import { required, email, min } from '@vee-validate/rules';
 import * as rules from '@vee-validate/rules'
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin((_nuxtApp) => {
   // defineRule('required', required);
   // defineRule('email', email);
   // defineRule('min', min);
-  Object.keys(rules)
+  const rulesDict: { [key: string]: any } = rules
+  Object.keys(rulesDict)
     .filter((k) => k !== 'default')
     .forEach((rule) => {
-      defineRule(rule, rules[rule])
-      //   console.log(rule);
+      defineRule(rule, rulesDict[rule])
     })
 })
 
