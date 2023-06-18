@@ -2,8 +2,7 @@
 interface TableData {
   [property: string]: string | number
 }
-
-const props = defineProps({
+defineProps({
   tableData: {
     type: Array as () => TableData[],
     default: () => []

@@ -80,7 +80,7 @@ const writerInfo = [
       <h2 class="mb-6 text-[32px] font-bold">{{ articleDetail.title }}</h2>
       <img src="https://picsum.photos/904/412" alt="cover" class="mb-6 block" />
       <div>
-        <div class="mb-9" v-html="articleDetail.content"></div>
+        <div v-dompurify-html="articleDetail.content" class="mb-9"></div>
         <div class="flex items-center justify-between">
           <CategoryTag :tags="articleDetail.tags" />
           <ul class="flex gap-3">
