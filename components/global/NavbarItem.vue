@@ -72,6 +72,9 @@ const toggleshowCategory = () => {
                 <li>
                   <NuxtLink to="/account/messages" class="cursor-pointer">我的訊息</NuxtLink>
                 </li>
+                <li v-if="userData.role === 'writer'">
+                  <NuxtLink to="/account/mywork" class="cursor-pointer">我的文章</NuxtLink>
+                </li>
                 <li>
                   <NuxtLink to="/account/myplan" class="cursor-pointer">訂閱管理</NuxtLink>
                 </li>

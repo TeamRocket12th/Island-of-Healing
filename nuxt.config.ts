@@ -7,6 +7,9 @@ export default defineNuxtConfig({
   pinia: {
     autoImports: ['defineStore', ['defineStore', 'definePiniaStore']]
   },
+  build: {
+    transpile: [/echarts/]
+  },
   components: [
     {
       path: '~/components',

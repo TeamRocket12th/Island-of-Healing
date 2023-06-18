@@ -1,3 +1,5 @@
+<script setup lang="ts"></script>
+
 <template>
   <div id="userpage" class="bg-[#F5F5F5]">
     <NavbarItem class="mb-10" />
