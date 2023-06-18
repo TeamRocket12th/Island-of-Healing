@@ -71,7 +71,7 @@ const data = [
           </div>
           <div><Icon name="material-symbols:favorite-outline-rounded" size="24" class="" /></div>
         </div>
-        <div class="mb-3 text-[16px] font-bold">{{ item.title }}</div>
+        <div class="mb-3 font-serif-tc text-[16px] font-bold">{{ item.title }}</div>
         <div class="mb-3 text-[14px] text-[#828282]">{{ item.content }}</div>
 
         <div class="mb-5 h-full w-full bg-[#D9D9D9]"></div>

@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true
   },
+  css: ['@/assets/css/main.css'],
   pinia: {
     autoImports: ['defineStore', ['defineStore', 'definePiniaStore']]
   },
