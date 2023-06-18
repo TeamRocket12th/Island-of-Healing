@@ -16,7 +16,9 @@ const toggleshowCategory = () => {
   <header class="bg-[#CDCDCD]">
     <div class="container">
       <nav class="relative flex h-14 items-center justify-between">
-        <h1 class="text-2xl font-bold"><NuxtLink to="/">小島聊癒所</NuxtLink></h1>
+        <h1>
+          <NuxtLink to="/" class="font-serif-tc text-2xl font-bold">小島聊癒所</NuxtLink>
+        </h1>
         <ul class="flex items-center gap-6 text-xl font-medium">
           <li>
             <button @click="toggleshowCategory">
