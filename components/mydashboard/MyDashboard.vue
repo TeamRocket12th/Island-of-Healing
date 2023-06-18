@@ -28,6 +28,7 @@ const option = ref({
   <div class="grid grid-cols-12 gap-7">
     <div class="col-span-6 border border-[#D9D9D9] pb-3">
       <client-only>
+        <p class="ml-3 text-4xl font-medium leading-normal">2023年</p>
         <v-chart class="chart" :option="option" />
       </client-only>
     </div>

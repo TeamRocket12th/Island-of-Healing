@@ -15,7 +15,7 @@ interface UserResponse {
 let res: UserResponse = {}
 
 const user = reactive({
-  account: 'example@mail.com',
+  account: 'user@mail.com',
   password: 'Test0000'
 })
 
