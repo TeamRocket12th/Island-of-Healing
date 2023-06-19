@@ -63,25 +63,39 @@ const toggleshowCategory = () => {
                 class="dropdown-content menu rounded-box relative top-[105%] z-10 w-52 bg-base-100 p-2 text-base shadow"
               >
                 <li>
-                  <NuxtLink to="/account/profile" class="cursor-pointer">會員設定</NuxtLink>
+                  <NuxtLink :to="`/account/${userData.userId}/profile`" class="cursor-pointer"
+                    >會員設定</NuxtLink
+                  >
                 </li>
                 <li>
-                  <NuxtLink to="/account/collection" class="cursor-pointer">我的收藏</NuxtLink>
+                  <NuxtLink :to="`/account/${userData.userId}/collection`" class="cursor-pointer"
+                    >我的收藏</NuxtLink
+                  >
                 </li>
                 <li>
-                  <NuxtLink to="/account/following" class="cursor-pointer">我的追蹤</NuxtLink>
+                  <NuxtLink :to="`/account/${userData.userId}/following`" class="cursor-pointer"
+                    >我的追蹤</NuxtLink
+                  >
                 </li>
                 <li>
-                  <NuxtLink to="/account/messages" class="cursor-pointer">我的訊息</NuxtLink>
+                  <NuxtLink :to="`/account/${userData.userId}/messages`" class="cursor-pointer"
+                    >我的訊息</NuxtLink
+                  >
                 </li>
                 <li v-if="userData.role === 'writer'">
-                  <NuxtLink to="/account/mywork" class="cursor-pointer">我的文章</NuxtLink>
+                  <NuxtLink :to="`/account/${userData.userId}/mywork`" class="cursor-pointer"
+                    >我的文章</NuxtLink
+                  >
                 </li>
                 <li>
-                  <NuxtLink to="/account/myplan" class="cursor-pointer">訂閱管理</NuxtLink>
+                  <NuxtLink :to="`/account/${userData.userId}/myplan`" class="cursor-pointer"
+                    >訂閱管理</NuxtLink
+                  >
                 </li>
                 <li>
-                  <NuxtLink to="/account/pastorders" class="cursor-pointer">歷史訂單</NuxtLink>
+                  <NuxtLink :to="`/account/${userData.userId}/pastorders`" class="cursor-pointer"
+                    >歷史訂單</NuxtLink
+                  >
                 </li>
                 <li>
                   <button type="button" @click="userLogout">登出</button>

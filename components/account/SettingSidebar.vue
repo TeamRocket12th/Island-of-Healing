@@ -20,7 +20,10 @@ const { toggleWriterSettings } = uiStore
     </div>
     <ul class="whitespace-nowrap">
       <li class="px-4">
-        <NuxtLink to="/account/profile" class="block w-full px-6 py-3 hover:bg-gray-200">
+        <NuxtLink
+          :to="`/account/${userData.userId}/profile`"
+          class="block w-full px-6 py-3 hover:bg-gray-200"
+        >
           <div class="flex items-center">
             <Icon name="material-symbols:manage-accounts-outline-rounded" size="24" class="mr-2" />
             <span>會員設定</span>
@@ -28,7 +31,10 @@ const { toggleWriterSettings } = uiStore
         </NuxtLink>
       </li>
       <li class="px-4">
-        <NuxtLink to="/account/collection" class="block w-full px-6 py-3 hover:bg-gray-200">
+        <NuxtLink
+          :to="`/account/${userData.userId}/collection`"
+          class="block w-full px-6 py-3 hover:bg-gray-200"
+        >
           <div class="flex items-center">
             <Icon name="material-symbols:bookmark-outline" size="24" class="mr-2" />
             <span>我的收藏</span>
@@ -36,7 +42,10 @@ const { toggleWriterSettings } = uiStore
         </NuxtLink>
       </li>
       <li class="px-4">
-        <NuxtLink to="/account/following" class="block w-full px-6 py-3 hover:bg-gray-200">
+        <NuxtLink
+          :to="`/account/${userData.userId}/following`"
+          class="block w-full px-6 py-3 hover:bg-gray-200"
+        >
           <div class="flex items-center">
             <Icon name="ic:round-rss-feed" size="24" class="mr-2" />
             <span>我的追蹤</span>
@@ -44,7 +53,10 @@ const { toggleWriterSettings } = uiStore
         </NuxtLink>
       </li>
       <li class="px-4">
-        <NuxtLink to="/account/messages" class="block w-full px-6 py-3 hover:bg-gray-200">
+        <NuxtLink
+          :to="`/account/${userData.userId}/messages`"
+          class="block w-full px-6 py-3 hover:bg-gray-200"
+        >
           <div class="flex items-center">
             <Icon name="ic:baseline-mail-outline" size="24" class="mr-2" />
             <span>我的訊息</span>
@@ -72,28 +84,40 @@ const { toggleWriterSettings } = uiStore
           :class="isWriterExpanded ? 'max-h-96' : 'max-h-0'"
         >
           <li class="w-full">
-            <NuxtLink to="/account/mywork" class="block px-6 py-3 hover:bg-gray-200">
+            <NuxtLink
+              :to="`/account/${userData.userId}/mywork`"
+              class="block px-6 py-3 hover:bg-gray-200"
+            >
               <div class="flex items-center">
                 <span class="ml-2 mr-4 block h-1 w-1 rounded-full bg-slate-600"></span> 文章列表
               </div>
             </NuxtLink>
           </li>
           <li class="w-full">
-            <NuxtLink to="/account/mywork/progress" class="block px-6 py-3 hover:bg-gray-200">
+            <NuxtLink
+              :to="`/account/${userData.userId}/progress`"
+              class="block px-6 py-3 hover:bg-gray-200"
+            >
               <div class="flex items-center">
                 <span class="ml-2 mr-4 block h-1 w-1 rounded-full bg-slate-600"></span> 審核進度
               </div>
             </NuxtLink>
           </li>
           <li class="w-full">
-            <NuxtLink to="/account/mywork/drafts" class="block px-6 py-3 hover:bg-gray-200">
+            <NuxtLink
+              :to="`/account/${userData.userId}/drafts`"
+              class="block px-6 py-3 hover:bg-gray-200"
+            >
               <div class="flex items-center">
                 <span class="ml-2 mr-4 block h-1 w-1 rounded-full bg-slate-600"></span> 我的草稿
               </div>
             </NuxtLink>
           </li>
           <li class="w-full">
-            <NuxtLink to="/account/mywork/dashboard" class="block px-6 py-3 hover:bg-gray-200">
+            <NuxtLink
+              :to="`/account/${userData.userId}/dashboard`"
+              class="block px-6 py-3 hover:bg-gray-200"
+            >
               <div class="flex items-center">
                 <Icon name="material-symbols:bar-chart" size="24" class="mr-2" />
                 <span>後台數據</span>
@@ -103,7 +127,10 @@ const { toggleWriterSettings } = uiStore
         </ul>
       </li>
       <li class="px-4">
-        <NuxtLink to="/account/myplan" class="block w-full px-6 py-3 hover:bg-gray-200">
+        <NuxtLink
+          :to="`/account/${userData.userId}/myplan`"
+          class="block w-full px-6 py-3 hover:bg-gray-200"
+        >
           <div class="flex items-center">
             <Icon name="ic:baseline-done-all" size="24" class="mr-2" />
             <span>訂閱管理</span>
@@ -111,7 +138,10 @@ const { toggleWriterSettings } = uiStore
         </NuxtLink>
       </li>
       <li class="px-4">
-        <NuxtLink to="/account/pastorders" class="block w-full px-6 py-3 hover:bg-gray-200">
+        <NuxtLink
+          :to="`/account/${userData.userId}/pastorders`"
+          class="block w-full px-6 py-3 hover:bg-gray-200"
+        >
           <div class="flex items-center">
             <Icon name="ic:outline-receipt" size="24" class="mr-2" />
             <span>歷史訂單</span>

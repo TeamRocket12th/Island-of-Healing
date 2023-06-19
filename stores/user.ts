@@ -3,6 +3,7 @@ export const useUserStore = defineStore(
   () => {
     const isLogin = ref(false)
     const userData = ref({
+      userId: '',
       name: '',
       role: 'guest',
       avatar: ''
@@ -13,6 +14,7 @@ export const useUserStore = defineStore(
     }
 
     const getUserInfo = (user: UserInfo) => {
+      userData.value.userId = user.uuid
       userData.value.name = user.nickName
       userData.value.role = user.role
       userData.value.avatar = user.imgUrl
