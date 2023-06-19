@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <div>訂閱方案頁面</div>
+  <PlanCard />
 </template>
 
 <style scoped></style>
