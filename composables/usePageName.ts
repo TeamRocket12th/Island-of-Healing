@@ -1,8 +1,6 @@
-export function usePageName() {
-  const route = useRoute()
+export const usePageName = () => {
   const nowPage = ref('')
-
-  nowPage.value = route.meta.pageName as string
+  nowPage.value = useRoute().meta.pageName as string
 
   return { nowPage }
 }

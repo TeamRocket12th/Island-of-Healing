@@ -48,9 +48,9 @@ const toggleshowCategory = () => {
               </li>
             </ul>
           </li>
-          <li><NuxtLink to="/">AI告解室</NuxtLink></li>
+          <li><NuxtLink to="/chatroom">AI告解室</NuxtLink></li>
           <li><NuxtLink to="/">留言板</NuxtLink></li>
-          <li><NuxtLink to="/">訂閱方案</NuxtLink></li>
+          <li><NuxtLink to="/plans">訂閱方案</NuxtLink></li>
           <li v-if="isLogin">
             <div class="dropdown-end dropdown">
               <label tabindex="0" class="btn-ghost btn-circle avatar btn">
