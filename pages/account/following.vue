@@ -8,9 +8,9 @@ definePageMeta({
 })
 </script>
 <template>
-  <div>
+  <section>
     <FollowingList />
-  </div>
+  </section>
 </template>
 
 <style scoped></style>

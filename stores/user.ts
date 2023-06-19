@@ -12,7 +12,7 @@ export const useUserStore = defineStore(
       isLogin.value = true
     }
 
-    const getUserInfo = (user) => {
+    const getUserInfo = (user: UserInfo) => {
       userData.value.name = user.nickName
       userData.value.role = user.role
       userData.value.avatar = user.imgUrl

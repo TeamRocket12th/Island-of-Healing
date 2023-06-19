@@ -29,21 +29,31 @@ const followingWriters = [
     id: '5',
     bio: '作家自介',
     imgUrl: 'https://picsum.photos/60'
+  },
+  {
+    name: '作家姓名',
+    id: '6',
+    bio: '作家自介',
+    imgUrl: 'https://picsum.photos/60'
+  },
+  {
+    name: '作家姓名',
+    id: '7',
+    bio: '作家自介',
+    imgUrl: 'https://picsum.photos/60'
+  },
+  {
+    name: '作家姓名',
+    id: '8',
+    bio: '作家自介',
+    imgUrl: 'https://picsum.photos/60'
   }
 ]
 </script>
 <template>
-  <div class="grid grid-cols-12 bg-white p-10">
-    <div class="col-span-9 mr-6">
-      <h2 class="mb-8 text-2xl font-bold">我的追蹤</h2>
-      <WriterCardWide :writer-info="followingWriters" />
-    </div>
-    <div class="col-span-3 pt-[66px]">
-      <div class="p-4">
-        <h2 class="mb-4 pl-4 text-2xl font-medium">熱門作家</h2>
-        <TrendingWriters />
-      </div>
-    </div>
+  <div class="mb-16 rounded-lg bg-white px-10 pb-24 pt-10">
+    <h2 class="mb-14 text-2xl font-bold leading-normal">我的追蹤</h2>
+    <WriterCardWide :writer-info="followingWriters" />
   </div>
 </template>
 
