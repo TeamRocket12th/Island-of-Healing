@@ -11,7 +11,7 @@ const { toggleWriterSettings } = uiStore
 </script>
 
 <template>
-  <aside class="z-10 mx-5">
+  <aside class="mx-5 3xl:absolute 3xl:left-0 3xl:z-10">
     <div class="mb-2 flex items-center justify-center gap-2 px-4">
       <div class="h-[44px] w-[44px] overflow-hidden rounded-full">
         <img :src="userData.avatar" alt="user" />

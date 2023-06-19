@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     }
   ],
   runtimeConfig: {
+    apiKey: process.env.CHATGPT_API_KEY,
     public: {
       apiBase: 'http://localhost:4000'
     }
