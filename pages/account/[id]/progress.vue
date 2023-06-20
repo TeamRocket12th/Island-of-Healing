@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import isWriter from '~/middleware /isWriter'
+import isWriter from '~/middleware/isWriter'
 
 definePageMeta({
   title: '審核進度',
