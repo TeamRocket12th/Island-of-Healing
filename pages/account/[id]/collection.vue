@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import auth from '~/middleware /auth'
+import auth from '~/middleware/auth'
 import CollectionList from '~/containers/CollectionList.vue'
 
 definePageMeta({
