@@ -1,7 +1,12 @@
 export const useUserStore = defineStore(
   'auth',
   () => {
-    const isLogin = ref(false)
+    const runtimeConfig = useRuntimeConfig()
+    const apiBase = runtimeConfig.public.apiBase
+    const authCookie = useCookie('auth')
+    const sessionId = useCookie('sessionId')
+
+    const router = useRouter()
     const userData = ref({
       userId: '',
       name: '',
@@ -9,8 +14,11 @@ export const useUserStore = defineStore(
       avatar: ''
     })
 
+    const isLogin = ref(false)
+
     const userLogin = () => {
       isLogin.value = true
+      sessionId.value = 'testSessionId'
     }
 
     const getUserInfo = (user: UserInfo) => {
@@ -21,12 +29,29 @@ export const useUserStore = defineStore(
     }
 
     const userLogout = () => {
-      const authCookie = useCookie('auth')
       authCookie.value = null
+      sessionId.value = null
       location.reload()
     }
 
-    return { isLogin, userData, userLogin, getUserInfo, userLogout }
+    const checkAuth = async () => {
+      const { data, error } = await useFetch(`${apiBase}/checkauth`, {
+        method: 'POST',
+        body: {
+          token: sessionId?.value
+        }
+      })
+      if (data.value) {
+        console.log('sessionId 驗證成功')
+      } else if (error.value) {
+        sessionId.value = null
+        isLogin.value = false
+        console.log('session 驗證失敗')
+        router.replace('/login')
+      }
+    }
+
+    return { isLogin, userData, userLogin, getUserInfo, userLogout, checkAuth }
   },
   {
     persist: true
