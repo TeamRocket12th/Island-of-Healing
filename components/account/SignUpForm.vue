@@ -21,7 +21,7 @@ const handleSignUp = async () => {
     res = data.value
     console.log(res)
     if (res.statusCode === 200) {
-      console.log(res.message)
+      console.log(res.Message)
       router.push('/login')
     }
   } else if (error.value) {
