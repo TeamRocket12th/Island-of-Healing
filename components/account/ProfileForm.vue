@@ -5,23 +5,15 @@ import { useUserStore } from '~/stores/user'
 const userStore = useUserStore()
 const { userData } = storeToRefs(userStore)
 
-interface UsersData {
-  email: string
-}
-
-const usersData: UsersData = reactive({
-  email: 'name@example.com'
-})
-
-const date = ref<Date | null>(null)
+const birthday = ref<Date | null>(new Date(userData.value.birthday))
 const handleDateClick = (togglePopover: () => void) => {
   event?.preventDefault()
   togglePopover()
 }
 
 const formattedDate = computed(() => {
-  if (date.value) {
-    const selectedDate = new Date(date.value)
+  if (birthday.value) {
+    const selectedDate = new Date(birthday.value)
     const year = selectedDate.getFullYear()
     const month = String(selectedDate.getMonth() + 1).padStart(2, '0')
     const day = String(selectedDate.getDate()).padStart(2, '0')
@@ -47,11 +39,13 @@ const selectFile = (event: Event) => {
   }
 }
 
-const inputText = ref<string>('')
-const maxCharacterCount = 30
-const characterCount = ref<string>(`(${inputText.value.length}/${maxCharacterCount})`)
+const jobTitle = ref<string>(userData.value.jobTitle)
 
-watch(inputText, (newValue: string) => {
+const bioInput = ref<string>(userData.value.bio)
+const maxCharacterCount = 30
+const characterCount = ref<string>(`(${bioInput.value.length}/${maxCharacterCount})`)
+
+watch(bioInput, (newValue: string) => {
   characterCount.value = `(${newValue.length}/${maxCharacterCount})`
 })
 
@@ -93,14 +87,14 @@ const textLengthRule = (value: string) => {
               />
             </div>
           </div>
-          <VForm class="w-full px-6 pt-6 font-sans-tc">
+          <VForm class="w-full px-6 pt-6">
             <div class="mb-6">
               <label for="email" class="mb-2 block text-primary">常用信箱</label>
               <input
                 id="email"
+                v-model="userData.email"
                 type="input"
-                :value="usersData.email"
-                class="w-2/3 rounded border border-primary bg-white px-3 py-[6px] text-sand-300 outline-none"
+                class="w-2/3 cursor-not-allowed rounded border border-primary bg-white px-3 py-[6px] text-sand-300 outline-none"
                 readonly
               />
             </div>
@@ -112,7 +106,7 @@ const textLengthRule = (value: string) => {
                   :value="userData.name"
                   name="userName"
                   label="*名稱"
-                  class="my-2 w-full rounded border border-primary bg-white px-3 py-[6px] text-sand-300 outline-none"
+                  class="my-2 w-full rounded border border-primary bg-white px-3 py-[6px] text-primary-dark outline-none"
                   rules="required"
                 />
                 <VErrorMessage name="userName" class="text-primary" />
@@ -120,7 +114,7 @@ const textLengthRule = (value: string) => {
               <div class="w-1/3 pl-8">
                 <label for="birthday" class="mb-2 block text-primary">生日</label>
                 <div class="w-full cursor-pointer rounded border border-primary bg-white">
-                  <VDatePicker v-model="date" expanded>
+                  <VDatePicker v-model="birthday" expanded>
                     <template #default="{ togglePopover }">
                       <div
                         class="flex cursor-pointer justify-between px-3 py-[6px]"
@@ -130,7 +124,7 @@ const textLengthRule = (value: string) => {
                           id="birthday"
                           v-model="formattedDate"
                           type="text"
-                          class="w-full cursor-pointer rounded border-primary text-sand-300 outline-none"
+                          class="w-full cursor-pointer rounded border-primary text-primary-dark outline-none"
                           readonly
                         />
                         <button class="mr-4">
@@ -146,9 +140,10 @@ const textLengthRule = (value: string) => {
               <label for="jobTitle" class="block text-primary">頭銜</label>
               <VField
                 id="jobTitle"
+                v-model="jobTitle"
                 name="jobTitle"
                 label="*頭銜"
-                class="my-2 block w-2/3 rounded border border-primary bg-white px-3 py-[6px] text-sand-300 outline-none"
+                class="my-2 block w-2/3 rounded border border-primary bg-white px-3 py-[6px] text-primary-dark outline-none"
                 rules="required"
               />
               <VErrorMessage name="jobTitle" class="text-primary" />
@@ -157,14 +152,14 @@ const textLengthRule = (value: string) => {
               <label for="userIntro" class="mb-2 block text-primary">自我介紹</label>
               <VField
                 id="userIntro"
-                v-model="inputText"
+                v-model="bioInput"
                 name="userIntro"
                 as="textarea"
                 label="*自我介紹"
                 maxlength="30"
                 :rules="textLengthRule"
                 rows="4"
-                class="w-full rounded border border-primary bg-white px-3 py-[6px] text-sand-300 outline-none"
+                class="w-full rounded border border-primary bg-white px-3 py-[6px] text-primary-dark outline-none"
                 placeholder="向其他人簡單介紹你自己吧!
 可以分享你的創作理念、寫作方向，建議 20-30 字為佳！"
               />
