@@ -17,7 +17,7 @@
       "responses": [
         {
           "uuid": "a068b086-5171-419e-9358-70e68e43d9c8",
-          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"註冊成功\",\n   \"status\":\"success\",\n   \"data\": {\n       \"user\": {\n           \"id\": 1,\n           \"username\": \"島民\",\n           \"email\": \"example@mail.com\"\n       },\n       \"token\": \"jwt.token.here\"\n   }\n}\n",
+          "body": "{\n   \"StatusCode\": 200,\n   \"Message\": \"註冊成功\",\n   \"Status\":\"success\",\n   \"Data\": {\n       \"User\": {\n           \"Username\": \"島民\",\n           \"Email\": \"example@mail.com\"\n       }\n   }\n}\n",
           "latency": 0,
           "statusCode": 200,
           "label": "回傳註冊成功",
@@ -77,7 +77,7 @@
       "responses": [
         {
           "uuid": "0cc11117-bbf9-4013-9d95-07a22013721f",
-          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"登入成功\",\n   \"status\":\"success\",\n   \"data\": {\n       \"user\": {\n           \"uuid\":\"firstuser\",\n           \"nickName\": \"島民\",\n           \"email\": \"{{body 'account'}}\",\n           \"imgUrl\":\"https://i.pinimg.com/564x/1f/37/39/1f373917adfdf156ad811330355e4456.jpg\",\n           \"role\": \"commonUser\"\n       },\n       \"token\": \"jwt.token.here\"\n   }\n}\n",
+          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"登入成功\",\n   \"status\":\"success\",\n   \"token\": \"MockToken\",\n   \"data\": {\n       \"user\": {\n           \"Uid\":\"firstuser\",\n           \"NickName\": \"島民\",\n           \"Email\": \"{{body 'account'}}\",\n           \"ImgUrl\":\"https://i.pinimg.com/564x/1f/37/39/1f373917adfdf156ad811330355e4456.jpg\",\n           \"Role\": \"commonUser\",\n           \"Birthday\": \"1999, 11, 11\",\n           \"MyPlan\":\"\"\n       }\n   }\n}\n",
           "latency": 0,
           "statusCode": 200,
           "label": "回傳一般島民登入成功",
@@ -109,7 +109,7 @@
         },
         {
           "uuid": "519211bd-5fa8-41af-bd65-609a10db2697",
-          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"登入成功\",\n   \"status\":\"success\",\n   \"data\": {\n       \"user\": {\n           \"uuid\":\"firstuser\",\n           \"nickName\": \"島民(作家)\",\n           \"email\": \"{{body 'account'}}\",\n           \"imgUrl\":\"https://avatars.githubusercontent.com/u/6178622?v=4\",\n           \"role\": \"writer\"\n       },\n       \"token\": \"jwt.token.here\"\n   }\n}",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"登入成功\",\n  \"status\": \"success\",\n  \"token\": \"MockToken\",\n  \"data\": {\n    \"user\": {\n      \"Uid\": \"firstuser\",\n      \"NickName\": \"島民(作家)\",\n      \"Email\": \"{{body 'account'}}\",\n      \"ImgUrl\": \"https://avatars.githubusercontent.com/u/6178622?v=4\",\n      \"Role\": \"writer\",\n      \"Birthday\": \"1999, 11, 11\",\n      \"MyPlan\": \"\",\n      \"JobTitle\":\"心靈捕手\",\n      \"Bio\":\"生活是一面鏡子，我們努力追求的第一件事，就是從中辨認出自己。\"\n      \n    }\n  }\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "回傳島民作家登入成功",
@@ -357,7 +357,7 @@
           "body": "{\n   \"statusCode\": 200,\n   \"message\": \"驗證成功\",\n   \"status\":\"success\"\n}",
           "latency": 0,
           "statusCode": 200,
-          "label": "驗證存在cookie的sessionId有效",
+          "label": "驗證存在cookie的token有效",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
@@ -367,7 +367,7 @@
             {
               "target": "body",
               "modifier": "token",
-              "value": "testSessionId",
+              "value": "MockToken",
               "invert": false,
               "operator": "equals"
             }
@@ -382,7 +382,7 @@
           "body": "{\n   \"statusCode\": 401,\n   \"message\": \"驗證失敗\",\n   \"status\":\"failed\"\n}",
           "latency": 0,
           "statusCode": 401,
-          "label": "驗證存在cookie的sessionId無效",
+          "label": "驗證存在cookie的token無效",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",

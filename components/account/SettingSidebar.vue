@@ -21,8 +21,8 @@ const { toggleWriterSettings } = uiStore
     <ul class="whitespace-nowrap">
       <li class="px-4">
         <NuxtLink
-          :to="`/account/${userData.userId}/profile`"
-          class="block w-full px-6 py-3 hover:bg-gray-200"
+          :to="`/account/${userData.id}/profile`"
+          class="block w-full px-6 py-3 hover:rounded-md hover:bg-gray-200"
         >
           <div class="flex items-center">
             <Icon name="material-symbols:manage-accounts-outline-rounded" size="24" class="mr-2" />
@@ -32,8 +32,8 @@ const { toggleWriterSettings } = uiStore
       </li>
       <li class="px-4">
         <NuxtLink
-          :to="`/account/${userData.userId}/collection`"
-          class="block w-full px-6 py-3 hover:bg-gray-200"
+          :to="`/account/${userData.id}/collection`"
+          class="block w-full px-6 py-3 hover:rounded-md hover:bg-gray-200"
         >
           <div class="flex items-center">
             <Icon name="material-symbols:bookmark-outline" size="24" class="mr-2" />
@@ -43,8 +43,8 @@ const { toggleWriterSettings } = uiStore
       </li>
       <li class="px-4">
         <NuxtLink
-          :to="`/account/${userData.userId}/following`"
-          class="block w-full px-6 py-3 hover:bg-gray-200"
+          :to="`/account/${userData.id}/following`"
+          class="block w-full px-6 py-3 hover:rounded-md hover:bg-gray-200"
         >
           <div class="flex items-center">
             <Icon name="ic:round-rss-feed" size="24" class="mr-2" />
@@ -54,8 +54,8 @@ const { toggleWriterSettings } = uiStore
       </li>
       <li class="px-4">
         <NuxtLink
-          :to="`/account/${userData.userId}/messages`"
-          class="block w-full px-6 py-3 hover:bg-gray-200"
+          :to="`/account/${userData.id}/messages`"
+          class="block w-full px-6 py-3 hover:rounded-md hover:bg-gray-200"
         >
           <div class="flex items-center">
             <Icon name="ic:baseline-mail-outline" size="24" class="mr-2" />
@@ -65,7 +65,7 @@ const { toggleWriterSettings } = uiStore
       </li>
       <li v-if="userData.role === 'writer'" class="px-4">
         <div
-          class="flex w-full cursor-pointer items-center px-6 py-3 hover:bg-gray-200"
+          class="flex w-full cursor-pointer items-center px-6 py-3 hover:rounded-md hover:bg-gray-200"
           @click="toggleWriterSettings"
         >
           <Icon name="material-symbols:clarify-outline" size="24" class="mr-2" />
@@ -85,8 +85,8 @@ const { toggleWriterSettings } = uiStore
         >
           <li class="w-full">
             <NuxtLink
-              :to="`/account/${userData.userId}/mywork`"
-              class="block px-6 py-3 hover:bg-gray-200"
+              :to="`/account/${userData.id}/mywork`"
+              class="block px-6 py-3 hover:rounded-md hover:bg-gray-200"
             >
               <div class="flex items-center">
                 <span class="ml-2 mr-4 block h-1 w-1 rounded-full bg-slate-600"></span> 文章列表
@@ -95,8 +95,8 @@ const { toggleWriterSettings } = uiStore
           </li>
           <li class="w-full">
             <NuxtLink
-              :to="`/account/${userData.userId}/progress`"
-              class="block px-6 py-3 hover:bg-gray-200"
+              :to="`/account/${userData.id}/progress`"
+              class="block px-6 py-3 hover:rounded-md hover:bg-gray-200"
             >
               <div class="flex items-center">
                 <span class="ml-2 mr-4 block h-1 w-1 rounded-full bg-slate-600"></span> 審核進度
@@ -105,8 +105,8 @@ const { toggleWriterSettings } = uiStore
           </li>
           <li class="w-full">
             <NuxtLink
-              :to="`/account/${userData.userId}/drafts`"
-              class="block px-6 py-3 hover:bg-gray-200"
+              :to="`/account/${userData.id}/drafts`"
+              class="block px-6 py-3 hover:rounded-md hover:bg-gray-200"
             >
               <div class="flex items-center">
                 <span class="ml-2 mr-4 block h-1 w-1 rounded-full bg-slate-600"></span> 我的草稿
@@ -115,8 +115,8 @@ const { toggleWriterSettings } = uiStore
           </li>
           <li class="w-full">
             <NuxtLink
-              :to="`/account/${userData.userId}/dashboard`"
-              class="block px-6 py-3 hover:bg-gray-200"
+              :to="`/account/${userData.id}/dashboard`"
+              class="block px-6 py-3 hover:rounded-md hover:bg-gray-200"
             >
               <div class="flex items-center">
                 <Icon name="material-symbols:bar-chart" size="24" class="mr-2" />
@@ -128,8 +128,8 @@ const { toggleWriterSettings } = uiStore
       </li>
       <li class="px-4">
         <NuxtLink
-          :to="`/account/${userData.userId}/myplan`"
-          class="block w-full px-6 py-3 hover:bg-gray-200"
+          :to="`/account/${userData.id}/myplan`"
+          class="block w-full px-6 py-3 hover:rounded-md hover:bg-gray-200"
         >
           <div class="flex items-center">
             <Icon name="ic:baseline-done-all" size="24" class="mr-2" />
@@ -139,8 +139,8 @@ const { toggleWriterSettings } = uiStore
       </li>
       <li class="px-4">
         <NuxtLink
-          :to="`/account/${userData.userId}/pastorders`"
-          class="block w-full px-6 py-3 hover:bg-gray-200"
+          :to="`/account/${userData.id}/pastorders`"
+          class="block w-full px-6 py-3 hover:rounded-md hover:bg-gray-200"
         >
           <div class="flex items-center">
             <Icon name="ic:outline-receipt" size="24" class="mr-2" />
@@ -166,5 +166,10 @@ const { toggleWriterSettings } = uiStore
 .accordion-enter-to,
 .accordion-leave-from {
   height: auto;
+}
+
+.router-link-active {
+  background-color: #d9d9d9;
+  border-radius: 6px;
 }
 </style>

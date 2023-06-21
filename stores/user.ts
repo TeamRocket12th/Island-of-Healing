@@ -4,34 +4,49 @@ export const useUserStore = defineStore(
     const runtimeConfig = useRuntimeConfig()
     const apiBase = runtimeConfig.public.apiBase
     const authCookie = useCookie('auth')
-    const sessionId = useCookie('sessionId')
+    const authToken = useCookie('token')
 
     const router = useRouter()
     const userData = ref({
-      userId: '',
+      email: '',
+      id: '',
       name: '',
       role: 'guest',
-      avatar: ''
+      avatar: '',
+      birthday: '',
+      myPlan: '',
+      jobTitle: '',
+      bio: ''
     })
 
     const isLogin = ref(false)
 
     const userLogin = () => {
       isLogin.value = true
-      sessionId.value = 'testSessionId'
     }
 
     const getUserInfo = (user: UserInfo) => {
-      userData.value.userId = user.uuid
-      userData.value.name = user.nickName
-      userData.value.role = user.role
-      userData.value.avatar = user.imgUrl
+      userData.value.email = user.Email
+      userData.value.id = user.Uid
+      userData.value.name = user.NickName
+      userData.value.role = user.Role
+      userData.value.avatar = user.ImgUrl
+      userData.value.birthday = user.Birthday
+      userData.value.myPlan = user.MyPlan
+      if (user.Role === 'writer') {
+        userData.value.jobTitle = user.JobTitle as string
+        userData.value.bio = user.Bio as string
+      }
+    }
+
+    const getUserToken = (token: string) => {
+      authToken.value = token
     }
 
     const userLogout = () => {
       isLogin.value = false
       authCookie.value = null
-      sessionId.value = null
+      authToken.value = null
       const router = useRouter()
       if (router.currentRoute.value.meta.requiredAuth) {
         router.replace('/login')
@@ -44,20 +59,20 @@ export const useUserStore = defineStore(
       const { data, error } = await useFetch(`${apiBase}/checkauth`, {
         method: 'POST',
         body: {
-          token: sessionId?.value
+          token: authToken?.value
         }
       })
       if (data.value) {
-        console.log('sessionId 驗證成功')
+        console.log('token 驗證成功')
       } else if (error.value) {
-        sessionId.value = null
+        authToken.value = null
         isLogin.value = false
-        console.log('session 驗證失敗')
+        console.log('token 驗證失敗')
         router.replace('/login')
       }
     }
 
-    return { isLogin, userData, userLogin, getUserInfo, userLogout, checkAuth }
+    return { isLogin, userData, userLogin, getUserInfo, getUserToken, userLogout, checkAuth }
   },
   {
     persist: true

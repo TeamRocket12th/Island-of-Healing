@@ -53,11 +53,15 @@ declare global {
 
   // 使用者資訊
   interface UserInfo {
-    uuid: string
-    nickName: string
-    email: string
-    imgUrl: string
-    role: string
+    Uid: string
+    NickName: string
+    Email: string
+    ImgUrl: string
+    Role: string
+    Birthday: string
+    MyPlan: string
+    JobTitle?: string
+    Bio?: string
   }
 
   // 作家統計資訊

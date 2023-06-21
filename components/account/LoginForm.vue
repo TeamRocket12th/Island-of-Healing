@@ -2,7 +2,7 @@
 import { useUserStore } from '~/stores/user'
 const userStore = useUserStore()
 
-const { userLogin, getUserInfo } = userStore
+const { userLogin, getUserInfo, getUserToken } = userStore
 
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
@@ -29,6 +29,7 @@ const handleLogin = async () => {
       console.log(res.data.user)
       userLogin()
       getUserInfo(res.data.user)
+      getUserToken(res.token)
       router.push('/')
     }
   } else if (error.value) {
