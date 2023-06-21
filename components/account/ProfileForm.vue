@@ -100,7 +100,7 @@ const handleInput = (event: Event) => {
             </div>
           </div>
           <VForm class="w-full px-6 pt-6 font-sans-tc">
-            <div class="mb-4">
+            <div class="mb-6">
               <label for="email" class="mb-2 block text-primary">常用信箱</label>
               <input
                 id="email"
@@ -110,8 +110,8 @@ const handleInput = (event: Event) => {
                 readonly
               />
             </div>
-            <div class="flex w-full">
-              <div class="mb-4 w-2/3 gap-4">
+            <div class="mb-6 flex w-full">
+              <div class="w-2/3 gap-4">
                 <label for="userName" class="text-primary">暱稱</label>
                 <VField
                   id="userName"
@@ -123,7 +123,7 @@ const handleInput = (event: Event) => {
                 />
                 <VErrorMessage name="userName" class="text-primary" />
               </div>
-              <div class="mb-4 w-1/3">
+              <div class="w-1/3 pl-8">
                 <label for="birthday" class="mb-2 block text-primary">生日</label>
                 <div class="w-full cursor-pointer rounded border border-primary bg-white">
                   <VDatePicker v-model="date" expanded>
@@ -148,7 +148,7 @@ const handleInput = (event: Event) => {
                 </div>
               </div>
             </div>
-            <div v-show="showInputStatus" class="mb-4">
+            <div v-show="showInputStatus" class="mb-6">
               <label for="jobTitle" class="block text-primary">頭銜</label>
               <VField
                 id="jobTitle"
@@ -159,7 +159,7 @@ const handleInput = (event: Event) => {
               />
               <VErrorMessage name="jobTitle" class="text-primary" />
             </div>
-            <div v-show="showInputStatus" class="mb-9">
+            <div v-show="showInputStatus" class="mb-11">
               <label for="userIntro" class="mb-2 block text-primary">自我介紹</label>
               <VField
                 id="userIntro"
@@ -187,7 +187,7 @@ const handleInput = (event: Event) => {
                   <nuxt-link to="/forgetpassword">重設密碼</nuxt-link>
                 </button>
               </div>
-              <div class="mb-11 flex gap-8">
+              <div class="mb-9 flex gap-8">
                 <h4 class="font-medium text-primary">訂閱管理</h4>
                 <button class="rounded border border-secondary px-2 py-[3px] text-secondary">
                   <nuxt-link to="/">變更訂閱</nuxt-link>
