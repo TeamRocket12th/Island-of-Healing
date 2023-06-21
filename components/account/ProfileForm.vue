@@ -48,7 +48,7 @@ const selectFile = (event: Event) => {
 }
 const showInputStatus = ref()
 onMounted(() => {
-  if (userData.value.role === 'writer') {
+  if (userData.value.role !== 'writer') {
     showInputStatus.value = false
   } else {
     showInputStatus.value = true
@@ -66,6 +66,14 @@ watch(inputText, (newValue: string) => {
 const handleInput = (event: Event) => {
   const text: string = (event.target as HTMLTextAreaElement).value.slice(0, maxCharacterCount)
   inputText.value = text
+}
+
+const textLengthRule = (value: string) => {
+  if (value.length >= 30 || value.length === 30) {
+    return '*自我介紹不超過30個字'
+  } else {
+    return true
+  }
 }
 </script>
 
@@ -167,7 +175,7 @@ const handleInput = (event: Event) => {
                 as="textarea"
                 label="*自我介紹"
                 maxlength="30"
-                rules="max_value:30"
+                :rules="textLengthRule"
                 rows="4"
                 class="w-full rounded border border-primary bg-white px-3 py-[6px] text-sand-300 outline-none"
                 placeholder="向其他人簡單介紹你自己吧!
