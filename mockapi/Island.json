@@ -1,5 +1,5 @@
 {
-  "uuid": "8db57b02-bb16-458d-be35-e5cd2b32bcaf",
+  "uuid": "a72822dd-d09d-4a32-9678-01a7046d43c7",
   "lastMigration": 27,
   "name": "Island",
   "endpointPrefix": "",
@@ -9,14 +9,14 @@
   "folders": [],
   "routes": [
     {
-      "uuid": "1d765a49-cc9b-415a-b403-c982fe5ff1bf",
+      "uuid": "7a0312b8-e4c4-4828-ab2b-683ef260c635",
       "type": "http",
       "documentation": "島民註冊",
       "method": "post",
       "endpoint": "signup",
       "responses": [
         {
-          "uuid": "3336a112-b9a6-4910-8cb3-b8811deec7ad",
+          "uuid": "a068b086-5171-419e-9358-70e68e43d9c8",
           "body": "{\n   \"statusCode\": 200,\n   \"message\": \"註冊成功\",\n   \"status\":\"success\",\n   \"data\": {\n       \"user\": {\n           \"id\": 1,\n           \"username\": \"島民\",\n           \"email\": \"example@mail.com\"\n       },\n       \"token\": \"jwt.token.here\"\n   }\n}\n",
           "latency": 0,
           "statusCode": 200,
@@ -48,7 +48,7 @@
           "default": false
         },
         {
-          "uuid": "fbabc12b-7f17-4723-8a5c-4b6aad6871e2",
+          "uuid": "05716fac-a1de-4a73-8792-777e2733ce7e",
           "body": "{\n   \"statusCode\": 401,\n   \"message\": \"登入失敗\",\n   \"status\":\"failed\"\n}",
           "latency": 0,
           "statusCode": 401,
@@ -69,15 +69,15 @@
       "responseMode": null
     },
     {
-      "uuid": "3d5501a8-08b5-4687-aae2-6d6fab1a42a3",
+      "uuid": "51cd1094-4062-42c3-af6e-812763e46ef9",
       "type": "http",
       "documentation": "島民登入",
       "method": "post",
       "endpoint": "login",
       "responses": [
         {
-          "uuid": "5c85581d-4399-4469-a014-a281e02036da",
-          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"登入成功\",\n   \"status\":\"success\",\n   \"data\": {\n       \"user\": {\n           \"nickName\": \"島民\",\n           \"email\": \"{{body 'account'}}\",\n           \"imgUrl\":\"https://i.pinimg.com/564x/1f/37/39/1f373917adfdf156ad811330355e4456.jpg\",\n           \"role\": \"commonUser\"\n       },\n       \"token\": \"jwt.token.here\"\n   }\n}\n",
+          "uuid": "0cc11117-bbf9-4013-9d95-07a22013721f",
+          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"登入成功\",\n   \"status\":\"success\",\n   \"data\": {\n       \"user\": {\n           \"uuid\":\"firstuser\",\n           \"nickName\": \"島民\",\n           \"email\": \"{{body 'account'}}\",\n           \"imgUrl\":\"https://i.pinimg.com/564x/1f/37/39/1f373917adfdf156ad811330355e4456.jpg\",\n           \"role\": \"commonUser\"\n       },\n       \"token\": \"jwt.token.here\"\n   }\n}\n",
           "latency": 0,
           "statusCode": 200,
           "label": "回傳一般島民登入成功",
@@ -108,8 +108,8 @@
           "default": false
         },
         {
-          "uuid": "47b3ea54-e175-4adf-b08b-942f43acf2e3",
-          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"登入成功\",\n   \"status\":\"success\",\n   \"data\": {\n       \"user\": {\n           \"nickName\": \"島民(作家)\",\n           \"email\": \"{{body 'account'}}\",\n           \"imgUrl\":\"https://avatars.githubusercontent.com/u/6178622?v=4\",\n           \"role\": \"writer\"\n       },\n       \"token\": \"jwt.token.here\"\n   }\n}",
+          "uuid": "519211bd-5fa8-41af-bd65-609a10db2697",
+          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"登入成功\",\n   \"status\":\"success\",\n   \"data\": {\n       \"user\": {\n           \"uuid\":\"firstuser\",\n           \"nickName\": \"島民(作家)\",\n           \"email\": \"{{body 'account'}}\",\n           \"imgUrl\":\"https://avatars.githubusercontent.com/u/6178622?v=4\",\n           \"role\": \"writer\"\n       },\n       \"token\": \"jwt.token.here\"\n   }\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "回傳島民作家登入成功",
@@ -140,11 +140,249 @@
           "default": false
         },
         {
-          "uuid": "36099143-f9ba-4032-9165-489c85d5b9a5",
+          "uuid": "bda84111-a6bb-41af-9e66-0e93e6d633e2",
           "body": "{\n   \"statusCode\": 401,\n   \"message\": \"登入失敗\",\n   \"status\":\"failed\"\n}",
           "latency": 0,
           "statusCode": 401,
           "label": "回傳登入失敗",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "569f4c1b-35bb-4848-8363-e37a6862e99f",
+      "type": "http",
+      "documentation": "取得追蹤作家清單",
+      "method": "get",
+      "endpoint": "account/:userid/following",
+      "responses": [
+        {
+          "uuid": "857b4d71-848b-4394-a62f-3dc616dd2309",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"1\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"2\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"3\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"4\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"5\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"6\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"7\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"8\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "取得會員個人追蹤作家清單",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "7f4f99b8-0646-4c40-bc96-164e265fc7bd",
+      "type": "http",
+      "documentation": "取得收藏文章清單",
+      "method": "get",
+      "endpoint": "account/:userid/collection",
+      "responses": [
+        {
+          "uuid": "67108e67-a279-4ff6-9bdc-115e15d64451",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\":[\n  {\n    \"id\": \"001\",\n    \"role\": \"心理諮商師\",\n    \"coverUrl\": \"https://picsum.photos/192/146\",\n    \"articleTitle\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n    \"articleSummary\": \"心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上第二步是主動尋求多元性和不同觀點。與各種不同背景和經歷的人互動，聆聽他們的故事...\",\n    \"articleDate\": \"2023-06-01\"\n  },\n  {\n    \"id\": \"002\",\n    \"role\": \"心理諮商師\",\n    \"coverUrl\": \"https://picsum.photos/192/146\",\n    \"articleTitle\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n    \"articleSummary\": \"心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上第二步是主動尋求多元性和不同觀點。與各種不同背景和經歷的人互動，聆聽他們的故事...\",\n    \"articleDate\": \"2023-06-01\"\n  },\n  {\n    \"id\": \"003\",\n    \"role\": \"心理諮商師\",\n    \"coverUrl\": \"https://picsum.photos/192/146\",\n    \"articleTitle\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n    \"articleSummary\": \"心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上第二步是主動尋求多元性和不同觀點。與各種不同背景和經歷的人互動，聆聽他們的故事...\",\n    \"articleDate\": \"2023-06-01\"\n  },\n  {\n    \"id\": \"004\",\n    \"role\": \"心理諮商師\",\n    \"coverUrl\": \"https://picsum.photos/192/146\",\n    \"articleTitle\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n    \"articleSummary\": \"心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上第二步是主動尋求多元性和不同觀點。與各種不同背景和經歷的人互動，聆聽他們的故事...\",\n    \"articleDate\": \"2023-06-01\"\n  }\n]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "取得會員個人收藏文章清單",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "1f9cc7f0-a096-4543-80db-077a34a8438e",
+      "type": "http",
+      "documentation": "取得個人站內訊息",
+      "method": "get",
+      "endpoint": "account/:userid/messages",
+      "responses": [
+        {
+          "uuid": "22cd57cb-b5ac-4b2c-a352-69e744d3a2e4",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室基哥\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 1\n    },\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室Ting\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 2\n    },\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室Nancy\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 3\n    },\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室Benson\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 4\n    },\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室Ben爸\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 5\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "取得會員個人全部站內訊息",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "07e809ce-26a4-4fb3-abfe-0f9c6476d8fa",
+      "type": "http",
+      "documentation": "取得個人歷史訂單",
+      "method": "get",
+      "endpoint": "account/:userid/pastorders",
+      "responses": [
+        {
+          "uuid": "54f62da9-a1cb-4427-bc64-36bfaf8ce867",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"orderDate\": \"2023-06-01\",\n      \"orderId\": \"14729-1-4\",\n      \"orderPlan\": \"月付\",\n      \"price\": 100,\n      \"payment\": \"信用卡\"\n    },\n    {\n      \"orderDate\": \"2023-05-27\",\n      \"orderId\": \"14729-1-3\",\n      \"orderPlan\": \"月付\",\n      \"price\": 100,\n      \"payment\": \"ATM轉帳\"\n    },\n    {\n      \"orderDate\": \"2023-04-23\",\n      \"orderId\": \"14729-1-2\",\n      \"orderPlan\": \"月付\",\n      \"price\": 100,\n      \"payment\": \"信用卡\"\n    },\n    {\n      \"orderDate\": \"2023-03-23\",\n      \"orderId\": \"14729-1-2\",\n      \"orderPlan\": \"月付\",\n      \"price\": 100,\n      \"payment\": \"信用卡\"\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "取得會員個人訂閱歷史訂單",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "70ceca47-ab39-4f82-8087-55004ec2519f",
+          "body": "{\n   \"statusCode\": 401,\n   \"message\": \"登入失敗\",\n   \"status\":\"failed\"\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "回傳取得失敗",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "bbac0cb7-8c8e-4018-9bbc-3faa907c5f5e",
+      "type": "http",
+      "documentation": "取得作家文章列表",
+      "method": "get",
+      "endpoint": "account/:userid/mywork",
+      "responses": [
+        {
+          "uuid": "f662b628-bf7e-4e75-aaa6-56a7b2028308",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"title\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n      \"publishDate\": \"2023-05-27\",\n      \"progress\": \"待審核\",\n      \"collectNum\": 324,\n      \"commentNum\": 58,\n      \"permission\": \"所有人\"\n    },\n    {\n      \"id\": 2,\n      \"title\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n      \"publishDate\": \"2023-05-27\",\n      \"progress\": \"審核中\",\n      \"collectNum\": 324,\n      \"commentNum\": 58,\n      \"permission\": \"所有人\"\n    },\n    {\n      \"id\": 3,\n      \"title\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n      \"publishDate\": \"2023-05-27\",\n      \"progress\": \"審核成功\",\n      \"collectNum\": 324,\n      \"commentNum\": 58,\n      \"permission\": \"付費會員\"\n    },\n    {\n      \"id\": 4,\n      \"title\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n      \"publishDate\": \"2023-05-27\",\n      \"progress\": \"審核成功\",\n      \"collectNum\": 324,\n      \"commentNum\": 58,\n      \"permission\": \"付費會員\"\n    },\n    {\n      \"id\": 5,\n      \"title\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n      \"publishDate\": \"2023-05-27\",\n      \"progress\": \"審核失敗\",\n      \"collectNum\": 324,\n      \"commentNum\": 58,\n      \"permission\": \"付費會員\"\n    },\n    {\n      \"id\": 6,\n      \"title\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n      \"publishDate\": \"2023-05-27\",\n      \"progress\": \"審核失敗\",\n      \"collectNum\": 324,\n      \"commentNum\": 58,\n      \"permission\": \"付費會員\"\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "取得作家自己的文章列表",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "18bd69ad-2dde-4035-8b77-4a8d0387d4b7",
+      "type": "http",
+      "documentation": "取得作家統計數據",
+      "method": "get",
+      "endpoint": "account/:userid/writerstats",
+      "responses": [
+        {
+          "uuid": "514d350e-3d43-4258-bbb5-4171211cca4c",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": {\n    \"totalFollowers\": 1590,\n    \"totalArticles\": 15,\n    \"totalCollection\": 64,\n    \"totalLikes\": 38,\n    \"totalComments\": 60,\n    \"totalInteractions\": 60,\n    \"totalClicks\": 760\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "取得作家後台統計數據",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "92e4fd3c-438f-484b-b8e2-c7530262de6d",
+      "type": "http",
+      "documentation": "確認sessionId是否有效",
+      "method": "post",
+      "endpoint": "checkauth",
+      "responses": [
+        {
+          "uuid": "8c1b65c4-d80c-46f3-a3da-2f2cdfca9864",
+          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"驗證成功\",\n   \"status\":\"success\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "驗證存在cookie的sessionId有效",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "token",
+              "value": "testSessionId",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "f9af7144-7d02-4734-babe-fbf4543a5911",
+          "body": "{\n   \"statusCode\": 401,\n   \"message\": \"驗證失敗\",\n   \"status\":\"failed\"\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "驗證存在cookie的sessionId無效",
           "headers": [],
           "bodyType": "INLINE",
           "filePath": "",
@@ -164,11 +402,39 @@
   "rootChildren": [
     {
       "type": "route",
-      "uuid": "1d765a49-cc9b-415a-b403-c982fe5ff1bf"
+      "uuid": "7a0312b8-e4c4-4828-ab2b-683ef260c635"
     },
     {
       "type": "route",
-      "uuid": "3d5501a8-08b5-4687-aae2-6d6fab1a42a3"
+      "uuid": "51cd1094-4062-42c3-af6e-812763e46ef9"
+    },
+    {
+      "type": "route",
+      "uuid": "569f4c1b-35bb-4848-8363-e37a6862e99f"
+    },
+    {
+      "type": "route",
+      "uuid": "7f4f99b8-0646-4c40-bc96-164e265fc7bd"
+    },
+    {
+      "type": "route",
+      "uuid": "1f9cc7f0-a096-4543-80db-077a34a8438e"
+    },
+    {
+      "type": "route",
+      "uuid": "07e809ce-26a4-4fb3-abfe-0f9c6476d8fa"
+    },
+    {
+      "type": "route",
+      "uuid": "bbac0cb7-8c8e-4018-9bbc-3faa907c5f5e"
+    },
+    {
+      "type": "route",
+      "uuid": "18bd69ad-2dde-4035-8b77-4a8d0387d4b7"
+    },
+    {
+      "type": "route",
+      "uuid": "92e4fd3c-438f-484b-b8e2-c7530262de6d"
     }
   ],
   "proxyMode": false,

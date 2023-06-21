@@ -5,7 +5,8 @@ definePageMeta({
   title: '審核進度',
   pageName: 'progress',
   middleware: [isWriter],
-  layout: 'userlayout'
+  layout: 'userlayout',
+  requiredAuth: true
 })
 
 const { nowPage } = usePageName()

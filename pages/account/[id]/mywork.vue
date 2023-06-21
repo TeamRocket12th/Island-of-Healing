@@ -5,7 +5,8 @@ definePageMeta({
   title: '文章列表',
   pageName: 'articleList',
   middleware: [isWriter],
-  layout: 'userlayout'
+  layout: 'userlayout',
+  requiredAuth: true
 })
 
 const { nowPage } = usePageName()

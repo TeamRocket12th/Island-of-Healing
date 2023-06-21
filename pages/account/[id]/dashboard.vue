@@ -3,7 +3,8 @@ import isWriter from '~/middleware/isWriter'
 definePageMeta({
   middleware: [isWriter],
   pageName: 'dashboard',
-  layout: 'userlayout'
+  layout: 'userlayout',
+  requiredAuth: true
 })
 
 const runtimeConfig = useRuntimeConfig()

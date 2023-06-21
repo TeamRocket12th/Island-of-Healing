@@ -4,7 +4,8 @@ import isWriter from '~/middleware/isWriter'
 definePageMeta({
   middleware: [isWriter],
   pageName: 'drafts',
-  layout: 'userlayout'
+  layout: 'userlayout',
+  requiredAuth: true
 })
 
 const { nowPage } = usePageName()
