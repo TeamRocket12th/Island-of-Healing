@@ -29,9 +29,15 @@ export const useUserStore = defineStore(
     }
 
     const userLogout = () => {
+      isLogin.value = false
       authCookie.value = null
       sessionId.value = null
-      location.reload()
+      const router = useRouter()
+      if (router.currentRoute.value.meta.requiredAuth) {
+        router.replace('/login')
+      } else {
+        location.reload()
+      }
     }
 
     const checkAuth = async () => {

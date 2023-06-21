@@ -2,7 +2,8 @@
 import FollowingList from '~/containers/FollowingList.vue'
 
 definePageMeta({
-  layout: 'userlayout'
+  layout: 'userlayout',
+  requiredAuth: true
 })
 </script>
 <template>

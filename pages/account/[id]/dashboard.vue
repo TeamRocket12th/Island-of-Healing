@@ -1,10 +1,29 @@
 <script setup lang="ts">
 import isWriter from '~/middleware/isWriter'
-
 definePageMeta({
   middleware: [isWriter],
   pageName: 'dashboard',
-  layout: 'userlayout'
+  layout: 'userlayout',
+  requiredAuth: true
+})
+
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+const route = useRoute()
+const writerStats = ref<WriterStats | null>(null)
+
+const getWriterStats = async () => {
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/account/${route.params.id}/writerstats`)
+    writerStats.value = res.data as WriterStats
+    console.log(writerStats.value)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+onMounted(() => {
+  getWriterStats()
 })
 
 const articles = [
@@ -64,7 +83,7 @@ const { nowPage } = usePageName()
   <div class="bg-white px-10 pt-10">
     <h2 class="mb-10 text-2xl font-bold">後台數據</h2>
     <div>
-      <MyDashboard />
+      <MyDashboard v-if="writerStats" :writer-stats="writerStats" />
       <div class="mb-28 pb-14">
         <MyArticleTableTab :now-page="nowPage" />
         <MyArticleTable :table-data="articles" />

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: 'userlayout'
+  layout: 'userlayout',
+  requiredAuth: true
 })
 </script>
 <template>

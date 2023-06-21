@@ -1,34 +1,8 @@
 <script setup lang="ts">
-const pastorders = [
-  {
-    orderDate: '2023-06-01',
-    orderId: '1472120066442107-1-4',
-    orderPlan: '月付',
-    price: 100,
-    payment: '信用卡'
-  },
-  {
-    orderDate: '2023-05-27',
-    orderId: '1472120066442107-1-3',
-    orderPlan: '月付',
-    price: 100,
-    payment: 'ATM轉帳'
-  },
-  {
-    orderDate: '2023-04-23',
-    orderId: '1472120066442107-1-2',
-    orderPlan: '月付',
-    price: 100,
-    payment: '信用卡'
-  },
-  {
-    orderDate: '2023-03-23',
-    orderId: '1472120066442107-1-2',
-    orderPlan: '月付',
-    price: 100,
-    payment: '信用卡'
-  }
-]
+const { data: pastorders, error } = getMockData<PastOrder>('pastorders')
+if (error.value) {
+  console.error('Error fetching data: ', error.value)
+}
 </script>
 <template>
   <div class="bg-white p-10">

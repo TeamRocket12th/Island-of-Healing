@@ -1,9 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { LineChart } from 'echarts/charts'
 import { TitleComponent, TooltipComponent, LegendComponent } from 'echarts/components'
 import VChart from 'vue-echarts'
+
+defineProps({
+  writerStats: {
+    type: Object as () => WriterStats,
+    required: true
+  }
+})
+
 use([CanvasRenderer, LineChart, TitleComponent, TooltipComponent, LegendComponent])
 
 const option = ref({
@@ -27,8 +35,14 @@ const option = ref({
 <template>
   <div class="grid grid-cols-12 gap-7">
     <div class="col-span-6 border border-[#D9D9D9] pb-3">
-      <client-only>
+      <div class="flex justify-between">
         <p class="ml-3 text-4xl font-medium leading-normal">2023年</p>
+        <div class="flex flex-col items-center">
+          <span>總人數</span>
+          <span class="text-2xl font-medium">{{ writerStats.totalFollowers }}人</span>
+        </div>
+      </div>
+      <client-only>
         <v-chart class="chart" :option="option" />
       </client-only>
     </div>
@@ -97,12 +111,12 @@ const option = ref({
           </thead>
           <tbody>
             <tr>
-              <td class="py-3">15</td>
-              <td class="py-3">64</td>
-              <td class="py-3">38</td>
-              <td class="py-3">54</td>
-              <td class="py-3">45</td>
-              <td class="py-3">760</td>
+              <td class="py-3">{{ writerStats.totalArticles }}</td>
+              <td class="py-3">{{ writerStats.totalCollection }}</td>
+              <td class="py-3">{{ writerStats.totalLikes }}</td>
+              <td class="py-3">{{ writerStats.totalComments }}</td>
+              <td class="py-3">{{ writerStats.totalInteractions }}</td>
+              <td class="py-3">{{ writerStats.totalClicks }}</td>
             </tr>
           </tbody>
         </table>

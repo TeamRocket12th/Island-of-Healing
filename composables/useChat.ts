@@ -1,4 +1,3 @@
-// repositories/chat.js
 export const getAnswer = async ({ messages }: { messages: AllMessages }) => {
   try {
     const { body } = await fetch('/api/chatgpt', {

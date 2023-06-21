@@ -2,7 +2,8 @@
 import CollectionList from '~/containers/CollectionList.vue'
 
 definePageMeta({
-  layout: 'userlayout'
+  layout: 'userlayout',
+  requiredAuth: true
 })
 </script>
 <template>
