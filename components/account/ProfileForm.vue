@@ -44,7 +44,6 @@ const selectFile = (event: Event) => {
       selectedImage.value = reader.result as string
     }
     reader.readAsDataURL(file)
-    // console.log(reader)
   }
 }
 const showInputStatus = ref()
@@ -190,7 +189,7 @@ const handleInput = (event: Event) => {
               <div class="mb-9 flex gap-8">
                 <h4 class="font-medium text-primary">訂閱管理</h4>
                 <button class="rounded border border-secondary px-2 py-[3px] text-secondary">
-                  <nuxt-link to="/">變更訂閱</nuxt-link>
+                  <nuxt-link to="/account/{userData.userId}/myplan">變更訂閱</nuxt-link>
                 </button>
               </div>
             </div>
