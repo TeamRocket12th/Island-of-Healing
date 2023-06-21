@@ -9,10 +9,7 @@ const apiBase = runtimeConfig.public.apiBase
 
 const router = useRouter()
 
-interface UserResponse {
-  [key: string]: any
-}
-let res: UserResponse = {}
+let res: ApiResponse = {}
 
 const user = reactive({
   account: 'user@mail.com',

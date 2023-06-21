@@ -1,56 +1,12 @@
 <script setup lang="ts">
-interface Message {
-  userAcount: string
-  image: string
-  name: string
-  canMessage: string
-  date: string
-  id: number
+const { data: messages, error } = getMockData<Message>('messages')
+
+if (error.value) {
+  console.error('Error fetching data: ', error.value)
 }
-const messages: Message[] = [
-  {
-    userAcount: 'mou12345',
-    image: '',
-    name: '告解室基哥',
-    canMessage: '哈囉，我們是好物研究社團隊...',
-    date: '5月25日',
-    id: 1
-  },
-  {
-    userAcount: 'mou12345',
-    image: '',
-    name: '告解室Ting',
-    canMessage: '哈囉，我們是好物研究社團隊...',
-    date: '5月25日',
-    id: 2
-  },
-  {
-    userAcount: 'mou12345',
-    image: '',
-    name: '告解室Nancy',
-    canMessage: '哈囉，我們是好物研究社團隊...',
-    date: '5月25日',
-    id: 3
-  },
-  {
-    userAcount: 'mou12345',
-    image: '',
-    name: '告解室Benson',
-    canMessage: '哈囉，我們是好物研究社團隊...',
-    date: '5月25日',
-    id: 4
-  },
-  {
-    userAcount: 'mou12345',
-    image: '',
-    name: '告解室Ben爸',
-    canMessage: '哈囉，我們是好物研究社團隊...',
-    date: '5月25日',
-    id: 5
-  }
-]
+
 const messageId = ref(1)
-function renderMessage(message: Message): void {
+const renderMessage = (message: Message) => {
   messageId.value = message.id
 }
 </script>
@@ -67,7 +23,9 @@ function renderMessage(message: Message): void {
           @mousedown="renderMessage(message)"
         >
           <div class="flex py-3">
-            <div class="h-[48px] w-[48px] rounded-full bg-[#D9D9D9]"></div>
+            <div class="h-[48px] w-[48px] overflow-hidden rounded-full">
+              <img :src="message.imgUrl" alt="avatar" />
+            </div>
             <div class="ml-2 w-[85%]">
               <div class="flex justify-between">
                 <h3 class="font-bold">{{ message.name }}</h3>

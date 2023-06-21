@@ -67,7 +67,8 @@ defineProps({
               <input type="checkbox" class="mt-1 h-4 w-4 cursor-pointer" />
             </td>
             <td class="w-[31%] py-[10px]">{{ item.title }}</td>
-            <td class="w-[14%] py-[10px]">{{ item.progress }}</td>
+            <td v-if="nowPage === 'progress'" class="w-[14%] py-[10px]">{{ item.progress }}</td>
+            <td v-else class="w-[14%] py-[10px]">-</td>
             <td class="w-[14%] py-[10px]">{{ item.publishDate }}</td>
             <td class="w-[14%] py-[10px]">{{ item.permission }}</td>
             <td class="w-[17%] py-[10px]">
