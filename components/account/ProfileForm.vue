@@ -46,27 +46,14 @@ const selectFile = (event: Event) => {
     reader.readAsDataURL(file)
   }
 }
-const showInputStatus = ref()
-onMounted(() => {
-  if (userData.value.role !== 'writer') {
-    showInputStatus.value = false
-  } else {
-    showInputStatus.value = true
-  }
-})
 
-const inputText: Ref<string> = ref('')
+const inputText = ref<string>('')
 const maxCharacterCount = 30
-const characterCount: Ref<string> = ref(`(${inputText.value.length}/${maxCharacterCount})`)
+const characterCount = ref<string>(`(${inputText.value.length}/${maxCharacterCount})`)
 
 watch(inputText, (newValue: string) => {
   characterCount.value = `(${newValue.length}/${maxCharacterCount})`
 })
-
-const handleInput = (event: Event) => {
-  const text: string = (event.target as HTMLTextAreaElement).value.slice(0, maxCharacterCount)
-  inputText.value = text
-}
 
 const textLengthRule = (value: string) => {
   if (value.length >= 30 || value.length === 30) {
@@ -155,7 +142,7 @@ const textLengthRule = (value: string) => {
                 </div>
               </div>
             </div>
-            <div v-show="showInputStatus" class="mb-6">
+            <div v-if="userData.role === 'writer'" class="mb-6">
               <label for="jobTitle" class="block text-primary">頭銜</label>
               <VField
                 id="jobTitle"
@@ -166,7 +153,7 @@ const textLengthRule = (value: string) => {
               />
               <VErrorMessage name="jobTitle" class="text-primary" />
             </div>
-            <div v-show="showInputStatus" class="mb-11">
+            <div v-if="userData.role === 'writer'" class="mb-11">
               <label for="userIntro" class="mb-2 block text-primary">自我介紹</label>
               <VField
                 id="userIntro"
@@ -180,7 +167,6 @@ const textLengthRule = (value: string) => {
                 class="w-full rounded border border-primary bg-white px-3 py-[6px] text-sand-300 outline-none"
                 placeholder="向其他人簡單介紹你自己吧!
 可以分享你的創作理念、寫作方向，建議 20-30 字為佳！"
-                @input="handleInput"
               />
               <div class="relative flex">
                 <VErrorMessage name="userIntro" class="text-primary" />
@@ -190,15 +176,19 @@ const textLengthRule = (value: string) => {
             <div>
               <div class="mb-[27px] flex gap-8">
                 <h4 class="font-medium text-primary">重置密碼</h4>
-                <button class="rounded border border-secondary px-2 py-[3px] text-secondary">
-                  <nuxt-link to="/forgetpassword">重設密碼</nuxt-link>
-                </button>
+                <nuxt-link
+                  to="/forgetpassword"
+                  class="rounded border border-secondary px-2 py-[3px] text-secondary"
+                  >重設密碼</nuxt-link
+                >
               </div>
               <div class="mb-9 flex gap-8">
                 <h4 class="font-medium text-primary">訂閱管理</h4>
-                <button class="rounded border border-secondary px-2 py-[3px] text-secondary">
-                  <nuxt-link to="/account/{userData.userId}/myplan">變更訂閱</nuxt-link>
-                </button>
+                <nuxt-link
+                  to="/account/{userData.userId}/myplan"
+                  class="rounded border border-secondary px-2 py-[3px] text-secondary"
+                  >變更訂閱</nuxt-link
+                >
               </div>
             </div>
             <div class="mb-16 flex w-full justify-end">
