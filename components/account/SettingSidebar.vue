@@ -128,17 +128,6 @@ const { toggleWriterSettings } = uiStore
       </li>
       <li class="px-4">
         <NuxtLink
-          :to="`/account/${userData.id}/myplan`"
-          class="block w-full px-6 py-3 hover:rounded-md hover:bg-gray-200"
-        >
-          <div class="flex items-center">
-            <Icon name="ic:baseline-done-all" size="24" class="mr-2" />
-            <span>訂閱管理</span>
-          </div>
-        </NuxtLink>
-      </li>
-      <li class="px-4">
-        <NuxtLink
           :to="`/account/${userData.id}/pastorders`"
           class="block w-full px-6 py-3 hover:rounded-md hover:bg-gray-200"
         >
@@ -153,21 +142,6 @@ const { toggleWriterSettings } = uiStore
 </template>
 
 <style scoped>
-.accordion-enter-active {
-  transition: height 0.3s ease-in-out;
-}
-.accordion-leave-active {
-  transition: height 0.3s ease-in-out;
-}
-.accordion-enter-from,
-.accordion-leave-to {
-  height: 0;
-}
-.accordion-enter-to,
-.accordion-leave-from {
-  height: auto;
-}
-
 .router-link-active {
   background-color: #d9d9d9;
   border-radius: 6px;

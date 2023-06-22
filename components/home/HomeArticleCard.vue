@@ -1,65 +1,79 @@
 <script setup>
-const data = [
+const articles = [
   {
-    type: '情緒察覺',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    description:
+    id: 1,
+    type: '個人成長',
+    title: '重建內在力量：創傷後的成長與自我照顧的關鍵',
+    imgUrl: 'https://picsum.photos/408/247',
+    content:
       '心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上有一定的限度，所以在某些情境下會難以理性及有...'
   },
   {
-    type: '情緒察覺',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    description:
-      '心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上有一定的限度，所以在某些情境下會難以理性及有...'
+    id: 2,
+    type: '日常練習',
+    title: '走出情緒低潮：五個簡單行動陪你重拾積極心態',
+    imgUrl: 'https://picsum.photos/408/247',
+    content:
+      '在生活的旅途中，我們都會遇到情緒低潮的時刻。這些時刻讓我們感到沮喪、無助和失去方向。然而，我們並不孤單，而是有許多簡單而有效的方法可以幫助我們走出情緒低潮，重拾積極心態。'
   },
   {
+    id: 3,
     type: '情緒察覺',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    description:
-      '心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上有一定的限度，所以在某些情境下會難以理性及有...'
+    title: '靜心與自我觀察：放鬆心靈的四個方法面對過度思考',
+    imgUrl: 'https://picsum.photos/408/247',
+    content:
+      '在這個繁忙的現代生活中，我們往往被過度思考和內心的嘈雜聲所困擾。這些思緒無法停止地盤旋在我們的頭腦中，造成焦慮和壓力。'
   }
 ]
 </script>
 <template>
-  <section class="container">
-    <div class="mb-[296px] border-r">
-      <h2 class="border-l border-t py-9 pl-4">精選文章</h2>
-      <ul class="flex border-b border-t">
-        <li v-for="(item, index) in data" :key="index" class="w-1/3 border-l px-4 py-4">
-          <div>
-            <div class="relative mb-2 h-[247px] bg-[#CDCDCD]">
-              <Icon
-                name="material-symbols:favorite-outline-rounded"
-                size="24"
-                class="absolute right-0 top-0 mr-3 mt-3"
-              />
-            </div>
-          </div>
-          <div>
-            <div class="mb-2 flex">
-              <div class="flex w-[20%] items-center justify-center bg-[#CDCDCD]">
-                <span class="text-sm">{{ item.type }}</span>
+  <section class="bg-sand-100 py-[84px] sm:bg-sand-200">
+    <div class="container">
+      <div class="mb-6 flex items-center gap-4 px-4">
+        <h2 class="font-serif-tc text-4xl font-bold text-primary">精選文章</h2>
+        <div class="h-[0.5px] w-[150px] bg-primary"></div>
+      </div>
+      <ul class="mb-3 grid-cols-12 sm:grid">
+        <li v-for="article in articles" :key="article.id" class="col-span-4 h-[460px] p-4">
+          <NuxtLink :to="`/article/${article.id}`">
+            <div class="relative">
+              <div class="mb-2">
+                <img :src="article.imgUrl" alt="article-cover" class="w-full" />
               </div>
-              <p class="w-[80%] pl-2">{{ item.title }}</p>
+              <span
+                class="absolute top-0 h-8 w-[74px] bg-assistant p-1 font-serif-tc font-semibold text-sand-100"
+                >{{ article.type }}</span
+              >
             </div>
-            <p>
-              {{ item.description }}
-            </p>
-            <div class="flex justify-end gap-2">
-              <div class="flex h-9 w-9 items-center justify-center rounded-full bg-[#CDCDCD]">
-                <Icon name="material-symbols:bookmark-outline-rounded" size="16" />
+            <div>
+              <div class="mb-2 flex">
+                <p class="mb-3 font-serif-tc text-xl font-bold text-primary">
+                  {{ article.title }}
+                </p>
               </div>
-              <div class="flex h-9 w-9 items-center justify-center rounded-full bg-[#CDCDCD]">
-                <Icon name="mdi:share-variant-outline" size="16" />
-              </div>
+              <p class="font-light text-primary-dark">
+                {{ article.content }}
+              </p>
             </div>
-          </div>
+          </NuxtLink>
         </li>
       </ul>
-      <div class="flex justify-center border-b border-l py-9">
-        <p>閱讀更多</p>
-        <Icon name="ic:round-chevron-right" size="24" />
-      </div>
+      <NuxtLink to="/article" class="font-serif-tc text-xl font-semibold text-primary">
+        <div class="flex items-center justify-center">
+          <span class="border-b border-primary">閱讀更多</span>
+          <Icon name="ic:outline-keyboard-arrow-right" size="24" />
+        </div>
+      </NuxtLink>
     </div>
   </section>
 </template>
+<style scoped>
+@media (min-width: 640px) {
+  li:first-child {
+    border-right: 0.5px solid #4e2a09;
+  }
+  li:last-child {
+    border-left: 0.5px solid #4e2a09;
+  }
+}
+</style>

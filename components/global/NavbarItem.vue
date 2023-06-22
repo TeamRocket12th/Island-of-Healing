@@ -10,103 +10,296 @@ const showCategory = ref(false)
 const toggleshowCategory = () => {
   showCategory.value = !showCategory.value
 }
+
+const showMobileMenu = ref(false)
+const toggleMobileMenu = () => {
+  showMobileMenu.value = !showMobileMenu.value
+  if (showMobileMenu.value) {
+    document.body.classList.add('no-scroll')
+  } else {
+    document.body.classList.remove('no-scroll')
+  }
+  if (showMobileCategory.value) {
+    showMobileCategory.value = !showMobileCategory.value
+  }
+}
+
+const showMobileCategory = ref(false)
+const toggleMobileCategory = () => {
+  showMobileCategory.value = !showMobileCategory.value
+}
 </script>
 
 <template>
-  <header class="bg-[#CDCDCD]">
-    <div class="container">
-      <nav class="relative flex h-14 items-center justify-between">
-        <h1>
-          <NuxtLink to="/" class="font-serif-tc text-2xl font-bold">小島聊癒所</NuxtLink>
-        </h1>
-        <ul class="flex items-center gap-6 text-xl font-medium">
-          <li>
-            <button @click="toggleshowCategory">
-              精選文章 <Icon name="ic:round-arrow-drop-down" size="24" />
-            </button>
-            <ul
-              v-if="showCategory"
-              class="absolute top-full z-10 w-36 whitespace-nowrap border border-[#CDCDCD] bg-white font-normal"
-            >
-              <li>
-                <RouterLink to="/" class="block w-full border-b border-[#CDCDCD] p-[10px]"
-                  >個人成長</RouterLink
-                >
-              </li>
-              <li>
-                <RouterLink to="/" class="block w-full border-b border-[#CDCDCD] p-[10px]"
-                  >情緒覺察</RouterLink
-                >
-              </li>
-              <li>
-                <RouterLink to="/" class="block w-full border-b border-[#CDCDCD] p-[10px]"
-                  >親密關係</RouterLink
-                >
-              </li>
-              <li>
-                <RouterLink to="/" class="block w-full p-[10px]">日常練習</RouterLink>
-              </li>
-            </ul>
+  <header>
+    <nav class="bg-secondary">
+      <div class="container flex h-14 items-center justify-between">
+        <p class="font-serif-tc font-medium text-sand-100">提供心靈療癒的庇護所</p>
+        <ul class="hidden items-center gap-6 sm:flex">
+          <li v-if="!isLogin">
+            <NuxtLink to="/login" class="font-serif-tc font-bold text-sand-100">登入</NuxtLink>
           </li>
-          <li><NuxtLink to="/chatroom">AI告解室</NuxtLink></li>
-          <li><NuxtLink to="/">留言板</NuxtLink></li>
-          <li><NuxtLink to="/plans">訂閱方案</NuxtLink></li>
+          <li v-if="!isLogin">
+            <NuxtLink
+              to="/signup"
+              class="rounded bg-sand-100 px-2 py-1 font-serif-tc font-bold text-primary"
+              >註冊</NuxtLink
+            >
+          </li>
           <li v-if="isLogin">
             <div class="dropdown-end dropdown">
-              <label tabindex="0" class="btn-ghost btn-circle avatar btn">
-                <div class="h-9 w-9 rounded-full">
+              <label tabindex="0" class="btn-ghost btn-circle avatar btn flex w-20 items-center">
+                <div class="h-9 w-9 overflow-hidden rounded-full">
                   <img :src="userData.avatar" />
                 </div>
+                <span class="block">
+                  <Icon name="ic:outline-arrow-drop-down" size="24" class="text-sand-100"
+                /></span>
               </label>
+
               <ul
                 tabindex="0"
-                class="dropdown-content menu rounded-box relative top-[105%] z-10 w-52 bg-base-100 p-2 text-base shadow"
+                class="dropdown-content menu rounded-box relative top-[110%] z-10 w-52 bg-base-100 p-2 font-serif-tc text-base shadow"
               >
-                <li>
-                  <NuxtLink :to="`/account/${userData.userId}/profile`" class="cursor-pointer"
-                    >會員設定</NuxtLink
+                <li class="text-primary hover:bg-secondary hover:text-sand-100">
+                  <NuxtLink :to="`/account/${userData.id}/profile`" class="font-medium">
+                    <Icon
+                      name="material-symbols:manage-accounts-outline-rounded"
+                      size="24"
+                      class="mr-2"
+                    />
+                    <span>會員設定</span>
+                  </NuxtLink>
+                </li>
+                <li class="text-primary hover:bg-secondary hover:text-sand-100">
+                  <NuxtLink :to="`/account/${userData.id}/collection`" class="font-medium">
+                    <Icon name="material-symbols:bookmark-outline" size="24" class="mr-2" />
+                    <span>我的收藏</span>
+                  </NuxtLink>
+                </li>
+                <li class="text-primary hover:bg-secondary hover:text-sand-100">
+                  <NuxtLink :to="`/account/${userData.id}/following`" class="font-medium">
+                    <Icon name="ic:round-rss-feed" size="24" class="mr-2" />
+                    <span>我的追蹤</span></NuxtLink
                   >
                 </li>
-                <li>
-                  <NuxtLink :to="`/account/${userData.userId}/collection`" class="cursor-pointer"
-                    >我的收藏</NuxtLink
-                  >
+                <li class="text-primary hover:bg-secondary hover:text-sand-100">
+                  <NuxtLink :to="`/account/${userData.id}/messages`" class="font-medium">
+                    <Icon name="ic:baseline-mail-outline" size="24" class="mr-2" />
+                    <span>我的訊息</span>
+                  </NuxtLink>
                 </li>
-                <li>
-                  <NuxtLink :to="`/account/${userData.userId}/following`" class="cursor-pointer"
-                    >我的追蹤</NuxtLink
-                  >
+                <li
+                  v-if="userData.role === 'writer'"
+                  class="text-primary hover:bg-secondary hover:text-sand-100"
+                >
+                  <NuxtLink :to="`/account/${userData.id}/mywork`" class="font-medium">
+                    <Icon name="material-symbols:clarify-outline" size="24" class="mr-2" />
+                    <span>我的文章</span>
+                  </NuxtLink>
                 </li>
-                <li>
-                  <NuxtLink :to="`/account/${userData.userId}/messages`" class="cursor-pointer"
-                    >我的訊息</NuxtLink
+                <li class="text-primary">
+                  <NuxtLink
+                    :to="`/account/${userData.id}/pastorders`"
+                    class="font-medium hover:bg-secondary hover:text-sand-100"
                   >
+                    <Icon name="ic:outline-receipt" size="24" class="mr-2" />
+                    <span>歷史訂單</span>
+                  </NuxtLink>
                 </li>
-                <li v-if="userData.role === 'writer'">
-                  <NuxtLink :to="`/account/${userData.userId}/mywork`" class="cursor-pointer"
-                    >我的文章</NuxtLink
-                  >
-                </li>
-                <li>
-                  <NuxtLink :to="`/account/${userData.userId}/myplan`" class="cursor-pointer"
-                    >訂閱管理</NuxtLink
-                  >
-                </li>
-                <li>
-                  <NuxtLink :to="`/account/${userData.userId}/pastorders`" class="cursor-pointer"
-                    >歷史訂單</NuxtLink
-                  >
-                </li>
-                <li>
-                  <button type="button" @click="userLogout">登出</button>
+                <li class="text-primary hover:bg-secondary hover:text-sand-100">
+                  <button class="flex items-center" @click="userLogout">
+                    <Icon name="ic:outline-logout" size="24" class="mr-2" />
+                    <span class="font-medium">登出</span>
+                  </button>
                 </li>
               </ul>
             </div>
           </li>
-          <li v-if="!isLogin"><NuxtLink to="/login">登入</NuxtLink></li>
-          <li v-if="!isLogin"><NuxtLink to="/signup">註冊</NuxtLink></li>
         </ul>
-      </nav>
+      </div>
+    </nav>
+    <div class="relative h-20 bg-sand-100 sm:h-[142px] sm:py-5">
+      <div class="container">
+        <div class="relative py-4 sm:py-0">
+          <h1 class="mb-3 text-left sm:text-center">
+            <NuxtLink
+              to="/"
+              class="font-serif-tc text-3xl-plus font-bold text-primary sm:text-4xl-plus"
+              >小島聊癒所</NuxtLink
+            >
+          </h1>
+          <span class="absolute right-0 top-1/4 z-10 sm:hidden" @click="toggleMobileMenu"
+            ><Icon name="ic:outline-menu" size="32"
+          /></span>
+        </div>
+        <ul class="hidden items-center justify-center gap-4 font-serif-tc sm:flex">
+          <li class="relative text-xl font-semibold leading-normal text-primary">
+            <button @click="toggleshowCategory">精選文章</button>
+            <ul
+              v-if="showCategory"
+              class="absolute -left-20 top-[167%] z-10 w-[164px] whitespace-nowrap border border-primary bg-white font-normal"
+              @click="toggleshowCategory"
+            >
+              <li>
+                <RouterLink
+                  to="/"
+                  class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
+                  >個人成長</RouterLink
+                >
+              </li>
+              <li>
+                <RouterLink
+                  to="/"
+                  class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
+                  >情緒察覺</RouterLink
+                >
+              </li>
+              <li>
+                <RouterLink
+                  to="/"
+                  class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
+                  >親密關係</RouterLink
+                >
+              </li>
+              <li>
+                <RouterLink
+                  to="/"
+                  class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
+                  >日常練習</RouterLink
+                >
+              </li>
+              <li>
+                <RouterLink
+                  to="/article"
+                  class="block w-full bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
+                  >所有文章</RouterLink
+                >
+              </li>
+            </ul>
+          </li>
+          <span class="flex items-center font-serif-tc text-xl font-semibold">·</span>
+          <li>
+            <NuxtLink to="/chatroom" class="text-xl font-semibold leading-normal text-primary"
+              >AI告解室</NuxtLink
+            >
+          </li>
+          <span class="flex items-center font-serif-tc text-xl font-semibold">·</span>
+          <li>
+            <NuxtLink to="/" class="text-xl font-semibold text-primary" leading-normal
+              >論壇</NuxtLink
+            >
+          </li>
+          <span class="flex items-center font-serif-tc text-xl font-semibold">·</span>
+          <li>
+            <NuxtLink to="/plans" class="text-xl font-semibold leading-normal text-primary"
+              >訂閱方案</NuxtLink
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      v-if="showMobileMenu"
+      class="absolute top-[56px] z-10 min-h-screen w-screen bg-sand-100 px-4 opacity-90 sm:hidden"
+    >
+      <span class="block text-right" @click="toggleMobileMenu"
+        ><Icon name="ic:outline-close" size="32" class="my-6 text-primary" />
+      </span>
+      <SearchInput class="mb-3" />
+      <ul>
+        <li class="pt-5">
+          <div
+            class="flex items-center justify-between border-b border-primary pb-5"
+            @click="toggleMobileCategory"
+          >
+            <p class="font-serif-tc font-semibold text-primary">精選文章</p>
+            <Icon
+              name="ic:outline-expand-more"
+              size="24"
+              class="duration-200"
+              :class="{ 'rotate-180': showMobileCategory }"
+            />
+          </div>
+          <ul
+            class="overflow-hidden transition-all duration-500"
+            :class="showMobileCategory ? 'max-h-96' : 'max-h-0'"
+          >
+            <li class="border-b border-primary">
+              <NuxtLink
+                to="/article"
+                class="block py-5 font-serif-tc font-semibold text-primary"
+                @click="toggleMobileMenu"
+                >個人成長</NuxtLink
+              >
+            </li>
+            <li class="border-b border-primary">
+              <NuxtLink
+                to="/article"
+                class="block py-5 font-serif-tc font-semibold text-primary"
+                @click="toggleMobileMenu"
+                >情緒察覺</NuxtLink
+              >
+            </li>
+            <li class="border-b border-primary">
+              <NuxtLink
+                to="/article"
+                class="block py-5 font-serif-tc font-semibold text-primary"
+                @click="toggleMobileMenu"
+                >親密關係</NuxtLink
+              >
+            </li>
+            <li class="border-b border-primary">
+              <NuxtLink
+                to="/article"
+                class="block py-5 font-serif-tc font-semibold text-primary"
+                @click="toggleMobileMenu"
+                >日常練習</NuxtLink
+              >
+            </li>
+            <li class="border-b border-primary">
+              <NuxtLink
+                to="/article"
+                class="block py-5 font-serif-tc font-semibold text-primary"
+                @click="toggleMobileMenu"
+                >所有文章</NuxtLink
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="border-b border-primary">
+          <NuxtLink
+            to="/chatroom"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="toggleMobileMenu"
+            >AI告解室</NuxtLink
+          >
+        </li>
+        <li class="border-b border-primary">
+          <NuxtLink
+            to="/chatroom"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="toggleMobileMenu"
+            >論壇</NuxtLink
+          >
+        </li>
+        <li class="border-b border-primary">
+          <NuxtLink
+            to="/plans"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="toggleMobileMenu"
+            >訂閱方案</NuxtLink
+          >
+        </li>
+        <li class="border-b border-primary">
+          <NuxtLink
+            to="/login"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="toggleMobileMenu"
+            >登入/註冊</NuxtLink
+          >
+        </li>
+      </ul>
     </div>
   </header>
 </template>

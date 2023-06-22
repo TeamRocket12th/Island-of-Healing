@@ -1,94 +1,102 @@
 <script setup>
 const data = [
   {
+    id: 1,
     Classification: '個人成長',
     date: '2023.6.31',
-    title: '一起面對並再次茁壯！創傷後成長的 5 種面向',
+    title: '重拾自我價值：探索內在的力量',
     content:
-      '心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上有一定的限度，所以在某些情境下會難以理性及有邏輯的判斷事件並做出決定。',
-    img: ''
+      '在這個忙碌、要求和競爭的世界中，我們常常忽略了最重要的一個人──自己。愛自己並不是自私或自戀，而是一種對自己的尊重和關懷。當我們學會愛自己時，我們能夠建立健康的自尊心、提高生活質量',
+    imgUrl: 'https://picsum.photos/392/247'
   },
   {
+    id: 2,
     Classification: '情緒察覺',
     date: '2023.6.30',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
+    title: '認識自我與擁抱內在小孩的旅程',
     content:
-      '心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上有一定的限度，所以在某些情境下會難以理性及有邏輯的判斷事件並做出決定。',
-    img: ''
+      '人生是一個不斷成長和發展的旅程，而認識自我是這個旅程中至關重要的一部分。我們每個人都有一個內在的小孩，那個純真、好奇和無憂無慮的自己。',
+    imgUrl: 'https://picsum.photos/392/247'
   },
   {
+    id: 3,
     Classification: '親密關係',
     date: '2023.6.30',
-    title: '面對不健康家庭關係，讓自己更好過的 5 個調適方式',
+    title: '別離與成長：好好道別的力量',
     content:
-      '心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上有一定的限度，所以在某些情境下會難以理性及有邏輯的判斷事件並做出決定。',
-    img: ''
+      '在人生的旅程中，我們常常面對各種離別和告別。不論是和摯愛的人分手、離開一個熟悉的環境，或是告別已逝的親友，說再見總是一個不可避免的過程。然而，我們可以選擇以一種全新的角度來看待這些告別，並學會好好說再見。',
+    imgUrl: 'https://picsum.photos/392/247'
   },
   {
-    Classification: '情緒察覺',
-    date: '2023.6.20',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    content:
-      '心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上有一定的限度，所以在某些情境下會難以理性及有邏輯的判斷事件並做出決定。',
-    img: ''
-  },
-  {
+    id: 4,
     Classification: '個人成長',
-    date: '2023.5.30',
-    title: '一起面對並再次茁壯！創傷後成長的 5 種面向',
+    date: '2023.6.20',
+    title: '獨處的力量：發現內在寧靜與成長的時刻',
     content:
-      '心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上有一定的限度，所以在某些情境下會難以理性及有邏輯的判斷事件並做出決定。',
-    img: ''
+      '在人生的旅程中，我們常常面對各種離別和告別。不論是和摯愛的人分手、離開一個熟悉的環境，或是告別已逝的親友，說再見總是一個不可避免的過程。然而，我們可以選擇以一種全新的角度來看待這些告別，並學會好好說再見。',
+    imgUrl: 'https://picsum.photos/392/247'
   },
   {
+    id: 5,
     Classification: '親密關係',
-    date: '2023.6.19',
-    title: '面對不健康家庭關係，讓自己更好過的 5 個調適方式',
+    date: '2023.5.30',
+    title: '擺脫不健康的家庭關係，重塑心理平衡的五個關鍵方法',
     content:
-      '心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上有一定的限度，所以在某些情境下會難以理性及有邏輯的判斷事件並做出決定。',
-    img: ''
+      '家庭關係對我們的心理健康和幸福感有著深遠的影響。然而，有時候我們可能陷入不健康的家庭關係中，這可能帶來壓力、焦慮和情緒困擾。',
+    imgUrl: 'https://picsum.photos/392/247'
+  },
+  {
+    id: 6,
+    Classification: '日常練習',
+    date: '2023.6.19',
+    title: '照顧身心的力量：分享三個簡單的實踐方法',
+    content:
+      '在現代快節奏的生活中，照顧好我們的身心健康變得至關重要。無論是面對工作壓力、人際關係或其他挑戰，學會照顧自己的身心可以幫助我們保持平衡、增強抵抗力，並享受更充實的生活。',
+    imgUrl: 'https://picsum.photos/392/247'
   }
 ]
 </script>
 <template>
   <section class="container mb-6">
-    <div class="mb-4 flex items-center justify-between">
-      <h2 class="text-[24px] font-bold">最新文章</h2>
-      <SearchInput />
+    <div class="mb-6 flex items-center justify-between px-4">
+      <div class="flex items-center gap-2">
+        <h2 class="font-serif-tc text-4xl font-bold text-primary">最新文章</h2>
+        <div class="h-[0.5px] w-[150px] bg-primary"></div>
+      </div>
+      <SearchInput class="hidden sm:block" />
     </div>
-    <ul class="flex flex-wrap gap-4">
+    <ul class="mb-3 gap-4 sm:grid sm:grid-cols-12">
       <li
-        v-for="(item, index) in data"
-        :key="index"
-        class="flex h-[500px] w-[30%] grow flex-col border p-4 shadow-md"
+        v-for="item in data"
+        :key="item.id"
+        class="mb-3 flex h-auto grow flex-col p-4 sm:h-[517px] md:col-span-6 lg:col-span-4"
       >
-        <div class="mb-7 flex w-full justify-between">
+        <div class="flex w-full justify-between">
           <div class="flex flex-col">
             <div class="mb-1 flex">
-              <h4 class="font-bold">{{ item.Classification }}</h4>
+              <h3 class="font-serif-tc font-semibold text-primary">{{ item.Classification }}</h3>
             </div>
-            <p class="text-[12px] text-[#828282]">{{ item.date }}</p>
-          </div>
-          <div><Icon name="material-symbols:favorite-outline-rounded" size="24" class="" /></div>
-        </div>
-        <div class="mb-3 font-serif-tc text-[16px] font-bold">{{ item.title }}</div>
-        <div class="mb-3 text-[14px] text-[#828282]">{{ item.content }}</div>
-
-        <div class="mb-5 h-full w-full bg-[#D9D9D9]"></div>
-
-        <div class="flex items-end justify-end gap-2">
-          <div
-            class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#CDCDCD]"
-          >
-            <Icon name="material-symbols:bookmark-outline-rounded" size="16" />
-          </div>
-          <div
-            class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#CDCDCD]"
-          >
-            <Icon name="mdi:share-variant-outline" size="16" />
+            <p class="mb-3 font-serif-tc text-sm font-light text-[#828282] sm:text-primary-dark">
+              {{ item.date }}
+            </p>
           </div>
         </div>
+        <NuxtLink :to="`article/${item.id}`">
+          <div class="mb-3 h-[267px] max-w-full">
+            <img :src="item.imgUrl" alt="article-cover" class="h-full w-full" />
+          </div>
+          <h4 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ item.title }}</h4>
+          <p class="font-light text-primary-dark">{{ item.content }}</p>
+        </NuxtLink>
       </li>
     </ul>
+    <div class="flex justify-center">
+      <NuxtLink to="/article" class="font-serif-tc text-xl font-semibold text-primary">
+        <div class="flex items-center">
+          <span class="border-b border-primary">更多文章</span>
+          <Icon name="ic:outline-keyboard-arrow-right" size="24" />
+        </div>
+      </NuxtLink>
+    </div>
   </section>
 </template>
