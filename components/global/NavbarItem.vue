@@ -134,6 +134,16 @@ const toggleMobileCategory = () => {
           /></span>
         </div>
         <ul class="hidden items-center justify-center gap-4 font-serif-tc sm:flex">
+          <li v-if="userData.role === 'writer'">
+            <NuxtLink to="/" class="text-xl font-semibold leading-normal text-primary"
+              >發表文章</NuxtLink
+            >
+          </li>
+          <span
+            v-if="userData.role === 'writer'"
+            class="flex items-center font-serif-tc text-xl font-semibold"
+            >·</span
+          >
           <li class="relative text-xl font-semibold leading-normal text-primary">
             <button @click="toggleshowCategory">精選文章</button>
             <ul
@@ -201,13 +211,21 @@ const toggleMobileCategory = () => {
     </div>
     <div
       v-if="showMobileMenu"
-      class="absolute top-[56px] z-10 min-h-screen w-screen bg-sand-100 px-4 opacity-90 sm:hidden"
+      class="absolute top-[56px] z-10 h-screen min-h-screen w-screen overflow-auto bg-sand-100 px-4 opacity-90 sm:hidden"
     >
       <span class="block text-right" @click="toggleMobileMenu"
         ><Icon name="ic:outline-close" size="32" class="my-6 text-primary" />
       </span>
       <SearchInput class="mb-3" />
       <ul>
+        <li v-if="userData.role === 'writer'" class="border-b border-primary">
+          <NuxtLink
+            to="/login"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="toggleMobileMenu"
+            >發表文章</NuxtLink
+          >
+        </li>
         <li class="pt-5">
           <div
             class="flex items-center justify-between border-b border-primary pb-5"
