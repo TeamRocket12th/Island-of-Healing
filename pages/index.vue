@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>
+  <div class="bg-sand-100">
     <BannerArea />
     <LatestArticleCard />
     <TrendingCreater />
