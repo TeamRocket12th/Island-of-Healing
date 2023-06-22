@@ -27,15 +27,15 @@ const articles = [
 ]
 </script>
 <template>
-  <section class="bg-sand-200 py-[84px]">
+  <section class="bg-sand-100 py-[84px] sm:bg-sand-200">
     <div class="container">
       <div class="mb-6 flex items-center gap-4 px-4">
         <h2 class="font-serif-tc text-4xl font-bold text-primary">精選文章</h2>
         <div class="h-[0.5px] w-[150px] bg-primary"></div>
       </div>
-      <ul class="mb-3 grid grid-cols-12">
+      <ul class="mb-3 grid-cols-12 sm:grid">
         <li v-for="article in articles" :key="article.id" class="col-span-4 h-[460px] p-4">
-          <NuxtLink :to="`/article/${id}`">
+          <NuxtLink :to="`/article/${article.id}`">
             <div class="relative">
               <div class="mb-2">
                 <img :src="article.imgUrl" alt="article-cover" class="w-full" />
@@ -68,10 +68,12 @@ const articles = [
   </section>
 </template>
 <style scoped>
-li:first-child {
-  border-right: 0.5px solid #4e2a09;
-}
-li:last-child {
-  border-left: 0.5px solid #4e2a09;
+@media (min-width: 640px) {
+  li:first-child {
+    border-right: 0.5px solid #4e2a09;
+  }
+  li:last-child {
+    border-left: 0.5px solid #4e2a09;
+  }
 }
 </style>

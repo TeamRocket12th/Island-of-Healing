@@ -6,7 +6,7 @@ const data = [
     date: '2023.6.31',
     title: '重拾自我價值：探索內在的力量',
     content:
-      '心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上有一定的限度，所以在某些情境下會難以理性及有邏輯的判斷事件並做出決定。',
+      '在這個忙碌、要求和競爭的世界中，我們常常忽略了最重要的一個人──自己。愛自己並不是自私或自戀，而是一種對自己的尊重和關懷。當我們學會愛自己時，我們能夠建立健康的自尊心、提高生活質量',
     imgUrl: 'https://picsum.photos/392/247'
   },
   {
@@ -63,23 +63,27 @@ const data = [
         <h2 class="font-serif-tc text-4xl font-bold text-primary">最新文章</h2>
         <div class="h-[0.5px] w-[150px] bg-primary"></div>
       </div>
-      <SearchInput />
+      <SearchInput class="hidden sm:block" />
     </div>
-    <ul class="mb-3 grid grid-cols-12 gap-4">
-      <li v-for="item in data" :key="item.id" class="col-span-4 flex h-[517px] grow flex-col p-4">
+    <ul class="mb-3 gap-4 sm:grid sm:grid-cols-12">
+      <li
+        v-for="item in data"
+        :key="item.id"
+        class="mb-3 flex h-auto grow flex-col p-4 sm:h-[517px] md:col-span-6 lg:col-span-4"
+      >
         <div class="flex w-full justify-between">
           <div class="flex flex-col">
             <div class="mb-1 flex">
               <h3 class="font-serif-tc font-semibold text-primary">{{ item.Classification }}</h3>
             </div>
-            <p class="mb-3 font-serif-tc text-sm font-light text-primary-dark">
+            <p class="mb-3 font-serif-tc text-sm font-light text-[#828282] sm:text-primary-dark">
               {{ item.date }}
             </p>
           </div>
         </div>
         <NuxtLink :to="`article/${item.id}`">
-          <div class="mb-3">
-            <img :src="item.imgUrl" alt="article-cover" class="w-full" />
+          <div class="mb-3 h-[267px] max-w-full">
+            <img :src="item.imgUrl" alt="article-cover" class="h-full w-full" />
           </div>
           <h4 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ item.title }}</h4>
           <p class="font-light text-primary-dark">{{ item.content }}</p>

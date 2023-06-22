@@ -5,10 +5,17 @@
 @tailwind utilities;
 
 @layer base {
-
     body {
         font-family: 'Noto Sans TC', sans-serif;
         @apply leading-normal 
+    }
+}
 
+@layer components {
+    .categoryTag {
+        @apply block w-[74px] bg-assistant text-sand-100 font-serif-tc font-semibold p-1
+    } 
+    .no-scroll {
+        @apply overflow-hidden
     }
 }

@@ -1,10 +1,10 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="relative w-[288px] bg-sand-100">
+  <div class="relative max-w-full bg-sand-100">
     <input
       type="text"
-      class="h-10 w-[288px] rounded border border-primary bg-transparent p-[10px] pl-[38px] text-primary placeholder-sand-300 focus:outline-sand-300"
+      class="h-10 w-full rounded border border-primary bg-transparent p-[10px] pl-[38px] text-primary placeholder-sand-300 focus:outline-sand-300"
       placeholder="搜尋文章"
     />
     <Icon

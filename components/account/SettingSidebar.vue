@@ -142,21 +142,6 @@ const { toggleWriterSettings } = uiStore
 </template>
 
 <style scoped>
-.accordion-enter-active {
-  transition: height 0.3s ease-in-out;
-}
-.accordion-leave-active {
-  transition: height 0.3s ease-in-out;
-}
-.accordion-enter-from,
-.accordion-leave-to {
-  height: 0;
-}
-.accordion-enter-to,
-.accordion-leave-from {
-  height: auto;
-}
-
 .router-link-active {
   background-color: #d9d9d9;
   border-radius: 6px;
