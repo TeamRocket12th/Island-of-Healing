@@ -1,20 +1,52 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const treandingArticles = [
+  {
+    id: 1,
+    title: '探索情緒的四個迷思',
+    writer: '奧斯汀',
+    createdDate: '2023-05-23'
+  },
+  {
+    id: 1,
+    title: '轉化焦慮為生活的優勢',
+    writer: '艾蜜莉',
+    createdDate: '2023-05-23'
+  },
+  {
+    id: 1,
+    title: '走出青鳥症候群，活出真實而有意義的生活',
+    writer: '卡夫卡',
+    createdDate: '2023-05-23'
+  },
+  {
+    id: 1,
+    title: '行動力的關鍵：三個方法提升自我效能',
+    writer: '莉莉安',
+    createdDate: '2023-05-23'
+  }
+]
+</script>
 <template>
   <div>
-    <h3 class="mb-3 font-bold">熱門文章</h3>
-
-    <div class="mb-3 pb-1 underline decoration-1 underline-offset-4">
-      <NuxtLink to="/">謝謝你好好長大！擁抱「內在小孩」....</NuxtLink>
-    </div>
-    <div class="mb-3 pb-1 underline decoration-1 underline-offset-4">
-      <NuxtLink to="/">謝謝你好好長大！擁抱「微笑憂鬱症....</NuxtLink>
-    </div>
-    <div class="mb-3 pb-1 underline decoration-1 underline-offset-4">
-      <NuxtLink to="/">一起面對並茁壯！創傷後成長的5種面....</NuxtLink>
-    </div>
-    <div class="mb-3 pb-1 underline decoration-1 underline-offset-4">
-      <NuxtLink to="/">魔法車和兔子，用美好時光照顧自己....</NuxtLink>
-    </div>
+    <h3 class="mb-4 font-serif-tc text-xl font-bold leading-normal text-primary">熱門文章</h3>
+    <ul class="mb-3 pb-1 decoration-1 underline-offset-4">
+      <li
+        v-for="article in treandingArticles"
+        :key="article.id"
+        class="border-b border-sand-200 py-3"
+      >
+        <NuxtLink
+          :to="`/article/${article.id}`"
+          class="mb-2 block font-medium text-primary underline"
+          >{{ article.title }}</NuxtLink
+        >
+        <div class="flex items-center text-sm font-light leading-normal text-primary-dark">
+          <p>{{ article.writer }}</p>
+          <span>·</span>
+          <p>{{ article.createdDate }}</p>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 

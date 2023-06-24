@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: pastorders, error } = getMockData<PastOrder>('pastorders')
+const { data: pastorders, error } = getMockData<PastOrder>('account', 'pastorders')
 if (error.value) {
   console.error('Error fetching data: ', error.value)
 }

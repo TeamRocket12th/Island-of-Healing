@@ -24,6 +24,15 @@ declare global {
     commentNum: number
   }
 
+  // 文章卡片
+  interface ArticleCard {
+    id: number
+    title: string
+    imgUrl: string
+    writer: string
+    date: string
+  }
+
   // 作家資訊
   interface Writer {
     name: string

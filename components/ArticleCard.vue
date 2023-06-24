@@ -1,64 +1,54 @@
-<script setup>
-const data = [
-  {
-    image: '',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    writer: '李柚子',
-    date: '2023-03-20'
-  },
-  {
-    image: '',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    writer: '李柚子',
-    date: '2023-03-20'
-  },
-  {
-    image: '',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    writer: '李柚子',
-    date: '2023-03-20'
+<script setup lang="ts">
+defineProps({
+  articles: {
+    type: Array as () => ArticleCard[],
+    required: true,
+    default: () => []
   }
-]
+})
 </script>
 
 <template>
   <div>
     <div>
-      <ul class="flex gap-6">
-        <li v-for="(item, index) in data" :key="index" class="w-1/3 border">
-          <div>
-            <div class="relative h-[157px] bg-[#CDCDCD]">
-              <Icon
-                name="material-symbols:favorite-outline-rounded"
-                size="24"
-                class="absolute right-0 top-0 mr-3 mt-3"
-              />
+      <ul class="grid grid-cols-3 gap-6">
+        <li v-for="item in articles" :key="item.id" class="col-span-1 border">
+          <NuxtLink :to="`/article/${item.id}`">
+            <div class="h-[157px] overflow-hidden">
+              <img :src="item.imgUrl" alt="cover-photo" class="h-full w-full object-cover" />
             </div>
-          </div>
-          <div class="px-3 py-3">
-            <div class="mb-3">
-              <p class="">{{ item.title }}</p>
-            </div>
-
-            <div class="flex justify-between">
-              <div>
-                <p>
-                  {{ item.writer }}
-                </p>
-                <p>
-                  {{ item.date }}
+            <div class="bg-white pb-3 pl-3 pr-[14px] pt-2">
+              <div class="mb-3">
+                <p class="font-serif-tc text-xl font-bold leading-normal text-primary">
+                  {{ item.title }}
                 </p>
               </div>
-              <div class="flex items-end justify-end gap-2">
-                <div class="flex h-9 w-9 items-center justify-center rounded-full bg-[#CDCDCD]">
-                  <Icon name="material-symbols:bookmark-outline-rounded" size="16" />
+              <div class="flex justify-between">
+                <div>
+                  <p class="text-sm font-light text-primary-dark">
+                    {{ item.writer }}
+                  </p>
+                  <p class="text-sm font-light text-primary-dark">
+                    {{ item.date }}
+                  </p>
                 </div>
-                <div class="flex h-9 w-9 items-center justify-center rounded-full bg-[#CDCDCD]">
-                  <Icon name="mdi:share-variant-outline" size="16" />
+                <div class="flex items-end justify-end gap-2">
+                  <span class="cursor-pointer"
+                    ><Icon
+                      name="material-symbols:bookmark-outline-rounded"
+                      size="16"
+                      class="text-sand-300"
+                  /></span>
+                  <span class="cursor-pointer"
+                    ><Icon
+                      name="material-symbols:favorite-outline-rounded"
+                      size="16"
+                      class="text-sand-300"
+                  /></span>
                 </div>
               </div>
             </div>
-          </div>
+          </NuxtLink>
         </li>
       </ul>
     </div>

@@ -134,6 +134,16 @@ const toggleMobileCategory = () => {
           /></span>
         </div>
         <ul class="hidden items-center justify-center gap-4 font-serif-tc sm:flex">
+          <li v-if="userData.role === 'writer'">
+            <NuxtLink to="/" class="text-xl font-semibold leading-normal text-primary"
+              >發表文章</NuxtLink
+            >
+          </li>
+          <span
+            v-if="userData.role === 'writer'"
+            class="flex items-center font-serif-tc text-xl font-semibold"
+            >·</span
+          >
           <li class="relative text-xl font-semibold leading-normal text-primary">
             <button @click="toggleshowCategory">精選文章</button>
             <ul
@@ -143,35 +153,35 @@ const toggleMobileCategory = () => {
             >
               <li>
                 <RouterLink
-                  to="/"
+                  :to="{ name: 'article', query: { category: 'personal-growth' } }"
                   class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
                   >個人成長</RouterLink
                 >
               </li>
               <li>
                 <RouterLink
-                  to="/"
+                  :to="{ name: 'article', query: { category: 'emotional-awareness' } }"
                   class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
                   >情緒察覺</RouterLink
                 >
               </li>
               <li>
                 <RouterLink
-                  to="/"
+                  :to="{ name: 'article', query: { category: 'intimate-relationships' } }"
                   class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
                   >親密關係</RouterLink
                 >
               </li>
               <li>
                 <RouterLink
-                  to="/"
+                  :to="{ name: 'article', query: { category: 'daily-practice' } }"
                   class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
                   >日常練習</RouterLink
                 >
               </li>
               <li>
                 <RouterLink
-                  to="/article"
+                  :to="{ name: 'article', query: { category: 'all' } }"
                   class="block w-full bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
                   >所有文章</RouterLink
                 >
@@ -201,13 +211,21 @@ const toggleMobileCategory = () => {
     </div>
     <div
       v-if="showMobileMenu"
-      class="absolute top-[56px] z-10 min-h-screen w-screen bg-sand-100 px-4 opacity-90 sm:hidden"
+      class="absolute top-[56px] z-10 h-screen min-h-screen w-screen overflow-auto bg-sand-100 px-4 opacity-90 sm:hidden"
     >
       <span class="block text-right" @click="toggleMobileMenu"
         ><Icon name="ic:outline-close" size="32" class="my-6 text-primary" />
       </span>
       <SearchInput class="mb-3" />
       <ul>
+        <li v-if="userData.role === 'writer'" class="border-b border-primary">
+          <NuxtLink
+            to="/login"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="toggleMobileMenu"
+            >發表文章</NuxtLink
+          >
+        </li>
         <li class="pt-5">
           <div
             class="flex items-center justify-between border-b border-primary pb-5"
@@ -227,7 +245,7 @@ const toggleMobileCategory = () => {
           >
             <li class="border-b border-primary">
               <NuxtLink
-                to="/article"
+                :to="{ name: 'article', query: { category: 'personal-growth' } }"
                 class="block py-5 font-serif-tc font-semibold text-primary"
                 @click="toggleMobileMenu"
                 >個人成長</NuxtLink
@@ -235,7 +253,7 @@ const toggleMobileCategory = () => {
             </li>
             <li class="border-b border-primary">
               <NuxtLink
-                to="/article"
+                :to="{ name: 'article', query: { category: 'emotional-awareness' } }"
                 class="block py-5 font-serif-tc font-semibold text-primary"
                 @click="toggleMobileMenu"
                 >情緒察覺</NuxtLink
@@ -243,7 +261,7 @@ const toggleMobileCategory = () => {
             </li>
             <li class="border-b border-primary">
               <NuxtLink
-                to="/article"
+                :to="{ name: 'article', query: { category: 'intimate-relationships' } }"
                 class="block py-5 font-serif-tc font-semibold text-primary"
                 @click="toggleMobileMenu"
                 >親密關係</NuxtLink
@@ -251,7 +269,7 @@ const toggleMobileCategory = () => {
             </li>
             <li class="border-b border-primary">
               <NuxtLink
-                to="/article"
+                :to="{ name: 'article', query: { category: 'daily-practice' } }"
                 class="block py-5 font-serif-tc font-semibold text-primary"
                 @click="toggleMobileMenu"
                 >日常練習</NuxtLink
@@ -259,7 +277,7 @@ const toggleMobileCategory = () => {
             </li>
             <li class="border-b border-primary">
               <NuxtLink
-                to="/article"
+                :to="{ name: 'article', query: { category: 'all' } }"
                 class="block py-5 font-serif-tc font-semibold text-primary"
                 @click="toggleMobileMenu"
                 >所有文章</NuxtLink
