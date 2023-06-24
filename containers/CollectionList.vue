@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: collectedArticles, error } = getMockData<Article>('collection')
+const { data: collectedArticles, error } = getMockData<Article>('account', 'collection')
 
 if (error.value) {
   console.error('Error fetching data: ', error.value)

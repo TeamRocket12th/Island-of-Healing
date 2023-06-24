@@ -10,7 +10,7 @@ definePageMeta({
 })
 
 const { nowPage } = usePageName()
-const { data: articles, error } = getMockData<ArticleSummary>('mywork')
+const { data: articles, error } = getMockData<ArticleSummary>('account', 'mywork')
 if (error.value) {
   console.error('Error fetching data: ', error.value)
 }
