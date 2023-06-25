@@ -9,32 +9,36 @@ defineProps({
 </script>
 
 <template>
-  <div>
+  <div class="col-span-10 col-start-2 grid">
     <ul v-if="collectedArticles.length > 0">
-      <li v-for="article in collectedArticles" :key="article.id" class="pt-3">
-        <div class="mb-3 flex items-center gap-1 px-6">
-          <div class="h-4 w-4 rounded-full bg-[#D9D9D9]"></div>
-          <span class="text-sm">{{ article.role }}</span>
-        </div>
-        <div class="flex gap-3 px-6">
-          <div>
-            <div class="w-4/5">
-              <h3 class="mb-2 font-bold">{{ article.articleTitle }}</h3>
-              <p class="mb-2 text-[#828282]">{{ article.articleSummary }}</p>
+      <li v-for="article in collectedArticles" :key="article.id">
+        <div class="flex w-full gap-3 p-3">
+          <div class="w-1/3">
+            <img :src="article.coverUrl" alt="cover" class="w-full" />
+          </div>
+          <div class="w-full">
+            <div class="w-[90%]">
+              <div class="mb-3 flex items-center gap-1">
+                <div class="h-6 w-6 rounded-full bg-primary">
+                  <img src="" alt="" />
+                </div>
+                <span class="text-sm font-light">{{ article.role }}</span>
+              </div>
+              <h3 class="mb-2 font-serif-tc text-xl font-bold text-primary">
+                {{ article.articleTitle }}
+              </h3>
+              <p class="mb-2 font-light text-primary-dark">{{ article.articleSummary }}</p>
             </div>
             <div class="flex justify-between">
-              <p>{{ article.articleDate }}</p>
+              <p class="font-light">{{ article.articleDate }}</p>
               <div class="flex items-center gap-1">
-                <Icon name="material-symbols:bookmark-outline-rounded" size="16" />
-                <span>收藏</span>
+                <Icon name="mdi:bookmark" size="24" />
+                <span class="font-light">收藏</span>
               </div>
             </div>
           </div>
-          <div class="w-1/5">
-            <img :src="article.coverUrl" alt="cover" />
-          </div>
         </div>
-        <div class="my-7 w-full border"></div>
+        <div class="my-6 w-full border-[0.5px] border-primary"></div>
       </li>
     </ul>
     <span v-else>Loading...</span>
