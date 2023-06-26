@@ -32,8 +32,8 @@ defineProps({
             <div class="flex justify-between">
               <p class="font-light">{{ article.articleDate }}</p>
               <div class="flex items-center gap-1">
-                <Icon name="mdi:bookmark" size="24" />
-                <span class="font-light">收藏</span>
+                <Icon name="mdi:bookmark" size="24" class="text-secondary" />
+                <span class="font-light text-secondary">收藏</span>
               </div>
             </div>
           </div>
