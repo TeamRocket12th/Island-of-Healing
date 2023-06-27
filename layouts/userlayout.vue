@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div id="userpage" class="bg-[#F5F5F5]">
+  <div id="userpage" class="bg-sand-100">
     <NavbarItem class="mb-10" />
     <div class="flex flex-grow">
       <SettingSidebar />
