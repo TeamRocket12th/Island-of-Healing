@@ -5,6 +5,14 @@ declare global {
     [key: string]: any
   }
 
+  // 作家資訊
+  interface Writer {
+    name: string
+    id: string
+    bio: string
+    imgUrl: string
+  }
+
   // 文章
   interface Article {
     id: string
@@ -13,6 +21,19 @@ declare global {
     articleTitle: string
     articleSummary: string
     articleDate: string
+  }
+
+  // 文章詳細內容
+  interface ArticleDetail {
+    id: string
+    charge: boolean
+    title: string
+    coverUrl: string
+    content: string
+    createdTime: string
+    category: string
+    tags: string[]
+    writerInfo: Writer
   }
 
   // 文章摘要
@@ -31,14 +52,6 @@ declare global {
     imgUrl: string
     writer: string
     date: string
-  }
-
-  // 作家資訊
-  interface Writer {
-    name: string
-    id: string
-    bio: string
-    imgUrl: string
   }
 
   // 個人訊息

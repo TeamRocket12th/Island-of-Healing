@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import isWriter from '~/middleware/isWriter'
+
+definePageMeta({
+  title: '新增文章',
+  middleware: [isWriter],
+  requiredAuth: true
+})
+
 const settingShow = ref()
 const articleTitle = ref('')
 const settingUse = (value: boolean) => {

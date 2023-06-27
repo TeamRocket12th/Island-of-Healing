@@ -120,11 +120,11 @@ export const useChatCharacters = defineStore('characterStore', () => {
       type: 'intimate-relationships',
       name: '引路人 - 約翰',
       imgUrl: 'https://i.pinimg.com/564x/0d/ce/c3/0dcec3105e668483438e6e48ef31cc87.jpg',
-      desc: '在日常生活中，與在意的人一定會有大大小小的摩擦，不論是微妙的煩惱還是令人困擾的衝突，或許我可以為你指引道路',
+      desc: '在日常生活中，與在意的人一定會有大大小小的摩擦，也許是微妙到難以啟齒的煩惱，又或是令人困擾的衝突，或許我可以為你指引道路',
       clientMsgs: [
         {
           role: 'assistant',
-          content: '是否感覺迷失中呢？'
+          content: '人生漫漫，是否曾經感覺迷失呢？'
         }
       ],
       serverMsgs: [

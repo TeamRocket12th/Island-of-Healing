@@ -71,7 +71,9 @@ const recArticles = [
           <ArticleList title="精選文章" :articles="recArticles" />
           <ArticleList title="你可能會喜歡" :articles="recArticles" />
         </div>
-        <ArticleSideBar />
+        <div class="col-span-3">
+          <ArticleSideBar />
+        </div>
       </div>
     </section>
   </main>

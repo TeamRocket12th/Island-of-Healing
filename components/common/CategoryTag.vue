@@ -13,7 +13,7 @@ defineProps({
       <li
         v-for="(tag, index) in tags"
         :key="index"
-        class="rounded-md border border-[#CED4DA] bg-gray-100 px-4 py-1 text-sm"
+        class="rounded-md border border-assistant bg-assistant px-4 py-1 text-sm text-white"
       >
         {{ tag }}
       </li>
