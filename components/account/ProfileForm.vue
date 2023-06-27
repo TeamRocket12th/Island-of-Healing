@@ -59,7 +59,7 @@ const textLengthRule = (value: string) => {
 </script>
 
 <template>
-  <div class="border border-secondary bg-sand-100 p-10">
+  <div class="mb-40 border border-secondary bg-sand-100 p-10">
     <div class="grid grid-cols-12">
       <h2 class="col-span-2 font-serif-tc text-2xl font-bold text-primary">會員設定</h2>
       <div class="col-span-9">
@@ -170,15 +170,15 @@ const textLengthRule = (value: string) => {
             </div>
             <div>
               <div class="mb-[27px] flex gap-8">
-                <h4 class="font-medium text-primary">重置密碼</h4>
+                <h4 class="text-2xl font-medium text-primary">重置密碼</h4>
                 <nuxt-link
                   to="/forgetpassword"
                   class="rounded border border-secondary px-2 py-[3px] text-secondary"
-                  >重設密碼</nuxt-link
+                  >修改密碼</nuxt-link
                 >
               </div>
               <div class="mb-9 flex gap-8">
-                <h4 class="font-medium text-primary">訂閱管理</h4>
+                <h4 class="text-2xl font-medium text-primary">訂閱管理</h4>
                 <nuxt-link
                   to="/account/{userData.userId}/myplan"
                   class="rounded border border-secondary px-2 py-[3px] text-secondary"

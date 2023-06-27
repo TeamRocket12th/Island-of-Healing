@@ -11,7 +11,7 @@ defineProps({
 <template>
   <div class="grid grid-cols-12">
     <div class="col-span-10 col-start-2 grid">
-      <ul v-if="collectedArticles.length > 0">
+      <ul v-if="collectedArticles.length > 0" class="mb-[106px]">
         <li v-for="article in collectedArticles" :key="article.id">
           <div class="flex w-full gap-4 p-4">
             <div class="w-1/3">
@@ -39,7 +39,7 @@ defineProps({
               </div>
             </div>
           </div>
-          <div class="my-6 w-full border-[0.5px] border-primary"></div>
+          <div class="my-6 w-full border-[0.5px] border-primary border-opacity-30"></div>
         </li>
       </ul>
       <span v-else>Loading...</span>
