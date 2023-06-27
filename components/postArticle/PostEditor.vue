@@ -6,11 +6,9 @@ import { Paragraph } from '@tiptap/extension-paragraph'
 import { Text } from '@tiptap/extension-text'
 import { Underline } from '@tiptap/extension-underline'
 import { Image } from '@tiptap/extension-image'
-import { TextAlign } from '@tiptap/extension-text-align'
 import { BulletList } from '@tiptap/extension-bullet-list'
 import { OrderedList } from '@tiptap/extension-ordered-list'
 import { Link } from '@tiptap/extension-link'
-import { Highlight } from '@tiptap/extension-highlight'
 import { Editor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
 
 const articleTitle = ref('')
@@ -31,10 +29,6 @@ onMounted(() => {
       Text,
       Underline,
       Image,
-      Highlight,
-      TextAlign.configure({
-        types: ['heading', 'paragraph']
-      }),
       Heading.configure({
         levels: [2, 3]
       }),
