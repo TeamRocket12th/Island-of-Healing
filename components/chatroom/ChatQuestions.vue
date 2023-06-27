@@ -70,6 +70,10 @@ const getCharacter = (result) => {
   return selectedRoles[0]
 }
 
+const scrollTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
 const submit = () => {
   if (answers.value['4']) {
     const valuesArray = Object.values(answers.value)
@@ -87,6 +91,7 @@ const submit = () => {
       }
     }
     selectedRole.value = getCharacter(maxCategory.value)
+    scrollTop()
   }
 }
 </script>
