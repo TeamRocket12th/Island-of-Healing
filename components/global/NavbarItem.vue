@@ -25,6 +25,16 @@ const showMobileCategory = ref(false)
 const toggleMobileCategory = () => {
   showMobileCategory.value = !showMobileCategory.value
 }
+
+const route = useRoute()
+
+const isUserPage = computed(() => {
+  if (route.meta.layout === 'userlayout') {
+    return true
+  } else {
+    return false
+  }
+})
 </script>
 
 <template>
@@ -133,7 +143,8 @@ const toggleMobileCategory = () => {
           /></span>
         </div>
         <ul
-          class="hidden items-center justify-center gap-4 border-b border-primary font-serif-tc sm:flex"
+          class="hidden items-center justify-center gap-4 font-serif-tc sm:flex"
+          :class="isUserPage ? 'border-none' : 'border-b border-primary'"
         >
           <li v-if="userData.role === 'writer'" class="pb-5">
             <NuxtLink to="/newstory" class="text-xl font-semibold leading-normal text-primary"
