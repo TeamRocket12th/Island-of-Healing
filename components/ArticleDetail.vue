@@ -112,9 +112,18 @@ const handleUnLock = () => {
     </div>
   </div>
   <div v-if="articleDetail" class="mb-9 flex items-center justify-between py-6">
-    <div class="flex items-center">
-      <div class="mr-2 h-[60px] w-[60px]">
-        <img :src="articleDetail.writerInfo.imgUrl" alt="avatar" class="rounded-full" />
+    <div class="items-center md:flex">
+      <div class="flex justify-between sm:mr-2">
+        <img
+          :src="articleDetail.writerInfo.imgUrl"
+          alt="avatar"
+          class="h-[60px] w-[60px] rounded-full"
+        />
+        <button
+          class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:opacity-80 sm:hidden"
+        >
+          <Icon name="ic:baseline-plus" size="16" />追蹤
+        </button>
       </div>
       <div>
         <p class="font-medium text-primary">作家·{{ articleDetail.writerInfo.name }}</p>
@@ -123,7 +132,7 @@ const handleUnLock = () => {
     </div>
     <div>
       <button
-        class="flex items-center rounded border bg-secondary px-3 py-2 text-white hover:opacity-80"
+        class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:opacity-80 sm:flex"
       >
         <Icon name="ic:baseline-plus" size="20" />追蹤
       </button>
@@ -143,8 +152,8 @@ const handleUnLock = () => {
         </div>
         <span class="font-medium text-primary">{{ userData.name }}</span>
       </div>
-      <div class="grid grid-cols-7 gap-6">
-        <div class="relative col-span-6">
+      <div class="grid-cols-7 gap-6 text-right md:grid md:text-left">
+        <div class="relative col-span-6 mb-4 md:mb-0">
           <textarea
             ref="textarea"
             v-model="userComment"
@@ -168,12 +177,12 @@ const handleUnLock = () => {
             @select="insertEmoji"
           />
         </div>
-        <button class="h-10 rounded bg-secondary text-white hover:opacity-80">發表留言</button>
+        <button class="h-10 rounded bg-secondary p-2 text-white hover:opacity-80">發表留言</button>
       </div>
     </div>
   </div>
   <section>
-    <h2 class="mb-6 font-serif-tc text-2xl font-bold text-primary">你可能會喜歡</h2>
+    <h2 class="mb-6 font-serif-tc text-4xl font-bold text-primary md:text-2xl">你可能會喜歡</h2>
     <RecArticleCard />
   </section>
 </template>

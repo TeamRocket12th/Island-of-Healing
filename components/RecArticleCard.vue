@@ -43,12 +43,12 @@ const recArticles = [
     <li
       v-for="article in recArticles"
       :key="article.id"
-      class="border-light flex items-center gap-6 py-6"
+      class="border-light items-center gap-6 py-6 sm:flex"
     >
-      <div class="h-[152px] w-[30%]">
+      <div class="mb-4 h-[186px] w-full sm:w-[30%] md:mb-0 md:h-[152px]">
         <img :src="article.coverUrl" alt="cover" class="h-full w-full" />
       </div>
-      <div class="w-[70%]">
+      <div class="w-full md:w-[70%]">
         <h3 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ article.title }}</h3>
         <p class="mb-[22px] font-light text-primary-dark">{{ article.summary }}</p>
         <div class="flex items-center justify-between">
