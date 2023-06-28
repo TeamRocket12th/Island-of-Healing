@@ -47,7 +47,7 @@
           </NuxtLink>
         </div>
         <div
-          class="col-span-4 border-b border-primary border-primary pb-[27px] pl-3 pr-3 pt-3 sm:border-b-0 sm:pb-0"
+          class="col-span-4 border-b border-primary pb-[27px] pl-3 pr-3 pt-3 sm:border-b-0 sm:pb-0"
         >
           <NuxtLink :to="`/article/id`">
             <div>
