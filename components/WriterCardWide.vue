@@ -6,6 +6,14 @@ defineProps({
     default: () => []
   }
 })
+
+const shortenBio = (bio: string) => {
+  let shortBio = bio
+  if (bio && bio.length > 13) {
+    shortBio = bio.substring(0, 13) + '...'
+  }
+  return shortBio
+}
 </script>
 
 <template>
@@ -14,18 +22,29 @@ defineProps({
       <li
         v-for="writer in writerInfo"
         :key="writer.id"
-        class="mb-6 flex items-center justify-between border border-[#CDCDCD] p-6"
+        class="mb-6 flex items-center justify-between border bg-white p-6 shadow-sm"
       >
         <span class="flex items-center gap-2">
           <div class="h-[60px] w-[60px] overflow-hidden rounded-full">
             <img :src="writer.imgUrl" alt="writer" />
           </div>
           <div>
-            <p>{{ writer.name }}</p>
-            <p>{{ writer.bio }}</p>
+            <p class="font-medium text-primary">{{ writer.name }}</p>
+            <p class="text-sm text-primary-dark">
+              {{ writer.jobTitle }}。{{ shortenBio(writer.bio) }}
+            </p>
           </div>
         </span>
-        <button class="flex items-center rounded border px-3 py-1 text-[#9F9F9F]">
+        <button
+          v-if="writer.isFollowing"
+          class="flex items-center whitespace-nowrap rounded border bg-secondary px-2 py-1 text-sm text-white"
+        >
+          <Icon name="ic:outline-check" size="20" />追蹤中
+        </button>
+        <button
+          v-else
+          class="flex items-center whitespace-nowrap rounded border bg-secondary px-2 py-1 text-sm text-white"
+        >
           <Icon name="ic:baseline-plus" size="20" />追蹤
         </button>
       </li>
