@@ -10,6 +10,7 @@ import { BulletList } from '@tiptap/extension-bullet-list'
 import { OrderedList } from '@tiptap/extension-ordered-list'
 import { Link } from '@tiptap/extension-link'
 import { Editor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
+import { Extension } from '@tiptap/core'
 
 const articleTitle = ref('')
 
@@ -19,10 +20,28 @@ const postSent = (value) => {
   const title = articleTitle.value
   emits('article-title', title)
 }
+
+const CustomExtension = Extension.create({
+  name: 'custom_extension',
+  onKeyDown({ event, state, dispatch }) {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      dispatch(state.tr.insertText('\n'))
+      return true
+    }
+    return false
+  }
+})
+
 const editor = ref(null)
 onMounted(() => {
   editor.value = new Editor({
     extensions: [
+      Paragraph.configure({
+        addKeyboardShortcuts: false
+      }),
+      Extension,
+      CustomExtension,
       StarterKit,
       Document,
       Paragraph,
@@ -49,13 +68,9 @@ onMounted(() => {
         }
       })
     ],
+
     content: `
-      <h2>
-        Hi there,
-      </h2>
-      <p>
-        this is a <em>basic</em> example of <strong>tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-      </p>
+     <blockquote><h2>前言</h2></blockquote><p>情緒是我們內在世界的一部分，影響著我們的思想、行為和日常生活。然而，對於情緒的理解往往被一些迷思所混淆。這些迷思使我們對情緒產生誤解，可能導致負面的影響，影響我們的心理健康和人際關係。本文將探索情緒的常見迷思，幫助我們更深入地理解和處理情緒的重要性。</p><h3>以下是關於情緒的四個迷思，提供了一些觀點來重新理解情緒：</h3><h3>迷思一：情緒是弱點</h3><p>許多人認為情緒表達是一種脆弱的表現，它們認為情緒使人變得脆弱和無力。然而，這是一個錯誤的觀點。情緒是我們人類的自然反應，它們提供了對外界和內在狀態的敏感度和反應能力。情緒能夠幫助我們連結他人，感受生活的豐富性，並提供指導我們行動和做出決策的線索。</p>
     `
   })
 })
@@ -110,17 +125,16 @@ watchEffect(() => {
     const json = editor.value.getJSON()
     const html = editor.value.getHTML()
     newJson.value = json
-    // console.log(newJson.value)
+    console.log(newJson.value)
     htmlOutput.value = html
     console.log(htmlOutput.value)
-    const content = newJson.value.content
     // console.log(content)
   }
 })
 </script>
 
 <template>
-  <div class="container grid grid-cols-12 pt-[100px]">
+  <div class="container relative grid grid-cols-12 pt-[100px]">
     <div class="col-span-8 col-start-3">
       <input
         v-model="articleTitle"
@@ -129,52 +143,67 @@ watchEffect(() => {
         placeholder="請輸入標題"
       />
       <div class="mb-6">
-        <div v-if="editor" class="flex">
-          <label class="swap">
+        <div v-if="editor" class="flex min-h-[36px]">
+          <label class="swap mr-3">
             <input type="checkbox" />
             <div class="swap-on" @click="swapOn">
-              <Icon name="mdi:close-thick" size="24" />
+              <Icon name="mdi:close-thick" size="24" class="rounded bg-[#E9E4D9] text-primary" />
             </div>
             <div class="swap-off" @click="swapOff">
-              <Icon name="ic:round-plus" size="24" />
+              <Icon name="ic:round-plus" size="24" class="rounded bg-[#E9E4D9] text-primary" />
             </div>
           </label>
-          <div v-if="textNavbarShow" class="border">
+          <div
+            v-if="textNavbarShow"
+            class="flex gap-1 rounded border-[0.5px] border-secondary border-opacity-30 p-1 text-primary"
+          >
             <button @click="addImage">
-              <Icon name="material-symbols:add-photo-alternate-outline" size="24" />
+              <Icon
+                name="material-symbols:add-photo-alternate-outline"
+                size="24"
+                class="hover:bg-[#E9E4D9]"
+              />
             </button>
             <button :class="{ 'is-active': editor.isActive('link') }" @click="setLink">
-              <Icon name="ic:twotone-insert-link" size="24" />
+              <Icon name="ic:twotone-insert-link" size="24" class="hover:bg-[#E9E4D9]" />
             </button>
             <button
               :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
               @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
             >
-              <Icon name="ic:baseline-title" size="24" />
+              <Icon name="ic:baseline-title" size="24" class="hover:bg-[#E9E4D9]" />
             </button>
             <button
               :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
               @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
             >
-              <Icon name="ic:baseline-title" size="20" />
+              <Icon name="ic:baseline-title" size="20" class="hover:bg-[#E9E4D9]" />
             </button>
             <button @click="editor.chain().focus().setHorizontalRule().run()">
-              <Icon name="ic:round-horizontal-rule" size="24" />
+              <Icon name="material-symbols:align-center" size="24" class="hover:bg-[#E9E4D9]" />
             </button>
             <button @click="editor.chain().focus().setHardBreak().run()">
-              <Icon name="material-symbols:wrap-text" size="24" />
+              <Icon name="material-symbols:wrap-text" size="24" class="hover:bg-[#E9E4D9]" />
             </button>
             <button
               :disabled="!editor.can().chain().focus().undo().run()"
               @click="editor.chain().focus().undo().run()"
             >
-              <Icon name="material-symbols:undo-rounded" size="24" />
+              <Icon
+                name="material-symbols:undo-rounded"
+                size="24"
+                class="cursor-pointer hover:bg-[#E9E4D9]"
+              />
             </button>
             <button
               :disabled="!editor.can().chain().focus().redo().run()"
               @click="editor.chain().focus().redo().run()"
             >
-              <Icon name="material-symbols:redo" size="24" />
+              <Icon
+                name="material-symbols:redo"
+                size="24"
+                class="cursor-pointer hover:bg-[#E9E4D9]"
+              />
             </button>
           </div>
           <bubble-menu class="bubble-menu" :tippy-options="{ duration: 100 }" :editor="editor">
@@ -241,20 +270,27 @@ watchEffect(() => {
           </bubble-menu>
         </div>
         <div>
-          <editor-content
-            id="container"
-            ref="content"
-            :editor="editor"
-            class="relative h-[600px] p-2"
-          />
+          <editor-content ref="content" :editor="editor" class="p-2" />
         </div>
+        <div v-dompurify-html="newHtml"></div>
       </div>
     </div>
-    <div class="col-span-8 col-start-3 mb-80 flex justify-end gap-3">
-      <button class="bg-[#828282] px-3 py-[7px] text-white" @click="sentBtn">儲存草稿</button>
-      <button class="bg-[#828282] px-3 py-[7px] text-white" @click="postSent(true)">
+    <div class="col-span-8 col-start-3 mb-20 flex justify-end gap-3">
+      <button
+        class="rounded px-3 py-1 text-secondary duration-100 hover:bg-secondary hover:text-white"
+        @click="sentBtn"
+      >
+        儲存草稿
+      </button>
+      <button
+        class="rounded px-3 py-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+        @click="postSent(true)"
+      >
         發表貼文
       </button>
+      <!-- <button @click="editor.commands.insertContent('<br></br>')">test</button> -->
+      <!-- <button @click="editor.commands.newlineInCode()">test2</button> -->
+      <!-- <button @click="editor.commands.setContent(`${htmlOutput}`)">test</button> -->
     </div>
   </div>
 </template>
@@ -269,6 +305,7 @@ code {
 blockquote {
   padding-left: 1rem;
   border-left: 3px solid black;
+  margin-bottom: 16px;
 }
 
 .ProseMirror {
@@ -294,10 +331,24 @@ blockquote {
 }
 
 h2 {
-  font-size: 36px;
+  font-size: 24px;
+  color: #4e2a09;
+  font-family: 'Noto Sans TC';
+  margin-bottom: 10px;
 }
 h3 {
-  font-size: 24px;
+  font-size: 20px;
+  color: #4e2a09;
+  font-family: 'Noto Sans TC';
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 16px;
+  color: #3d1f03;
+  font-family: 'Noto Sans TC';
+  font-weight: 300;
+  margin-bottom: 20px;
 }
 
 .bubble-menu {

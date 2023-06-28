@@ -137,7 +137,7 @@ const toggleMobileCategory = () => {
         </div>
         <ul class="hidden items-center justify-center gap-4 font-serif-tc sm:flex">
           <li v-if="userData.role === 'writer'">
-            <NuxtLink to="/" class="text-xl font-semibold leading-normal text-primary"
+            <NuxtLink to="/newstory" class="text-xl font-semibold leading-normal text-primary"
               >發表文章</NuxtLink
             >
           </li>
