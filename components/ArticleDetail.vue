@@ -55,9 +55,12 @@ const handleUnLock = () => {
 </script>
 <template>
   <div v-if="articleDetail" class="mb-10">
+    <span v-if="articleDetail.charge" class="mb-3 flex items-center gap-1 text-primary-dark"
+      ><Icon name="material-symbols:lock-outline" size="16" /> 付費限定文章</span
+    >
     <div class="mb-5 flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <div class="h-8 w-8 overflow-hidden rounded-full">
+        <div class="h-9 w-9 overflow-hidden rounded-full">
           <img src="https://picsum.photos/32" alt="writer" />
         </div>
         <div>
@@ -126,6 +129,7 @@ const handleUnLock = () => {
       </button>
     </div>
   </div>
+  <!--留言-->
   <div>
     <div class="mb-6 flex items-center justify-between">
       <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
@@ -168,6 +172,10 @@ const handleUnLock = () => {
       </div>
     </div>
   </div>
+  <section>
+    <h2 class="mb-6 font-serif-tc text-2xl font-bold text-primary">你可能會喜歡</h2>
+    <RecArticleCard />
+  </section>
 </template>
 
 <style scoped></style>
