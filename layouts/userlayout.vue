@@ -2,7 +2,7 @@
 
 <template>
   <div id="userpage" class="bg-sand-100">
-    <NavbarItem class="mb-10" />
+    <NavbarItem />
     <div class="flex flex-grow">
       <SettingSidebar />
       <main id="content" class="container">

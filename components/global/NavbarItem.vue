@@ -7,9 +7,6 @@ const { isLogin, userData } = storeToRefs(userStore)
 const { userLogout } = userStore
 
 const showCategory = ref(false)
-const toggleshowCategory = () => {
-  showCategory.value = !showCategory.value
-}
 
 const showMobileMenu = ref(false)
 const toggleMobileMenu = () => {
@@ -119,7 +116,7 @@ const toggleMobileCategory = () => {
         </ul>
       </div>
     </nav>
-    <div class="relative h-20 bg-sand-100 sm:h-[142px] sm:py-5">
+    <div class="relative h-20 bg-sand-100 sm:h-[142px] sm:pt-5">
       <div class="container">
         <div class="relative py-4 sm:py-0">
           <h1 class="mb-3 text-left sm:text-center">
@@ -135,23 +132,30 @@ const toggleMobileCategory = () => {
             ><Icon name="ic:outline-menu" size="32"
           /></span>
         </div>
-        <ul class="hidden items-center justify-center gap-4 font-serif-tc sm:flex">
-          <li v-if="userData.role === 'writer'">
+        <ul
+          class="hidden items-center justify-center gap-4 border-b border-primary font-serif-tc sm:flex"
+        >
+          <li v-if="userData.role === 'writer'" class="pb-5">
             <NuxtLink to="/newstory" class="text-xl font-semibold leading-normal text-primary"
               >發表文章</NuxtLink
             >
           </li>
           <span
             v-if="userData.role === 'writer'"
-            class="flex items-center font-serif-tc text-xl font-semibold"
+            class="flex items-center pb-5 font-serif-tc text-xl font-semibold"
             >·</span
           >
-          <li class="relative text-xl font-semibold leading-normal text-primary">
-            <button @click="toggleshowCategory">精選文章</button>
+          <li
+            class="relative pb-5 text-xl font-semibold leading-normal text-primary"
+            @mouseover="showCategory = true"
+            @mouseleave="showCategory = false"
+          >
+            <button>精選文章</button>
             <ul
-              v-if="showCategory"
-              class="absolute -left-20 top-[167%] z-10 w-[164px] whitespace-nowrap border border-primary bg-white font-normal"
-              @click="toggleshowCategory"
+              v-show="showCategory"
+              class="absolute -left-20 top-full z-20 w-[164px] whitespace-nowrap border border-primary bg-white font-normal"
+              @mouseover="showCategory = true"
+              @mouseleave="showCategory = false"
             >
               <li>
                 <RouterLink
@@ -190,20 +194,20 @@ const toggleMobileCategory = () => {
               </li>
             </ul>
           </li>
-          <span class="flex items-center font-serif-tc text-xl font-semibold">·</span>
-          <li>
+          <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
+          <li class="pb-5">
             <NuxtLink to="/chatroom" class="text-xl font-semibold leading-normal text-primary"
               >AI告解室</NuxtLink
             >
           </li>
-          <span class="flex items-center font-serif-tc text-xl font-semibold">·</span>
-          <li>
+          <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
+          <li class="pb-5">
             <NuxtLink to="/" class="text-xl font-semibold text-primary" leading-normal
               >論壇</NuxtLink
             >
           </li>
-          <span class="flex items-center font-serif-tc text-xl font-semibold">·</span>
-          <li>
+          <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
+          <li class="pb-5">
             <NuxtLink to="/plans" class="text-xl font-semibold leading-normal text-primary"
               >訂閱方案</NuxtLink
             >
@@ -211,6 +215,7 @@ const toggleMobileCategory = () => {
         </ul>
       </div>
     </div>
+    <!--手機版導覽列-->
     <div
       v-if="showMobileMenu"
       class="absolute top-[56px] z-10 h-screen min-h-screen w-screen overflow-auto bg-sand-100 px-4 opacity-90 sm:hidden"
