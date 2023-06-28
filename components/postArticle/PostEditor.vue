@@ -112,9 +112,9 @@ const swapOff = () => {
 const newHtml = ref('')
 const sentBtn = () => {
   const html = editor.value.getHTML()
-  // const json = editor.value.getJSON()
+  const json = editor.value.getJSON()
   console.log(html)
-  // console.log(json)
+  console.log(json)
   newHtml.value = html
 }
 

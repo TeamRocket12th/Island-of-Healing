@@ -76,8 +76,8 @@
       "endpoint": "login",
       "responses": [
         {
-          "uuid": "34f114e6-540f-4c37-b658-c7f96c445644",
-          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"登入成功\",\n   \"status\":\"success\",\n   \"token\": \"MockToken\",\n   \"data\": {\n       \"user\": {\n           \"Uid\":\"firstuser\",\n           \"NickName\": \"島民\",\n           \"Email\": \"{{body 'account'}}\",\n           \"ImgUrl\":\"https://i.pinimg.com/564x/1f/37/39/1f373917adfdf156ad811330355e4456.jpg\",\n           \"Role\": \"commonUser\",\n           \"Birthday\": \"1999, 11, 11\",\n           \"MyPlan\":\"\"\n       }\n   }\n}\n",
+          "uuid": "0cc11117-bbf9-4013-9d95-07a22013721f",
+          "body": "{\n   \"statusCode\": 200,\n   \"message\": \"登入成功\",\n   \"status\":\"success\",\n   \"token\": \"MockToken\",\n   \"data\": {\n       \"user\": {\n           \"Uid\":\"firstuser\",\n           \"NickName\": \"島民\",\n           \"Email\": \"{{body 'account'}}\",\n           \"ImgUrl\":\"https://i.pinimg.com/564x/1f/37/39/1f373917adfdf156ad811330355e4456.jpg\",\n           \"Role\": \"commonUser\",\n           \"Birthday\": \"1999, 11, 11\",\n           \"MyPlan\":\"free\"\n       }\n   }\n}\n",
           "latency": 0,
           "statusCode": 200,
           "label": "回傳一般島民登入成功",
@@ -108,8 +108,8 @@
           "default": false
         },
         {
-          "uuid": "04f41bc2-f0f9-483c-a28b-c3de2b301121",
-          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"登入成功\",\n  \"status\": \"success\",\n  \"token\": \"MockToken\",\n  \"data\": {\n    \"user\": {\n      \"Uid\": \"firstuser\",\n      \"NickName\": \"島民(作家)\",\n      \"Email\": \"{{body 'account'}}\",\n      \"ImgUrl\": \"https://avatars.githubusercontent.com/u/6178622?v=4\",\n      \"Role\": \"writer\",\n      \"Birthday\": \"1999, 11, 11\",\n      \"MyPlan\": \"\",\n      \"JobTitle\":\"心靈捕手\",\n      \"Bio\":\"生活是一面鏡子，我們努力追求的第一件事，就是從中辨認出自己。\"\n      \n    }\n  }\n}",
+          "uuid": "519211bd-5fa8-41af-bd65-609a10db2697",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"登入成功\",\n  \"status\": \"success\",\n  \"token\": \"MockToken\",\n  \"data\": {\n    \"user\": {\n      \"Uid\": \"firstuser\",\n      \"NickName\": \"島民(作家)\",\n      \"Email\": \"{{body 'account'}}\",\n      \"ImgUrl\": \"https://avatars.githubusercontent.com/u/6178622?v=4\",\n      \"Role\": \"writer\",\n      \"Birthday\": \"1999, 11, 11\",\n      \"MyPlan\": \"monthly\",\n      \"JobTitle\":\"心靈捕手\",\n      \"Bio\":\"生活是一面鏡子，我們努力追求的第一件事，就是從中辨認出自己。\"\n      \n    }\n  }\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "回傳島民作家登入成功",
@@ -397,6 +397,170 @@
       ],
       "enabled": true,
       "responseMode": null
+    },
+    {
+      "uuid": "5083b230-c1ef-4d59-8088-09829d6496a3",
+      "type": "http",
+      "documentation": "取得文章列表",
+      "method": "get",
+      "endpoint": "article",
+      "responses": [
+        {
+          "uuid": "b433ec09-0d63-42cf-819c-6ad5131728b9",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"重拾自我價值：探索內在的力量\",\n      \"writer\": \"李柚子\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 2,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"認識自我與擁抱內在小孩的旅程\",\n      \"writer\": \"莉莉安\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 3,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"別離與成長：好好道別的力量\",\n      \"writer\": \"馬克\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 4,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"獨處的力量：發現內在寧靜與成長的時刻\",\n      \"writer\": \"艾蜜莉\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 5,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"擺脫不健康的家庭關係，重塑心理平衡的五個關鍵方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 6,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"照顧身心的力量：分享三個簡單的實踐方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "取得文章列表",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "category",
+              "value": "all",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "ab6172cc-a9d3-4850-8e06-98079c4f65bb",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"重拾自我價值：探索內在的力量\",\n      \"writer\": \"李柚子\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 2,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"認識自我與擁抱內在小孩的旅程\",\n      \"writer\": \"莉莉安\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 3,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"別離與成長：好好道別的力量\",\n      \"writer\": \"馬克\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 4,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"獨處的力量：發現內在寧靜與成長的時刻\",\n      \"writer\": \"艾蜜莉\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 5,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"擺脫不健康的家庭關係，重塑心理平衡的五個關鍵方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 6,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"照顧身心的力量：分享三個簡單的實踐方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 7,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"重拾自我價值：探索內在的力量\",\n      \"writer\": \"李柚子\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 8,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"認識自我與擁抱內在小孩的旅程\",\n      \"writer\": \"莉莉安\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 9,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"別離與成長：好好道別的力量\",\n      \"writer\": \"馬克\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 10,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"獨處的力量：發現內在寧靜與成長的時刻\",\n      \"writer\": \"艾蜜莉\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 11,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"擺脫不健康的家庭關係，重塑心理平衡的五個關鍵方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 12,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"照顧身心的力量：分享三個簡單的實踐方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "category",
+              "value": "personal-growth",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "dee2a09f-9711-4acb-9fd6-7e95cfd4674d",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"重拾自我價值：探索內在的力量\",\n      \"writer\": \"李柚子\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 2,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"認識自我與擁抱內在小孩的旅程\",\n      \"writer\": \"莉莉安\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 3,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"別離與成長：好好道別的力量\",\n      \"writer\": \"馬克\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 4,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"獨處的力量：發現內在寧靜與成長的時刻\",\n      \"writer\": \"艾蜜莉\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 5,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"擺脫不健康的家庭關係，重塑心理平衡的五個關鍵方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 6,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"照顧身心的力量：分享三個簡單的實踐方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 7,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"重拾自我價值：探索內在的力量\",\n      \"writer\": \"李柚子\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 8,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"認識自我與擁抱內在小孩的旅程\",\n      \"writer\": \"莉莉安\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 9,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"別離與成長：好好道別的力量\",\n      \"writer\": \"馬克\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 10,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"獨處的力量：發現內在寧靜與成長的時刻\",\n      \"writer\": \"艾蜜莉\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 11,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"擺脫不健康的家庭關係，重塑心理平衡的五個關鍵方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 12,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"照顧身心的力量：分享三個簡單的實踐方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "category",
+              "value": "emotional-awareness",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "1d652cac-9721-4d53-a0b2-c89d08aa24ac",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"重拾自我價值：探索內在的力量\",\n      \"writer\": \"李柚子\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 2,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"認識自我與擁抱內在小孩的旅程\",\n      \"writer\": \"莉莉安\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 3,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"別離與成長：好好道別的力量\",\n      \"writer\": \"馬克\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 4,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"獨處的力量：發現內在寧靜與成長的時刻\",\n      \"writer\": \"艾蜜莉\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 5,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"擺脫不健康的家庭關係，重塑心理平衡的五個關鍵方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 6,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"照顧身心的力量：分享三個簡單的實踐方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 7,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"重拾自我價值：探索內在的力量\",\n      \"writer\": \"李柚子\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 8,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"認識自我與擁抱內在小孩的旅程\",\n      \"writer\": \"莉莉安\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 9,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"別離與成長：好好道別的力量\",\n      \"writer\": \"馬克\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 10,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"獨處的力量：發現內在寧靜與成長的時刻\",\n      \"writer\": \"艾蜜莉\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 11,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"擺脫不健康的家庭關係，重塑心理平衡的五個關鍵方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 12,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"照顧身心的力量：分享三個簡單的實踐方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "category",
+              "value": "intimate-relationships",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "b1014d4a-1cd7-436e-bd2d-3228b264bea4",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"重拾自我價值：探索內在的力量\",\n      \"writer\": \"李柚子\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 2,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"認識自我與擁抱內在小孩的旅程\",\n      \"writer\": \"莉莉安\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 3,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"別離與成長：好好道別的力量\",\n      \"writer\": \"馬克\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 4,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"獨處的力量：發現內在寧靜與成長的時刻\",\n      \"writer\": \"艾蜜莉\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 5,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"擺脫不健康的家庭關係，重塑心理平衡的五個關鍵方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 6,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"照顧身心的力量：分享三個簡單的實踐方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 7,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"重拾自我價值：探索內在的力量\",\n      \"writer\": \"李柚子\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 8,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"認識自我與擁抱內在小孩的旅程\",\n      \"writer\": \"莉莉安\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 9,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"別離與成長：好好道別的力量\",\n      \"writer\": \"馬克\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 10,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"獨處的力量：發現內在寧靜與成長的時刻\",\n      \"writer\": \"艾蜜莉\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 11,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"擺脫不健康的家庭關係，重塑心理平衡的五個關鍵方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    },\n    {\n      \"id\": 12,\n      \"imgUrl\": \"https://picsum.photos/312/234\",\n      \"title\": \"照顧身心的力量：分享三個簡單的實踐方法\",\n      \"writer\": \"奧斯汀\",\n      \"date\": \"2023-03-20\"\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "category",
+              "value": "daily-practice",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "8a141a76-ded0-4166-b2f1-32ca66ca1ca2",
+      "type": "http",
+      "documentation": "取得單篇文章內容",
+      "method": "get",
+      "endpoint": "article/:id",
+      "responses": [
+        {
+          "uuid": "127ae138-8c8f-4280-8694-16ee6f29578e",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": \"article-001\",\n    \"charge\":\"true\",\n    \"title\": \"建立連結與跨越認知偏見\",\n    \"coverUrl\": \"https://picsum.photos/904/412\",\n    \"content\": \"<p>在這個忙碌、要求和競爭的世界中，我們常常忽略了最重要的一個人──自己。愛自己並不是自私或自戀，而是一種對自己的尊重和關懷。當我們學會愛自己時，我們能夠建立健康的自尊心、提高生活質量，並成為更好的人。</p><p></p><p></p><blockquote><p>愛自己並不是一個一次性的行為，而是一個持續的過程。愛自己意味著我們要接納自己的完整性，包括優點和缺點。當我們接納自己的時候，我們能夠更加自信地面對自己和他人。</p></blockquote><p></p><h3>學會接受不完美的自己</h3><p>真正的自我價值並不在於外界的標準，而是源於內心深處的力量。這是一種與生俱來的價值，無論外界環境如何變化，都不會消失。重拾自我價值的關鍵是探索內在的力量，透過自我反思和接納，我們能夠找到那個真實的自己，並發揮出我們最大的潛能。</p><p></p><p></p><p>接納自己並接受自己的不完整時，我們才能真正發揮內在的力量。每個人都有不完美的一面，這是人性的一部分，並非需要被否定或隱藏的。當我們能夠接納自己的所有面向，包括缺點和錯誤，我們才能真正與自己和解，並開始成長和改變。</p><p></p><p><strong>以下建議可以幫助您更珍視自己：</strong></p><p></p><ol class='custom-ordered-list'><li><p>照顧身體：愛自己的第一步是照顧自己的身體。這包括健康飲食、適量的運動和充足的休息。給自己提供營養豐富的食物，定期運動以保持身體健康，並確保每天都有足夠的休息和睡眠時間。</p><p></p></li><li><p>情緒與心理健康：愛自己也意味著關注自己的情緒和心理健康。這包括學會管理壓力、放鬆身心、表達情感和尋求支持。找到一個適合自己的方式來處理壓力，例如冥想、呼吸練習或寫日記。同時，不要害怕向他人尋求幫助或支持。</p><p></p></li><li><p>追求興趣和激發創造力：給自己留出時間和空間追求自己的興趣和愛好。這些活動可以使我們感到快樂和充實，並激發我們的創造力。花時間閱讀、寫作、繪畫、學習樂器或參與任何讓自己感到興奮的活動。</p><p></p></li><li><p>與自己建立良好的對話：學會與自己建立良好的對話，是愛自己的關鍵。這意味著給自己正面的肯定和鼓勵，並學會放過自己的過錯和缺點。要對自己說出積極的話語，關注自己的成就和優點，並接納自己的不完美。</p><p></p></li><li><p>設定健康的界限：愛自己也意味著學會設定健康的界限。這包括學會說「不」，拒絕不符合自己價值觀和需求的事物。保護自己的時間、能量和情感，並與那些給予你正能量和支持的人建立良好的關係。</p></li></ol><p></p><p>上述建議可以幫助您更認識自己，每個人的方式可能有所不同。重要的是要持續關注自己的需要，尊重自己的價值，並以積極和關懷的態度對待自己。無論是在日常生活中還是面對挑戰和困難時，記住愛自己是一個持續的過程，需要耐心和自我寬容。</p>\",\n    \"createdTime\": \"2023-05-23 17:43\",\n    \"category\": \"個人成長\",\n    \"tags\": [\n      \"日常練習\",\n      \"自我察覺\",\n      \"個人成長\"\n    ],\n    \"writerInfo\": {\n      \"name\": \"章家齊\",\n      \"id\": \"1\",\n      \"bio\": \"協助他人釋放心靈的痛苦，尋找內在的平靜與自由。\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    \"comment\":[\n      {\n        \"id\": \"comment-1\",\n        \"userName\": \"大美\",\n        \"content\": \"謝謝家齊作家的分享，讓大家更了解認知偏見是怎麼一回事！\",\n        \"createdTime\": \"2023-05-25 21:50\"\n      }\n      \n      \n      ]\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
     }
   ],
   "rootChildren": [
@@ -434,7 +598,15 @@
     },
     {
       "type": "route",
-      "uuid": "34407bf7-7b36-474d-924b-af69ce5edc94"
+      "uuid": "92e4fd3c-438f-484b-b8e2-c7530262de6d"
+    },
+    {
+      "type": "route",
+      "uuid": "5083b230-c1ef-4d59-8088-09829d6496a3"
+    },
+    {
+      "type": "route",
+      "uuid": "8a141a76-ded0-4166-b2f1-32ca66ca1ca2"
     }
   ],
   "proxyMode": false,

@@ -1,6 +1,8 @@
 <script setup></script>
 <template>
-  <SignUpForm />
+  <div class="bg-sand-100">
+    <SignUpForm />
+  </div>
 </template>
 
 <style scoped></style>

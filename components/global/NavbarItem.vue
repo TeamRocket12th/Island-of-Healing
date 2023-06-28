@@ -129,7 +129,9 @@ const toggleMobileCategory = () => {
               >小島聊癒所</NuxtLink
             >
           </h1>
-          <span class="absolute right-0 top-1/4 z-10 sm:hidden" @click="toggleMobileMenu"
+          <span
+            class="absolute right-0 top-1/4 z-10 cursor-pointer sm:hidden"
+            @click="toggleMobileMenu"
             ><Icon name="ic:outline-menu" size="32"
           /></span>
         </div>
@@ -214,13 +216,13 @@ const toggleMobileCategory = () => {
       class="absolute top-[56px] z-10 h-screen min-h-screen w-screen overflow-auto bg-sand-100 px-4 opacity-90 sm:hidden"
     >
       <span class="block text-right" @click="toggleMobileMenu"
-        ><Icon name="ic:outline-close" size="32" class="my-6 text-primary" />
+        ><Icon name="ic:outline-close" size="32" class="my-6 cursor-pointer text-primary" />
       </span>
       <SearchInput class="mb-3" />
       <ul>
         <li v-if="userData.role === 'writer'" class="border-b border-primary">
           <NuxtLink
-            to="/login"
+            to="/newstory"
             class="block py-5 font-serif-tc font-semibold text-primary"
             @click="toggleMobileMenu"
             >發表文章</NuxtLink
