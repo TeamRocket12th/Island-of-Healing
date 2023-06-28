@@ -126,7 +126,9 @@ const isUserPage = computed(() => {
         </ul>
       </div>
     </nav>
-    <div class="relative h-20 bg-sand-100 sm:h-[142px] sm:pt-5">
+    <div
+      class="relative h-20 border-b border-primary bg-sand-100 sm:h-[142px] sm:border-none sm:pt-5"
+    >
       <div class="container">
         <div class="relative py-4 sm:py-0">
           <h1 class="mb-3 text-left sm:text-center">
@@ -144,7 +146,7 @@ const isUserPage = computed(() => {
         </div>
         <ul
           class="hidden items-center justify-center gap-4 font-serif-tc sm:flex"
-          :class="isUserPage ? 'border-none' : 'border-b border-primary'"
+          :class="isUserPage ? 'border-none' : 'border-primary sm:border-b'"
         >
           <li v-if="userData.role === 'writer'" class="pb-5">
             <NuxtLink to="/newstory" class="text-xl font-semibold leading-normal text-primary"

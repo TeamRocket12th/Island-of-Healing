@@ -9,8 +9,10 @@ declare global {
   interface Writer {
     name: string
     id: string
+    jobTitle: string
     bio: string
     imgUrl: string
+    isFollowing: boolean
   }
 
   // 文章

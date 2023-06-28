@@ -4,7 +4,7 @@
   <div id="userpage" class="bg-sand-100">
     <NavbarItem />
     <div class="flex flex-grow">
-      <SettingSidebar />
+      <SettingSidebar class="hidden md:block" />
       <main id="content" class="container">
         <slot />
       </main>
