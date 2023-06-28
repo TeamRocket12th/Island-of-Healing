@@ -34,7 +34,7 @@ const toggleMobileCategory = () => {
   <header>
     <nav class="bg-secondary">
       <div class="container flex h-14 items-center justify-between">
-        <p class="mb-0 font-serif-tc font-medium text-sand-100">提供心靈療癒的庇護所</p>
+        <p class="font-serif-tc font-medium text-sand-100">提供心靈療癒的庇護所</p>
         <ul class="hidden items-center gap-6 sm:flex">
           <li v-if="!isLogin">
             <NuxtLink to="/login" class="font-serif-tc font-bold text-sand-100">登入</NuxtLink>

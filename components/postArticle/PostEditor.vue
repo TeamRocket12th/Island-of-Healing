@@ -14,11 +14,14 @@ import { Extension } from '@tiptap/core'
 
 const articleTitle = ref('')
 
-const emits = defineEmits(['post-upload', 'article-title'])
+const emits = defineEmits(['post-upload', 'article-title', 'post-rules'])
 const postSent = (value) => {
   emits('post-upload', value)
   const title = articleTitle.value
   emits('article-title', title)
+}
+const rulesShow = (value) => {
+  emits('post-rules', value)
 }
 
 const CustomExtension = Extension.create({
@@ -44,7 +47,11 @@ onMounted(() => {
       CustomExtension,
       StarterKit,
       Document,
-      Paragraph,
+      Paragraph.configure({
+        HTMLAttributes: {
+          class: 'text-p'
+        }
+      }),
       Text,
       Underline,
       Image,
@@ -135,6 +142,9 @@ watchEffect(() => {
 
 <template>
   <div class="container relative grid grid-cols-12 pt-[100px]">
+    <div class="absolute right-0 cursor-pointer" @click="rulesShow(true)">
+      <Icon name="material-symbols:info-outline" size="24" class="text-sand-300" />
+    </div>
     <div class="col-span-8 col-start-3">
       <input
         v-model="articleTitle"
@@ -343,7 +353,7 @@ h3 {
   margin-bottom: 10px;
 }
 
-p {
+.text-p {
   font-size: 16px;
   color: #3d1f03;
   font-family: 'Noto Sans TC';

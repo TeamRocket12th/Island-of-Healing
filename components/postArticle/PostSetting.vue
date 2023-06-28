@@ -52,15 +52,15 @@ const removeTag = (index: number): void => {
   tags.value.splice(index, 1)
 }
 
-const bioInput = ref('')
-const maxCharacterCount = 30
-const characterCount = ref(`(${bioInput.value.length}/${maxCharacterCount})`)
+const summaryInput = ref('')
+const maxContentCount = 30
+const summaryCount = ref(`(${summaryInput.value.length}/${maxContentCount})`)
 
-watch(bioInput, (newValue) => {
-  characterCount.value = `(${newValue.length}/${maxCharacterCount})`
+watch(summaryInput, (newValue) => {
+  summaryCount.value = `(${newValue.length}/${maxContentCount})`
 })
 
-const textLengthRule = (value) => {
+const textLengthRule = (value: string) => {
   if (value.length >= 30 || value.length === 30) {
     return '*摘要不超過30個字'
   } else {
@@ -180,7 +180,7 @@ const textLengthRule = (value) => {
           <label for="userIntro" class="mb-2 block text-primary"> 內容摘要</label>
           <VField
             id="userIntro"
-            v-model="bioInput"
+            v-model="summaryInput"
             name="userIntro"
             as="textarea"
             label="*內容摘要"
@@ -192,7 +192,7 @@ const textLengthRule = (value) => {
           />
           <div class="relative flex">
             <VErrorMessage name="userIntro" class="text-primary" />
-            <p class="absolute right-0">{{ characterCount }}</p>
+            <p class="absolute right-0">{{ summaryCount }}</p>
           </div>
         </VForm>
       </div>
