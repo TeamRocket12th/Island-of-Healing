@@ -79,10 +79,4 @@ const sentOrder = (value: Boolean) => {
   </div>
 </template>
 
-<style scoped>
-.table :where(th, td, ) {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 0px;
-}
-</style>
+<style scoped></style>
