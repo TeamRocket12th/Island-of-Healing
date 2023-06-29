@@ -15,6 +15,29 @@ declare global {
     isFollowing: boolean
   }
 
+  // 作者個人頁面
+
+  // 作者個人文章
+  interface Work {
+    id: string
+    title: string
+    coverUrl: string
+    summary: string
+    createdDate: string
+  }
+
+  // 作者個人資訊
+  interface WriterInfo {
+    id: string
+    name: string
+    jobTitle: string
+    bio: string
+    imgUrl: string
+    followerNum: number
+    followingNum: number
+    work: Work[]
+  }
+
   // 文章
   interface Article {
     id: string

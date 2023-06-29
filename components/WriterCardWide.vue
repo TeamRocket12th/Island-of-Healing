@@ -29,7 +29,10 @@ const shortenBio = (bio: string) => {
             <img :src="writer.imgUrl" alt="writer" />
           </div>
           <div>
-            <p class="font-medium text-primary">{{ writer.name }}</p>
+            <NuxtLink :to="`/writer/${writer.id}`"
+              ><p class="font-medium text-primary">{{ writer.name }}</p></NuxtLink
+            >
+
             <p class="text-sm text-primary-dark">
               {{ writer.jobTitle }}。{{ shortenBio(writer.bio) }}
             </p>
@@ -39,7 +42,7 @@ const shortenBio = (bio: string) => {
           v-if="writer.isFollowing"
           class="flex items-center whitespace-nowrap rounded border bg-secondary px-2 py-1 text-sm text-white"
         >
-          <Icon name="ic:outline-check" size="20" />追蹤中
+          <Icon name="material-symbols:fitbit-check-small" size="20" />追蹤中
         </button>
         <button
           v-else
