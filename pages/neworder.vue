@@ -8,8 +8,7 @@ const orderForm = (value: boolean) => {
 <template>
   <main>
     <OrderForm class="relative" @custom-order="orderForm" />
-    <OrderConfirm v-show="orderStatus" @custom-order="orderForm" />
-    <AlertModal />
+    <OrderConfirm v-if="orderStatus" @custom-order="orderForm" />
   </main>
 </template>
 

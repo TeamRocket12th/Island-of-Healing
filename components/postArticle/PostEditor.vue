@@ -10,7 +10,6 @@ import { BulletList } from '@tiptap/extension-bullet-list'
 import { OrderedList } from '@tiptap/extension-ordered-list'
 import { Link } from '@tiptap/extension-link'
 import { Editor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
-import { Extension } from '@tiptap/core'
 
 const articleTitle = ref('')
 
@@ -24,18 +23,6 @@ const rulesShow = (value) => {
   emits('post-rules', value)
 }
 
-const CustomExtension = Extension.create({
-  name: 'custom_extension',
-  onKeyDown({ event, state, dispatch }) {
-    if (event.key === 'Enter') {
-      event.preventDefault()
-      dispatch(state.tr.insertText('\n'))
-      return true
-    }
-    return false
-  }
-})
-
 const editor = ref(null)
 onMounted(() => {
   editor.value = new Editor({
@@ -43,8 +30,6 @@ onMounted(() => {
       Paragraph.configure({
         addKeyboardShortcuts: false
       }),
-      Extension,
-      CustomExtension,
       StarterKit,
       Document,
       Paragraph.configure({

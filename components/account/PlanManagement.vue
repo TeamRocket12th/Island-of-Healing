@@ -1,4 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const emits = defineEmits(['plan-cancel'])
+const CancelPlan = (value: boolean) => {
+  emits('plan-cancel', value)
+}
+</script>
 <template>
   <div class="grid grid-cols-12 border border-primary bg-sand-100">
     <h2 class="col-span-2 pl-10 pt-10 font-serif-tc text-2xl font-bold text-primary">變更訂閱</h2>
@@ -14,7 +19,13 @@
         </div>
         <div class="mb-4 border-[0.5px] border-secondary"></div>
         <div class="flex justify-end">
-          <button class="border-b border-primary text-primary">取消訂閱</button>
+          <button class="border-b border-primary text-primary" @click="CancelPlan(true)">
+            取消訂閱
+          </button>
+        </div>
+        <div v-if="false" class="flex justify-between">
+          <p class="text-sand-300">已退訂</p>
+          <button class="border-primary text-primary">重新訂閱</button>
         </div>
       </div>
       <div class="border border-secondary bg-white p-4">
