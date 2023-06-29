@@ -6,8 +6,10 @@ if (error.value) {
 }
 
 const messageId = ref(1)
+const emit = defineEmits(['getMessageInfo'])
 const renderMessage = (message: Message) => {
   messageId.value = message.id
+  emit('getMessageInfo', message)
 }
 </script>
 <template>
