@@ -16,8 +16,7 @@ const isOrderOK = ref(true)
 
 <template>
   <div class="mb-28 mt-[60px] grid grid-cols-12 rounded-lg px-10 pb-14 pt-10">
-    <div class="col-span-3"></div>
-    <div class="col-span-6 rounded border bg-white shadow">
+    <div class="col-span-6 col-start-4 rounded border bg-white shadow">
       <div v-if="isOrderOK">
         <div class="mb-4 flex items-center justify-between gap-2 p-4">
           <div class="flex gap-2">
@@ -57,7 +56,6 @@ const isOrderOK = ref(true)
       </div>
     </div>
   </div>
-  <div class="col-span-3"></div>
 </template>
 
 <style scoped></style>

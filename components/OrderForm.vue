@@ -11,7 +11,7 @@ const sentOrder = (value: boolean) => {
 
 <template>
   <section class="container grid grid-cols-12 border border-primary bg-white px-10 pb-14 pt-10">
-    <div class="col-span-7 mr-6 pb-[204px]">
+    <div class="col-span-7 mr-6">
       <h2 class="mb-10 font-serif-tc text-2xl font-bold text-primary">顧客資料</h2>
       <form class="rounded border-[0.5px] border-secondary px-6 py-[26px]">
         <div>
@@ -46,7 +46,7 @@ const sentOrder = (value: boolean) => {
         </div>
       </form>
     </div>
-    <div class="col-span-5 rounded border-[0.5px] border-secondary pl-6 pr-6">
+    <div class="col-span-5 rounded border-[0.5px] border-secondary pb-[204px] pl-6 pr-6">
       <div class="mb-11 pt-6">
         <p
           class="mb-4 border-b-[0.5px] border-primary pb-6 font-serif-tc text-2xl font-bold text-primary"
