@@ -60,12 +60,16 @@ const handleUnLock = () => {
     >
     <div class="mb-5 flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <div class="h-9 w-9 overflow-hidden rounded-full">
-          <img src="https://picsum.photos/32" alt="writer" />
+        <div class="h-9 w-9">
+          <img src="https://picsum.photos/32" alt="writer" class="h-full w-full rounded-full" />
         </div>
         <div>
           <p class="text-xs">作家</p>
-          <p class="text-sm font-medium">{{ articleDetail?.writerInfo.name }}</p>
+          <p class="text-sm font-medium">
+            <NuxtLink :to="`/writer/${articleDetail?.writerInfo.id}`">{{
+              articleDetail?.writerInfo.name
+            }}</NuxtLink>
+          </p>
         </div>
       </div>
       <div>
@@ -126,8 +130,10 @@ const handleUnLock = () => {
         </button>
       </div>
       <div>
-        <p class="font-medium text-primary">作家·{{ articleDetail.writerInfo.name }}</p>
-        <p class="font-light text-primary-dark">{{ articleDetail.writerInfo.bio }}</p>
+        <NuxtLink :to="`/writer/${articleDetail?.writerInfo.id}`">
+          <p class="font-medium text-primary">作家·{{ articleDetail.writerInfo.name }}</p>
+          <p class="font-light text-primary-dark">{{ articleDetail.writerInfo.bio }}</p>
+        </NuxtLink>
       </div>
     </div>
     <div>
