@@ -5,7 +5,7 @@ const userData = {
   plan: {
     project: '月付讀到飽專案',
     paymentMethod: '信用卡',
-    price: '	US $120'
+    price: '	TW $120'
   }
 }
 const emits = defineEmits(['custom-order'])
@@ -15,7 +15,7 @@ const sentOrder = (value: Boolean) => {
 </script>
 
 <template>
-  <div class="absolute left-1/2 top-2/3 w-full -translate-x-1/2 -translate-y-1/3">
+  <div class="absolute left-1/2 top-[56%] w-full -translate-x-1/2 -translate-y-1/3">
     <div class="mb-10 grid grid-cols-12 rounded-lg pb-14 pt-20">
       <div class="relative col-span-8 col-start-3 mt-20 rounded-lg bg-white shadow">
         <Icon
@@ -38,27 +38,25 @@ const sentOrder = (value: Boolean) => {
             </div>
           </div>
           <div class="mb-[15px] flex justify-between border-b-[0.5px] border-secondary py-2">
-            <p class="text-secondary">月付讀到飽專案</p>
+            <p class="text-secondary">{{ userData.plan.project }}</p>
             <div class="flex gap-[126px] text-secondary">
-              <span>TW $120</span>
-              <span>TW $120</span>
+              <span>{{ userData.plan.price }}</span>
+              <span>{{ userData.plan.price }}</span>
             </div>
           </div>
         </div>
-        <div
-          class="m-6 overflow-x-auto rounded border-[0.5px] border-secondary pb-12 pl-3 pr-[136px] pt-3"
-        >
+        <div class="m-6 rounded border-[0.5px] border-secondary pb-12 pl-3 pr-[136px] pt-3">
           <h3 class="mb-2 text-2xl font-medium text-primary">付款資訊</h3>
           <div class="flex justify-between">
             <div>
               <h4 class="my-2 font-medium text-primary">付款方式</h4>
-              <span class="text-secondary">信用卡</span>
+              <span class="text-secondary">{{ userData.plan.paymentMethod }}</span>
             </div>
             <div>
-              <h4 class="mb-2 font-medium text-primary">顧客資訊</h4>
+              <h4 class="my-2 font-medium text-primary">顧客資訊</h4>
               <div>
-                <p class="mb-1 text-secondary">聯絡人：林小明</p>
-                <p class="text-secondary">聯絡信箱：abc0000@gmail.com</p>
+                <p class="mb-1 text-secondary">聯絡人：{{ userData.userName }}</p>
+                <p class="text-secondary">聯絡信箱：{{ userData.userMail }}</p>
               </div>
             </div>
           </div>

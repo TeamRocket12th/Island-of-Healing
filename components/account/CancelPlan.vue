@@ -6,7 +6,7 @@ const CancelPlan = (value: boolean) => {
 </script>
 
 <template>
-  <div class="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2">
+  <div class="absolute left-1/2 top-2/3 w-full -translate-x-1/2 -translate-y-1/2">
     <div class="relative">
       <div
         class="absolute left-1/2 top-2/3 h-[210px] w-[500px] -translate-x-1/3 -translate-y-1/3 rounded bg-white shadow"
