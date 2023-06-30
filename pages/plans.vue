@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <PlanCard />
+  <div class="bg-sand-100"><PlanCard /></div>
 </template>
 
 <style scoped></style>
