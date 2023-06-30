@@ -1,33 +1,119 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { myWorkStore } from '~/stores/mywork'
+const useMyworkStore = myWorkStore()
+
+const { selectedCategory, selectedYear, progressTab } = storeToRefs(useMyworkStore)
+const { getCategory, getYear } = useMyworkStore
+
 defineProps<{ nowPage: string }>()
+const categories = ['個人成長', '情緒察覺', '親密關係', '日常練習']
+const years = ['2020年', '2021年', '2022年', '2023年', '2024年']
+const isCategoriesOpen = ref(false)
+const isYearsOpen = ref(false)
+
+const toggleCategories = () => {
+  isCategoriesOpen.value = !isCategoriesOpen.value
+}
+
+const toggleYears = () => {
+  isYearsOpen.value = !isYearsOpen.value
+}
+
+const reset = () => {
+  getCategory('選擇分類')
+  getYear('選擇時間')
+}
 </script>
 <template>
-  <div class="flex justify-between border border-[#D9D9D9] py-[10px] pl-8 pr-4">
+  <div class="flex w-full justify-between py-2 pl-8 pr-4">
     <div v-if="nowPage === 'articleList'" class="flex items-center">
-      <span class="mr-11 px-2">全部</span>
-      <div
-        class="mr-3 flex cursor-pointer items-center rounded border border-[#7B7B7B] px-3 py-[2px] text-[#7B7B7B]"
+      <span
+        class="mr-11 cursor-pointer px-2 pb-2 text-primary"
+        :class="{
+          'border-b-2 border-primary':
+            selectedCategory === '選擇分類' && selectedYear === '選擇時間'
+        }"
+        @click="reset"
+        >全部</span
       >
-        <span>選擇分類</span>
-        <Icon name="ic:outline-keyboard-arrow-down" size="24" />
+      <div
+        class="relative mr-4 flex cursor-pointer items-center justify-center rounded border border-primary bg-white px-2 py-1 text-primary"
+        @click="toggleCategories"
+      >
+        <span class="text-sm leading-normal">{{ selectedCategory }}</span>
+        <Icon name="material-symbols:arrow-drop-down" size="20" />
+        <ul
+          v-if="isCategoriesOpen"
+          class="absolute top-[105%] rounded border border-primary bg-white text-sm"
+        >
+          <li
+            v-for="(c, index) in categories"
+            :key="index"
+            class="px-4 py-1 hover:bg-secondary hover:text-sand-100"
+            :class="{ 'border-b border-[edeae6]': index !== categories.length - 1 }"
+            @click="getCategory(c)"
+          >
+            {{ c }}
+          </li>
+        </ul>
       </div>
       <div
-        class="flex cursor-pointer items-center rounded border border-[#7B7B7B] px-3 py-[2px] text-[#7B7B7B]"
+        class="relative flex cursor-pointer items-center justify-center rounded border border-primary bg-white px-2 py-1 text-primary"
+        @click="toggleYears"
       >
-        <span>選擇時間</span>
-        <Icon name="ic:outline-keyboard-arrow-down" size="24" class="text-[#7B7B7B]" />
+        <span class="text-sm leading-normal">{{ selectedYear }}</span>
+        <Icon name="material-symbols:arrow-drop-down" size="20" />
+        <ul
+          v-if="isYearsOpen"
+          class="absolute top-[105%] rounded border border-primary bg-white text-sm"
+        >
+          <li
+            v-for="(y, index) in years"
+            :key="index"
+            class="px-4 py-1 hover:bg-secondary hover:text-sand-100"
+            :class="{ 'border-b border-[edeae6]': index !== years.length - 1 }"
+            @click="getYear(y)"
+          >
+            {{ y }}
+          </li>
+        </ul>
       </div>
     </div>
     <div v-if="nowPage === 'progress'">
-      <ul class="flex gap-8">
-        <li>全部</li>
-        <li>待審核</li>
-        <li>審核中</li>
-        <li>審核結果</li>
+      <ul class="flex gap-8 text-sand-300">
+        <li
+          class="cursor-pointer font-medium md:px-4 md:py-2"
+          :class="{ 'border-b-2 border-primary text-primary': progressTab === '全部' }"
+          @click="progressTab = '全部'"
+        >
+          全部
+        </li>
+        <li
+          class="cursor-pointer font-medium md:px-4 md:py-2"
+          :class="{ 'border-b-2 border-primary text-primary': progressTab === '待審核' }"
+          @click="progressTab = '待審核'"
+        >
+          待審核
+        </li>
+        <li
+          class="cursor-pointer font-medium md:px-4 md:py-2"
+          :class="{ 'border-b-2 border-primary text-primary': progressTab === '審核中' }"
+          @click="progressTab = '審核中'"
+        >
+          審核中
+        </li>
+        <li
+          class="md:py-2font-medium cursor-pointer md:px-4"
+          :class="{ 'border-b-2 border-primary text-primary': progressTab === '審核結果' }"
+          @click="progressTab = '審核結果'"
+        >
+          審核結果
+        </li>
       </ul>
     </div>
     <div v-if="nowPage === 'drafts'">
-      <span class="mr-11 px-2">全部</span>
+      <span class="mr-11 border-b-2 border-primary px-4 pb-2 text-primary">全部</span>
     </div>
     <div v-if="nowPage === 'dashboard'" class="flex w-full items-center justify-between">
       <span class="mr-11 font-medium">貼文分析</span>
@@ -47,7 +133,7 @@ defineProps<{ nowPage: string }>()
     <button
       v-if="nowPage !== 'dashboard'"
       type="button"
-      class="rounded border border-[#828282] px-3 text-[#828282]"
+      class="rounded bg-secondary px-2 py-1 text-sm text-sand-100 md:h-8"
     >
       全部刪除
     </button>

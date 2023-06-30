@@ -9,7 +9,6 @@ const getWriterInfo = async () => {
     const res: ApiResponse = await $fetch(`${apiBase}/writer/${route.params.id}`)
     if (res.statusCode === 200) {
       writerInfo.value = res.data
-      console.log(writerInfo.value)
     }
   } catch (error) {
     console.log(error)
