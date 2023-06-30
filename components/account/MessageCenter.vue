@@ -6,10 +6,24 @@ if (error.value) {
 }
 
 const messageId = ref(1)
-const messageName = ref()
+const userName = ref('')
+const firstId = ref()
+const firstName = ref('')
+const messageobj = ref({})
+
+onBeforeUpdate(() => {
+  messageobj.value = messages.value
+  if (messageId !== 1) {
+    const objId = messageobj.value[0].id
+    firstId.value = objId
+    const objName = messageobj.value[0].name
+    firstName.value = objName
+  }
+})
+
 const renderMessage = (message: Message) => {
   messageId.value = message.id
-  messageName.value = message.name
+  userName.value = message.name
 }
 </script>
 <template>
@@ -44,12 +58,11 @@ const renderMessage = (message: Message) => {
         </li>
       </ul>
     </div>
-    <div
-      class="col-span-12 hidden border border-[#CDCDCD] bg-sand-100 pb-[390px] lg:col-span-8 lg:block"
-    >
-      <div class="items-centbg-error flex justify-end border-b border-[#CDCDCD] bg-sand-200 p-3">
-        <p class="mr-3">第{{ messageId }}個，共{{ messages.length }}個。</p>
-
+    <div class="col-span-8 border border-[#CDCDCD] bg-white pb-[390px]">
+      <div class="items-centbg-error flex justify-end border-b border-[#CDCDCD] p-3">
+        <p class="mr-3">
+          第{{ messageId === 1 ? firstId : messageId }}個，共{{ messages.length }}個。
+        </p>
         <div class="mr-6 flex">
           <Icon name="mdi:chevron-left" size="22" class="cursor-pointer text-[#1C1B1F]" />
           <Icon name="mdi:chevron-right" size="22" class="cursor-pointer text-[#1C1B1F]" />
@@ -58,17 +71,17 @@ const renderMessage = (message: Message) => {
       </div>
       <div class="mb-[102px] ml-6 mt-6 flex items-center">
         <div class="h-[35px] w-[35px] rounded-full bg-[#D9D9D9]"></div>
-        <h4 class="ml-2">{{ messageName }}</h4>
+        <h4 class="ml-2">{{ userName ? userName : firstName }}</h4>
       </div>
-      <p class="mb-8 flex justify-center leading-6">
-        嗨！ {{}}，<br />
+      <p class="mb-8 flex justify-center">
+        嗨！ mou0429，<br />
         最近過得好嗎！<br />
         我是告解室管理員，很高興你打開了這封信！<br />
         提醒您，您已經3個月沒變更密碼囉！為了您的帳戶安全，建議您 <br />
         快去變更吧！
       </p>
       <button
-        class="btn mx-auto flex h-[40px] w-[94px] justify-center bg-secondary text-white hover:bg-primary"
+        class="btn mx-auto flex h-[44px] w-[148px] justify-center bg-[#828282] text-white hover:bg-slate-500"
       >
         立即變更
       </button>
