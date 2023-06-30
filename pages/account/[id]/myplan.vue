@@ -3,19 +3,18 @@ definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
 })
-const modalUse = ref()
-const cancelModalShow = (value: boolean) => {
+const modalUse = ref(false)
+const showCancelModal = (value: boolean) => {
   modalUse.value = value
-  console.log(modalUse.value)
 }
-const cancelModalHidden = (value: boolean) => {
+const hideCancelModal = (value: boolean) => {
   modalUse.value = value
 }
 </script>
 <template>
   <div>
-    <PlanManagement class="relative" @plan-cancel="cancelModalShow" />
-    <CancelPlan v-if="modalUse" @plan-cancel="cancelModalHidden" />
+    <PlanManagement class="relative" @plan-cancel="showCancelModal" />
+    <CancelPlan v-if="modalUse" @plan-cancel="hideCancelModal" />
   </div>
 </template>
 

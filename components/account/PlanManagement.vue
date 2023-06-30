@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const emits = defineEmits(['plan-cancel'])
-const CancelPlan = (value: boolean) => {
+const cancelPlan = (value: boolean) => {
   emits('plan-cancel', value)
 }
 </script>
@@ -19,7 +19,7 @@ const CancelPlan = (value: boolean) => {
         </div>
         <div class="mb-4 border-[0.5px] border-secondary"></div>
         <div class="flex justify-end">
-          <button class="border-b border-primary text-primary" @click="CancelPlan(true)">
+          <button class="border-b border-primary text-primary" @click="cancelPlan(true)">
             取消訂閱
           </button>
         </div>
