@@ -54,7 +54,9 @@ onMounted(() => {
       }),
       Text,
       Underline,
-      Image,
+      Image.configure({
+        allowBase64: true
+      }),
       Heading.configure({
         levels: [2, 3]
       }),
@@ -132,12 +134,56 @@ watchEffect(() => {
     const json = editor.value.getJSON()
     const html = editor.value.getHTML()
     newJson.value = json
-    console.log(newJson.value)
     htmlOutput.value = html
-    console.log(htmlOutput.value)
-    // console.log(content)
+    // console.log(htmlOutput.value)
+    console.log(newJson.value)
   }
 })
+
+// const previewImage = ref(null)
+// const handleDragOver = (event) => {
+//   event.preventDefault()
+// }
+// const handleDrop = (event) => {
+//   event.preventDefault()
+//   const file = event.dataTransfer.files[0]
+
+//   const reader = new FileReader()
+//   reader.onload = () => {
+//     const base64Data = reader.result
+//     previewImage.value = base64Data
+//     console.log(previewImage.value)
+//   }
+//   reader.readAsDataURL(file)
+//   const imageSrc = previewImage.value
+//   if (imageSrc) {
+//     editor.value.commands.insertContent({
+//       type: 'image',
+//       attrs: {
+//         src: imageSrc
+//       }
+//     })
+//   }
+//   console.log(imageSrc)
+// }
+// onUnmounted(() => {
+//   if (previewImage.value) {
+//     URL.revokeObjectURL(previewImage.value)
+//   }
+// })
+
+// const insertImage = () => {
+//   const imageSrc = previewImage.value
+//   if (imageSrc) {
+//     editor.value.commands.insertContent({
+//       type: 'image',
+//       attrs: {
+//         src: imageSrc
+//       }
+//     })
+//   }
+//   console.log(imageSrc)
+// }
 </script>
 
 <template>
@@ -149,7 +195,7 @@ watchEffect(() => {
       <input
         v-model="articleTitle"
         type="text"
-        class="h mb-10 w-full bg-sand-100 p-4 text-4xl text-primary outline-none placeholder:text-sand-300"
+        class="mb-10 w-full bg-sand-100 p-4 text-4xl text-primary outline-none placeholder:text-sand-300"
         placeholder="請輸入標題"
       />
       <div class="mb-6">
@@ -283,6 +329,15 @@ watchEffect(() => {
           <editor-content ref="content" :editor="editor" class="p-2" />
         </div>
         <div v-dompurify-html="newHtml"></div>
+        <!-- <div
+          class="h-[200px] max-w-full overflow-hidden bg-sand-200 bg-cover bg-center"
+          :style="{ backgroundImage: `url(${previewImage})` }"
+          @dragover.prevent="handleDragOver"
+          @drop.prevent="handleDrop"
+        >
+          <div v-if="!previewImage">拖曳圖片到此處</div>
+        </div> -->
+        <div></div>
       </div>
     </div>
     <div class="col-span-8 col-start-3 mb-20 flex justify-end gap-3">
@@ -298,9 +353,9 @@ watchEffect(() => {
       >
         發表貼文
       </button>
-      <!-- <button @click="editor.commands.insertContent('<br></br>')">test</button> -->
-      <!-- <button @click="editor.commands.newlineInCode()">test2</button> -->
-      <!-- <button @click="editor.commands.setContent(`${htmlOutput}`)">test</button> -->
+      <!-- <button @click="insertImage" @dragover.prevent="handleDragOver" @drop.prevent="handleDrop">
+        test
+      </button> -->
     </div>
   </div>
 </template>
@@ -358,7 +413,6 @@ h3 {
   color: #3d1f03;
   font-family: 'Noto Sans TC';
   font-weight: 300;
-  margin-bottom: 0;
 }
 
 .bubble-menu {

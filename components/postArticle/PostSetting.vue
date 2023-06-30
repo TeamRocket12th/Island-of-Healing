@@ -8,6 +8,7 @@ const openFilePicker = (): void => {
 }
 
 const selectFile = (event: Event): void => {
+  previewImage.value = ''
   const inputElement = event.target as HTMLInputElement
   const file = inputElement.files?.[0]
   if (file) {
@@ -67,6 +68,28 @@ const textLengthRule = (value: string) => {
     return true
   }
 }
+
+const previewImage = ref<string | null>(null)
+const handleDragOver = (event: DragEvent) => {
+  event.preventDefault()
+}
+const handleDrop = (event: DragEvent) => {
+  event.preventDefault()
+  selectedImage.value = ''
+  const file = event.dataTransfer?.files[0] as File
+  const reader = new FileReader()
+  reader.onload = () => {
+    const base64Data = reader.result as string
+    previewImage.value = base64Data
+  }
+  reader.readAsDataURL(file)
+}
+
+onUnmounted(() => {
+  if (previewImage.value) {
+    URL.revokeObjectURL(previewImage.value)
+  }
+})
 </script>
 <template>
   <div
@@ -76,7 +99,12 @@ const textLengthRule = (value: string) => {
       <div class="px-[54px] py-[54px]">
         <h3 class="mb-3 text-base">文章封面</h3>
         <div>
-          <div class="h-[200px] max-w-full overflow-hidden bg-sand-200">
+          <div
+            class="h-[200px] max-w-full overflow-hidden bg-sand-200 bg-cover bg-center"
+            :style="{ backgroundImage: `url(${previewImage})` }"
+            @dragover.prevent="handleDragOver"
+            @drop.prevent="handleDrop"
+          >
             <img
               v-if="selectedImage"
               class="pointer-events-none h-[200px] w-full"
