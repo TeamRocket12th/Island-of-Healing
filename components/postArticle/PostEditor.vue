@@ -9,9 +9,25 @@ import { Image } from '@tiptap/extension-image'
 import { BulletList } from '@tiptap/extension-bullet-list'
 import { OrderedList } from '@tiptap/extension-ordered-list'
 import { Link } from '@tiptap/extension-link'
+import { HardBreak } from '@tiptap/extension-hard-break'
 import { Editor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
+import { Node } from '@tiptap/core'
 
 const articleTitle = ref('')
+
+const CustomParagraphNode = Node.create({
+  name: 'custom_paragraph',
+  group: 'block',
+  parseHTML: () => [{ type: 'custom_paragraph' }],
+  renderHTML: () => ['p', {}, []],
+  addKeyboardShortcuts: () => {
+    return {
+      Enter: ({ editor }) => {
+        editor.commands.setHardBreak()
+      }
+    }
+  }
+})
 
 const emits = defineEmits(['post-upload', 'article-title', 'post-rules'])
 const postSent = (value) => {
@@ -27,9 +43,8 @@ const editor = ref(null)
 onMounted(() => {
   editor.value = new Editor({
     extensions: [
-      Paragraph.configure({
-        addKeyboardShortcuts: false
-      }),
+      CustomParagraphNode,
+      HardBreak,
       StarterKit,
       Document,
       Paragraph.configure({
@@ -134,7 +149,7 @@ watchEffect(() => {
       <input
         v-model="articleTitle"
         type="text"
-        class="mb-10 w-full bg-sand-100 text-4xl text-primary outline-none placeholder:text-sand-300"
+        class="h mb-10 w-full bg-sand-100 p-4 text-4xl text-primary outline-none placeholder:text-sand-300"
         placeholder="請輸入標題"
       />
       <div class="mb-6">
@@ -343,7 +358,7 @@ h3 {
   color: #3d1f03;
   font-family: 'Noto Sans TC';
   font-weight: 300;
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 
 .bubble-menu {
@@ -356,5 +371,8 @@ h3 {
 .myButton {
   border: solid 1px black;
   font-size: 20px;
+}
+.ProseMirror-trailingBreak {
+  display: none;
 }
 </style>
