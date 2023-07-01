@@ -26,12 +26,12 @@ const toggleshowCategory = ref(false)
 const selectCategory = (category: string): void => {
   selectedCategory.value = category
 }
-watch(selectedCategory, (newValue) => {
-  console.log('category:', newValue)
-})
+
+// watch(selectedCategory, (newValue) => {
+//   console.log('category:', newValue)
+// })
 
 const toggleCategory = (status: boolean): void => {
-  console.log(status)
   toggleshowCategory.value = status
 }
 

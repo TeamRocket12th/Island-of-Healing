@@ -15,6 +15,7 @@ import { Node } from '@tiptap/core'
 
 const articleTitle = ref('')
 
+// 新增節點
 const CustomParagraphNode = Node.create({
   name: 'custom_paragraph',
   group: 'block',
@@ -121,9 +122,9 @@ const swapOff = () => {
 const newHtml = ref('')
 const sentBtn = () => {
   const html = editor.value.getHTML()
-  const json = editor.value.getJSON()
-  console.log(html)
-  console.log(json)
+  // const json = editor.value.getJSON()
+  // console.log(html)
+  // console.log(json)
   newHtml.value = html
 }
 
@@ -136,58 +137,58 @@ watchEffect(() => {
     newJson.value = json
     htmlOutput.value = html
     // console.log(htmlOutput.value)
-    console.log(newJson.value)
+    // console.log(newJson.value)
   }
 })
 
-// const previewImage = ref(null)
-// const handleDragOver = (event) => {
-//   event.preventDefault()
-// }
-// const handleDrop = (event) => {
-//   event.preventDefault()
-//   const file = event.dataTransfer.files[0]
+// 圖片拖曳
+const previewImage = ref(null)
+const handleDragOver = (event) => {
+  event.preventDefault()
+}
+const handleDrop = (event) => {
+  event.preventDefault()
+  const file = event.dataTransfer.files[0]
 
-//   const reader = new FileReader()
-//   reader.onload = () => {
-//     const base64Data = reader.result
-//     previewImage.value = base64Data
-//     console.log(previewImage.value)
-//   }
-//   reader.readAsDataURL(file)
-//   const imageSrc = previewImage.value
-//   if (imageSrc) {
-//     editor.value.commands.insertContent({
-//       type: 'image',
-//       attrs: {
-//         src: imageSrc
-//       }
-//     })
-//   }
-//   console.log(imageSrc)
-// }
-// onUnmounted(() => {
-//   if (previewImage.value) {
-//     URL.revokeObjectURL(previewImage.value)
-//   }
-// })
+  const reader = new FileReader()
+  reader.onload = () => {
+    const base64Data = reader.result
+    previewImage.value = base64Data
+    // console.log(previewImage.value)
+  }
+  reader.readAsDataURL(file)
+}
+onUnmounted(() => {
+  if (previewImage.value) {
+    URL.revokeObjectURL(previewImage.value)
+  }
+})
+watch(previewImage, (newValue) => {
+  if (newValue) {
+    insertImage()
+  }
+})
 
-// const insertImage = () => {
-//   const imageSrc = previewImage.value
-//   if (imageSrc) {
-//     editor.value.commands.insertContent({
-//       type: 'image',
-//       attrs: {
-//         src: imageSrc
-//       }
-//     })
-//   }
-//   console.log(imageSrc)
-// }
+const insertImage = () => {
+  const imageSrc = previewImage.value
+  if (imageSrc) {
+    editor.value.commands.insertContent({
+      type: 'image',
+      attrs: {
+        src: imageSrc
+      }
+    })
+  }
+  console.log(imageSrc)
+}
 </script>
 
 <template>
-  <div class="container relative grid grid-cols-12 pt-[100px]">
+  <div
+    class="container relative grid grid-cols-12 pt-[100px]"
+    @dragover.prevent="handleDragOver"
+    @drop.prevent="handleDrop"
+  >
     <div class="absolute right-0 cursor-pointer" @click="rulesShow(true)">
       <Icon name="material-symbols:info-outline" size="24" class="text-sand-300" />
     </div>
@@ -329,15 +330,6 @@ watchEffect(() => {
           <editor-content ref="content" :editor="editor" class="p-2" />
         </div>
         <div v-dompurify-html="newHtml"></div>
-        <!-- <div
-          class="h-[200px] max-w-full overflow-hidden bg-sand-200 bg-cover bg-center"
-          :style="{ backgroundImage: `url(${previewImage})` }"
-          @dragover.prevent="handleDragOver"
-          @drop.prevent="handleDrop"
-        >
-          <div v-if="!previewImage">拖曳圖片到此處</div>
-        </div> -->
-        <div></div>
       </div>
     </div>
     <div class="col-span-8 col-start-3 mb-20 flex justify-end gap-3">
