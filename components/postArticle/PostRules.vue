@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const emits = defineEmits(['post-rules'])
-const rulesShow = (value) => {
+const rulesShow = (value: boolean) => {
   emits('post-rules', value)
 }
 </script>

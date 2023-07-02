@@ -26,8 +26,8 @@ const reset = () => {
 }
 </script>
 <template>
-  <div class="flex w-full justify-between py-2 pl-8 pr-4">
-    <div v-if="nowPage === 'articleList'" class="flex items-center">
+  <div class="flex w-full justify-between">
+    <div v-if="nowPage === 'articleList'" class="mb-2 flex items-center">
       <span
         class="mr-11 cursor-pointer px-2 pb-2 text-primary"
         :class="{
@@ -81,7 +81,7 @@ const reset = () => {
       </div>
     </div>
     <div v-if="nowPage === 'progress'">
-      <ul class="flex gap-8 text-sand-300">
+      <ul class="mb-2 flex gap-8 text-sand-300">
         <li
           class="cursor-pointer font-medium md:px-4 md:py-2"
           :class="{ 'border-b-2 border-primary text-primary': progressTab === '全部' }"
@@ -104,7 +104,7 @@ const reset = () => {
           審核中
         </li>
         <li
-          class="md:py-2font-medium cursor-pointer md:px-4"
+          class="cursor-pointer font-medium md:px-4 md:py-2"
           :class="{ 'border-b-2 border-primary text-primary': progressTab === '審核結果' }"
           @click="progressTab = '審核結果'"
         >
@@ -113,18 +113,18 @@ const reset = () => {
       </ul>
     </div>
     <div v-if="nowPage === 'drafts'">
-      <span class="mr-11 border-b-2 border-primary px-4 pb-2 text-primary">全部</span>
+      <span class="mb-2 mr-11 border-b-2 border-primary px-4 pb-2 text-primary">全部</span>
     </div>
-    <div v-if="nowPage === 'dashboard'" class="flex w-full items-center justify-between">
-      <span class="mr-11 font-medium">貼文分析</span>
-      <div class="flex gap-3">
+    <div v-if="nowPage === 'dashboard'" class="mb-[18px] flex w-full items-center justify-between">
+      <p class="text-xl font-medium text-primary">貼文分析</p>
+      <div class="flex items-center gap-3">
         <div
-          class="flex cursor-pointer items-center rounded-lg border border-[#828282] px-2 py-1 text-sm text-[#828282]"
+          class="flex cursor-pointer items-center rounded border border-primary px-2 py-1 text-sm text-primary"
         >
           選擇年份<Icon name="ic:round-arrow-drop-down" size="24" />
         </div>
         <div
-          class="flex cursor-pointer items-center rounded-lg border border-[#828282] px-2 py-1 text-sm text-[#828282]"
+          class="flex cursor-pointer items-center rounded border border-primary px-2 py-1 text-sm text-primary"
         >
           選擇月份<Icon name="ic:round-arrow-drop-down" size="24" />
         </div>
@@ -133,7 +133,7 @@ const reset = () => {
     <button
       v-if="nowPage !== 'dashboard'"
       type="button"
-      class="rounded bg-secondary px-2 py-1 text-sm text-sand-100 md:h-8"
+      class="mb-3 rounded bg-secondary px-2 py-1 text-sm text-sand-100 md:h-8"
     >
       全部刪除
     </button>

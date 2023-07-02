@@ -83,35 +83,26 @@ const { toggleWriterSettings } = uiStore
           class="flex flex-col items-center overflow-hidden transition-all duration-500"
           :class="isWriterExpanded ? 'max-h-96' : 'max-h-0'"
         >
-          <li class="w-full hover:text-sand-100">
-            <NuxtLink
-              :to="`/account/${userData.id}/mywork`"
-              class="block px-6 py-3 hover:bg-secondary"
-            >
+          <li class="w-full hover:bg-secondary hover:text-sand-100">
+            <NuxtLink :to="`/account/${userData.id}/mywork`" class="block px-6 py-3">
               <div class="flex items-center">
-                <span class="ml-2 mr-4 block h-1 w-1 rounded-full bg-secondary"></span>
+                <Icon name="ph:dot-outline-fill" class="mr-4" />
                 文章列表
               </div>
             </NuxtLink>
           </li>
-          <li class="w-full">
-            <NuxtLink
-              :to="`/account/${userData.id}/progress`"
-              class="block px-6 py-3 hover:bg-secondary hover:text-sand-100"
-            >
+          <li class="w-full hover:bg-secondary hover:text-sand-100">
+            <NuxtLink :to="`/account/${userData.id}/progress`" class="block px-6 py-3">
               <div class="flex items-center">
-                <span class="ml-2 mr-4 block h-1 w-1 rounded-full bg-secondary"></span>
+                <Icon name="ph:dot-outline-fill" class="mr-4" />
                 審核進度
               </div>
             </NuxtLink>
           </li>
-          <li class="w-full">
-            <NuxtLink
-              :to="`/account/${userData.id}/drafts`"
-              class="block px-6 py-3 hover:bg-secondary hover:text-sand-100"
-            >
+          <li class="w-full hover:bg-secondary hover:text-sand-100">
+            <NuxtLink :to="`/account/${userData.id}/drafts`" class="block px-6 py-3">
               <div class="flex items-center">
-                <span class="ml-2 mr-4 block h-1 w-1 rounded-full bg-secondary"></span>
+                <Icon name="ph:dot-outline-fill" class="mr-4" />
                 我的草稿
               </div>
             </NuxtLink>

@@ -99,7 +99,7 @@ watchEffect(() => {
 <template>
   <div class="overflow-x-auto">
     <div>
-      <table class="w-[1240px] lg:w-full">
+      <table class="w-[1240px] md:w-full">
         <thead>
           <tr v-if="nowPage === 'articleList'" class="bg-sand-200 text-primary">
             <th class="py-[10px] font-medium">選取</th>
@@ -158,8 +158,12 @@ watchEffect(() => {
             <td class="py-[10px] text-primary-dark md:w-[14%]">{{ item.commentNum }}</td>
             <td class="py-[10px] text-primary-dark md:w-[17%]">
               <button type="button">
-                <Icon name="material-symbols:edit-outline" size="24" class="mr-6" /></button
-              ><button type="button">
+                <Icon name="material-symbols:edit-outline" size="24" class="mr-3" />
+              </button>
+              <button type="button" class="mr-3">
+                <Icon name="ic:outline-visibility" size="24" />
+              </button>
+              <button type="button">
                 <Icon name="material-symbols:delete-outline" size="24" />
               </button>
             </td>
@@ -224,7 +228,7 @@ watchEffect(() => {
               <button type="button" class="mr-3">
                 <Icon name="material-symbols:edit-outline" size="24" />
               </button>
-              <button type="button" class="mr-3">
+              <button v-if="nowPage !== 'progress'" type="button" class="mr-3">
                 <Icon name="ic:outline-visibility" size="24" />
               </button>
               <button type="button">
