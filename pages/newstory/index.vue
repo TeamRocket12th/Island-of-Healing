@@ -25,15 +25,12 @@ const ruleUse = (value: boolean) => {
 </script>
 
 <template>
-  <div class="bg-sand-100">
-    <PostEditor
-      class="relative"
-      @post-upload="settingUse"
-      @article-title="titleUse"
-      @post-rules="ruleUse"
-    />
-    <PostSetting v-if="settingShow" @post-upload="settingUse" />
-    <PostRules v-if="rulesShow" @post-rules="ruleUse" />
+  <div>
+    <div class="bg-sand-100">
+      <PostEditor @post-upload="settingUse" @article-title="titleUse" @post-rules="ruleUse" />
+      <PostSetting v-if="settingShow" @post-upload="settingUse" />
+      <PostRules v-if="rulesShow" @post-rules="ruleUse" />
+    </div>
   </div>
 </template>
 
