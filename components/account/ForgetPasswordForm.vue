@@ -29,7 +29,7 @@ const sendMail = (event: Event) => {
       <div
         class="flex w-full flex-col items-center justify-center px-[74px] py-[124px] md:border md:border-primary 3xl:relative 3xl:px-[516px] 3xl:py-[132px]"
       >
-        <div class="relative w-[288px] 3xl:static">
+        <div class="relative w-[322px] 3xl:static">
           <transition name="fade" mode="out-in">
             <p
               v-if="alreadySend"
