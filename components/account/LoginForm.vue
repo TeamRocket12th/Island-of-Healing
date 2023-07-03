@@ -79,7 +79,7 @@ const togglePasswordType = () => {
       <div
         class="flex w-full flex-col items-center justify-center px-[74px] py-[124px] md:border md:border-primary 3xl:px-[516px] 3xl:py-[132px]"
       >
-        <div class="w-[288px]">
+        <div class="w-[322px]">
           <div class="tabs mb-8 hidden w-full items-center justify-center font-bold lg:flex">
             <NuxtLink
               to="/login"
