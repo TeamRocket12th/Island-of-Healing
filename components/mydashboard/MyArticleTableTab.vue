@@ -48,13 +48,13 @@ const reset = () => {
           class="absolute top-[105%] rounded border border-primary bg-white text-sm"
         >
           <li
-            v-for="(c, index) in categories"
+            v-for="(category, index) in categories"
             :key="index"
             class="px-4 py-1 hover:bg-secondary hover:text-sand-100"
             :class="{ 'border-b border-[edeae6]': index !== categories.length - 1 }"
-            @click="getCategory(c)"
+            @click="getCategory(category)"
           >
-            {{ c }}
+            {{ category }}
           </li>
         </ul>
       </div>
@@ -69,13 +69,13 @@ const reset = () => {
           class="absolute top-[105%] rounded border border-primary bg-white text-sm"
         >
           <li
-            v-for="(y, index) in years"
+            v-for="(year, index) in years"
             :key="index"
             class="px-4 py-1 hover:bg-secondary hover:text-sand-100"
             :class="{ 'border-b border-[edeae6]': index !== years.length - 1 }"
-            @click="getYear(y)"
+            @click="getYear(year)"
           >
-            {{ y }}
+            {{ year }}
           </li>
         </ul>
       </div>
