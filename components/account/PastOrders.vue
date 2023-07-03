@@ -5,8 +5,8 @@ if (error.value) {
 }
 </script>
 <template>
-  <div class="bg-sand-100 p-10">
-    <h2 class="mb-6 text-2xl font-bold text-primary 3xl:mb-10">歷史訂單</h2>
+  <div class="mb-40 border border-primary bg-sand-100 px-10 pb-40 pt-10">
+    <h2 class="mb-6 font-serif-tc text-2xl font-bold text-primary 3xl:mb-10">歷史訂單</h2>
     <div class="md:hidden">
       <ul
         v-for="order in pastorders"
