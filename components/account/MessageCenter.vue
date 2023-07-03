@@ -10,6 +10,7 @@ const userName = ref('')
 const firstId = ref()
 const firstName = ref('')
 const messageobj = ref({})
+const readstatus = ref(true)
 
 onBeforeUpdate(() => {
   messageobj.value = messages.value
@@ -24,6 +25,7 @@ onBeforeUpdate(() => {
 const renderMessage = (message: Message) => {
   messageId.value = message.id
   userName.value = message.name
+  message.read = false
 }
 </script>
 <template>
@@ -38,7 +40,11 @@ const renderMessage = (message: Message) => {
           class="cursor-pointer px-6 active:bg-[#CDCDCD]"
           @mousedown="renderMessage(message)"
         >
-          <div class="flex justify-center py-3">
+          <div class="relative flex justify-center py-3">
+            <div
+              v-if="message.read"
+              class="absolute left-[-20px] top-1/2 h-4 w-4 translate-y-[-50%] rounded-lg bg-secondary"
+            ></div>
             <div class="h-[48px] w-[48px] overflow-hidden rounded-full">
               <img :src="message.imgUrl" alt="avatar" />
             </div>

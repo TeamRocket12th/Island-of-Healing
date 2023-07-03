@@ -62,6 +62,7 @@ declare global {
     canMessage: string
     date: string
     id: number
+    read: boolean
   }
 
   // 歷史訂單

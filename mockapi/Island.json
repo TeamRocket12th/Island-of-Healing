@@ -1,5 +1,5 @@
 {
-  "uuid": "2d56ba8c-3b75-45ed-985e-b4c0396bcc57",
+  "uuid": "a72822dd-d09d-4a32-9678-01a7046d43c7",
   "lastMigration": 27,
   "name": "Island",
   "endpointPrefix": "",
@@ -9,14 +9,14 @@
   "folders": [],
   "routes": [
     {
-      "uuid": "3e32f591-fc91-43ba-87a2-6d0755f6ebc1",
+      "uuid": "7a0312b8-e4c4-4828-ab2b-683ef260c635",
       "type": "http",
       "documentation": "島民註冊",
       "method": "post",
       "endpoint": "signup",
       "responses": [
         {
-          "uuid": "214ee0d4-ca13-4c02-b2b6-76ec66766b8c",
+          "uuid": "a068b086-5171-419e-9358-70e68e43d9c8",
           "body": "{\n   \"StatusCode\": 200,\n   \"Message\": \"註冊成功\",\n   \"Status\":\"success\",\n   \"Data\": {\n       \"User\": {\n           \"Username\": \"島民\",\n           \"Email\": \"example@mail.com\"\n       }\n   }\n}\n",
           "latency": 0,
           "statusCode": 200,
@@ -48,7 +48,7 @@
           "default": false
         },
         {
-          "uuid": "0c349b2c-747c-4de6-b1ab-ad83b23179a0",
+          "uuid": "05716fac-a1de-4a73-8792-777e2733ce7e",
           "body": "{\n   \"statusCode\": 401,\n   \"message\": \"登入失敗\",\n   \"status\":\"failed\"\n}",
           "latency": 0,
           "statusCode": 401,
@@ -69,7 +69,7 @@
       "responseMode": null
     },
     {
-      "uuid": "3f037056-e08c-4ffc-9355-a106c3a92cc2",
+      "uuid": "51cd1094-4062-42c3-af6e-812763e46ef9",
       "type": "http",
       "documentation": "島民登入",
       "method": "post",
@@ -140,7 +140,7 @@
           "default": false
         },
         {
-          "uuid": "5ac6efdc-2a10-4e08-9d66-9faf3a131633",
+          "uuid": "bda84111-a6bb-41af-9e66-0e93e6d633e2",
           "body": "{\n   \"statusCode\": 401,\n   \"message\": \"登入失敗\",\n   \"status\":\"failed\"\n}",
           "latency": 0,
           "statusCode": 401,
@@ -161,15 +161,15 @@
       "responseMode": null
     },
     {
-      "uuid": "6788a9e3-043a-4806-90c8-c9c3afd65cdd",
+      "uuid": "569f4c1b-35bb-4848-8363-e37a6862e99f",
       "type": "http",
       "documentation": "取得追蹤作家清單",
       "method": "get",
       "endpoint": "account/:userid/following",
       "responses": [
         {
-          "uuid": "7fc42608-11ce-4939-912b-d7503a7be021",
-          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"1\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"2\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"3\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"4\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"5\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"6\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"7\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    },\n    {\n      \"name\": \"作家姓名\",\n      \"id\": \"8\",\n      \"bio\": \"作家自介\",\n      \"imgUrl\": \"https://picsum.photos/60\"\n    }\n  ]\n}",
+          "uuid": "857b4d71-848b-4394-a62f-3dc616dd2309",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"name\": \"卡夫卡\",\n      \"id\": \"1\",\n      \"jobTitle\": \"文字工作者\",\n      \"bio\": \"徜徉於文字的迷宮，書寫著情感的起伏與內心的矛盾，將想像與現實交織成獨特的文學之旅。\",\n      \"imgUrl\": \"https://picsum.photos/60\",\n      \"isFollowing\": \"true\"\n    },\n    {\n      \"name\": \"艾蜜莉\",\n      \"id\": \"2\",\n      \"jobTitle\": \"學術工作者\",\n      \"bio\": \"用智慧的翅膀飛向知識的星辰，探索思想的邊界，以筆尖描繪著奇思妙想的瑰麗圖騰。\",\n      \"imgUrl\": \"https://picsum.photos/60\",\n      \"isFollowing\": \"true\"\n    },\n    {\n      \"name\": \"莉莉安\",\n      \"id\": \"3\",\n      \"jobTitle\": \"心理諮商師\",\n      \"bio\": \"以溫暖的聆聽和理解，陪伴他人探索內心的迷宮，重建心靈的堡壘，讓每個人都能找回內在的力量。\",\n      \"imgUrl\": \"https://picsum.photos/60\",\n      \"isFollowing\": \"true\"\n    },\n    {\n      \"name\": \"章家齊\",\n      \"id\": \"4\",\n      \"jobTitle\": \"心理諮商師\",\n      \"bio\": \"協助他人釋放心靈的痛苦，尋找內在的平靜與自由。\",\n      \"imgUrl\": \"https://picsum.photos/60\",\n      \"isFollowing\": \"true\"\n    },\n    {\n      \"name\": \"馬克\",\n      \"id\": \"5\",\n      \"jobTitle\": \"社會評論者\",\n      \"bio\": \"用文字點燃公眾的意識，為一個更公正、更包容的社會發聲，引領讀者思索與改變的道路。\",\n      \"imgUrl\": \"https://picsum.photos/60\",\n      \"isFollowing\": \"true\"\n    }\n  ]\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "取得會員個人追蹤作家清單",
@@ -189,14 +189,14 @@
       "responseMode": null
     },
     {
-      "uuid": "931684c0-aa40-4a68-bcb0-1bf95c4fa524",
+      "uuid": "7f4f99b8-0646-4c40-bc96-164e265fc7bd",
       "type": "http",
       "documentation": "取得收藏文章清單",
       "method": "get",
       "endpoint": "account/:userid/collection",
       "responses": [
         {
-          "uuid": "33579dd2-590d-40b1-adab-e988695c6970",
+          "uuid": "67108e67-a279-4ff6-9bdc-115e15d64451",
           "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\":[\n  {\n    \"id\": \"001\",\n    \"role\": \"心理諮商師\",\n    \"coverUrl\": \"https://picsum.photos/192/146\",\n    \"articleTitle\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n    \"articleSummary\": \"心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上第二步是主動尋求多元性和不同觀點。與各種不同背景和經歷的人互動，聆聽他們的故事...\",\n    \"articleDate\": \"2023-06-01\"\n  },\n  {\n    \"id\": \"002\",\n    \"role\": \"心理諮商師\",\n    \"coverUrl\": \"https://picsum.photos/192/146\",\n    \"articleTitle\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n    \"articleSummary\": \"心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上第二步是主動尋求多元性和不同觀點。與各種不同背景和經歷的人互動，聆聽他們的故事...\",\n    \"articleDate\": \"2023-06-01\"\n  },\n  {\n    \"id\": \"003\",\n    \"role\": \"心理諮商師\",\n    \"coverUrl\": \"https://picsum.photos/192/146\",\n    \"articleTitle\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n    \"articleSummary\": \"心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上第二步是主動尋求多元性和不同觀點。與各種不同背景和經歷的人互動，聆聽他們的故事...\",\n    \"articleDate\": \"2023-06-01\"\n  },\n  {\n    \"id\": \"004\",\n    \"role\": \"心理諮商師\",\n    \"coverUrl\": \"https://picsum.photos/192/146\",\n    \"articleTitle\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n    \"articleSummary\": \"心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上第二步是主動尋求多元性和不同觀點。與各種不同背景和經歷的人互動，聆聽他們的故事...\",\n    \"articleDate\": \"2023-06-01\"\n  }\n]\n}",
           "latency": 0,
           "statusCode": 200,
@@ -217,15 +217,15 @@
       "responseMode": null
     },
     {
-      "uuid": "aeaf1f0e-985e-4bee-9058-94e6ed18e497",
+      "uuid": "1f9cc7f0-a096-4543-80db-077a34a8438e",
       "type": "http",
       "documentation": "取得個人站內訊息",
       "method": "get",
       "endpoint": "account/:userid/messages",
       "responses": [
         {
-          "uuid": "bf2eb404-4e9f-4259-9545-c1e44da5e588",
-          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室基哥\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 1\n    },\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室Ting\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 2\n    },\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室Nancy\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 3\n    },\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室Benson\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 4\n    },\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室Ben爸\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 5\n    }\n  ]\n}",
+          "uuid": "22cd57cb-b5ac-4b2c-a352-69e744d3a2e4",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室基哥\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 1,\n      \"read\": false\n    },\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室Ting\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 2,\n      \"read\": true\n    },\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室Nancy\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 3,\n      \"read\": true\n    },\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室Benson\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 4,\n      \"read\": false\n    },\n    {\n      \"email\": \"mou12345\",\n      \"imgUrl\": \"https://picsum.photos/48\",\n      \"name\": \"告解室Ben爸\",\n      \"canMessage\": \"哈囉，我們是好物研究社團隊...\",\n      \"date\": \"5月25日\",\n      \"id\": 5,\n      \"read\": false\n    }\n  ]\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "取得會員個人全部站內訊息",
@@ -245,14 +245,14 @@
       "responseMode": null
     },
     {
-      "uuid": "41a4b9bc-f72d-4e37-bf37-a7fb781cff89",
+      "uuid": "07e809ce-26a4-4fb3-abfe-0f9c6476d8fa",
       "type": "http",
       "documentation": "取得個人歷史訂單",
       "method": "get",
       "endpoint": "account/:userid/pastorders",
       "responses": [
         {
-          "uuid": "8c5d21c3-2e3c-49fd-9e48-7bab877c3266",
+          "uuid": "54f62da9-a1cb-4427-bc64-36bfaf8ce867",
           "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"orderDate\": \"2023-06-01\",\n      \"orderId\": \"14729-1-4\",\n      \"orderPlan\": \"月付\",\n      \"price\": 100,\n      \"payment\": \"信用卡\"\n    },\n    {\n      \"orderDate\": \"2023-05-27\",\n      \"orderId\": \"14729-1-3\",\n      \"orderPlan\": \"月付\",\n      \"price\": 100,\n      \"payment\": \"ATM轉帳\"\n    },\n    {\n      \"orderDate\": \"2023-04-23\",\n      \"orderId\": \"14729-1-2\",\n      \"orderPlan\": \"月付\",\n      \"price\": 100,\n      \"payment\": \"信用卡\"\n    },\n    {\n      \"orderDate\": \"2023-03-23\",\n      \"orderId\": \"14729-1-2\",\n      \"orderPlan\": \"月付\",\n      \"price\": 100,\n      \"payment\": \"信用卡\"\n    }\n  ]\n}",
           "latency": 0,
           "statusCode": 200,
@@ -269,7 +269,7 @@
           "default": true
         },
         {
-          "uuid": "d72c6d0b-60b8-4e41-b2e1-77889d182ca4",
+          "uuid": "70ceca47-ab39-4f82-8087-55004ec2519f",
           "body": "{\n   \"statusCode\": 401,\n   \"message\": \"登入失敗\",\n   \"status\":\"failed\"\n}",
           "latency": 0,
           "statusCode": 401,
@@ -290,14 +290,14 @@
       "responseMode": null
     },
     {
-      "uuid": "93dd5dc3-84ac-45f1-b2c3-91ffdf5268aa",
+      "uuid": "bbac0cb7-8c8e-4018-9bbc-3faa907c5f5e",
       "type": "http",
       "documentation": "取得作家文章列表",
       "method": "get",
       "endpoint": "account/:userid/mywork",
       "responses": [
         {
-          "uuid": "f86e3f04-94f5-4ad3-b993-e58e608763ea",
+          "uuid": "f662b628-bf7e-4e75-aaa6-56a7b2028308",
           "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": [\n    {\n      \"id\": 1,\n      \"title\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n      \"publishDate\": \"2023-05-27\",\n      \"progress\": \"待審核\",\n      \"collectNum\": 324,\n      \"commentNum\": 58,\n      \"permission\": \"所有人\"\n    },\n    {\n      \"id\": 2,\n      \"title\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n      \"publishDate\": \"2023-05-27\",\n      \"progress\": \"審核中\",\n      \"collectNum\": 324,\n      \"commentNum\": 58,\n      \"permission\": \"所有人\"\n    },\n    {\n      \"id\": 3,\n      \"title\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n      \"publishDate\": \"2023-05-27\",\n      \"progress\": \"審核成功\",\n      \"collectNum\": 324,\n      \"commentNum\": 58,\n      \"permission\": \"付費會員\"\n    },\n    {\n      \"id\": 4,\n      \"title\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n      \"publishDate\": \"2023-05-27\",\n      \"progress\": \"審核成功\",\n      \"collectNum\": 324,\n      \"commentNum\": 58,\n      \"permission\": \"付費會員\"\n    },\n    {\n      \"id\": 5,\n      \"title\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n      \"publishDate\": \"2023-05-27\",\n      \"progress\": \"審核失敗\",\n      \"collectNum\": 324,\n      \"commentNum\": 58,\n      \"permission\": \"付費會員\"\n    },\n    {\n      \"id\": 6,\n      \"title\": \"打破 3 種常見的「認知偏見」，從自我覺察開始\",\n      \"publishDate\": \"2023-05-27\",\n      \"progress\": \"審核失敗\",\n      \"collectNum\": 324,\n      \"commentNum\": 58,\n      \"permission\": \"付費會員\"\n    }\n  ]\n}",
           "latency": 0,
           "statusCode": 200,
@@ -318,14 +318,14 @@
       "responseMode": null
     },
     {
-      "uuid": "22a649e2-5871-419a-8f27-8031b76f161f",
+      "uuid": "18bd69ad-2dde-4035-8b77-4a8d0387d4b7",
       "type": "http",
       "documentation": "取得作家統計數據",
       "method": "get",
       "endpoint": "account/:userid/writerstats",
       "responses": [
         {
-          "uuid": "6f73ccff-b499-41e1-945c-c64947c05f87",
+          "uuid": "514d350e-3d43-4258-bbb5-4171211cca4c",
           "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": {\n    \"totalFollowers\": 1590,\n    \"totalArticles\": 15,\n    \"totalCollection\": 64,\n    \"totalLikes\": 38,\n    \"totalComments\": 60,\n    \"totalInteractions\": 60,\n    \"totalClicks\": 760\n  }\n}",
           "latency": 0,
           "statusCode": 200,
@@ -346,14 +346,14 @@
       "responseMode": null
     },
     {
-      "uuid": "34407bf7-7b36-474d-924b-af69ce5edc94",
+      "uuid": "92e4fd3c-438f-484b-b8e2-c7530262de6d",
       "type": "http",
       "documentation": "確認sessionId是否有效",
       "method": "post",
       "endpoint": "checkauth",
       "responses": [
         {
-          "uuid": "976c782b-43a4-419d-93fb-170f7172d421",
+          "uuid": "8c1b65c4-d80c-46f3-a3da-2f2cdfca9864",
           "body": "{\n   \"statusCode\": 200,\n   \"message\": \"驗證成功\",\n   \"status\":\"success\"\n}",
           "latency": 0,
           "statusCode": 200,
@@ -378,7 +378,7 @@
           "default": false
         },
         {
-          "uuid": "62522d66-bd72-4c78-956a-7b2984f46df7",
+          "uuid": "f9af7144-7d02-4734-babe-fbf4543a5911",
           "body": "{\n   \"statusCode\": 401,\n   \"message\": \"驗證失敗\",\n   \"status\":\"failed\"\n}",
           "latency": 0,
           "statusCode": 401,
@@ -561,40 +561,72 @@
       ],
       "enabled": true,
       "responseMode": null
+    },
+    {
+      "uuid": "14648bb6-b8e6-44cf-a866-8b5f8b594f32",
+      "type": "http",
+      "documentation": "取得單一作家資訊",
+      "method": "get",
+      "endpoint": "writer/:id",
+      "responses": [
+        {
+          "uuid": "e4398c88-7555-45f9-8000-62962cc2cc17",
+          "body": "{\n  \"statusCode\": 200,\n  \"message\": \"取得成功\",\n  \"status\": \"success\",\n  \"data\": {\n    \"id\": \"1\",\n    \"name\": \"章家齊\",\n    \"jobTitle\": \"心理諮商師\",\n    \"bio\": \"協助他人釋放心靈的痛苦，尋找內在的平靜與自由。\",\n    \"imgUrl\": \"https://picsum.photos/95\",\n    \"followerNum\": 30,\n    \"followingNum\": 20,\n    \"work\": [\n      {\n        \"id\": \"001\",\n        \"title\": \"重拾自我價值：探索內在的力量\",\n        \"coverUrl\":\"https://picsum.photos/224/168\",\n        \"summary\": \"在這個忙碌、要求和競爭的世界中，我們常常忽略了最重要的一個人──自己。愛自己並不是自私或自戀，而是一種對自己的尊重和關懷。當我們學會愛自己時，我們能夠建立健康的自尊心、提高生活質量，並成為更好的人。\",\n        \"createdDate\": \"2023-06-01\"\n      },\n      {\n        \"id\": \"002\",\n        \"title\": \"找回自信，追尋幸福-克服情緒低潮的勇氣\",\n        \"coverUrl\":\"https://picsum.photos/224/168\",\n        \"summary\": \"人生中，每個人都會遇到情緒低潮的時刻。這些時刻可能是由於失敗、挫折、壓力或失去親愛的人所引起的。在這種情況下，我們常常感到迷失和無助，失去對自己和未來的信心。然而，正是在這樣的困境中，我們可以學會找回自信，追尋幸福，並展現克服情緒低潮的勇氣。本文將探討幾個方法，幫助你克服情緒低潮，重新找回內在的力量和幸福。\",\n        \"createdDate\": \"2023-06-01\"\n      },\n      {\n        \"id\": \"003\",\n        \"title\": \"療癒的力量：擁抱憂鬱症的自我探索之旅\",\n        \"coverUrl\":\"https://picsum.photos/224/168\",\n        \"summary\": \"近年來，憂鬱症逐漸成為一個備受關注的心理健康問題。影響著許多人的生活品質和幸福感。然而，面對憂鬱症並不是絕望的結局，而是一場自我探索之旅的開始。透過擁抱憂鬱症，我們可以深入了解自己的情感、思維和行為模式，並尋找治愈和成長的途徑。本文將帶領你展開一段擁抱憂鬱症的自我探索之旅，探索內在的力量和重建幸福的可能性。\",\n        \"createdDate\": \"2023-06-01\"\n      },\n      {\n        \"id\": \"004\",\n        \"title\": \"建立連結與跨越認知偏見\",\n        \"coverUrl\":\"https://picsum.photos/224/168\",\n        \"summary\": \"在當今社會，我們經常面對各種認知偏見，這些偏見侷限了我們對他人的理解和連結。然而，建立連結和跨越認知偏見是我們共同成長和進步的關鍵。本文將探討如何建立連結，打破認知偏見的桎梏，並促進包容和理解的社會氛圍。\",\n        \"createdDate\": \"2023-06-01\"\n      },\n      {\n        \"id\": \"005\",\n        \"title\": \"認識三種依戀人格類型：探索心靈的連結\",\n        \"coverUrl\":\"https://picsum.photos/224/168\",\n        \"summary\": \"人類的依附行為是我們生活中重要的一環，它與我們的情感和心靈連結密切相關。根據研究，有三種主要的依附人格類型：安全型、回避型和焦慮型。這些依附人格類型影響著我們與他人建立和維持關係的方式。本文將深入探討這三種依附人格類型，並探索它們對心靈連結的影響。\",\n        \"createdDate\": \"2023-06-01\"\n      }\n    ]\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "取得單一作家詳細資訊",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
     }
   ],
   "rootChildren": [
     {
       "type": "route",
-      "uuid": "3e32f591-fc91-43ba-87a2-6d0755f6ebc1"
+      "uuid": "7a0312b8-e4c4-4828-ab2b-683ef260c635"
     },
     {
       "type": "route",
-      "uuid": "3f037056-e08c-4ffc-9355-a106c3a92cc2"
+      "uuid": "51cd1094-4062-42c3-af6e-812763e46ef9"
     },
     {
       "type": "route",
-      "uuid": "6788a9e3-043a-4806-90c8-c9c3afd65cdd"
+      "uuid": "569f4c1b-35bb-4848-8363-e37a6862e99f"
     },
     {
       "type": "route",
-      "uuid": "931684c0-aa40-4a68-bcb0-1bf95c4fa524"
+      "uuid": "7f4f99b8-0646-4c40-bc96-164e265fc7bd"
     },
     {
       "type": "route",
-      "uuid": "aeaf1f0e-985e-4bee-9058-94e6ed18e497"
+      "uuid": "1f9cc7f0-a096-4543-80db-077a34a8438e"
     },
     {
       "type": "route",
-      "uuid": "41a4b9bc-f72d-4e37-bf37-a7fb781cff89"
+      "uuid": "07e809ce-26a4-4fb3-abfe-0f9c6476d8fa"
     },
     {
       "type": "route",
-      "uuid": "93dd5dc3-84ac-45f1-b2c3-91ffdf5268aa"
+      "uuid": "bbac0cb7-8c8e-4018-9bbc-3faa907c5f5e"
     },
     {
       "type": "route",
-      "uuid": "22a649e2-5871-419a-8f27-8031b76f161f"
+      "uuid": "18bd69ad-2dde-4035-8b77-4a8d0387d4b7"
+    },
+    {
+      "type": "route",
+      "uuid": "92e4fd3c-438f-484b-b8e2-c7530262de6d"
     },
     {
       "type": "route",
@@ -606,7 +638,7 @@
     },
     {
       "type": "route",
-      "uuid": "34407bf7-7b36-474d-924b-af69ce5edc94"
+      "uuid": "14648bb6-b8e6-44cf-a866-8b5f8b594f32"
     }
   ],
   "proxyMode": false,
