@@ -5,6 +5,39 @@ declare global {
     [key: string]: any
   }
 
+  // 作家資訊
+  interface Writer {
+    name: string
+    id: string
+    jobTitle: string
+    bio: string
+    imgUrl: string
+    isFollowing: boolean
+  }
+
+  // 作者個人頁面
+
+  // 作者個人文章
+  interface Work {
+    id: string
+    title: string
+    coverUrl: string
+    summary: string
+    createdDate: string
+  }
+
+  // 作者個人資訊
+  interface WriterInfo {
+    id: string
+    name: string
+    jobTitle: string
+    bio: string
+    imgUrl: string
+    followerNum: number
+    followingNum: number
+    work: Work[]
+  }
+
   // 文章
   interface Article {
     id: string
@@ -13,6 +46,19 @@ declare global {
     articleTitle: string
     articleSummary: string
     articleDate: string
+  }
+
+  // 文章詳細內容
+  interface ArticleDetail {
+    id: string
+    charge: boolean
+    title: string
+    coverUrl: string
+    content: string
+    createdTime: string
+    category: string
+    tags: string[]
+    writerInfo: Writer
   }
 
   // 文章摘要
@@ -31,14 +77,6 @@ declare global {
     imgUrl: string
     writer: string
     date: string
-  }
-
-  // 作家資訊
-  interface Writer {
-    name: string
-    id: string
-    bio: string
-    imgUrl: string
   }
 
   // 個人訊息

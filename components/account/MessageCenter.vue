@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: messages, error } = getMockData<Message>('messages')
+const { data: messages, error } = getMockData<Message>('account', 'messages')
 
 if (error.value) {
   console.error('Error fetching data: ', error.value)

@@ -6,10 +6,9 @@ const orderForm = (value: boolean) => {
 </script>
 
 <template>
-  <main>
+  <main class="bg-sand-100 pb-[190px]">
     <OrderForm class="relative" @custom-order="orderForm" />
-    <OrderConfirm v-show="orderStatus" @custom-order="orderForm" />
-    <AlertModal />
+    <OrderConfirm v-if="orderStatus" @custom-order="orderForm" />
   </main>
 </template>
 

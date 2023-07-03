@@ -1,10 +1,10 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div id="userpage" class="bg-[#F5F5F5]">
-    <NavbarItem class="mb-10" />
+  <div id="userpage" class="bg-sand-100">
+    <NavbarItem />
     <div class="flex flex-grow">
-      <SettingSidebar />
+      <SettingSidebar class="hidden md:block" />
       <main id="content" class="container">
         <slot />
       </main>

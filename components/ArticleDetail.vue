@@ -1,85 +1,104 @@
 <script setup lang="ts">
-const articleDetail = {
-  title: '建立連結與跨越認知偏見',
-  coverImgUrl: 'https://picsum.photos/904/412',
-  content: `<h2>認知偏見類型</h2>
-    <h3>1.先入為主偏見</h3>
-    <p>
-      人們往往根據第一印象或刻板印象來評價他人，而忽略後續的事實或經驗。這可能導致對他人形成不公平或不正確的評價。
-    </p>
-    <br />
-    <h3>2.群體偏見</h3>
-    <p>
-      人們對於不同的群體或社群持有刻板印象，並在沒有真正了解他們的情況下，對他們產生偏見或歧視。這種偏見可能基於種族、性別、宗教、性取向等因素。
-    </p>
-    <br />
-    <h3>3.認知錯誤</h3>
-    <p>
-      人們往往對新資訊或觀點表現出偏見，這種偏見可能是因為個人偏好、固有信念或經驗的影響。這使得人們難以接受或評估新的觀點，並可能導致認知失衡。
-    </p>
-    <br />
-    <p>
-      這些認知偏見在我們的思維和判斷中普遍存在，可能影響我們對他人的看法和互動。意識到這些偏見的存在，並努力對其進行反思和修正，有助於建立更開放、包容和公正的觀點。
-    </p>
-    <h2>打破認知偏見的方法</h2>
-    <p>
-      認知偏見是我們思考和判斷的常見陷阱。它們可以影響我們對他人的看法，限制我們的觀點和行為。然而，我們可以學習如何打破這些偏見，建立開放的心態和連結。
-    </p>
-    <p>
-      首先，意識是關鍵。了解認知偏見的存在並認識到自己的偏見是很重要的。我們可以反問自己：「我是否根據刻板印象或先入為主的觀點評價他人？」當我們意識到自己的偏見時，我們可以開始主動挑戰這些想法。
-    </p>
-    <br />
-    <p>
-      第二步是主動尋求多元性和不同觀點。與各種不同背景和經歷的人互動，聆聽他們的故事和觀點。這樣做可以幫助我們擴大視野，瞭解不同的價值觀和信念。透過敞開心胸，我們可以超越刻板印象並建立更真實的連結。
-    </p>
-    <br />
-    <p>
-      第三個方法是自我反省和思考。當我們面臨新的資訊或觀點時，要問問自己：「這是否基於事實還是偏見？」評估自己的思維和情感反應，並檢視是否有偏見的跡象。這需要勇氣和自我誠實，但這是超越偏見的重要一步。
-    </p>
-    <br />
-    <p>
-      另一個方法是開放對話和尊重。與他人進行開放、尊重和包容的對話可以幫助我們建立連結和理解。這包括願意聆聽他人的觀點，分享自己的想法並尊重不同的意見。這種開放性的對話可以促進互相學習和成長。
-    </p>
-    <br />
-    <p>
-      最後，教育和學習也是重要的。瞭解並學習關於不同文化、價值觀和社會議題的知識，可以幫助我們更全面地看待世界。這包括閱讀、參加工作坊、與專業人士討論等等。透過不斷學習，我們能夠消除偏見。
-    </p>`,
-  writer: '作家姓名',
-  createdTime: '2023-05-23 17:43',
-  category: '個人成長',
-  tags: ['日常練習', '自我察覺', '個人成長']
-}
-const writerInfo = [
-  {
-    name: '作家姓名',
-    id: '1',
-    bio: '作家自介',
-    imgUrl: 'https://picsum.photos/60'
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
+
+const userStore = useUserStore()
+const { isLogin, userData } = storeToRefs(userStore)
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+const articleDetail = ref<ArticleDetail | null>(null)
+const charge = ref(false)
+const route = useRoute()
+
+const getArticleDetail = async () => {
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/article/${route.params.id}`)
+    if (res.statusCode === 200) {
+      console.log(res.data)
+      articleDetail.value = res.data
+      charge.value = res.data.charge
+    }
+  } catch (error) {
+    console.log(error)
   }
-]
+}
+
+onMounted(getArticleDetail)
+
+const textarea = ref<HTMLTextAreaElement | null>(null)
+const emojiPicker = ref<any>(null)
+
+const autoResize = () => {
+  textarea.value!.style.height = '40px'
+  textarea.value!.style.height = textarea.value!.scrollHeight + 'px'
+}
+
+onMounted(autoResize)
+
+const userComment = ref('')
+const showEmojiPicker = ref(false)
+const insertEmoji = (emoji: any) => {
+  userComment.value += emoji.i
+  showEmojiPicker.value = false
+}
+
+const isLocked = ref(true)
+const handleUnLock = () => {
+  if (!isLogin.value) {
+    alert('需要先登入才能閱讀文章喔')
+  } else if (userData.value.myPlan === 'free' && charge.value) {
+    alert('請先訂閱我們')
+  } else {
+    isLocked.value = !isLocked.value
+  }
+}
 </script>
 <template>
-  <section class="col-span-9">
-    <div class="mb-10 border border-[#CDCDCD] p-10">
-      <div class="mb-5 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <div class="h-8 w-8 overflow-hidden rounded-full">
-            <img src="https://picsum.photos/32" alt="writer" />
-          </div>
-          <div>
-            <p class="text-xs">作家</p>
-            <p class="text-sm font-medium">{{ articleDetail.writer }}</p>
-          </div>
+  <div v-if="articleDetail" class="mb-10">
+    <span v-if="articleDetail.charge" class="mb-3 flex items-center gap-1 text-primary-dark"
+      ><Icon name="material-symbols:lock-outline" size="16" /> 付費限定文章</span
+    >
+    <div class="mb-5 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="h-9 w-9">
+          <img src="https://picsum.photos/32" alt="writer" class="h-full w-full rounded-full" />
         </div>
         <div>
-          <p class="text-gray-400">
-            {{ articleDetail.createdTime }} 發表於 {{ articleDetail.category }}
+          <p class="text-xs">作家</p>
+          <p class="text-sm font-medium">
+            <NuxtLink :to="`/writer/${articleDetail?.writerInfo.id}`">{{
+              articleDetail?.writerInfo.name
+            }}</NuxtLink>
           </p>
         </div>
       </div>
-      <h2 class="mb-6 text-[32px] font-bold">{{ articleDetail.title }}</h2>
-      <img src="https://picsum.photos/904/412" alt="cover" class="mb-6 block" />
       <div>
+        <p class="font-light text-[#3D1F03]">
+          {{ articleDetail.createdTime }} 發表於 {{ articleDetail?.category }}
+        </p>
+      </div>
+    </div>
+    <!-- 文章內文 -->
+    <div class="relative max-h-[800px] overflow-hidden" :class="{ 'max-h-none': !isLocked }">
+      <div
+        v-if="isLocked"
+        class="payment-shade absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-sand-200"
+      ></div>
+      <button
+        v-if="isLocked"
+        class="font-sm absolute bottom-10 left-1/2 flex -translate-x-2/4 transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
+        @click="handleUnLock"
+      >
+        <span class="pb-1">
+          <Icon v-if="userData.myPlan === 'free'" name="ic:outline-paid" size="18" />
+          <Icon v-else name="material-symbols:arrow-circle-down-outline" size="18" />
+        </span>
+        <span v-if="userData.myPlan === 'free'">付費解鎖</span>
+        <span v-else>繼續閱讀</span>
+      </button>
+      <h2 class="mb-6 text-[32px] font-bold">{{ articleDetail?.title }}</h2>
+      <img :src="articleDetail.coverUrl" alt="cover" class="mb-6 block" />
+      <div class="border-b-[0.5px] border-primary pb-16">
         <div v-dompurify-html="articleDetail.content" class="mb-9"></div>
         <div class="flex items-center justify-between">
           <CategoryTag :tags="articleDetail.tags" />
@@ -95,7 +114,82 @@ const writerInfo = [
         </div>
       </div>
     </div>
-    <WriterCardWide :writer-info="writerInfo" />
+  </div>
+  <div v-if="articleDetail" class="mb-9 flex items-center justify-between py-6">
+    <div class="items-center md:flex">
+      <div class="flex justify-between sm:mr-2">
+        <img
+          :src="articleDetail.writerInfo.imgUrl"
+          alt="avatar"
+          class="h-[60px] w-[60px] rounded-full"
+        />
+        <button
+          class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:opacity-80 sm:hidden"
+        >
+          <Icon name="ic:baseline-plus" size="16" />追蹤
+        </button>
+      </div>
+      <div>
+        <NuxtLink :to="`/writer/${articleDetail?.writerInfo.id}`">
+          <p class="font-medium text-primary">作家·{{ articleDetail.writerInfo.name }}</p>
+          <p class="font-light text-primary-dark">{{ articleDetail.writerInfo.bio }}</p>
+        </NuxtLink>
+      </div>
+    </div>
+    <div>
+      <button
+        class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:opacity-80 sm:flex"
+      >
+        <Icon name="ic:baseline-plus" size="20" />追蹤
+      </button>
+    </div>
+  </div>
+  <!--留言-->
+  <div>
+    <div class="mb-6 flex items-center justify-between">
+      <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
+      <button class="font-medium text-primary-dark">查看全部</button>
+    </div>
+    <ArticleComment />
+    <div class="mb-28">
+      <div class="mb-2 flex items-center">
+        <div class="mr-2 h-9 w-9">
+          <img :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />
+        </div>
+        <span class="font-medium text-primary">{{ userData.name }}</span>
+      </div>
+      <div class="grid-cols-7 gap-6 text-right md:grid md:text-left">
+        <div class="relative col-span-6 mb-4 md:mb-0">
+          <textarea
+            ref="textarea"
+            v-model="userComment"
+            cols="60"
+            rows="2"
+            max="50"
+            placeholder="留言分享你的想法吧！"
+            class="focus: h-10 w-full resize-none overflow-hidden rounded border border-secondary py-2 pl-2 pr-10 text-primary-dark outline-primary placeholder:text-sand-300"
+            @input="autoResize"
+          ></textarea>
+          <span class="cursor-pointer" @click="showEmojiPicker = !showEmojiPicker"
+            ><Icon
+              name="ic:outline-sentiment-satisfied-alt"
+              size="20"
+              class="absolute right-[10px] top-[10px] text-secondary hover:text-primary"
+          /></span>
+          <EmojiPicker
+            v-if="showEmojiPicker"
+            ref="emojiPicker"
+            class="absolute right-[10px] top-8"
+            @select="insertEmoji"
+          />
+        </div>
+        <button class="h-10 rounded bg-secondary p-2 text-white hover:opacity-80">發表留言</button>
+      </div>
+    </div>
+  </div>
+  <section>
+    <h2 class="mb-6 font-serif-tc text-4xl font-bold text-primary md:text-2xl">你可能會喜歡</h2>
+    <RecArticleCard />
   </section>
 </template>
 

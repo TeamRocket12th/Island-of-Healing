@@ -1,7 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-  <ResetPasswordForm />
+  <div class="bg-sand-100">
+    <ResetPasswordForm />
+  </div>
 </template>
 
 <style scoped></style>

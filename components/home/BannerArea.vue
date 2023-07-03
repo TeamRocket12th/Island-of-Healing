@@ -2,7 +2,7 @@
 
 <template>
   <section class="container mb-16">
-    <div class="border-t border-primary">
+    <div>
       <div class="grid-rows-2 sm:grid sm:grid-cols-12 sm:px-3">
         <div
           class="col-span-4 border-b border-primary pb-[27px] pl-3 pr-3 pt-3 sm:border-b-0 sm:border-r sm:pb-0"
@@ -47,7 +47,7 @@
           </NuxtLink>
         </div>
         <div
-          class="col-span-4 border-b border-primary border-primary pb-[27px] pl-3 pr-3 pt-3 sm:border-b-0 sm:pb-0"
+          class="col-span-4 border-b border-primary pb-[27px] pl-3 pr-3 pt-3 sm:border-b-0 sm:pb-0"
         >
           <NuxtLink :to="`/article/id`">
             <div>

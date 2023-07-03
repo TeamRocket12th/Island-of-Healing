@@ -15,38 +15,46 @@ const isOrderOK = ref(true)
 </script>
 
 <template>
-  <div
-    class="mb-28 mt-[60px] grid grid-cols-12 rounded-lg border border-[#D9D9D9] bg-[#D9D9D9] px-10 pb-14 pt-10"
-  >
-    <div class="col-span-3"></div>
-    <div class="col-span-6 border bg-white">
-      <div>
-        <div v-show="isOrderOK" class="text-center">
-          <div class="mb-6 flex justify-center">
-            <Icon name="mdi:check-circle-outline" size="20" class="right-0 top-0 mr-7 mt-7" />
-            <h2 class="flex items-end font-bold">{{ data.success.alert }}</h2>
+  <div class="mb-28 mt-[60px] grid grid-cols-12 rounded-lg px-10 pb-14 pt-10">
+    <div class="col-span-6 col-start-4 rounded border bg-white shadow">
+      <div v-if="isOrderOK">
+        <div class="mb-4 flex items-center justify-between gap-2 p-4">
+          <div class="flex gap-2">
+            <div>
+              <Icon name="mdi:check-circle-outline" size="24" class="text-primary" />
+            </div>
+            <h2 class="my-auto flex text-xl font-bold">{{ data.success.alert }}</h2>
           </div>
-          <p>{{ data.success.content }}</p>
-          <p class="mb-8">{{ data.success.userEmail }}</p>
+          <Icon name="mdi:close-thick" size="24" class="text-secondary" />
         </div>
-        <div v-show="!isOrderOK" class="text-center">
-          <div class="mb-6 flex justify-center">
-            <Icon name="mdi:emoticon-sad-outline" size="20" class="right-0 top-0 mr-7 mt-7" />
-            <h2 class="flex items-end font-bold">{{ data.failed.alert }}</h2>
-          </div>
-          <p class="mb-8">{{ data.failed.content }}</p>
-        </div>
-        <div class="flex justify-center">
-          <button v-show="isOrderOK" class="mb-5 border bg-gray-500 px-4 py-2 text-white">
-            繼續購物
-          </button>
-          <button v-show="!isOrderOK" class="mb-5 border bg-gray-500 px-4 py-2 text-white">
-            確定
-          </button>
+        <div class="border-b border-t border-sand-200 p-4">
+          <p class="text-primary-dark">{{ data.success.content }}</p>
+          <p class="text-primary-dark">{{ data.success.userEmail }}</p>
         </div>
       </div>
+      <div v-if="!isOrderOK">
+        <div class="mb-4 flex items-center justify-between gap-2 p-4">
+          <div class="flex gap-2">
+            <div>
+              <Icon name="mdi:emoticon-sad-outline" size="24" class="text-primary" />
+            </div>
+            <h2 class="my-auto flex text-xl font-bold">{{ data.failed.alert }}</h2>
+          </div>
+          <Icon name="mdi:close-thick" size="24" class="text-secondary" />
+        </div>
+        <p class="border-b border-t border-sand-200 p-4 text-primary-dark">
+          {{ data.failed.content }}
+        </p>
+      </div>
+      <div class="flex justify-end p-3">
+        <button v-if="isOrderOK" class="rounded border bg-secondary p-[7px] text-sm text-white">
+          繼續購物
+        </button>
+        <button v-if="!isOrderOK" class="rounded border bg-secondary p-[7px] text-sm text-white">
+          確定
+        </button>
+      </div>
     </div>
-    <div class="col-span-3"></div>
   </div>
 </template>
 

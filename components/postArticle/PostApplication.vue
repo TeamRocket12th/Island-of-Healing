@@ -1,8 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <div class="bg-sand-100">
-    <ForgetPasswordForm />
-  </div>
+  <div>確認提交審核</div>
 </template>
 
 <style scoped></style>
