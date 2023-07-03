@@ -187,16 +187,22 @@ const sentHtml = () => {
   >
     <div class="col-span-12">
       <div class="flex flex-wrap">
-        <div class="relative order-2 mx-0 md:order-1 xl:mx-[280px]">
-          <div class="absolute right-0 cursor-pointer" @click="rulesShow(true)">
-            <Icon name="material-symbols:info-outline" size="24" class="text-sand-300" />
+        <div class="order-2 mx-0 md:order-1 xl:mx-[280px]">
+          <div class="relative md:flex md:justify-end">
+            <input
+              v-model="articleTitle"
+              type="text"
+              class="mb-3 w-full bg-sand-100 pt-8 text-4xl text-primary outline-none placeholder:text-sand-300"
+              placeholder="請輸入標題"
+            />
+            <div class="cursor-pointer" @click="rulesShow(true)">
+              <Icon
+                name="material-symbols:info-outline"
+                size="24"
+                class="absolute -top-[30px] right-5 mr-5 text-sand-300 md:static"
+              />
+            </div>
           </div>
-          <input
-            v-model="articleTitle"
-            type="text"
-            class="mb-3 w-full bg-sand-100 pt-0 pt-8 text-4xl text-primary outline-none placeholder:text-sand-300"
-            placeholder="請輸入標題"
-          />
           <div class="mb-6">
             <div v-if="editor" class="flex min-h-[36px]">
               <label class="swap mr-3">
@@ -265,11 +271,15 @@ const sentHtml = () => {
                   />
                 </button>
               </div>
-              <bubble-menu class="bubble-menu" :tippy-options="{ duration: 100 }" :editor="editor">
+              <bubble-menu
+                class="bubble-menu h flex gap-1 rounded border-[0.5px] border-secondary text-secondary"
+                :tippy-options="{ duration: 100 }"
+                :editor="editor"
+              >
                 <button
                   :disabled="!editor.can().chain().focus().toggleBold().run()"
                   :class="{ 'is-active': editor.isActive('bold') }"
-                  class="ml-auto block"
+                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleBold().run()"
                 >
                   <Icon name="ic:baseline-format-bold" size="24" />
@@ -277,14 +287,14 @@ const sentHtml = () => {
                 <button
                   :disabled="!editor.can().chain().focus().toggleItalic().run()"
                   :class="{ 'is-active': editor.isActive('italic') }"
-                  class="ml-auto block"
+                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleItalic().run()"
                 >
                   <Icon name="ic:sharp-format-italic" size="24" />
                 </button>
                 <button
                   :class="{ 'is-active': editor.isActive('blockquote') }"
-                  class="ml-auto block"
+                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleBlockquote().run()"
                 >
                   <Icon name="ic:outline-format-quote" size="24" />
@@ -292,14 +302,14 @@ const sentHtml = () => {
                 <button
                   :disabled="!editor.can().chain().focus().toggleStrike().run()"
                   :class="{ 'is-active': editor.isActive('strike') }"
-                  class="ml-auto block"
+                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleStrike().run()"
                 >
                   <Icon name="ic:round-strikethrough-s" size="24" />
                 </button>
                 <button
                   :class="{ 'is-active': editor.isActive('underline') }"
-                  class="ml-auto block"
+                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleUnderline().run()"
                 >
                   <Icon name="material-symbols:format-underlined" size="24" />
@@ -307,21 +317,21 @@ const sentHtml = () => {
                 <button
                   :disabled="!editor.can().chain().focus().toggleCode().run()"
                   :class="{ 'is-active': editor.isActive('code') }"
-                  class="ml-auto block"
+                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleCode().run()"
                 >
                   <Icon name="ic:baseline-code" size="24" />
                 </button>
                 <button
                   :class="{ 'is-active': editor.isActive('bulletList') }"
-                  class="ml-auto block"
+                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleBulletList().run()"
                 >
                   <Icon name="ic:twotone-format-list-bulleted" size="24" />
                 </button>
                 <button
                   :class="{ 'is-active': editor.isActive('orderedList') }"
-                  class="ml-auto block"
+                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleOrderedList().run()"
                 >
                   <Icon name="ic:round-format-list-numbered" size="24" />
@@ -344,7 +354,7 @@ const sentHtml = () => {
             儲存草稿
           </button>
           <button
-            class="mr-4 rounded px-3 py-[7px] text-sand-300 duration-100 hover:text-secondary md:mr-0 md:text-secondary md:hover:bg-secondary md:hover:text-white"
+            class="mr-16 rounded px-3 py-[7px] text-sand-300 duration-100 hover:text-secondary md:mr-0 md:text-secondary md:hover:bg-secondary md:hover:text-white"
             @click="postSent(true)"
           >
             發表貼文
