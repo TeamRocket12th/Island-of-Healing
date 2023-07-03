@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useUIStore } from '~/stores/ui'
 
 const userStore = useUserStore()
+const uiStore = useUIStore()
 const { isLogin, userData } = storeToRefs(userStore)
 const { userLogout } = userStore
+const { isWriterExpanded } = storeToRefs(uiStore)
 
 const showCategory = ref(false)
 
@@ -115,6 +118,7 @@ const isUserPage = computed(() => {
                   <NuxtLink
                     :to="`/account/${userData.id}/mywork`"
                     class="block p-[10px] font-medium"
+                    @click="isWriterExpanded = true"
                   >
                     <Icon name="material-symbols:clarify-outline" size="24" class="mr-2" />
                     <span>我的文章</span>

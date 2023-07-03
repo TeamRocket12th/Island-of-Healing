@@ -65,11 +65,11 @@ const data = [
       </div>
       <SearchInput class="hidden sm:block" />
     </div>
-    <ul class="mb-3 gap-4 sm:grid sm:grid-cols-12">
+    <ul class="mb-3 grid-cols-12 gap-4 md:grid">
       <li
         v-for="item in data"
         :key="item.id"
-        class="mb-3 flex h-auto grow flex-col p-4 sm:h-[517px] md:col-span-6 lg:col-span-4"
+        class="mb-3 flex h-auto grow flex-col p-4 md:col-span-6 lg:col-span-4"
       >
         <div class="flex w-full justify-between">
           <div class="flex flex-col">
@@ -82,11 +82,13 @@ const data = [
           </div>
         </div>
         <NuxtLink :to="`article/${item.id}`">
-          <div class="mb-3 h-[267px] max-w-full">
-            <img :src="item.imgUrl" alt="article-cover" class="h-full w-full" />
+          <div class="flex flex-col">
+            <div class="mb-3 h-[267px] max-w-full">
+              <img :src="item.imgUrl" alt="article-cover" class="h-full w-full" />
+            </div>
+            <h4 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ item.title }}</h4>
+            <p class="flex-grow font-light text-primary-dark">{{ item.content }}</p>
           </div>
-          <h4 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ item.title }}</h4>
-          <p class="font-light text-primary-dark">{{ item.content }}</p>
         </NuxtLink>
       </li>
     </ul>

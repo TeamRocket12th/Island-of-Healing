@@ -14,6 +14,8 @@ defineProps({
 
 use([CanvasRenderer, LineChart, TitleComponent, TooltipComponent, LegendComponent])
 
+const incomeView = ref('month')
+
 const option = ref({
   xAxis: {
     data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
@@ -35,99 +37,6 @@ const option = ref({
     trigger: 'item'
   }
 })
-
-const income = [
-  {
-    year: '2022',
-    monthly: [
-      {
-        month: '1月',
-        flowIncome: 200,
-        paperIncome: 400
-      },
-      {
-        month: '2月',
-        flowIncome: 400,
-        paperIncome: 500
-      },
-      {
-        month: '3月',
-        flowIncome: 300,
-        paperIncome: 500
-      },
-      {
-        month: '4月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '5月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '6月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '7月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '8月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '9月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '10月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '11月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '12月',
-        flowIncome: 200,
-        paperIncome: 500
-      }
-    ]
-  },
-  {
-    year: '2023',
-    monthly: [
-      {
-        month: '1月',
-        flowIncome: 200,
-        paperIncome: 400
-      },
-      {
-        month: '2月',
-        flowIncome: 400,
-        paperIncome: 500
-      },
-      {
-        month: '3月',
-        flowIncome: 300,
-        paperIncome: 500
-      },
-      {
-        month: '4月',
-        flowIncome: 200,
-        paperIncome: 500
-      }
-    ]
-  }
-]
 
 const followers = [
   {
@@ -275,6 +184,100 @@ const followers = [
   }
 ]
 
+// 作家收益數據
+const income = [
+  {
+    year: '2022',
+    monthly: [
+      {
+        month: '1月',
+        flowIncome: 200,
+        paperIncome: 400
+      },
+      {
+        month: '2月',
+        flowIncome: 400,
+        paperIncome: 500
+      },
+      {
+        month: '3月',
+        flowIncome: 300,
+        paperIncome: 500
+      },
+      {
+        month: '4月',
+        flowIncome: 200,
+        paperIncome: 500
+      },
+      {
+        month: '5月',
+        flowIncome: 200,
+        paperIncome: 500
+      },
+      {
+        month: '6月',
+        flowIncome: 200,
+        paperIncome: 500
+      },
+      {
+        month: '7月',
+        flowIncome: 200,
+        paperIncome: 500
+      },
+      {
+        month: '8月',
+        flowIncome: 200,
+        paperIncome: 500
+      },
+      {
+        month: '9月',
+        flowIncome: 200,
+        paperIncome: 500
+      },
+      {
+        month: '10月',
+        flowIncome: 200,
+        paperIncome: 500
+      },
+      {
+        month: '11月',
+        flowIncome: 200,
+        paperIncome: 500
+      },
+      {
+        month: '12月',
+        flowIncome: 200,
+        paperIncome: 500
+      }
+    ]
+  },
+  {
+    year: '2023',
+    monthly: [
+      {
+        month: '1月',
+        flowIncome: 200,
+        paperIncome: 400
+      },
+      {
+        month: '2月',
+        flowIncome: 400,
+        paperIncome: 500
+      },
+      {
+        month: '3月',
+        flowIncome: 300,
+        paperIncome: 500
+      },
+      {
+        month: '4月',
+        flowIncome: 200,
+        paperIncome: 500
+      }
+    ]
+  }
+]
+
 const selectedYearIndex = ref(income.length - 1)
 const selectedMonthIndex = ref(income[selectedYearIndex.value].monthly.length - 1)
 const selectedIncome = computed(
@@ -283,35 +286,51 @@ const selectedIncome = computed(
 const selectedYear = computed(() => income[selectedYearIndex.value].year)
 const selectedMonth = computed(() => selectedIncome.value.month)
 
-const hasPrevMonth = computed(() => selectedMonthIndex.value > 0 || selectedYearIndex.value > 0)
-const hasNextMonth = computed(
-  () =>
-    selectedMonthIndex.value < income[selectedYearIndex.value].monthly.length - 1 ||
-    selectedYearIndex.value < income.length - 1
-)
-const prevMonth = () => {
-  if (selectedMonthIndex.value > 0) {
-    selectedMonthIndex.value--
-  } else if (selectedYearIndex.value > 0) {
-    selectedYearIndex.value--
-    selectedMonthIndex.value = income[selectedYearIndex.value].monthly.length - 1
+const hasPrevDate = computed(() => {
+  if (showYearlyIncome.value) {
+    return selectedYearIndex.value > 0
+  } else {
+    return selectedMonthIndex.value > 0
   }
-}
+})
 
-const nextMonth = () => {
-  if (selectedMonthIndex.value < income[selectedYearIndex.value].monthly.length - 1) {
-    selectedMonthIndex.value++
-  } else if (selectedYearIndex.value < income.length - 1) {
-    selectedYearIndex.value++
-    selectedMonthIndex.value = 0
+const hasNextDate = computed(() => {
+  if (showYearlyIncome.value) {
+    return selectedYearIndex.value < income.length - 1
+  } else {
+    return selectedMonthIndex.value < income[selectedYearIndex.value].monthly.length - 1
   }
-}
+})
 
 const showYearlyIncome = ref(false)
 const yearlyIncome = ref({ flowIncome: 0, paperIncome: 0 })
 
+const prevDate = () => {
+  if (!showYearlyIncome.value && selectedMonthIndex.value > 0) {
+    selectedMonthIndex.value--
+  } else if (showYearlyIncome.value && selectedYearIndex.value > 0) {
+    selectedYearIndex.value--
+    selectedMonthIndex.value = income[selectedYearIndex.value].monthly.length - 1
+    sumYearlyIncome()
+  }
+}
+
+const nextDate = () => {
+  if (
+    !showYearlyIncome.value &&
+    selectedMonthIndex.value < income[selectedYearIndex.value].monthly.length - 1
+  ) {
+    selectedMonthIndex.value++
+  } else if (showYearlyIncome.value && selectedYearIndex.value < income.length - 1) {
+    selectedYearIndex.value++
+    selectedMonthIndex.value = 0
+    sumYearlyIncome()
+  }
+}
+
 const sumYearlyIncome = () => {
   showYearlyIncome.value = true
+  incomeView.value = 'year'
   yearlyIncome.value = income[selectedYearIndex.value].monthly.reduce(
     (acc, cur) => {
       acc.flowIncome += cur.flowIncome
@@ -324,8 +343,10 @@ const sumYearlyIncome = () => {
 
 const showMonthlyIncome = () => {
   showYearlyIncome.value = false
+  incomeView.value = 'month'
 }
 
+// 文章數據總覽
 const data = reactive([
   {
     id: '1',
@@ -518,29 +539,31 @@ const stats = computed(() => {
           <button
             type="button"
             class="mr-3 text-primary disabled:text-sand-300"
-            :disabled="!hasPrevMonth"
-            @click="prevMonth"
+            :disabled="!hasPrevDate"
+            @click="prevDate"
           >
             <Icon name="ic:outline-arrow-back" size="24" />
           </button>
           <button
             type="button"
             class="mr-3 text-primary disabled:text-sand-300"
-            :disabled="!hasNextMonth"
-            @click="nextMonth"
+            :disabled="!hasNextDate"
+            @click="nextDate"
           >
             <Icon name="ic:outline-arrow-forward" size="24" />
           </button>
           <button
             type="button"
-            class="mr-3 w-16 rounded bg-secondary py-1 text-sm font-medium text-white"
+            class="mr-3 w-16 rounded border border-secondary py-1 text-sm font-medium text-secondary hover:bg-secondary hover:text-white"
+            :class="{ 'bg-secondary text-white': incomeView === 'year' }"
             @click="sumYearlyIncome"
           >
             年
           </button>
           <button
             type="button"
-            class="w-16 rounded bg-secondary py-1 text-sm font-medium text-white"
+            class="w-16 rounded border border-secondary py-1 text-sm font-medium text-secondary hover:bg-secondary hover:text-white"
+            :class="{ 'bg-secondary text-white': incomeView === 'month' }"
             @click="showMonthlyIncome"
           >
             月

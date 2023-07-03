@@ -121,7 +121,6 @@ watchEffect(() => {
             <th class="py-[10px] font-medium">操作</th>
           </tr>
           <tr v-else class="bg-sand-200 text-primary">
-            <th class="py-[10px] font-medium">選取</th>
             <th class="py-[10px] font-medium">文章名稱</th>
             <th class="py-[10px] font-medium">發佈時間</th>
             <th class="py-[10px] font-medium">愛心數</th>
@@ -239,9 +238,6 @@ watchEffect(() => {
         </tbody>
         <tbody v-else>
           <tr v-for="item in articles" :key="item.id" class="text-center">
-            <td class="w-[10%] px-11 py-[10px]">
-              <input type="checkbox" class="mt-1 h-4 w-4 cursor-pointer" />
-            </td>
             <td class="w-[31%] py-[10px] text-primary-dark">{{ item.title }}</td>
             <td class="w-[14%] py-[10px] text-primary-dark">{{ item.publishDate }}</td>
             <td class="w-[14%] py-[10px] text-primary-dark">{{ item.likeNum }}</td>

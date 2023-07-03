@@ -77,14 +77,7 @@ const textLengthRule = (value: string) => {
                   class="text-sand-100"
                 />
               </button>
-              <input
-                id=""
-                ref="fileInput"
-                type="file"
-                name=""
-                style="display: none"
-                @change="selectFile"
-              />
+              <input ref="fileInput" type="file" style="display: none" @change="selectFile" />
             </div>
           </div>
           <VForm class="w-full px-6 pt-6">
@@ -160,8 +153,7 @@ const textLengthRule = (value: string) => {
                 :rules="textLengthRule"
                 rows="4"
                 class="w-full rounded border border-primary bg-white px-3 py-[6px] text-primary-dark outline-none"
-                placeholder="向其他人簡單介紹你自己吧!
-可以分享你的創作理念、寫作方向，建議 20-30 字為佳！"
+                placeholder="向其他人簡單介紹你自己吧!可以分享你的創作理念、寫作方向，建議 20-30 字為佳！"
               />
               <div class="relative flex">
                 <VErrorMessage name="userIntro" class="text-primary" />
