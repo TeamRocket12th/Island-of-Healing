@@ -513,15 +513,15 @@ const stats = computed(() => {
         <ul class="flex items-center gap-10 pr-3">
           <li class="flex flex-col items-center">
             <span class="text-secondary">本日新增</span>
-            <span class="text-2xl font-medium">{{ writerStats.totalFollowers }} 人</span>
+            <span class="text-2xl font-medium">60 人</span>
           </li>
           <li class="flex flex-col items-center">
             <span class="text-secondary">本月新增</span>
-            <span class="text-2xl font-medium">{{ writerStats.totalFollowers }} 人</span>
+            <span class="text-2xl font-medium">90 人</span>
           </li>
           <li class="flex flex-col items-center">
             <span class="text-secondary">總人數</span>
-            <span class="text-2xl font-medium">{{ writerStats.totalFollowers }} 人</span>
+            <span class="text-2xl font-medium">350 人</span>
           </li>
         </ul>
       </div>
