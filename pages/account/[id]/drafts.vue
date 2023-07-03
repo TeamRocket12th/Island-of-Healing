@@ -16,11 +16,11 @@ if (error.value) {
 }
 </script>
 <template>
-  <div class="mb-[200px] rounded-lg bg-white px-10 pb-20 pt-20">
-    <div class="mb-6 flex items-center justify-between">
-      <h2 class="text-2xl font-bold">我的草稿</h2>
+  <div class="mb-40 border-primary bg-sand-100 px-10 pb-20 pt-10 lg:border">
+    <div class="mb-6 items-center justify-between md:flex">
+      <h2 class="mb-16 font-serif-tc text-2xl font-bold">我的草稿</h2>
       <div class="flex items-center">
-        <NuxtLink to="/" class="mr-4 rounded-[4px] bg-[#9F9F9F] px-4 py-2 text-white">
+        <NuxtLink to="/newstory" class="mr-4 rounded-[4px] bg-secondary px-3 py-2 text-white">
           <div class="flex items-center"><Icon name="ic:outline-plus" size="20" /> 新增文章</div>
         </NuxtLink>
         <SearchInput />
