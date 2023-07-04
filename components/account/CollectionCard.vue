@@ -11,10 +11,10 @@ defineProps({
 <template>
   <div class="grid grid-cols-12">
     <div class="col-span-10 col-start-2 grid">
-      <ul v-if="collectedArticles.length > 0" class="mb-[106px]">
+      <ul v-if="collectedArticles.length > 0" class="sm:mb-[106px]">
         <li v-for="article in collectedArticles" :key="article.id">
-          <div class="block w-full gap-4 p-0 sm:flex sm:p-4">
-            <div class="mb-4 w-full sm:m-0 sm:w-1/2 md:w-1/3">
+          <div class="block w-full gap-4 sm:flex sm:p-4">
+            <div class="mb-4 w-full sm:w-1/2 xl:w-1/3">
               <img :src="article.coverUrl" alt="cover" class="w-full" />
             </div>
             <div class="w-full">
