@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
 const url = route.fullPath
+
 const copyUrl = () => {
   const input = url
   navigator.clipboard
@@ -28,11 +29,17 @@ const copyUrl = () => {
       <div class="relative flex justify-between">
         <ul class="mb-6 flex gap-7">
           <li class="flex cursor-pointer flex-col items-center justify-between">
-            <img src="~/assets/images/facebook.svg" alt="" class="mb-1 h-[44px] w-[44px]" />
+            <!-- ${url}前面要放部屬的網址  -->
+            <NuxtLink :to="`https://www.facebook.com/sharer.php?u=${url}`">
+              <img src="~/assets/images/facebook.svg" alt="" class="mb-1 h-[44px] w-[44px]" />
+            </NuxtLink>
             <p class="text-xs">Facebook</p>
           </li>
           <li class="flex cursor-pointer flex-col items-center justify-between">
-            <img src="~/assets/images/twitter.svg" alt="" class="mb-1 h-[44px] w-[44px]" />
+            <!-- ${url}前面要放部屬的網址  -->
+            <NuxtLink :to="`https://twitter.com/intent/tweet?url=${url}`">
+              <img src="~/assets/images/twitter.svg" alt="" class="mb-1 h-[44px] w-[44px]" />
+            </NuxtLink>
             <p class="text-xs">Twitter</p>
           </li>
           <li class="flex cursor-pointer flex-col items-center justify-between">
