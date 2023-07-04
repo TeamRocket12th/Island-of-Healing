@@ -60,13 +60,13 @@ const textLengthRule = (value: string) => {
 
 <template>
   <div class="mb-40 border-secondary bg-sand-100 p-10 sm:border">
-    <div class="grid-cols-12 xl:grid">
+    <div class="xl:grid xl:grid-cols-12">
       <h2 class="col-span-2 text-center font-serif-tc text-2xl font-bold text-primary md:text-left">
         會員設定
       </h2>
       <div class="col-span-9">
-        <div class="flex flex-wrap gap-0 pt-6 md:flex-nowrap lg:gap-4 lg:pt-10">
-          <div class="mx-auto my-0 md:m-0">
+        <div class="flex flex-wrap pt-6 md:flex-nowrap lg:gap-4 lg:pt-10">
+          <div class="mx-auto my-0">
             <div class="relative h-[100px] w-[100px] rounded-full bg-[#E9E4D9]">
               <img :src="selectedImage" class="h-full w-full rounded-full" />
               <button
@@ -150,7 +150,7 @@ const textLengthRule = (value: string) => {
               />
               <VErrorMessage name="jobTitle" class="text-primary" />
             </div>
-            <div v-if="userData.role === 'writer'" class="mb-12 lg:mb-11">
+            <div v-if="userData.role === 'writer'" class="mb-12 h-44 lg:mb-11">
               <label for="userIntro" class="mb-2 block text-primary">自我介紹</label>
               <VField
                 id="userIntro"
