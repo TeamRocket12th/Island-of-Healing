@@ -1,26 +1,28 @@
 <script setup lang="ts">
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+
+const { emailRequired, emailRule } = useValidate()
+
 const user = reactive({
   account: ''
 })
-const emailRequired = (value: string) => {
-  if (value && value.trim()) {
-    return true
-  }
-  return '*電子郵件為必填'
-}
-
-const emailRule = (value: string) => {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (regex.test(value)) {
-    return true
-  }
-  return '*請輸入有效的電子郵件'
-}
 
 const alreadySend = ref<boolean>(false)
-const sendMail = (event: Event) => {
-  event.preventDefault()
-  alreadySend.value = true
+
+const sendResetPwd = async () => {
+  if (user.account) {
+    try {
+      const res = await $fetch(`${apiBase}/forgetpwd/?email=${user.account}`, {
+        headers: { 'Content-type': 'application/json' },
+        method: 'POST'
+      })
+      console.log(res)
+      alreadySend.value = true
+    } catch (error: any) {
+      console.log(error.response)
+    }
+  }
 }
 </script>
 <template>
@@ -60,9 +62,9 @@ const sendMail = (event: Event) => {
             <div class="relative">
               <button
                 class="btn w-full rounded bg-secondary text-[16px] font-bold text-white hover:bg-slate-600"
-                type="submit"
+                type="button"
                 :disabled="!meta.valid"
-                @click="sendMail"
+                @click="sendResetPwd"
               >
                 確定
               </button>

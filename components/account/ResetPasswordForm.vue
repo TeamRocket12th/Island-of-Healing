@@ -1,25 +1,17 @@
 <script setup lang="ts">
-const passwordRequired = (value: string) => {
-  if (value && value.trim()) {
-    return true
-  }
-  return '*密碼 為必填'
-}
-const passwordRule = (value: string) => {
-  const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/
-  if (regex.test(value)) {
-    return true
-  }
-  return '*請輸入 8 位以上大小寫英數字組合'
-}
-const password = ref('')
-const passwordCheck = ref('')
-const confirmationRule = () => {
-  if (passwordCheck.value === password.value) {
-    return true
-  }
-  return '*密碼不一致'
-}
+import { useUserStore } from '~/stores/user'
+const userStore = useUserStore()
+const { userLogout } = userStore
+
+const { passwordRequired, passwordRule, confirmPwdSame } = useValidate()
+const confirmPwdRule = () => confirmPwdSame(Password, ConfirmPassword)
+
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+const router = useRouter()
+
+const Password = ref('')
+const ConfirmPassword = ref('')
 
 // 修改input type & eye icons
 const passwordType = ref('password')
@@ -38,6 +30,32 @@ const togglePasswordCheckType = () => {
   pwdCheckEyeOpen.value = !pwdCheckEyeOpen.value
   pwdCheckEyeClose.value = !pwdCheckEyeClose.value
 }
+
+const resetPwd = async () => {
+  const userToken = useCookie('token')
+  if (!userToken.value) {
+    return
+  }
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/setpwd`, {
+      headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` },
+      method: 'PUT',
+      body: {
+        Password: Password.value,
+        ConfirmPassword: ConfirmPassword.value
+      }
+    })
+    if (res.StatusCode === 200) {
+      alert(res.Message)
+      Password.value = ''
+      ConfirmPassword.value = ''
+      userLogout()
+      router.replace('/login')
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  }
+}
 </script>
 <template>
   <section class="container flex items-center justify-center pb-[55px] font-serif-tc">
@@ -53,7 +71,7 @@ const togglePasswordCheckType = () => {
             <div class="relative mb-1 mt-2">
               <VField
                 id="password"
-                v-model="password"
+                v-model="Password"
                 name="password"
                 :rules="[passwordRequired, passwordRule]"
                 :type="passwordType"
@@ -75,19 +93,21 @@ const togglePasswordCheckType = () => {
                 @click="togglePasswordType"
               />
             </div>
-            <VErrorMessage name="password" class="text-[14px] text-red-500" />
-            <div class="mb-4 mt-[10px] flex items-center">
-              <Icon name="mdi:alert-circle-outline" size="15" class="left-3" />
-              <p class="ml-1 text-[14px]">密碼不得少於6個字元</p>
+            <div>
+              <VErrorMessage name="password" class="text-[14px] text-red-500" />
             </div>
+            <!-- <div class="mb-4 mt-[10px] flex items-center">
+              <Icon name="mdi:alert-circle-outline" size="15" class="left-3" />
+             <p class="ml-1 text-[14px]">密碼不得少於6個字元</p> 
+            </div> -->
 
-            <label for="passwordCheck" class="mt-6 text-[16px]">重新輸入新密碼 :</label>
+            <label for="passwordCheck" class="mt-6 block text-[16px]">重新輸入新密碼 :</label>
             <div class="relative mb-1 mt-2">
               <VField
                 id="passwordCheck"
-                v-model="passwordCheck"
+                v-model="ConfirmPassword"
                 name="passwordCheck"
-                :rules="[passwordRequired, confirmationRule]"
+                :rules="[passwordRequired, confirmPwdRule]"
                 :type="passwordCheckType"
                 class="input-bordered input w-full rounded border-[#BDBDBD] focus:outline-none"
               />
@@ -109,7 +129,9 @@ const togglePasswordCheckType = () => {
             <VErrorMessage name="passwordCheck" class="text-[14px] text-red-500" />
             <div class="relative mt-4">
               <button
+                type="button"
                 class="btn w-full rounded bg-secondary text-[16px] font-bold text-white hover:bg-slate-600"
+                @click="resetPwd"
               >
                 儲存變更及登入
               </button>
