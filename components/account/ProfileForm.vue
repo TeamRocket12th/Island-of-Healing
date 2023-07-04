@@ -113,7 +113,7 @@ const textLengthRule = (value: string) => {
                 />
                 <VErrorMessage name="userName" class="text-primary" />
               </div>
-              <div class="w-full pt-4 lg:w-1/3 lg:p-0 lg:pl-8">
+              <div class="w-full pt-4 lg:w-1/3 lg:pl-8 lg:pt-0">
                 <label for="birthday" class="mb-2 block text-primary">生日</label>
                 <div class="w-full cursor-pointer rounded border border-primary bg-white">
                   <VDatePicker v-model="birthday" expanded>
@@ -129,7 +129,7 @@ const textLengthRule = (value: string) => {
                           class="w-full cursor-pointer rounded border-primary text-primary-dark outline-none"
                           readonly
                         />
-                        <button class="">
+                        <button>
                           <Icon name="material-symbols:arrow-drop-down" size="24" />
                         </button>
                       </div>
@@ -150,7 +150,7 @@ const textLengthRule = (value: string) => {
               />
               <VErrorMessage name="jobTitle" class="text-primary" />
             </div>
-            <div v-if="userData.role === 'writer'" class="mb-12 h-44 lg:mb-11">
+            <div v-if="userData.role === 'writer'" class="mb-12 lg:mb-11">
               <label for="userIntro" class="mb-2 block text-primary">自我介紹</label>
               <VField
                 id="userIntro"
