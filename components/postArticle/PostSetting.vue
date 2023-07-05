@@ -136,7 +136,7 @@ onUnmounted(() => {
               class="w-full rounded border border-secondary px-3 py-2 text-primary outline-none placeholder:text-sand-300"
             />
           </div>
-          <div class="mb:mb-0 mb-5">
+          <div class="mb-5 md:mb-0">
             <h3 class="mb-2 text-base text-primary">新增標籤</h3>
             <div
               class="flex flex-wrap items-center gap-2 rounded border border-secondary bg-white px-3 py-2"
@@ -221,7 +221,7 @@ onUnmounted(() => {
             </VForm>
           </div>
           <div class="flex justify-end md:absolute md:bottom-0 md:right-0">
-            <button class="mb:mb-0 mb-6 rounded bg-secondary px-3 py-2 text-white">確認送出</button>
+            <button class="mb-6 rounded bg-secondary px-3 py-2 text-white md:mb-0">確認送出</button>
           </div>
         </div>
       </div>
@@ -264,7 +264,6 @@ input[type='radio']:after {
   opacity: 0;
   transform: translate(-50%, -50%);
   transition: all 0.2s ease;
-  transform-origin: center center;
   pointer-events: none;
 }
 
