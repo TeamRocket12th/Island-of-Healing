@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const selectedImage: Ref<string> = ref('')
-const fileInput: Ref<HTMLInputElement | null> = ref(null)
-const articleTitle: Ref<string> = ref('')
+const selectedImage = ref<string>('')
+const fileInput = ref<HTMLInputElement | null>(null)
+const articleTitle = ref<string>('')
 
 const openFilePicker = (): void => {
   fileInput.value?.click()
@@ -36,7 +36,7 @@ const postSent = (value: boolean) => {
   emits('post-upload', value)
 }
 const newTag = ref('')
-const tags: Ref<string[]> = ref([])
+const tags = ref<string[]>([])
 
 const addTag = () => {
   if (newTag.value && !tags.value.includes(newTag.value)) {
@@ -89,7 +89,7 @@ onUnmounted(() => {
 </script>
 <template>
   <div
-    class="container absolute left-1/2 top-1/2 mt-44 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-8 sm:mt-12 md:pt-0"
+    class="container absolute left-1/2 top-1/2 mt-44 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-8 sm:mt-0 md:pt-0"
   >
     <div class="col-span-12 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3">
       <div class="relative block md:flex">

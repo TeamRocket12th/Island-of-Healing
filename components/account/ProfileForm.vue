@@ -4,16 +4,58 @@ import { useUserStore } from '~/stores/user'
 
 const userStore = useUserStore()
 const { userData } = storeToRefs(userStore)
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+const userToken = useCookie('token')
 
-const birthday = ref<Date | null>(new Date(userData.value.birthday))
+console.log(userData)
+
+interface UserInfo {
+  Birthday: null | string
+  JobTitle: string
+  Bio: string
+}
+
+const NickName = ref('')
+
+const userInfo: UserInfo = reactive({
+  Birthday: null,
+  JobTitle: '',
+  Bio: ''
+})
+
+const getUserInfo = async () => {
+  if (userToken.value) {
+    try {
+      const res: ApiResponse = await $fetch(`${apiBase}/userinfo`, {
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userToken.value}`
+        }
+      })
+      console.log(res)
+      if (res.StatusCode === 200) {
+        NickName.value = res.Data.User.NickName
+        userInfo.Birthday = res.Data.User.Birthday
+        userInfo.JobTitle = res.Data.User.Jobtitle || ''
+        userInfo.Bio = res.Data.User.Bio || ''
+      }
+    } catch (error: any) {
+      console.log(error.response)
+    }
+  }
+}
+
+onMounted(getUserInfo)
+
 const handleDateClick = (togglePopover: () => void) => {
   event?.preventDefault()
   togglePopover()
 }
 
 const formattedDate = computed(() => {
-  if (birthday.value) {
-    const selectedDate = new Date(birthday.value)
+  if (userInfo.Birthday) {
+    const selectedDate = new Date(userInfo.Birthday)
     const year = selectedDate.getFullYear()
     const month = String(selectedDate.getMonth() + 1).padStart(2, '0')
     const day = String(selectedDate.getDate()).padStart(2, '0')
@@ -39,21 +81,47 @@ const selectFile = (event: Event) => {
   }
 }
 
-const jobTitle = ref<string>(userData.value.jobTitle)
-
-const bioInput = ref<string>(userData.value.bio)
 const maxCharacterCount = 30
-const characterCount = ref<string>(`(${bioInput.value.length}/${maxCharacterCount})`)
+const characterCount = ref<string>(`(${userInfo.Bio.length}/${maxCharacterCount})`)
 
-watch(bioInput, (newValue: string) => {
-  characterCount.value = `(${newValue.length}/${maxCharacterCount})`
-})
+watch(
+  () => userInfo.Bio,
+  (newValue: string) => {
+    characterCount.value = `(${newValue.length}/${maxCharacterCount})`
+  }
+)
 
 const textLengthRule = (value: string) => {
   if (value.length >= 30 || value.length === 30) {
     return '*自我介紹不超過30個字'
   } else {
     return true
+  }
+}
+
+const updateUserInfo = async () => {
+  if (!userToken.value) {
+    return
+  }
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/updateuserinfo`, {
+      headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` },
+      method: 'PUT',
+      body: {
+        NickName: NickName.value,
+        Birthday: userInfo.Birthday,
+        JobTitle: userInfo.JobTitle,
+        Bio: userInfo.Bio
+      }
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      userData.value.nickName = NickName.value
+      alert(res.Message)
+      location.reload()
+    }
+  } catch (error: any) {
+    console.log(error.response)
   }
 }
 </script>
@@ -98,7 +166,7 @@ const textLengthRule = (value: string) => {
                 <label for="userName" class="block text-primary">暱稱</label>
                 <VField
                   id="userName"
-                  :value="userData.name"
+                  v-model="NickName"
                   name="userName"
                   label="*名稱"
                   class="my-2 w-full rounded border border-primary bg-white px-3 py-[6px] text-primary-dark outline-none"
@@ -109,7 +177,7 @@ const textLengthRule = (value: string) => {
               <div class="w-full pt-4 lg:w-1/3 lg:pl-8 lg:pt-0">
                 <label for="birthday" class="mb-2 block text-primary">生日</label>
                 <div class="w-full cursor-pointer rounded border border-primary bg-white">
-                  <VDatePicker v-model="birthday" expanded>
+                  <VDatePicker v-model="userInfo.Birthday" expanded>
                     <template #default="{ togglePopover }">
                       <div
                         class="flex cursor-pointer justify-between px-3 py-[6px]"
@@ -135,7 +203,7 @@ const textLengthRule = (value: string) => {
               <label for="jobTitle" class="block text-primary">頭銜</label>
               <VField
                 id="jobTitle"
-                v-model="jobTitle"
+                v-model="userInfo.JobTitle"
                 name="jobTitle"
                 label="*頭銜"
                 class="my-2 block w-full rounded border border-primary bg-white px-3 py-[6px] text-primary-dark outline-none lg:w-2/3"
@@ -147,7 +215,7 @@ const textLengthRule = (value: string) => {
               <label for="userIntro" class="mb-2 block text-primary">自我介紹</label>
               <VField
                 id="userIntro"
-                v-model="bioInput"
+                v-model="userInfo.Bio"
                 name="userIntro"
                 as="textarea"
                 label="*自我介紹"
@@ -166,7 +234,7 @@ const textLengthRule = (value: string) => {
               <div class="mb-[42px] flex justify-between gap-8 lg:mb-[27px] lg:justify-start">
                 <h4 class="text-2xl font-medium text-primary">重置密碼</h4>
                 <nuxt-link
-                  to="/forgetpassword"
+                  to="/resetpassword"
                   class="rounded border border-secondary px-2 py-[3px] text-secondary"
                   >修改密碼</nuxt-link
                 >
@@ -181,7 +249,13 @@ const textLengthRule = (value: string) => {
               </div>
             </div>
             <div class="mb-16 flex w-full justify-end">
-              <button class="rounded border bg-secondary px-[7px] py-2 text-white">儲存變更</button>
+              <button
+                type="button"
+                class="rounded border bg-secondary px-[7px] py-2 text-white"
+                @click="updateUserInfo"
+              >
+                儲存變更
+              </button>
             </div>
           </VForm>
         </div>

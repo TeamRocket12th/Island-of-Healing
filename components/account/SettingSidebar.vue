@@ -16,7 +16,7 @@ const { toggleWriterSettings } = uiStore
       <div class="h-[44px] w-[44px] overflow-hidden rounded-full">
         <img :src="userData.avatar" alt="user" />
       </div>
-      <p>{{ userData.name }}</p>
+      <p>{{ userData.nickName }}</p>
     </div>
     <ul class="whitespace-nowrap font-serif-tc font-medium text-primary">
       <li class="px-4">

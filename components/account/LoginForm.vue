@@ -1,76 +1,38 @@
 <script setup lang="ts">
 import { useUserStore } from '~/stores/user'
-const userStore = useUserStore()
 
+const userStore = useUserStore()
 const { userLogin, getUserInfo, getUserToken } = userStore
+const { emailRequired, emailRule, passwordRequired, passwordRule } = useValidate()
 
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
-
 const router = useRouter()
-
-let res: ApiResponse = {}
+const passwordField = useTogglePassword()
 
 const user = reactive({
-  account: 'user@mail.com',
-  password: 'Test0000'
+  account: '',
+  password: ''
 })
 
 const handleLogin = async () => {
-  const { data, error } = await useFetch(`${apiBase}/login`, {
-    headers: { 'Content-type': 'application/json' },
-    method: 'POST',
-    body: user
-  })
-  if (data.value) {
-    console.log('Login success', data.value)
-    res = data.value
-    if (res.statusCode === 200) {
-      console.log(res.data.user)
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/login`, {
+      headers: { 'Content-type': 'application/json' },
+      method: 'POST',
+      body: user
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      alert(res.Message)
       userLogin()
-      getUserInfo(res.data.user)
-      getUserToken(res.token)
-      router.push('/')
+      getUserInfo(res.Data.User)
+      getUserToken(res.Token)
+      router.replace('/')
     }
-  } else if (error.value) {
-    console.log('Login error', error.value.data)
+  } catch (error: any) {
+    console.log(error.response)
   }
-}
-
-const emailRequired = (value: string) => {
-  if (value && value.trim()) {
-    return true
-  }
-  return '*電子郵件為必填'
-}
-
-const emailRule = (value: string) => {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (regex.test(value)) {
-    return true
-  }
-  return '*請輸入有效的電子郵件'
-}
-const passwordRequired = (value: string) => {
-  if (value && value.trim()) {
-    return true
-  }
-  return '*密碼 為必填'
-}
-const passwordRule = (value: string) => {
-  const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/
-  if (regex.test(value)) {
-    return true
-  }
-  return '*請輸入 8 位以上大小寫英數字組合'
-}
-const passwordType = ref('password')
-const pwdEyeOpen = ref(false)
-const pwdEyeClose = ref(true)
-const togglePasswordType = () => {
-  passwordType.value = passwordType.value === 'text' ? 'password' : 'text'
-  pwdEyeOpen.value = !pwdEyeOpen.value
-  pwdEyeClose.value = !pwdEyeClose.value
 }
 </script>
 <template>
@@ -100,7 +62,7 @@ const togglePasswordType = () => {
               >立即註冊
             </NuxtLink>
           </div>
-          <VForm class="w-full text-secondary">
+          <VForm v-slot="{ errors, meta }" class="w-full text-secondary">
             <label for="account">帳號</label>
             <div class="relative my-1">
               <Icon
@@ -116,13 +78,12 @@ const togglePasswordType = () => {
                 type="email"
                 placeholder="帳號"
                 label="電子信箱"
-                class="input-bordered input w-full rounded border-[#BDBDBD] pl-12 focus:outline-none"
+                class="input-bordered input w-full rounded border pl-12 focus:outline-none"
+                :class="errors['email'] ? 'border-[#EF4444]' : 'border-secondary '"
               />
             </div>
-            <div class="mb-4 block text-[14px] text-red-500">
-              <VErrorMessage name="email" />
-            </div>
-            <label for="password" class="block">密碼</label>
+            <VErrorMessage name="email" class="block text-sm text-red-500" />
+            <label for="password" class="mt-4 block">密碼</label>
             <div class="relative my-1">
               <Icon
                 name="mdi:lock-outline"
@@ -134,32 +95,33 @@ const togglePasswordType = () => {
                 v-model="user.password"
                 name="password"
                 :rules="[passwordRequired, passwordRule]"
-                :type="passwordType"
+                :type="passwordField.passwordType.value"
                 placeholder="密碼"
-                class="input-bordered input w-full rounded border-[#BDBDBD] pl-12 focus:outline-none"
+                maxlength="13"
+                class="input-bordered input w-full rounded border pl-12 focus:outline-none"
+                :class="errors['password'] ? 'border-[#EF4444]' : 'border-secondary '"
               />
               <Icon
-                v-if="pwdEyeOpen"
+                v-if="passwordField.pwdEyeOpen.value"
                 name="ic:outline-remove-red-eye"
                 size="25"
                 class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer"
-                @click="togglePasswordType"
+                @click="passwordField.togglePasswordType"
               />
               <Icon
-                v-if="pwdEyeClose"
+                v-else
                 name="material-symbols:visibility-off-outline"
                 size="25"
                 class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer"
-                @click="togglePasswordType"
+                @click="passwordField.togglePasswordType"
               />
             </div>
-            <div class="mb-4 block text-[14px] text-red-500">
-              <VErrorMessage name="password" />
-            </div>
+            <VErrorMessage name="password" class="block text-sm text-red-500" />
             <div class="relative mb-4">
               <button
                 type="button"
-                class="btn mb-3 w-full rounded bg-secondary text-[16px] font-bold text-white hover:bg-slate-600 3xl:mb-4"
+                class="btn my-4 w-full rounded bg-secondary text-[16px] font-bold text-white hover:bg-slate-600 disabled:bg-[#cfccc9] disabled:text-white 3xl:mb-4"
+                :disabled="!meta.valid"
                 @click.prevent="handleLogin"
               >
                 登入

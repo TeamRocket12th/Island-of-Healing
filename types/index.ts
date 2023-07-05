@@ -110,8 +110,8 @@ declare global {
     Email: string
     ImgUrl: string
     Role: string
-    Birthday: string
     MyPlan: string
+    Birthday?: string
     JobTitle?: string
     Bio?: string
   }

@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+definePageMeta({
+  requiredAuth: true
+})
+</script>
 
 <template>
   <div class="bg-sand-100">

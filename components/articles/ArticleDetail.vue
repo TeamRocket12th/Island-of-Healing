@@ -5,14 +5,14 @@ import { useUserStore } from '~/stores/user'
 const userStore = useUserStore()
 const { isLogin, userData } = storeToRefs(userStore)
 const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const mockApiBase = runtimeConfig.public.mockApiBase
 const articleDetail = ref<ArticleDetail | null>(null)
 const charge = ref(false)
 const route = useRoute()
 
 const getArticleDetail = async () => {
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/article/${route.params.id}`)
+    const res: ApiResponse = await $fetch(`${mockApiBase}/article/${route.params.id}`)
     if (res.statusCode === 200) {
       console.log(res.data)
       articleDetail.value = res.data
@@ -42,15 +42,23 @@ const insertEmoji = (emoji: any) => {
   showEmojiPicker.value = false
 }
 
-const isLocked = ref(true)
-const handleUnLock = () => {
-  if (!isLogin.value) {
-    alert('需要先登入才能閱讀文章喔')
-  } else if (userData.value.myPlan === 'free' && charge.value) {
-    alert('請先訂閱我們')
-  } else {
-    isLocked.value = !isLocked.value
-  }
+// const isLocked = ref(true)
+// const handleUnLock = () => {
+//   if (!isLogin.value) {
+//     alert('需要先登入才能閱讀文章喔')
+//   } else if (userData.value.myPlan === 'free' && charge.value) {
+//     alert('請先訂閱我們')
+//   } else {
+//     isLocked.value = !isLocked.value
+//   }
+// }
+
+const isShareLinkOpen = ref(false)
+const toggleShareLink = () => {
+  isShareLinkOpen.value = !isShareLinkOpen.value
+}
+const closeModal = (val: boolean) => {
+  isShareLinkOpen.value = val
 }
 </script>
 <template>
@@ -109,8 +117,7 @@ const handleUnLock = () => {
             <li class="cursor-pointer">
               <Icon name="material-symbols:bookmark-outline-rounded" size="20" />
             </li>
-            <li onclick="my_modal_3.showModal()" class="cursor-pointer">
-              <ShareLink />
+            <li class="cursor-pointer" @click="toggleShareLink">
               <Icon name="mdi:share-variant-outline" size="20" />
             </li>
           </ul>
@@ -159,7 +166,7 @@ const handleUnLock = () => {
         <div class="mr-2 h-9 w-9">
           <img :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />
         </div>
-        <span class="font-medium text-primary">{{ userData.name }}</span>
+        <span class="font-medium text-primary">{{ userData.nickName }}</span>
       </div>
       <div class="grid-cols-7 gap-6 text-right md:grid md:text-left">
         <div class="relative col-span-6 mb-4 md:mb-0">
@@ -194,6 +201,9 @@ const handleUnLock = () => {
     <h2 class="mb-6 font-serif-tc text-4xl font-bold text-primary md:text-2xl">你可能會喜歡</h2>
     <RecArticleCard />
   </section>
+  <Teleport to="body">
+    <ShareLink :is-share-link-open="isShareLinkOpen" @close-modal="closeModal" />
+  </Teleport>
 </template>
 
 <style scoped></style>

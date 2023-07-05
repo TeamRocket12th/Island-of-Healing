@@ -1,8 +1,6 @@
 export const useUserStore = defineStore(
   'auth',
   () => {
-    const runtimeConfig = useRuntimeConfig()
-    const apiBase = runtimeConfig.public.apiBase
     const authCookie = useCookie('auth')
     const authToken = useCookie('token')
 
@@ -10,7 +8,7 @@ export const useUserStore = defineStore(
     const userData = ref({
       email: '',
       id: '',
-      name: '',
+      nickName: '',
       role: 'guest',
       avatar: '',
       birthday: '',
@@ -28,15 +26,10 @@ export const useUserStore = defineStore(
     const getUserInfo = (user: UserInfo) => {
       userData.value.email = user.Email
       userData.value.id = user.Uid
-      userData.value.name = user.NickName
+      userData.value.nickName = user.NickName
       userData.value.role = user.Role
       userData.value.avatar = user.ImgUrl
-      userData.value.birthday = user.Birthday
       userData.value.myPlan = user.MyPlan
-      if (user.Role === 'writer') {
-        userData.value.jobTitle = user.JobTitle as string
-        userData.value.bio = user.Bio as string
-      }
     }
 
     const getUserToken = (token: string) => {
@@ -55,16 +48,10 @@ export const useUserStore = defineStore(
       }
     }
 
-    const checkAuth = async () => {
-      const { data, error } = await useFetch(`${apiBase}/checkauth`, {
-        method: 'POST',
-        body: {
-          token: authToken?.value
-        }
-      })
-      if (data.value) {
+    const checkAuth = () => {
+      if (authToken.value) {
         console.log('token 驗證成功')
-      } else if (error.value) {
+      } else {
         authToken.value = null
         isLogin.value = false
         console.log('token 驗證失敗')
@@ -72,7 +59,15 @@ export const useUserStore = defineStore(
       }
     }
 
-    return { isLogin, userData, userLogin, getUserInfo, getUserToken, userLogout, checkAuth }
+    return {
+      isLogin,
+      userData,
+      userLogin,
+      getUserInfo,
+      getUserToken,
+      userLogout,
+      checkAuth
+    }
   },
   {
     persist: true
