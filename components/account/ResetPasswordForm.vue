@@ -45,7 +45,7 @@ const togglePasswordCheckType = () => {
       <div
         class="flex w-full flex-col items-center justify-center px-[74px] py-[124px] md:border md:border-primary 3xl:px-[516px] 3xl:py-[132px]"
       >
-        <div class="w-[288px] text-secondary">
+        <div class="w-[322px] text-secondary">
           <h2 class="mb-4 py-2 text-[24px] font-bold text-primary">重設密碼</h2>
 
           <VForm action="" class="w-full">

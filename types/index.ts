@@ -65,9 +65,14 @@ declare global {
   interface ArticleSummary {
     id: string
     title: string
+    category: string
     publishDate: string
+    progress: string
+    permission: string
     collectNum: number
     commentNum: number
+    likeNum: number
+    clickNum: number
   }
 
   // 文章卡片

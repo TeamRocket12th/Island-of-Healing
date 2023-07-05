@@ -16,9 +16,9 @@ if (error.value) {
 }
 </script>
 <template>
-  <div class="mb-[200px] rounded-lg bg-white px-10 pb-20 pt-20">
-    <div class="mb-6 flex items-center justify-between">
-      <h2 class="text-2xl font-bold">審核進度</h2>
+  <div class="mb-40 border-primary bg-sand-100 px-10 pb-20 pt-10 lg:border">
+    <div class="mb-6 items-center justify-between md:flex">
+      <h2 class="mb-16 font-serif-tc text-2xl font-bold">審核進度</h2>
       <div class="flex items-center">
         <SearchInput />
       </div>

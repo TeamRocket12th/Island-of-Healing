@@ -468,13 +468,11 @@ h2 {
   font-size: 24px;
   color: #4e2a09;
   font-family: 'Noto Sans TC';
-  margin-bottom: 10px;
 }
 h3 {
   font-size: 20px;
   color: #4e2a09;
   font-family: 'Noto Sans TC';
-  margin-bottom: 10px;
 }
 
 .text-p {
