@@ -189,14 +189,14 @@ const insertImage = () => {
 
 <template>
   <div
-    class="container grid grid-cols-1 pb-80 pt-0 sm:pb-96 md:pb-0 md:pt-[72px]"
+    class="container grid grid-cols-1 pt-0 sm:pb-96 sm:pt-[72px] md:pb-0"
     @dragover.prevent="handleDragOver"
     @drop.prevent="handleDrop"
   >
     <div class="col-span-12">
       <div class="flex flex-wrap">
-        <div class="order-2 mx-0 md:order-1 xl:mx-[280px]">
-          <div class="relative md:flex md:justify-end">
+        <div class="order-2 mx-0 sm:order-1 lg:mx-48 xl:mx-[280px]">
+          <div class="relative sm:flex sm:justify-end">
             <input
               v-model="articleTitle"
               type="text"
@@ -207,7 +207,7 @@ const insertImage = () => {
               <Icon
                 name="material-symbols:info-outline"
                 size="24"
-                class="absolute -top-[30px] right-5 mr-5 text-sand-300 md:static"
+                class="absolute -top-[30px] right-5 mr-5 text-sand-300 sm:static"
               />
             </div>
           </div>
@@ -277,7 +277,7 @@ const insertImage = () => {
                 </button>
               </div>
               <bubble-menu
-                class="tableBubbleMenu bubble-menu h flex gap-1 rounded border-[0.5px] border-secondary text-secondary"
+                class="bubble-menu h hidden gap-1 rounded border-[0.5px] border-secondary text-secondary md:flex"
                 :tippy-options="{ duration: 100 }"
                 :editor="editor"
               >
@@ -350,15 +350,15 @@ const insertImage = () => {
           </div>
         </div>
         <div
-          class="order-1 mb-0 flex w-full justify-end gap-0 md:order-2 md:mb-20 md:gap-3 xl:px-[280px]"
+          class="order-1 mb-0 flex w-full justify-end gap-0 sm:order-2 sm:mb-20 sm:gap-3 xl:px-[280px]"
         >
           <button
-            class="rounded px-3 py-1 text-sand-300 duration-100 hover:text-secondary md:text-secondary md:hover:bg-secondary md:hover:text-white"
+            class="rounded px-3 py-1 text-sand-300 duration-100 hover:text-secondary sm:text-secondary sm:hover:bg-secondary sm:hover:text-white"
           >
             儲存草稿
           </button>
           <button
-            class="mr-16 rounded px-3 py-[7px] text-sand-300 duration-100 hover:text-secondary md:mr-0 md:text-secondary md:hover:bg-secondary md:hover:text-white"
+            class="mr-16 rounded px-3 py-[7px] text-sand-300 duration-100 hover:text-secondary sm:mr-0 sm:text-secondary sm:hover:bg-secondary sm:hover:text-white"
             @click="postSent(true)"
           >
             發表貼文
@@ -369,7 +369,7 @@ const insertImage = () => {
     <div class="block">
       <div
         v-if="editor && selectedStatus"
-        class="phoneTextNavbar -mx-3 flex flex-wrap justify-around bg-[#E9E4D9] py-3 text-secondary"
+        class="-mx-6 flex flex-wrap justify-around bg-[#E9E4D9] py-3 text-secondary sm:hidden"
       >
         <button
           :disabled="!editor.can().chain().focus().toggleBold().run()"
@@ -392,11 +392,11 @@ const insertImage = () => {
       </div>
       <div
         v-if="editor && !selectedStatus"
-        class="phoneParagraphNavbar -mx-3 flex justify-start gap-2 bg-[#E9E4D9] px-3 py-3 text-secondary"
+        class="-mx-6 flex justify-start gap-2 bg-[#E9E4D9] px-3 py-3 text-secondary sm:hidden"
       >
         <button
           :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-          class="block rounded hover:bg-secondary hover:text-white"
+          class="block h-8 rounded hover:bg-secondary hover:text-white"
           @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
         >
           <Icon name="material-symbols:text-fields" size="24" />
@@ -496,18 +496,7 @@ h3 {
   border: solid 1px black;
   font-size: 20px;
 }
-@media (min-width: 767px) {
-  .phoneTextNavbar,
-  .phoneParagraphNavbar {
-    display: none;
-  }
-}
-@media (max-width: 768px) {
-  .tableBubbleMenu,
-  .tableTextNavbar {
-    display: none;
-  }
-}
+
 .bold-active,
 .italic-active,
 .link-active {

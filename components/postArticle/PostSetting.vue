@@ -27,10 +27,6 @@ const selectCategory = (category: string): void => {
   selectedCategory.value = category
 }
 
-// watch(selectedCategory, (newValue) => {
-//   console.log('category:', newValue)
-// })
-
 const toggleCategory = (status: boolean): void => {
   toggleshowCategory.value = status
 }
@@ -93,18 +89,18 @@ onUnmounted(() => {
 </script>
 <template>
   <div
-    class="container absolute left-1/2 top-[20%] grid -translate-x-1/2 grid-cols-12 bg-sand-100 md:top-[60%] md:max-h-[750px] md:-translate-y-1/2 md:pb-[317px] md:pt-10"
+    class="container absolute left-1/2 top-1/2 mt-44 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-8 md:mt-0 md:pt-0"
   >
     <div class="col-span-12 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3">
       <div class="relative block md:flex">
         <Icon
           name="ic:baseline-close"
           size="24"
-          class="absolute right-0 top-0 cursor-pointer text-primary"
+          class="absolute -top-4 right-0 cursor-pointer text-primary md:top-0"
           @click="postSent(false)"
         />
         <div class="w-full md:py-[54px] xl:px-[54px]">
-          <h3 class="mb-3 text-base">文章封面</h3>
+          <h3 class="mb-3 text-base text-primary">文章封面</h3>
           <div>
             <div
               class="h-[200px] max-w-full overflow-hidden bg-sand-200 bg-cover bg-center"
@@ -140,7 +136,7 @@ onUnmounted(() => {
               class="w-full rounded border border-secondary px-3 py-2 text-primary outline-none placeholder:text-sand-300"
             />
           </div>
-          <div>
+          <div class="mb:mb-0 mb-5">
             <h3 class="mb-2 text-base text-primary">新增標籤</h3>
             <div
               class="flex flex-wrap items-center gap-2 rounded border border-secondary bg-white px-3 py-2"
@@ -220,12 +216,12 @@ onUnmounted(() => {
               />
               <div class="relative flex">
                 <VErrorMessage name="userIntro" class="text-primary" />
-                <p class="absolute right-0">{{ summaryCount }}</p>
+                <p class="absolute right-0 text-primary-dark">{{ summaryCount }}</p>
               </div>
             </VForm>
           </div>
           <div class="flex justify-end md:absolute md:bottom-0 md:right-0">
-            <button class="rounded bg-secondary px-3 py-2 text-white">確認送出</button>
+            <button class="mb:mb-0 mb-6 rounded bg-secondary px-3 py-2 text-white">確認送出</button>
           </div>
         </div>
       </div>
