@@ -2,20 +2,20 @@
 import isWriter from '~/middleware/isWriter'
 
 definePageMeta({
-  title: '新增文章',
+  layout: 'postlayout',
   middleware: [isWriter],
   requiredAuth: true
 })
+
+useHead({ title: '新增文章' })
 
 const settingShow = ref()
 const rulesShow = ref()
 const articleTitle = ref('')
 const settingUse = (value: boolean) => {
   settingShow.value = value
-  console.log(value)
 }
 const titleUse = (title: string) => {
-  console.log(title)
   articleTitle.value = title
 }
 
