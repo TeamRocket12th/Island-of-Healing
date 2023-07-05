@@ -89,7 +89,7 @@ onUnmounted(() => {
 </script>
 <template>
   <div
-    class="container absolute left-1/2 top-1/2 mt-44 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-8 md:mt-0 md:pt-0"
+    class="container absolute left-1/2 top-1/2 mt-44 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-8 sm:mt-12 md:pt-0"
   >
     <div class="col-span-12 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3">
       <div class="relative block md:flex">
@@ -181,7 +181,7 @@ onUnmounted(() => {
             <h3 class="mb-2 text-base text-primary">文章分類</h3>
             <label
               tabindex="0"
-              class="btn m-1 flex justify-between rounded border-secondary bg-white"
+              class="btn flex justify-between rounded border-secondary bg-white"
               @click="toggleCategory(true)"
             >
               <span class="font-normal text-sand-300">{{ selectedCategory }}</span>
