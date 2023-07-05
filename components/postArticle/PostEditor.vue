@@ -15,7 +15,6 @@ import { Node } from '@tiptap/core'
 
 const articleTitle = ref('')
 
-// 新增節點
 const CustomParagraphNode = Node.create({
   name: 'custom_paragraph',
   group: 'block',
@@ -44,8 +43,19 @@ const rulesShow = (value) => {
 }
 
 const editor = ref(null)
+const selectedStatus = ref(false)
 onMounted(() => {
   editor.value = new Editor({
+    onSelectionUpdate({ editor }) {
+      console.log(editor)
+      console.log(editor.state.selection)
+      const { from, to } = editor.state.selection
+      const selectedText = editor.state.doc.textBetween(from, to)
+      console.log(selectedText)
+      const isTextSelected = !editor.state.selection.empty
+      selectedStatus.value = isTextSelected
+      console.log(isTextSelected)
+    },
     extensions: [
       CustomParagraphNode,
       HardBreak,
@@ -121,9 +131,8 @@ const swapOff = () => {
   textNavbarShow.value = false
 }
 
-// 輸出
 const newJson = ref('')
-const newHtml = ref('')
+// const newHtml = ref('')
 const htmlOutput = ref('')
 watchEffect(() => {
   if (editor.value !== null) {
@@ -134,7 +143,6 @@ watchEffect(() => {
   }
 })
 
-// 圖片拖曳
 const previewImage = ref(null)
 const handleDragOver = (event) => {
   event.preventDefault()
@@ -173,22 +181,22 @@ const insertImage = () => {
     })
   }
 }
-const sentHtml = () => {
-  const html = editor.value.getHTML()
-  newHtml.value = html
-}
+// const sentHtml = () => {
+//   const html = editor.value.getHTML()
+//   newHtml.value = html
+// }
 </script>
 
 <template>
   <div
-    class="container grid grid-cols-1 pb-80 pt-[72px] sm:pb-96 md:pb-0"
+    class="container grid grid-cols-1 pt-0 sm:pb-96 sm:pt-[72px] md:pb-0"
     @dragover.prevent="handleDragOver"
     @drop.prevent="handleDrop"
   >
     <div class="col-span-12">
       <div class="flex flex-wrap">
-        <div class="order-2 mx-0 md:order-1 xl:mx-[280px]">
-          <div class="relative md:flex md:justify-end">
+        <div class="order-2 mx-0 sm:order-1 lg:mx-48 xl:mx-[280px]">
+          <div class="relative sm:flex sm:justify-end">
             <input
               v-model="articleTitle"
               type="text"
@@ -199,12 +207,12 @@ const sentHtml = () => {
               <Icon
                 name="material-symbols:info-outline"
                 size="24"
-                class="absolute -top-[30px] right-5 mr-5 text-sand-300 md:static"
+                class="absolute -top-[30px] right-5 mr-5 text-sand-300 sm:static"
               />
             </div>
           </div>
           <div class="mb-6">
-            <div v-if="editor" class="flex min-h-[36px]">
+            <div v-if="editor" class="tableTextNavbar flex min-h-[36px]">
               <label class="swap mr-3">
                 <input type="checkbox" />
                 <div class="swap-on" @click="swapOn">
@@ -247,9 +255,6 @@ const sentHtml = () => {
                 <button @click="editor.chain().focus().setHorizontalRule().run()">
                   <Icon name="material-symbols:align-center" size="24" class="hover:bg-[#E9E4D9]" />
                 </button>
-                <button @click="editor.chain().focus().setHardBreak().run()">
-                  <Icon name="material-symbols:wrap-text" size="24" class="hover:bg-[#E9E4D9]" />
-                </button>
                 <button
                   :disabled="!editor.can().chain().focus().undo().run()"
                   @click="editor.chain().focus().undo().run()"
@@ -272,7 +277,7 @@ const sentHtml = () => {
                 </button>
               </div>
               <bubble-menu
-                class="bubble-menu h flex gap-1 rounded border-[0.5px] border-secondary text-secondary"
+                class="bubble-menu h hidden gap-1 rounded border-[0.5px] border-secondary text-secondary md:flex"
                 :tippy-options="{ duration: 100 }"
                 :editor="editor"
               >
@@ -341,25 +346,84 @@ const sentHtml = () => {
             <div>
               <editor-content ref="content" :editor="editor" class="p-2" />
             </div>
-            <div v-dompurify-html="newHtml"></div>
+            <!-- <div v-dompurify-html="newHtml"></div> -->
           </div>
         </div>
         <div
-          class="order-1 mb-0 flex w-full justify-end gap-0 md:order-2 md:mb-20 md:gap-3 xl:px-[280px]"
+          class="order-1 mb-0 flex w-full justify-end gap-0 sm:order-2 sm:mb-20 sm:gap-3 xl:px-[280px]"
         >
           <button
-            class="rounded px-3 py-1 text-sand-300 duration-100 hover:text-secondary md:text-secondary md:hover:bg-secondary md:hover:text-white"
-            @click="sentHtml()"
+            class="rounded px-3 py-1 text-sand-300 duration-100 hover:text-secondary sm:text-secondary sm:hover:bg-secondary sm:hover:text-white"
           >
             儲存草稿
           </button>
           <button
-            class="mr-16 rounded px-3 py-[7px] text-sand-300 duration-100 hover:text-secondary md:mr-0 md:text-secondary md:hover:bg-secondary md:hover:text-white"
+            class="mr-16 rounded px-3 py-[7px] text-sand-300 duration-100 hover:text-secondary sm:mr-0 sm:text-secondary sm:hover:bg-secondary sm:hover:text-white"
             @click="postSent(true)"
           >
             發表貼文
           </button>
         </div>
+      </div>
+    </div>
+    <div class="block">
+      <div
+        v-if="editor && selectedStatus"
+        class="-mx-6 flex flex-wrap justify-around bg-[#E9E4D9] py-3 text-secondary sm:hidden"
+      >
+        <button
+          :disabled="!editor.can().chain().focus().toggleBold().run()"
+          :class="{ 'bold-active': editor.isActive('bold') }"
+          class="h-8 font-bold"
+          @click="editor.chain().focus().toggleBold().run()"
+        >
+          Bold
+        </button>
+        <button
+          :disabled="!editor.can().chain().focus().toggleItalic().run()"
+          :class="{ 'italic-active': editor.isActive('italic') }"
+          @click="editor.chain().focus().toggleItalic().run()"
+        >
+          Italic
+        </button>
+        <button :class="{ 'link-active': editor.isActive('link') }" @click="setLink">
+          <span class="underline">Link</span>
+        </button>
+      </div>
+      <div
+        v-if="editor && !selectedStatus"
+        class="-mx-6 flex justify-start gap-2 bg-[#E9E4D9] px-3 py-3 text-secondary sm:hidden"
+      >
+        <button
+          :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+          class="block h-8 rounded hover:bg-secondary hover:text-white"
+          @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+        >
+          <Icon name="material-symbols:text-fields" size="24" />
+        </button>
+        <button
+          :class="{ 'is-active': editor.isActive('blockquote') }"
+          class="block rounded hover:bg-secondary hover:text-white"
+          @click="editor.chain().focus().toggleBlockquote().run()"
+        >
+          <Icon name="ic:outline-format-quote" size="24" />
+        </button>
+        <button
+          :class="{ 'is-active': editor.isActive('bulletList') }"
+          class="block rounded hover:bg-secondary hover:text-white"
+          @click="editor.chain().focus().toggleBulletList().run()"
+        >
+          <Icon name="ic:twotone-format-list-bulleted" size="24" />
+        </button>
+        <button
+          class="block rounded hover:bg-secondary hover:text-white"
+          @click="editor.chain().focus().setHorizontalRule().run()"
+        >
+          <Icon name="material-symbols:align-center" size="24" />
+        </button>
+        <button class="block rounded hover:bg-secondary hover:text-white" @click="addImage">
+          <Icon name="material-symbols:add-photo-alternate-outline" size="24" />
+        </button>
       </div>
     </div>
   </div>
@@ -429,5 +493,14 @@ h3 {
 .myButton {
   border: solid 1px black;
   font-size: 20px;
+}
+
+.bold-active,
+.italic-active,
+.link-active {
+  color: white;
+  background-color: #796959;
+  border-radius: 10%;
+  width: 50px;
 }
 </style>

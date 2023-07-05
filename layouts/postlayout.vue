@@ -64,6 +64,7 @@ const isUserPage = computed(() => {
                     <Icon name="ic:outline-arrow-drop-down" size="24" class="text-sand-100"
                   /></span>
                 </label>
+
                 <ul
                   tabindex="0"
                   class="dropdown-content menu rounded-box relative top-[110%] z-10 w-52 bg-base-100 p-2 font-serif-tc text-base shadow"
@@ -127,7 +128,7 @@ const isUserPage = computed(() => {
         </div>
       </nav>
       <div
-        class="relative h-20 border-b border-primary bg-sand-100 sm:hidden sm:h-[142px] sm:border-none sm:pt-5"
+        class="relative block h-20 border-b border-primary bg-sand-100 sm:hidden sm:h-[142px] sm:border-none sm:pt-5"
       >
         <div class="container">
           <div class="relative py-4 sm:py-0">
@@ -340,11 +341,10 @@ const isUserPage = computed(() => {
         </ul>
       </div>
     </header>
-    <div class="flex flex-grow">
-      <main id="content" class="container">
-        <slot />
-      </main>
-    </div>
+
+    <main id="content" class="container">
+      <slot />
+    </main>
   </div>
 </template>
 
