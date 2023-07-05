@@ -109,7 +109,10 @@ const handleUnLock = () => {
             <li class="cursor-pointer">
               <Icon name="material-symbols:bookmark-outline-rounded" size="20" />
             </li>
-            <li class="cursor-pointer"><Icon name="mdi:share-variant-outline" size="20" /></li>
+            <li onclick="my_modal_3.showModal()" class="cursor-pointer">
+              <ShareLink />
+              <Icon name="mdi:share-variant-outline" size="20" />
+            </li>
           </ul>
         </div>
       </div>
