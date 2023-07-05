@@ -19,7 +19,7 @@ defineProps({
             </div>
             <div class="w-full">
               <div class="sm:w-[90%]">
-                <div class="articleRole mb-3 flex items-center gap-1">
+                <div class="mb-3 hidden items-center gap-1 sm:flex">
                   <div class="h-6 w-6 rounded-full bg-primary">
                     <img src="" alt="" />
                   </div>
@@ -32,14 +32,14 @@ defineProps({
                   {{ article.articleSummary }}
                 </p>
               </div>
-              <div class="tableCollect flex justify-between">
+              <div class="hidden sm:flex sm:justify-between">
                 <p class="font-light">{{ article.articleDate }}</p>
                 <div class="flex items-center gap-1">
                   <Icon name="mdi:bookmark" size="24" class="text-secondary" />
                   <span class="font-light text-secondary">收藏</span>
                 </div>
               </div>
-              <div class="phoneCollect flex items-center justify-between">
+              <div class="flex items-center justify-between sm:hidden">
                 <div class="flex gap-[5px]">
                   <div class="flex items-center gap-1">
                     <div class="h-6 w-6 rounded-full bg-primary">
@@ -66,18 +66,4 @@ defineProps({
   </div>
 </template>
 
-<style scoped>
-@media (max-width: 640px) {
-  .articleRole {
-    display: none;
-  }
-  .tableCollect {
-    display: none;
-  }
-}
-@media (min-width: 640px) {
-  .phoneCollect {
-    display: none;
-  }
-}
-</style>
+<style scoped></style>
