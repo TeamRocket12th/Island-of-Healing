@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useUIStore } from '~/stores/ui'
 
 const userStore = useUserStore()
+const uiStore = useUIStore()
 const { isLogin, userData } = storeToRefs(userStore)
 const { userLogout } = userStore
+const { isWriterExpanded } = storeToRefs(uiStore)
 
 const showCategory = ref(false)
 
@@ -64,13 +67,15 @@ const isUserPage = computed(() => {
                     <Icon name="ic:outline-arrow-drop-down" size="24" class="text-sand-100"
                   /></span>
                 </label>
-
                 <ul
                   tabindex="0"
-                  class="dropdown-content menu rounded-box relative top-[110%] z-10 w-52 bg-base-100 p-2 font-serif-tc text-base shadow"
+                  class="dropdown-content relative top-[108%] z-10 w-48 border-[0.5px] border-primary bg-sand-100 font-serif-tc text-base shadow"
                 >
                   <li class="text-primary hover:bg-secondary hover:text-sand-100">
-                    <NuxtLink :to="`/account/${userData.id}/profile`" class="font-medium">
+                    <NuxtLink
+                      :to="`/account/${userData.id}/profile`"
+                      class="block p-[10px] font-medium"
+                    >
                       <Icon
                         name="material-symbols:manage-accounts-outline-rounded"
                         size="24"
@@ -80,19 +85,28 @@ const isUserPage = computed(() => {
                     </NuxtLink>
                   </li>
                   <li class="text-primary hover:bg-secondary hover:text-sand-100">
-                    <NuxtLink :to="`/account/${userData.id}/collection`" class="font-medium">
+                    <NuxtLink
+                      :to="`/account/${userData.id}/collection`"
+                      class="block p-[10px] font-medium"
+                    >
                       <Icon name="material-symbols:bookmark-outline" size="24" class="mr-2" />
                       <span>我的收藏</span>
                     </NuxtLink>
                   </li>
                   <li class="text-primary hover:bg-secondary hover:text-sand-100">
-                    <NuxtLink :to="`/account/${userData.id}/following`" class="font-medium">
+                    <NuxtLink
+                      :to="`/account/${userData.id}/following`"
+                      class="block p-[10px] font-medium"
+                    >
                       <Icon name="ic:round-rss-feed" size="24" class="mr-2" />
                       <span>我的追蹤</span></NuxtLink
                     >
                   </li>
                   <li class="text-primary hover:bg-secondary hover:text-sand-100">
-                    <NuxtLink :to="`/account/${userData.id}/messages`" class="font-medium">
+                    <NuxtLink
+                      :to="`/account/${userData.id}/messages`"
+                      class="block p-[10px] font-medium"
+                    >
                       <Icon name="ic:baseline-mail-outline" size="24" class="mr-2" />
                       <span>我的訊息</span>
                     </NuxtLink>
@@ -101,7 +115,11 @@ const isUserPage = computed(() => {
                     v-if="userData.role === 'writer'"
                     class="text-primary hover:bg-secondary hover:text-sand-100"
                   >
-                    <NuxtLink :to="`/account/${userData.id}/mywork`" class="font-medium">
+                    <NuxtLink
+                      :to="`/account/${userData.id}/mywork`"
+                      class="block p-[10px] font-medium"
+                      @click="isWriterExpanded = true"
+                    >
                       <Icon name="material-symbols:clarify-outline" size="24" class="mr-2" />
                       <span>我的文章</span>
                     </NuxtLink>
@@ -109,14 +127,14 @@ const isUserPage = computed(() => {
                   <li class="text-primary">
                     <NuxtLink
                       :to="`/account/${userData.id}/pastorders`"
-                      class="font-medium hover:bg-secondary hover:text-sand-100"
+                      class="block p-[10px] font-medium hover:bg-secondary hover:text-sand-100"
                     >
                       <Icon name="ic:outline-receipt" size="24" class="mr-2" />
                       <span>歷史訂單</span>
                     </NuxtLink>
                   </li>
-                  <li class="text-primary hover:bg-secondary hover:text-sand-100">
-                    <button class="flex items-center" @click="userLogout">
+                  <li class="p-[10px] text-primary hover:bg-secondary hover:text-sand-100">
+                    <button class="flex w-full items-center" @click="userLogout">
                       <Icon name="ic:outline-logout" size="24" class="mr-2" />
                       <span class="font-medium">登出</span>
                     </button>

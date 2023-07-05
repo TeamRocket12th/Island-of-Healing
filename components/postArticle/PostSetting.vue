@@ -181,7 +181,7 @@ onUnmounted(() => {
             <h3 class="mb-2 text-base text-primary">文章分類</h3>
             <label
               tabindex="0"
-              class="btn m-1 flex justify-between rounded border-secondary bg-white"
+              class="btn flex justify-between rounded border-secondary bg-white"
               @click="toggleCategory(true)"
             >
               <span class="font-normal text-sand-300">{{ selectedCategory }}</span>
