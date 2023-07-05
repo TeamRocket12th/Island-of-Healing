@@ -1,45 +1,56 @@
 <script setup lang="ts">
 const route = useRoute()
 const url = route.fullPath
-
-const successMessage = ref(true)
-
-const copyUrl = async () => {
-  try {
-    await navigator.clipboard.writeText(url)
-    successMessage.value = true
-    setTimeout(() => {
-      successMessage.value = false
-    }, 2000)
-  } catch (error) {
-    console.error('複製URL時發生錯誤', error)
+const props = defineProps({
+  isShareLinkOpen: {
+    type: Boolean,
+    default: false,
+    required: true
   }
+})
+
+const emits = defineEmits(['close-modal'])
+
+const closeModal = () => {
+  emits('close-modal', false)
+}
+
+watchEffect(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = props.isShareLinkOpen ? 'hidden' : 'auto'
+  }
+})
+
+const showSuccessMsg = ref(false)
+
+const copyUrl = () => {
+  navigator.clipboard.writeText(url)
+  showSuccessMsg.value = true
+  setTimeout(() => {
+    showSuccessMsg.value = false
+  }, 2000)
 }
 </script>
 
 <template>
-  <dialog id="my_modal_3" class="modal">
-    <form method="dialog" class="modal-box h-[234px] w-[518px] cursor-default rounded">
-      <button class="btn-ghost btn-sm btn-circle btn absolute right-2 top-2">✕</button>
+  <div
+    v-show="isShareLinkOpen"
+    class="fixed inset-0 z-[999] flex items-center justify-center overflow-hidden bg-black bg-opacity-20"
+    @click.self="closeModal"
+  >
+    <div class="modal-box h-[234px] w-[518px] rounded">
+      <button class="btn-ghost btn-sm btn-circle btn absolute right-2 top-2" @click="closeModal">
+        ✕
+      </button>
       <h3 class="mb-6 text-xl font-bold text-primary">分享</h3>
       <div class="relative flex justify-between">
         <ul class="mb-6 flex gap-7">
           <li class="flex cursor-pointer flex-col items-center justify-between">
-            <!-- ${url}前面要放部署的網址  -->
-            <NuxtLink :to="`https://www.facebook.com/sharer.php?u=${url}`">
-              <img
-                src="~/assets/images/facebook.svg"
-                alt="facebook"
-                class="mb-1 h-[44px] w-[44px]"
-              />
-            </NuxtLink>
+            <img src="~/assets/images/facebook.svg" alt="facebook" class="mb-1 h-[44px] w-[44px]" />
             <p class="text-xs">Facebook</p>
           </li>
           <li class="flex cursor-pointer flex-col items-center justify-between">
-            <!-- ${url}前面要放部署的網址  -->
-            <NuxtLink :to="`https://twitter.com/intent/tweet?url=${url}`">
-              <img src="~/assets/images/twitter.svg" alt="twitter" class="mb-1 h-[44px] w-[44px]" />
-            </NuxtLink>
+            <img src="~/assets/images/twitter.svg" alt="twitter" class="mb-1 h-[44px] w-[44px]" />
             <p class="text-xs">Twitter</p>
           </li>
           <li class="flex cursor-pointer flex-col items-center justify-between">
@@ -52,9 +63,8 @@ const copyUrl = async () => {
           </li>
         </ul>
         <div
-          v-show="successMessage"
-          class="absolute bottom-2 right-0 mt-2 hidden rounded bg-sand-100 p-2 px-4 text-sm text-primary"
-          :class="{ 'opacity-0': !successMessage }"
+          v-if="showSuccessMsg"
+          class="absolute bottom-5 right-0 mt-2 h-8 rounded bg-sand-100 px-4 py-2 text-sm text-primary"
         >
           已複製到剪貼板
         </div>
@@ -75,11 +85,6 @@ const copyUrl = async () => {
           複製
         </button>
       </div>
-    </form>
-    <form method="dialog" class="modal-backdrop">
-      <button>close</button>
-    </form>
-  </dialog>
+    </div>
+  </div>
 </template>
-
-<style scoped></style>

@@ -42,15 +42,23 @@ const insertEmoji = (emoji: any) => {
   showEmojiPicker.value = false
 }
 
-const isLocked = ref(true)
-const handleUnLock = () => {
-  if (!isLogin.value) {
-    alert('需要先登入才能閱讀文章喔')
-  } else if (userData.value.myPlan === 'free' && charge.value) {
-    alert('請先訂閱我們')
-  } else {
-    isLocked.value = !isLocked.value
-  }
+// const isLocked = ref(true)
+// const handleUnLock = () => {
+//   if (!isLogin.value) {
+//     alert('需要先登入才能閱讀文章喔')
+//   } else if (userData.value.myPlan === 'free' && charge.value) {
+//     alert('請先訂閱我們')
+//   } else {
+//     isLocked.value = !isLocked.value
+//   }
+// }
+
+const isShareLinkOpen = ref(false)
+const toggleShareLink = () => {
+  isShareLinkOpen.value = !isShareLinkOpen.value
+}
+const closeModal = (val: boolean) => {
+  isShareLinkOpen.value = val
 }
 </script>
 <template>
@@ -109,8 +117,7 @@ const handleUnLock = () => {
             <li class="cursor-pointer">
               <Icon name="material-symbols:bookmark-outline-rounded" size="20" />
             </li>
-            <li class="cursor-pointer" onclick="my_modal_3.showModal()">
-              <ShareLink />
+            <li class="cursor-pointer" @click="toggleShareLink">
               <Icon name="mdi:share-variant-outline" size="20" />
             </li>
           </ul>
@@ -194,6 +201,9 @@ const handleUnLock = () => {
     <h2 class="mb-6 font-serif-tc text-4xl font-bold text-primary md:text-2xl">你可能會喜歡</h2>
     <RecArticleCard />
   </section>
+  <Teleport to="body">
+    <ShareLink :is-share-link-open="isShareLinkOpen" @close-modal="closeModal" />
+  </Teleport>
 </template>
 
 <style scoped></style>
