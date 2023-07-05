@@ -20,8 +20,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiKey: process.env.CHATGPT_API_KEY,
     public: {
-      apiBase: 'https://islandofhealing.rocket-coding.com/api'
-      // apiBase: 'http://localhost:4000'
+      apiBase: 'https://islandofhealing.rocket-coding.com/api',
+      mockApiBase: 'http://localhost:4000'
     }
   }
 })

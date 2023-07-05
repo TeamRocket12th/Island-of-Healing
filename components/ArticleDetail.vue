@@ -5,14 +5,14 @@ import { useUserStore } from '~/stores/user'
 const userStore = useUserStore()
 const { isLogin, userData } = storeToRefs(userStore)
 const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const mockApiBase = runtimeConfig.public.mockApiBase
 const articleDetail = ref<ArticleDetail | null>(null)
 const charge = ref(false)
 const route = useRoute()
 
 const getArticleDetail = async () => {
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/article/${route.params.id}`)
+    const res: ApiResponse = await $fetch(`${mockApiBase}/article/${route.params.id}`)
     if (res.statusCode === 200) {
       console.log(res.data)
       articleDetail.value = res.data
@@ -52,6 +52,8 @@ const handleUnLock = () => {
     isLocked.value = !isLocked.value
   }
 }
+
+const showShareLink = ref(false)
 </script>
 <template>
   <div v-if="articleDetail" class="mb-10">
@@ -109,7 +111,10 @@ const handleUnLock = () => {
             <li class="cursor-pointer">
               <Icon name="material-symbols:bookmark-outline-rounded" size="20" />
             </li>
-            <li class="cursor-pointer"><Icon name="mdi:share-variant-outline" size="20" /></li>
+            <li class="cursor-pointer" onclick="my_modal_3.showModal()">
+              <ShareLink />
+              <Icon name="mdi:share-variant-outline" size="20" />
+            </li>
           </ul>
         </div>
       </div>
@@ -156,7 +161,7 @@ const handleUnLock = () => {
         <div class="mr-2 h-9 w-9">
           <img :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />
         </div>
-        <span class="font-medium text-primary">{{ userData.name }}</span>
+        <span class="font-medium text-primary">{{ userData.nickName }}</span>
       </div>
       <div class="grid-cols-7 gap-6 text-right md:grid md:text-left">
         <div class="relative col-span-6 mb-4 md:mb-0">

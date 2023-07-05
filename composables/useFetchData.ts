@@ -1,13 +1,13 @@
 export const getMockData = <T>(baseRoute: string, endpoint?: string) => {
   const runtimeConfig = useRuntimeConfig()
-  const apiBase = runtimeConfig.public.apiBase
+  const mockApiBase = runtimeConfig.public.mockApiBase
   const route = useRoute()
 
   const data = ref<T[]>([])
   const error = ref<any>(null)
 
   const fetchData = async () => {
-    let apiUrl = `${apiBase}/${baseRoute}`
+    let apiUrl = `${mockApiBase}/${baseRoute}`
     if (endpoint) {
       apiUrl += `/${route.params.id}/${endpoint}`
     }
