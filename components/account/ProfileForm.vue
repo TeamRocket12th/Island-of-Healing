@@ -40,7 +40,6 @@ const getUserInfo = async () => {
         userInfo.JobTitle = res.Data.User.Jobtitle || ''
         userInfo.Bio = res.Data.User.Bio || ''
       }
-      console.log(userInfo)
     } catch (error: any) {
       console.log(error.response)
     }

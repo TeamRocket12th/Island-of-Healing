@@ -11,17 +11,15 @@ const user = reactive({
 const alreadySend = ref<boolean>(false)
 
 const sendResetPwd = async () => {
-  if (user.account) {
-    try {
-      const res = await $fetch(`${apiBase}/forgetpwd/?email=${user.account}`, {
-        headers: { 'Content-type': 'application/json' },
-        method: 'POST'
-      })
-      console.log(res)
-      alreadySend.value = true
-    } catch (error: any) {
-      console.log(error.response)
-    }
+  try {
+    const res = await $fetch(`${apiBase}/forgetpwd/?email=${user.account}`, {
+      headers: { 'Content-type': 'application/json' },
+      method: 'POST'
+    })
+    console.log(res)
+    alreadySend.value = true
+  } catch (error: any) {
+    console.log(error.response)
   }
 }
 </script>

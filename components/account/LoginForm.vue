@@ -7,8 +7,8 @@ const { emailRequired, emailRule, passwordRequired, passwordRule } = useValidate
 
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
-
 const router = useRouter()
+const passwordField = useTogglePassword()
 
 const user = reactive({
   account: '',
@@ -33,15 +33,6 @@ const handleLogin = async () => {
   } catch (error: any) {
     console.log(error.response)
   }
-}
-
-const passwordType = ref('password')
-const pwdEyeOpen = ref(false)
-const pwdEyeClose = ref(true)
-const togglePasswordType = () => {
-  passwordType.value = passwordType.value === 'text' ? 'password' : 'text'
-  pwdEyeOpen.value = !pwdEyeOpen.value
-  pwdEyeClose.value = !pwdEyeClose.value
 }
 </script>
 <template>
@@ -104,25 +95,25 @@ const togglePasswordType = () => {
                 v-model="user.password"
                 name="password"
                 :rules="[passwordRequired, passwordRule]"
-                :type="passwordType"
+                :type="passwordField.passwordType.value"
                 placeholder="密碼"
                 maxlength="13"
                 class="input-bordered input w-full rounded border pl-12 focus:outline-none"
                 :class="errors['password'] ? 'border-[#EF4444]' : 'border-secondary '"
               />
               <Icon
-                v-if="pwdEyeOpen"
+                v-if="passwordField.pwdEyeOpen.value"
                 name="ic:outline-remove-red-eye"
                 size="25"
                 class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer"
-                @click="togglePasswordType"
+                @click="passwordField.togglePasswordType"
               />
               <Icon
-                v-if="pwdEyeClose"
+                v-else
                 name="material-symbols:visibility-off-outline"
                 size="25"
                 class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer"
-                @click="togglePasswordType"
+                @click="passwordField.togglePasswordType"
               />
             </div>
             <VErrorMessage name="password" class="block text-sm text-red-500" />

@@ -7,6 +7,8 @@ const account = ref('')
 const password = ref('')
 const confirmPwd = ref('')
 
+const passwordField = useTogglePassword()
+const passwordCheckField = useTogglePassword()
 const { emailRequired, emailRule, passwordRequired, passwordRule, confirmPwdSame } = useValidate()
 
 const confirmPwdRule = () => confirmPwdSame(password, confirmPwd)
@@ -17,37 +19,19 @@ const handleSignUp = async () => {
       headers: { 'Content-type': 'application/json' },
       method: 'POST',
       body: {
-        account: account.value,
-        password: password.value
+        Account: account.value,
+        Password: password.value
       }
     })
     console.log(res)
 
-    if (res.Status === 'success') {
+    if (res.StatusCode === 200) {
       alert(res.Message)
       router.push('/login')
     }
   } catch (error: any) {
     alert(error.response._data.Message)
   }
-}
-
-// 修改input type & eye icons
-const passwordType = ref('password')
-const pwdEyeOpen = ref(false)
-const pwdEyeClose = ref(true)
-const togglePasswordType = () => {
-  passwordType.value = passwordType.value === 'text' ? 'password' : 'text'
-  pwdEyeOpen.value = !pwdEyeOpen.value
-  pwdEyeClose.value = !pwdEyeClose.value
-}
-const passwordCheckType = ref('password')
-const pwdCheckEyeOpen = ref(false)
-const pwdCheckEyeClose = ref(true)
-const togglePasswordCheckType = () => {
-  passwordCheckType.value = passwordCheckType.value === 'text' ? 'password' : 'text'
-  pwdCheckEyeOpen.value = !pwdCheckEyeOpen.value
-  pwdCheckEyeClose.value = !pwdCheckEyeClose.value
 }
 </script>
 <template>
@@ -107,26 +91,26 @@ const togglePasswordCheckType = () => {
                 v-model="password"
                 :rules="[passwordRequired, passwordRule]"
                 name="password"
-                :type="passwordType"
+                :type="passwordField.passwordType.value"
                 maxlength="12"
                 placeholder="密碼"
                 class="input-bordered input mb-1 w-full rounded border pl-12 focus:outline-none"
                 :class="errors['password'] ? 'border-[#EF4444]' : 'border-secondary '"
               />
               <Icon
-                v-if="pwdEyeOpen"
+                v-if="passwordField.pwdEyeOpen.value"
                 name="ic:outline-remove-red-eye"
                 size="25"
                 class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer text-secondary"
-                @click="togglePasswordType"
+                @click="passwordField.togglePasswordType"
               />
 
               <Icon
-                v-if="pwdEyeClose"
+                v-else
                 name="material-symbols:visibility-off-outline"
                 size="25"
                 class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer text-secondary"
-                @click="togglePasswordType"
+                @click="passwordField.togglePasswordType"
               />
             </div>
             <VErrorMessage name="password" class="block text-sm text-red-500" />
@@ -142,26 +126,25 @@ const togglePasswordCheckType = () => {
                 v-model="confirmPwd"
                 :rules="[passwordRequired, confirmPwdRule]"
                 name="passwordCheck"
-                :type="passwordCheckType"
+                :type="passwordCheckField.passwordType.value"
                 maxlength="10"
                 placeholder="再次輸入密碼"
                 class="input-bordered input mb-1 w-full rounded pl-12 focus:outline-none"
                 :class="errors['passwordCheck'] ? 'border-[#EF4444]' : 'border-secondary '"
               />
               <Icon
-                v-if="pwdCheckEyeOpen"
+                v-if="passwordCheckField.pwdEyeOpen.value"
                 name="ic:outline-remove-red-eye"
                 size="25"
                 class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer text-secondary"
-                onclick="seePassWord"
-                @click="togglePasswordCheckType"
+                @click="passwordCheckField.togglePasswordType"
               />
               <Icon
-                v-if="pwdCheckEyeClose"
+                v-else
                 name="material-symbols:visibility-off-outline"
                 size="25"
                 class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer text-secondary"
-                @click="togglePasswordCheckType"
+                @click="passwordCheckField.togglePasswordType"
               />
             </div>
             <VErrorMessage name="passwordCheck" class="block text-sm text-red-500" />
