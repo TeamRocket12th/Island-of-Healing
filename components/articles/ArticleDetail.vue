@@ -52,8 +52,6 @@ const handleUnLock = () => {
     isLocked.value = !isLocked.value
   }
 }
-
-const showShareLink = ref(false)
 </script>
 <template>
   <div v-if="articleDetail" class="mb-10">
