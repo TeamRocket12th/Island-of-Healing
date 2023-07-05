@@ -59,12 +59,14 @@ const textLengthRule = (value: string) => {
 </script>
 
 <template>
-  <div class="mb-40 border border-secondary bg-sand-100 p-10">
-    <div class="grid grid-cols-12">
-      <h2 class="col-span-2 font-serif-tc text-2xl font-bold text-primary">會員設定</h2>
+  <div class="mb-40 border-secondary bg-sand-100 p-10 sm:border">
+    <div class="xl:grid xl:grid-cols-12">
+      <h2 class="col-span-2 text-center font-serif-tc text-2xl font-bold text-primary md:text-left">
+        會員設定
+      </h2>
       <div class="col-span-9">
-        <div class="flex gap-4 pt-10">
-          <div>
+        <div class="flex flex-wrap pt-6 md:flex-nowrap lg:gap-4 lg:pt-10">
+          <div class="mx-auto my-0">
             <div class="relative h-[100px] w-[100px] rounded-full bg-[#E9E4D9]">
               <img :src="selectedImage" class="h-full w-full rounded-full" />
               <button
@@ -81,19 +83,19 @@ const textLengthRule = (value: string) => {
             </div>
           </div>
           <VForm class="w-full px-6 pt-6">
-            <div class="mb-6">
+            <div class="mb-4 lg:mb-6">
               <label for="email" class="mb-2 block text-primary">常用信箱</label>
               <input
                 id="email"
                 v-model="userData.email"
                 type="input"
-                class="w-2/3 cursor-not-allowed rounded border border-primary bg-white px-3 py-[6px] text-sand-300 outline-none"
+                class="w-full cursor-not-allowed rounded border border-primary bg-white px-3 py-[6px] text-sand-300 outline-none lg:w-2/3"
                 readonly
               />
             </div>
-            <div class="mb-6 flex w-full">
-              <div class="w-2/3 gap-4">
-                <label for="userName" class="text-primary">暱稱</label>
+            <div class="mb-4 block w-full lg:mb-6 lg:flex">
+              <div class="w-full gap-4 lg:w-2/3">
+                <label for="userName" class="block text-primary">暱稱</label>
                 <VField
                   id="userName"
                   :value="userData.name"
@@ -104,7 +106,7 @@ const textLengthRule = (value: string) => {
                 />
                 <VErrorMessage name="userName" class="text-primary" />
               </div>
-              <div class="w-1/3 pl-8">
+              <div class="w-full pt-4 lg:w-1/3 lg:pl-8 lg:pt-0">
                 <label for="birthday" class="mb-2 block text-primary">生日</label>
                 <div class="w-full cursor-pointer rounded border border-primary bg-white">
                   <VDatePicker v-model="birthday" expanded>
@@ -120,7 +122,7 @@ const textLengthRule = (value: string) => {
                           class="w-full cursor-pointer rounded border-primary text-primary-dark outline-none"
                           readonly
                         />
-                        <button class="mr-4">
+                        <button>
                           <Icon name="material-symbols:arrow-drop-down" size="24" />
                         </button>
                       </div>
@@ -129,19 +131,19 @@ const textLengthRule = (value: string) => {
                 </div>
               </div>
             </div>
-            <div v-if="userData.role === 'writer'" class="mb-6">
+            <div v-if="userData.role === 'writer'" class="mb-4 lg:mb-6">
               <label for="jobTitle" class="block text-primary">頭銜</label>
               <VField
                 id="jobTitle"
                 v-model="jobTitle"
                 name="jobTitle"
                 label="*頭銜"
-                class="my-2 block w-2/3 rounded border border-primary bg-white px-3 py-[6px] text-primary-dark outline-none"
+                class="my-2 block w-full rounded border border-primary bg-white px-3 py-[6px] text-primary-dark outline-none lg:w-2/3"
                 rules="required"
               />
               <VErrorMessage name="jobTitle" class="text-primary" />
             </div>
-            <div v-if="userData.role === 'writer'" class="mb-11">
+            <div v-if="userData.role === 'writer'" class="mb-12 lg:mb-11">
               <label for="userIntro" class="mb-2 block text-primary">自我介紹</label>
               <VField
                 id="userIntro"
@@ -161,7 +163,7 @@ const textLengthRule = (value: string) => {
               </div>
             </div>
             <div>
-              <div class="mb-[27px] flex gap-8">
+              <div class="mb-[42px] flex justify-between gap-8 lg:mb-[27px] lg:justify-start">
                 <h4 class="text-2xl font-medium text-primary">重置密碼</h4>
                 <nuxt-link
                   to="/forgetpassword"
@@ -169,7 +171,7 @@ const textLengthRule = (value: string) => {
                   >修改密碼</nuxt-link
                 >
               </div>
-              <div class="mb-9 flex gap-8">
+              <div class="mb-12 flex justify-between gap-8 lg:mb-9 lg:justify-start">
                 <h4 class="text-2xl font-medium text-primary">訂閱管理</h4>
                 <nuxt-link
                   to="/account/{userData.userId}/myplan"
