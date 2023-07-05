@@ -8,13 +8,13 @@ definePageMeta({
 })
 
 const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const mockApiBase = runtimeConfig.public.mockApiBase
 const route = useRoute()
 const writerStats = ref<WriterStats | null>(null)
 
 const getWriterStats = async () => {
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/account/${route.params.id}/writerstats`)
+    const res: ApiResponse = await $fetch(`${mockApiBase}/account/${route.params.id}/writerstats`)
     writerStats.value = res.data as WriterStats
     console.log(writerStats.value)
   } catch (error) {
