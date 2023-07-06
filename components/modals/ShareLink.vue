@@ -55,14 +55,14 @@ const copyUrl = () => {
         <ul class="mb-6 flex gap-7">
           <li class="flex cursor-pointer flex-col items-center justify-between">
             <!-- ${url}前面要放部屬的網址  -->
-            <NuxtLink :to="`https://www.facebook.com/sharer.php?u=${url}`">
+            <NuxtLink :to="`https://www.facebook.com/sharer.php?u=${url}`" target="_blank">
               <img src="~/assets/images/facebook.svg" alt="" class="mb-1 h-[44px] w-[44px]" />
             </NuxtLink>
             <p class="text-xs">Facebook</p>
           </li>
           <li class="flex cursor-pointer flex-col items-center justify-between">
             <!-- ${url}前面要放部屬的網址  -->
-            <NuxtLink :to="`https://twitter.com/intent/tweet?url=${url}`">
+            <NuxtLink :to="`https://twitter.com/intent/tweet?url=${url}`" target="_blank">
               <img src="~/assets/images/twitter.svg" alt="" class="mb-1 h-[44px] w-[44px]" />
             </NuxtLink>
             <p class="text-xs">Twitter</p>
