@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { postArticle } from '~/stores/article'
+const articleUse = postArticle()
+
 const selectedImage = ref<string>('')
 const fileInput = ref<HTMLInputElement | null>(null)
-const articleTitle = ref<string>('')
 
 const openFilePicker = (): void => {
   fileInput.value?.click()
@@ -20,11 +22,22 @@ const selectFile = (event: Event): void => {
   }
 }
 
-const selectedCategory = ref('選擇文章分類')
+const selectedCategory = ref('個人成長')
 const toggleshowCategory = ref(false)
 
 const selectCategory = (category: string): void => {
   selectedCategory.value = category
+  if (category === '個人成長') {
+    articleUse.articleDetails.ArticlesClassId = 5
+  } else if (category === '情緒察覺') {
+    articleUse.articleDetails.ArticlesClassId = 6
+  } else if (category === '親密關係') {
+    articleUse.articleDetails.ArticlesClassId = 7
+  } else if (category === '日常練習') {
+    articleUse.articleDetails.ArticlesClassId = 8
+  } else {
+    articleUse.articleDetails.ArticlesClassId = 5
+  }
 }
 
 const toggleCategory = (status: boolean): void => {
@@ -41,6 +54,7 @@ const tags = ref<string[]>([])
 const addTag = () => {
   if (newTag.value && !tags.value.includes(newTag.value)) {
     tags.value.push(newTag.value)
+    articleUse.articleDetails.Tags.push(newTag.value)
     newTag.value = ''
   }
 }
@@ -86,10 +100,29 @@ onUnmounted(() => {
     URL.revokeObjectURL(previewImage.value)
   }
 })
+
+const saveDraft = () => {
+  articleUse.articleDetails.Progress = 0
+  console.log(articleUse.articleDetails)
+}
+
+const checkPost = () => {
+  articleUse.articleDetails.Progress = 1
+  console.log(articleUse.articleDetails)
+}
+
+const selectedOption = ref('免費')
+watch(selectedOption, (newValue) => {
+  if (newValue === '付費') {
+    articleUse.articleDetails.Pay = true
+  } else {
+    articleUse.articleDetails.Pay = false
+  }
+})
 </script>
 <template>
   <div
-    class="container absolute left-1/2 top-1/2 mt-44 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-8 sm:mt-0 md:pt-0"
+    class="container absolute left-1/2 top-1/2 mt-44 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-8 md:mt-0 md:pt-0"
   >
     <div class="col-span-12 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3">
       <div class="relative block md:flex">
@@ -130,7 +163,7 @@ onUnmounted(() => {
           <div class="mb-4">
             <h3 class="mb-2 text-base text-primary">文章標題</h3>
             <input
-              v-model="articleTitle"
+              v-model="articleUse.articleDetails.Title"
               type="text"
               placeholder="請輸入文章標題"
               class="w-full rounded border border-secondary px-3 py-2 text-primary outline-none placeholder:text-sand-300"
@@ -166,13 +199,20 @@ onUnmounted(() => {
         <div class="md:mb-[54px] md:ml-6 md:w-2/3 md:pt-[54px]">
           <fieldset class="mb-10 block">
             <legend class="mb-2 text-base text-primary">閱讀權限</legend>
-            <div class="flex gap-3">
+            <div class="flex items-center gap-3">
               <div>
-                <input id="free" type="radio" name="drone" value="免費" checked />
+                <input
+                  id="free"
+                  v-model="selectedOption"
+                  type="radio"
+                  name="drone"
+                  value="免費"
+                  checked
+                />
                 <label for="free" class="text-secondary">所有人觀看</label>
               </div>
               <div>
-                <input id="pay" type="radio" name="drone" value="付費" />
+                <input id="pay" v-model="selectedOption" type="radio" name="drone" value="付費" />
                 <label for="pay" class="text-secondary">付費會員觀看</label>
               </div>
             </div>
@@ -188,7 +228,7 @@ onUnmounted(() => {
               <Icon name="ic:round-arrow-drop-down" size="24" />
             </label>
             <ul
-              v-show="toggleshowCategory"
+              v-if="toggleshowCategory"
               tabindex="0"
               class="dropdown-content menu rounded-box w-full bg-base-100 p-2 shadow"
               @click="toggleCategory(false)"
@@ -204,7 +244,7 @@ onUnmounted(() => {
               <label for="userIntro" class="mb-2 block text-primary"> 內容摘要</label>
               <VField
                 id="userIntro"
-                v-model="summaryInput"
+                v-model="articleUse.articleDetails.Summary"
                 name="userIntro"
                 as="textarea"
                 label="*內容摘要"
@@ -220,9 +260,20 @@ onUnmounted(() => {
               </div>
             </VForm>
           </div>
-          <div class="flex justify-end md:absolute md:bottom-0 md:right-0">
-            <button class="mb-6 rounded bg-secondary px-3 py-2 text-white md:mb-0">確認送出</button>
-          </div>
+        </div>
+        <div class="flex justify-end md:absolute md:bottom-0 md:right-0">
+          <button
+            class="md:mb-0text-secondary mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white"
+            @click="saveDraft"
+          >
+            儲存草稿
+          </button>
+          <button
+            class="md:mb-0text-secondary mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white"
+            @click="checkPost"
+          >
+            確認送出
+          </button>
         </div>
       </div>
     </div>
