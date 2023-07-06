@@ -9,8 +9,8 @@ definePageMeta({
 
 useHead({ title: '新增文章' })
 
-const settingShow = ref()
-const rulesShow = ref()
+const settingShow = ref(false)
+const showRules = ref(false)
 const articleTitle = ref('')
 const settingUse = (value: boolean) => {
   settingShow.value = value
@@ -20,8 +20,13 @@ const titleUse = (title: string) => {
 }
 
 const ruleUse = (value: boolean) => {
-  rulesShow.value = value
+  showRules.value = value
 }
+watchEffect(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = showRules.value ? 'hidden' : 'auto'
+  }
+})
 </script>
 
 <template>
@@ -29,7 +34,9 @@ const ruleUse = (value: boolean) => {
     <div class="bg-sand-100">
       <PostEditor @post-upload="settingUse" @article-title="titleUse" @post-rules="ruleUse" />
       <PostSetting v-if="settingShow" @post-upload="settingUse" />
-      <PostRules v-if="rulesShow" @post-rules="ruleUse" />
+      <Teleport to="body">
+        <PostRules v-if="showRules" @post-rules="ruleUse" />
+      </Teleport>
     </div>
   </div>
 </template>

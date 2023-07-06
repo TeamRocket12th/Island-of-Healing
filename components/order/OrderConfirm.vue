@@ -8,21 +8,27 @@ const userData = {
     price: '	TW $120'
   }
 }
-const emits = defineEmits(['custom-order'])
-const sentOrder = (value: Boolean) => {
+const emits = defineEmits(['custom-order', 'get-result'])
+const sendOrder = (value: Boolean) => {
   emits('custom-order', value)
+}
+const getResult = (value: Boolean) => {
+  emits('get-result', value)
 }
 </script>
 
 <template>
-  <div class="absolute left-1/2 top-[56%] w-full -translate-x-1/2 -translate-y-1/3">
-    <div class="mb-10 grid grid-cols-12 rounded-lg pb-14 pt-20">
-      <div class="relative col-span-8 col-start-3 mt-20 rounded-lg bg-white shadow">
+  <div
+    class="fixed inset-0 z-[999] flex items-center justify-center overflow-hidden bg-black bg-opacity-20"
+    @click.self="sendOrder(false)"
+  >
+    <div class="container mb-10 mt-40 grid grid-cols-12 rounded-lg">
+      <div class="relative col-span-8 col-start-3 rounded-lg bg-white shadow">
         <Icon
           name="ic:twotone-close"
           size="24"
           class="absolute right-0 top-0 mr-6 mt-6 cursor-pointer text-primary"
-          @click="sentOrder(false)"
+          @click="sendOrder(false)"
         />
         <h2 class="my-[54px] text-center font-serif-tc text-2xl font-bold text-primary">
           結帳確認
@@ -64,12 +70,13 @@ const sentOrder = (value: Boolean) => {
         <div class="mb-16 flex justify-end gap-3 px-6">
           <button
             class="rounded border px-6 py-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
-            @click="sentOrder(false)"
+            @click="sendOrder(false)"
           >
             返回修改
           </button>
           <button
             class="rounded border px-6 py-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+            @click="getResult(true)"
           >
             確認付款
           </button>

@@ -1,25 +1,12 @@
 <script setup lang="ts">
 const route = useRoute()
 const url = route.fullPath
-const props = defineProps({
-  isShareLinkOpen: {
-    type: Boolean,
-    default: false,
-    required: true
-  }
-})
 
 const emits = defineEmits(['close-modal'])
 
-const closeModal = () => {
-  emits('close-modal', false)
+const closeModal = (value: boolean) => {
+  emits('close-modal', value)
 }
-
-watchEffect(() => {
-  if (typeof document !== 'undefined') {
-    document.body.style.overflow = props.isShareLinkOpen ? 'hidden' : 'auto'
-  }
-})
 
 const showSuccessMsg = ref(false)
 
@@ -34,12 +21,14 @@ const copyUrl = () => {
 
 <template>
   <div
-    v-show="isShareLinkOpen"
     class="fixed inset-0 z-[999] flex items-center justify-center overflow-hidden bg-black bg-opacity-20"
-    @click.self="closeModal"
+    @click.self="closeModal(false)"
   >
     <div class="modal-box h-[234px] w-[518px] rounded">
-      <button class="btn-ghost btn-sm btn-circle btn absolute right-2 top-2" @click="closeModal">
+      <button
+        class="btn-ghost btn-sm btn-circle btn absolute right-2 top-2"
+        @click="closeModal(false)"
+      >
         ✕
       </button>
       <h3 class="mb-6 text-xl font-bold text-primary">分享</h3>
