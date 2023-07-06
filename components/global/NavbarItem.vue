@@ -69,7 +69,7 @@ const isUserPage = computed(() => {
 
               <ul
                 tabindex="0"
-                class="dropdown-content relative top-[108%] z-10 w-48 border-[0.5px] border-primary bg-sand-100 font-serif-tc text-base shadow"
+                class="dropdown-content relative top-[108%] z-[100] w-48 border-[0.5px] border-primary bg-sand-100 font-serif-tc text-base shadow"
               >
                 <li class="text-primary hover:bg-secondary hover:text-sand-100">
                   <NuxtLink
@@ -185,7 +185,7 @@ const isUserPage = computed(() => {
             <button>精選文章</button>
             <ul
               v-show="showCategory"
-              class="absolute -left-20 top-full z-20 w-[164px] whitespace-nowrap border border-primary bg-white font-normal"
+              class="absolute -left-20 top-full z-[100] w-[164px] whitespace-nowrap border border-primary bg-white font-normal"
               @mouseover="showCategory = true"
               @mouseleave="showCategory = false"
             >
