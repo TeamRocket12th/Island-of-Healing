@@ -6,7 +6,7 @@ definePageMeta({
 
 <template>
   <main>
-    <section class="container pb-[441px] pt-[180px]">
+    <section class="container flex items-center justify-center pb-[441px] pt-[180px]">
       <div class="relative mx-auto h-[400px] w-[670px] pt-[197px]">
         <div class="absolute -left-24 -top-28 z-20 h-[200px] w-[200px]">
           <img
@@ -111,19 +111,6 @@ definePageMeta({
           </div>
         </div>
       </div>
-
-      <!-- <ul class="flex h-[50vh] justify-center gap-10">
-        <li class="text-2xl">
-          <NuxtLink to="/chatroom/questions" class="rounded-md bg-sand-300 p-2 text-primary"
-            >開始測驗</NuxtLink
-          >
-        </li>
-        <li class="text-2xl">
-          <NuxtLink to="/chatroom/characters" class="rounded-md bg-sand-300 p-2 text-primary"
-            >所有角色</NuxtLink
-          >
-        </li>
-      </ul> -->
     </section>
   </main>
 </template>
