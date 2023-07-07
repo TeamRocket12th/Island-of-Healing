@@ -10,11 +10,18 @@ const showCancelModal = (value: boolean) => {
 const hideCancelModal = (value: boolean) => {
   modalUse.value = value
 }
+watchEffect(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = modalUse.value ? 'hidden' : 'auto'
+  }
+})
 </script>
 <template>
   <div>
     <PlanManagement class="relative" @plan-cancel="showCancelModal" />
-    <CancelPlan v-if="modalUse" @plan-cancel="hideCancelModal" />
+    <Teleport to="body">
+      <CancelPlan v-if="modalUse" @plan-cancel="hideCancelModal" />
+    </Teleport>
   </div>
 </template>
 

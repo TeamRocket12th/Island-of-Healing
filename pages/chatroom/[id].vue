@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { useChatCharacters } from '~/stores/characters'
+definePageMeta({
+  layout: 'chatlayout'
+})
 
 const { selectCharacterId } = useChatCharacters()
 const { id } = useRoute().params
