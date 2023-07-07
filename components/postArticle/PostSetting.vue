@@ -1,46 +1,29 @@
 <script setup lang="ts">
-import { postArticle } from '~/stores/article'
-const articleUse = postArticle()
-
-const selectedImage = ref<string>('')
-const fileInput = ref<HTMLInputElement | null>(null)
-
-const openFilePicker = (): void => {
-  fileInput.value?.click()
-}
-
-const selectFile = (event: Event): void => {
-  previewImage.value = ''
-  const inputElement = event.target as HTMLInputElement
-  const file = inputElement.files?.[0]
-  if (file) {
-    const reader = new FileReader()
-    reader.onload = () => {
-      selectedImage.value = reader.result as string
-    }
-    reader.readAsDataURL(file)
-  }
-}
+import { useArticle } from '~/stores/article'
+const articleUse = useArticle()
 
 const selectedCategory = ref('個人成長')
 const toggleshowCategory = ref(false)
+const userToken = useCookie('token')
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
 
-const selectCategory = (category: string): void => {
+const selectCategory = (category: string) => {
   selectedCategory.value = category
   if (category === '個人成長') {
-    articleUse.articleDetails.ArticlesClassId = 5
+    articleUse.article.ArticlesClassId = 1
   } else if (category === '情緒察覺') {
-    articleUse.articleDetails.ArticlesClassId = 6
+    articleUse.article.ArticlesClassId = 2
   } else if (category === '親密關係') {
-    articleUse.articleDetails.ArticlesClassId = 7
+    articleUse.article.ArticlesClassId = 3
   } else if (category === '日常練習') {
-    articleUse.articleDetails.ArticlesClassId = 8
+    articleUse.article.ArticlesClassId = 4
   } else {
-    articleUse.articleDetails.ArticlesClassId = 5
+    articleUse.article.ArticlesClassId = 1
   }
 }
 
-const toggleCategory = (status: boolean): void => {
+const toggleCategory = (status: boolean) => {
   toggleshowCategory.value = status
 }
 
@@ -48,18 +31,18 @@ const emits = defineEmits(['post-upload', 'title-post'])
 const postSent = (value: boolean) => {
   emits('post-upload', value)
 }
-const newTag = ref('')
+const newTag = ref<string>('')
 const tags = ref<string[]>([])
 
 const addTag = () => {
   if (newTag.value && !tags.value.includes(newTag.value)) {
     tags.value.push(newTag.value)
-    articleUse.articleDetails.Tags.push(newTag.value)
+    articleUse.article.Tags = tags.value
     newTag.value = ''
   }
 }
 
-const removeTag = (index: number): void => {
+const removeTag = (index: number) => {
   tags.value.splice(index, 1)
 }
 
@@ -68,6 +51,7 @@ const maxContentCount = 30
 const summaryCount = ref(`(${summaryInput.value.length}/${maxContentCount})`)
 
 watch(summaryInput, (newValue) => {
+  summaryInput.value = articleUse.article.Summary
   summaryCount.value = `(${newValue.length}/${maxContentCount})`
 })
 
@@ -79,20 +63,75 @@ const textLengthRule = (value: string) => {
   }
 }
 
+const formData = new FormData()
+const selectedImage = ref<string>('')
+const fileInput = ref<HTMLInputElement | null>(null)
+
+// 點擊取得本機圖片
+const openFilePicker = (): void => {
+  fileInput.value?.click()
+}
+
+const selectFile = (event: Event) => {
+  previewImage.value = ''
+  const file: any = (event.target as HTMLInputElement).files?.[0]
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = () => {
+      selectedImage.value = reader.result as string
+    }
+    reader.readAsDataURL(file)
+  }
+  if (formData.get('articleCover')) {
+    formData.set('articleCover', file)
+  } else {
+    formData.append('articleCover', file)
+  }
+  // console.log(formData.get('articleCover'))
+}
+
 const previewImage = ref<string | null>(null)
 const handleDragOver = (event: DragEvent) => {
   event.preventDefault()
 }
+// 拖曳取得本機圖片
 const handleDrop = (event: DragEvent) => {
   event.preventDefault()
   selectedImage.value = ''
-  const file = event.dataTransfer?.files[0] as File
+  const file: File = event.dataTransfer!.files[0]
   const reader = new FileReader()
+  // sentArticleCoverImg(formData)
   reader.onload = () => {
-    const base64Data = reader.result as string
-    previewImage.value = base64Data
+    previewImage.value = reader.result as string
   }
   reader.readAsDataURL(file)
+  if (formData.get('articleCover')) {
+    formData.set('articleCover', file)
+  } else {
+    formData.append('articleCover', file)
+  }
+  // console.log(formData.get('articleCover'))
+}
+
+const postArticle = async () => {
+  if (!userToken.value) {
+    return
+  }
+
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/article/create`, {
+      headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` },
+      method: 'POST',
+      body: articleUse.article
+    })
+    if (res.StatusCode === 200) {
+      console.log(res.ArticleId)
+      const articleId = res.ArticleId
+      updateArticleCover(articleId)
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  }
 }
 
 onUnmounted(() => {
@@ -102,27 +141,49 @@ onUnmounted(() => {
 })
 
 const saveDraft = () => {
-  articleUse.articleDetails.Progress = 0
-  console.log(articleUse.articleDetails)
+  articleUse.article.Progress = 0
+  console.log(articleUse.article)
+  postArticle()
 }
 
-const checkPost = () => {
-  articleUse.articleDetails.Progress = 1
-  console.log(articleUse.articleDetails)
+const createPost = () => {
+  articleUse.article.Progress = 1
+  console.log(articleUse.article)
+  postArticle()
 }
 
 const selectedOption = ref('免費')
 watch(selectedOption, (newValue) => {
   if (newValue === '付費') {
-    articleUse.articleDetails.Pay = true
+    articleUse.article.Pay = true
   } else {
-    articleUse.articleDetails.Pay = false
+    articleUse.article.Pay = false
   }
 })
+
+const updateArticleCover = async (id: number) => {
+  if (!userToken.value) {
+    return
+  }
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/article/updatearticleimg/${id}`, {
+      headers: {
+        Authorization: `Bearer ${userToken.value}`
+      },
+      method: 'PUT',
+      body: formData
+    })
+    if (res.StatusCode === 200) {
+      console.log(res)
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  }
+}
 </script>
 <template>
   <div
-    class="container absolute left-1/2 top-1/2 mt-44 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-8 md:mt-0 md:pt-0"
+    class="container absolute left-1/2 top-1/2 mt-48 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-10 md:fixed md:mt-0 md:pt-0"
   >
     <div class="col-span-12 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3">
       <div class="relative block md:flex">
@@ -161,13 +222,20 @@ watch(selectedOption, (newValue) => {
             </div>
           </div>
           <div class="mb-4">
-            <h3 class="mb-2 text-base text-primary">文章標題</h3>
-            <input
-              v-model="articleUse.articleDetails.Title"
-              type="text"
-              placeholder="請輸入文章標題"
-              class="w-full rounded border border-secondary px-3 py-2 text-primary outline-none placeholder:text-sand-300"
-            />
+            <label for="articleTitle" class="mb-2 block text-base text-primary">文章標題</label>
+            <VForm>
+              <VField
+                id="articleTitle"
+                v-model="articleUse.article.Title"
+                name="articleTitle"
+                type="text"
+                placeholder="請輸入文章標題"
+                label="*文章標題"
+                class="w-full rounded border border-secondary px-3 py-2 text-primary outline-none placeholder:text-sand-300"
+                rules="required"
+              />
+              <VErrorMessage name="articleTitle" class="text-sm text-primary" />
+            </VForm>
           </div>
           <div class="mb-5 md:mb-0">
             <h3 class="mb-2 text-base text-primary">新增標籤</h3>
@@ -244,7 +312,7 @@ watch(selectedOption, (newValue) => {
               <label for="userIntro" class="mb-2 block text-primary"> 內容摘要</label>
               <VField
                 id="userIntro"
-                v-model="articleUse.articleDetails.Summary"
+                v-model="summaryInput"
                 name="userIntro"
                 as="textarea"
                 label="*內容摘要"
@@ -270,7 +338,7 @@ watch(selectedOption, (newValue) => {
           </button>
           <button
             class="md:mb-0text-secondary mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white"
-            @click="checkPost"
+            @click="createPost"
           >
             確認送出
           </button>

@@ -1,13 +1,13 @@
-export const postArticle = defineStore('article', () => {
-  const articleDetails = ref({
+export const useArticle = defineStore('article', () => {
+  const article = reactive({
     Title: '',
     Content: '',
-    Pay: false,
-    ArticlesClassId: 5,
-    Summary: '',
     Tags: [] as string[],
+    Pay: false,
+    ArticlesClassId: 1,
+    Summary: '',
     Progress: 0
   })
 
-  return { articleDetails }
+  return { article }
 })

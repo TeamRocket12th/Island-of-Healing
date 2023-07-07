@@ -68,7 +68,6 @@ const formattedDate = computed(() => {
   }
 })
 
-const selectedImage = ref(userData.value.avatar)
 const fileInput = ref<HTMLInputElement | null>(null)
 const openFilePicker = () => {
   fileInput.value?.click()
@@ -81,13 +80,6 @@ const selectFile = (event: Event) => {
   formData.append('userphoto', file)
 
   updateUserPhoto(formData)
-  if (file) {
-    const reader = new FileReader()
-    reader.onload = () => {
-      selectedImage.value = reader.result as string
-    }
-    reader.readAsDataURL(file)
-  }
 }
 
 const maxCharacterCount = 30
@@ -165,7 +157,7 @@ const updateUserPhoto = async (data: any) => {
         <div class="flex flex-wrap pt-6 md:flex-nowrap lg:gap-4 lg:pt-10">
           <div class="mx-auto my-0">
             <div class="relative h-[100px] w-[100px] rounded-full bg-[#E9E4D9]">
-              <img :src="selectedImage" class="h-full w-full rounded-full" />
+              <img :src="userData.avatar" class="h-full w-full rounded-full" />
               <button
                 class="absolute bottom-0 right-0 flex h-9 w-9 items-center justify-center rounded-full bg-secondary"
                 @click="openFilePicker"

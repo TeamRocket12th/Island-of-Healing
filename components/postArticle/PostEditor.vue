@@ -4,18 +4,18 @@ import { Heading } from '@tiptap/extension-heading'
 import { Document } from '@tiptap/extension-document'
 import { Paragraph } from '@tiptap/extension-paragraph'
 import { Text } from '@tiptap/extension-text'
-import { Underline } from '@tiptap/extension-underline'
 import { Image } from '@tiptap/extension-image'
 import { BulletList } from '@tiptap/extension-bullet-list'
 import { OrderedList } from '@tiptap/extension-ordered-list'
 import { Link } from '@tiptap/extension-link'
 import { HardBreak } from '@tiptap/extension-hard-break'
+import { Placeholder } from '@tiptap/extension-placeholder'
 import { Editor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
 import { Node } from '@tiptap/core'
-import { postArticle } from '~/stores/article'
+import { useArticle } from '~/stores/article'
 
 const editor = ref(null)
-const articleUse = postArticle()
+const articleUse = useArticle()
 
 const CustomParagraphNode = Node.create({
   name: 'custom_paragraph',
@@ -85,12 +85,14 @@ onMounted(() => {
         }
       }),
       Text,
-      Underline,
+
       Image.configure({
         allowBase64: true
       }),
       Heading.configure({
-        levels: [2, 3]
+        HTMLAttributes: {
+          class: 'custom-heading'
+        }
       }),
       BulletList.configure({
         HTMLAttributes: {
@@ -107,12 +109,11 @@ onMounted(() => {
         HTMLAttributes: {
           class: 'custom-link'
         }
+      }),
+      Placeholder.configure({
+        placeholder: '開始寫作吧...'
       })
-    ],
-
-    content: `
-     <h2>開始寫作吧...</h2>
-    `
+    ]
   })
 })
 
@@ -161,16 +162,6 @@ const handleDrop = (event) => {
   const reader = new FileReader()
   reader.onload = () => {
     previewImage.value = reader.result
-    const base64Data = previewImage.value
-    const byteCharacters = atob(base64Data.split(',')[1])
-    const byteArrays = []
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteArrays.push(byteCharacters.charCodeAt(i))
-    }
-    const blob = new Blob([new Uint8Array(byteArrays)], { type: 'image/jpeg' })
-    const url = URL.createObjectURL(blob)
-    console.log(url)
-    blobUrl.value = url
   }
   reader.readAsDataURL(file)
 }
@@ -213,9 +204,9 @@ const insertImage = () => {
         <div class="order-2 mx-0 w-full sm:order-1 lg:mx-48 xl:mx-[280px]">
           <div class="relative sm:flex sm:justify-end">
             <input
-              v-model="articleUse.articleDetails.Title"
+              v-model="articleUse.article.Title"
               type="text"
-              class="mb-3 w-full bg-sand-100 pt-8 text-4xl text-primary outline-none placeholder:text-sand-300"
+              class="font-weight mb-3 h-20 w-full bg-sand-100 pt-8 text-4xl text-primary outline-none placeholder:text-sand-300"
               placeholder="請輸入標題"
             />
             <div class="cursor-pointer" @click="rulesShow(true)">
@@ -227,48 +218,60 @@ const insertImage = () => {
             </div>
           </div>
           <div class="mb-6">
-            <div v-if="editor" class="tableTextNavbar mb-6 hidden min-h-[36px] sm:flex">
+            <div v-if="editor" class="mb-6 hidden min-h-[36px] sm:flex">
               <label class="swap mr-3">
                 <input type="checkbox" />
                 <div class="swap-on" @click="swapOn">
                   <Icon
                     name="mdi:close-thick"
                     size="24"
-                    class="rounded bg-[#E9E4D9] text-primary"
+                    class="rounded bg-[#E9E4D9] text-secondary"
                   />
                 </div>
                 <div class="swap-off" @click="swapOff">
-                  <Icon name="ic:round-plus" size="24" class="rounded bg-[#E9E4D9] text-primary" />
+                  <Icon
+                    name="ic:round-plus"
+                    size="24"
+                    class="rounded bg-[#E9E4D9] text-secondary"
+                  />
                 </div>
               </label>
               <div
                 v-if="textNavbarShow"
-                class="flex gap-1 rounded border-[0.5px] border-secondary border-opacity-30 p-1 text-primary"
+                class="flex gap-1 rounded border-[0.5px] border-secondary border-opacity-30 p-1 text-secondary"
               >
                 <button @click="addImage">
                   <Icon
                     name="material-symbols:add-photo-alternate-outline"
                     size="24"
-                    class="hover:bg-[#E9E4D9]"
+                    class="rounded hover:bg-[#E9E4D9]"
                   />
                 </button>
                 <button :class="{ 'is-active': editor.isActive('link') }" @click="setLink">
-                  <Icon name="ic:twotone-insert-link" size="24" class="hover:bg-[#E9E4D9]" />
+                  <Icon
+                    name="ic:twotone-insert-link"
+                    size="24"
+                    class="rounded hover:bg-[#E9E4D9]"
+                  />
                 </button>
                 <button
                   :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
                   @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
                 >
-                  <Icon name="ic:baseline-title" size="24" class="hover:bg-[#E9E4D9]" />
+                  <Icon name="ic:baseline-title" size="24" class="rounded hover:bg-[#E9E4D9]" />
                 </button>
                 <button
                   :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
                   @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
                 >
-                  <Icon name="ic:baseline-title" size="20" class="hover:bg-[#E9E4D9]" />
+                  <Icon name="ic:baseline-title" size="20" class="rounded hover:bg-[#E9E4D9]" />
                 </button>
                 <button @click="editor.chain().focus().setHorizontalRule().run()">
-                  <Icon name="material-symbols:align-center" size="24" class="hover:bg-[#E9E4D9]" />
+                  <Icon
+                    name="material-symbols:align-center"
+                    size="24"
+                    class="rounded hover:bg-[#E9E4D9]"
+                  />
                 </button>
                 <button
                   :disabled="!editor.can().chain().focus().undo().run()"
@@ -277,7 +280,7 @@ const insertImage = () => {
                   <Icon
                     name="material-symbols:undo-rounded"
                     size="24"
-                    class="cursor-pointer hover:bg-[#E9E4D9]"
+                    class="cursor-pointer rounded hover:bg-[#E9E4D9]"
                   />
                 </button>
                 <button
@@ -287,12 +290,12 @@ const insertImage = () => {
                   <Icon
                     name="material-symbols:redo"
                     size="24"
-                    class="cursor-pointer hover:bg-[#E9E4D9]"
+                    class="cursor-pointer rounded hover:bg-[#E9E4D9]"
                   />
                 </button>
               </div>
               <bubble-menu
-                class="hidden gap-1 rounded border-[0.5px] border-secondary text-secondary sm:flex md:flex"
+                class="hidden gap-1 rounded border-[0.5px] border-secondary bg-white text-secondary sm:flex md:flex"
                 :tippy-options="{ duration: 100 }"
                 :editor="editor"
               >
@@ -358,7 +361,7 @@ const insertImage = () => {
                 </button>
               </bubble-menu>
             </div>
-            <div>
+            <div class="max-h-[400px] overflow-y-auto sm:max-h-none">
               <editor-content ref="content" :editor="editor" />
             </div>
             <!-- <div v-dompurify-html="newHtml"></div> -->
@@ -379,7 +382,7 @@ const insertImage = () => {
     <div class="block">
       <div
         v-if="editor && selectedStatus"
-        class="-mx-6 flex flex-wrap justify-around bg-[#E9E4D9] py-3 text-secondary sm:hidden"
+        class="absolute bottom-0 -mx-6 flex w-full flex-wrap justify-around bg-[#E9E4D9] py-3 text-secondary sm:hidden"
       >
         <button
           :disabled="!editor.can().chain().focus().toggleBold().run()"
@@ -402,36 +405,36 @@ const insertImage = () => {
       </div>
       <div
         v-if="editor && !selectedStatus"
-        class="-mx-6 flex justify-start gap-4 bg-[#E9E4D9] px-3 py-3 text-secondary sm:hidden"
+        class="absolute bottom-0 -mx-6 flex w-full justify-start gap-2 bg-[#E9E4D9] px-3 py-3 text-secondary sm:hidden"
       >
         <button
           :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-          class="block h-8 rounded hover:bg-secondary hover:text-white"
+          class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
           @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
         >
           <Icon name="material-symbols:text-fields" size="24" />
         </button>
         <button
           :class="{ 'is-active': editor.isActive('blockquote') }"
-          class="block rounded hover:bg-secondary hover:text-white"
+          class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
           @click="editor.chain().focus().toggleBlockquote().run()"
         >
           <Icon name="ic:outline-format-quote" size="24" />
         </button>
         <button
           :class="{ 'is-active': editor.isActive('bulletList') }"
-          class="block rounded hover:bg-secondary hover:text-white"
+          class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
           @click="editor.chain().focus().toggleBulletList().run()"
         >
           <Icon name="ic:twotone-format-list-bulleted" size="24" />
         </button>
         <button
-          class="block rounded hover:bg-secondary hover:text-white"
+          class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
           @click="editor.chain().focus().setHorizontalRule().run()"
         >
           <Icon name="material-symbols:align-center" size="24" />
         </button>
-        <button class="block rounded hover:bg-secondary hover:text-white" @click="addImage">
+        <button class="block h-8 w-8 rounded hover:bg-secondary hover:text-white" @click="addImage">
           <Icon name="material-symbols:add-photo-alternate-outline" size="24" />
         </button>
       </div>
@@ -454,6 +457,8 @@ blockquote {
 
 .ProseMirror {
   outline: none;
+  overflow-y: scroll;
+  padding: 8px;
 }
 
 .custom-bullet-list {
@@ -474,12 +479,12 @@ blockquote {
   cursor: pointer;
 }
 
-h2 {
+h2.custom-heading {
   font-size: 24px;
   color: #4e2a09;
   font-family: 'Noto Sans TC';
 }
-h3 {
+h3.custom-heading {
   font-size: 20px;
   color: #4e2a09;
   font-family: 'Noto Sans TC';
@@ -505,5 +510,24 @@ h3 {
   background-color: #796959;
   border-radius: 10%;
   width: 50px;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #c1b6a4;
+  pointer-events: none;
+  height: 0;
+}
+
+.text-p.is-empty.is-editor-empty {
+  font-size: 20px;
+}
+
+hr {
+  border-top-width: 0.5px;
+  border-color: #4e2a09;
+  margin-bottom: 20px;
+  margin-top: 5px;
 }
 </style>

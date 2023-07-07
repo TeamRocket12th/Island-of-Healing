@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { postArticle } from '~/stores/article'
-const articleUse = postArticle()
+import { useArticle } from '~/stores/article'
+const articleUse = useArticle()
 
 const settingShow = ref(false)
 const rulesShow = ref(false)
@@ -9,7 +9,7 @@ const settingUse = (value: boolean) => {
   settingShow.value = value
 }
 const contentUse = (content: string) => {
-  articleUse.articleDetails.Content = content
+  articleUse.article.Content = content
 }
 
 const ruleUse = (value: boolean) => {
@@ -19,7 +19,7 @@ const ruleUse = (value: boolean) => {
 
 <template>
   <div>
-    <div class="bg-sand-100">
+    <div class="bg-sand-100 sm:h-[1100px] md:h-fit">
       <PostEditor @post-upload="settingUse" @post-rules="ruleUse" @article-content="contentUse" />
       <PostSetting v-if="settingShow" @post-upload="settingUse" />
 
