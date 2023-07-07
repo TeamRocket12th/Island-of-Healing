@@ -22,7 +22,6 @@ const ruleUse = (value: boolean) => {
     <div class="bg-sand-100 sm:h-[1100px] md:h-fit">
       <PostEditor @post-upload="settingUse" @post-rules="ruleUse" @article-content="contentUse" />
       <PostSetting v-if="settingShow" @post-upload="settingUse" />
-
       <PostRules v-if="rulesShow" @post-rules="ruleUse" />
     </div>
   </div>
