@@ -5,7 +5,7 @@
     <div
       class="container h-auto pb-8 pt-10 sm:grid sm:h-[308px] sm:grid-cols-2 sm:py-[92px] xl:grid-cols-12"
     >
-      <div class="border-r border-gray-500 py-10 sm:py-7 sm:pr-12 xl:col-span-5">
+      <div class="py-10 sm:py-7 sm:pr-12 xl:col-span-5">
         <h2 class="mb-4 font-serif-tc text-4xl font-bold text-sand-100">小島聊癒所</h2>
         <p class="font-light text-sand-100">
           「小島聊癒所」陪伴人們認識自己的情緒，傾聽內在的聲音，<br class="hidden md:block" />

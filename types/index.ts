@@ -9,8 +9,33 @@ declare global {
   interface Writer {
     name: string
     id: string
+    jobTitle: string
     bio: string
     imgUrl: string
+    isFollowing: boolean
+  }
+
+  // 作者個人頁面
+
+  // 作者個人文章
+  interface Work {
+    id: string
+    title: string
+    coverUrl: string
+    summary: string
+    createdDate: string
+  }
+
+  // 作者個人資訊
+  interface WriterInfo {
+    id: string
+    name: string
+    jobTitle: string
+    bio: string
+    imgUrl: string
+    followerNum: number
+    followingNum: number
+    work: Work[]
   }
 
   // 文章
@@ -40,9 +65,14 @@ declare global {
   interface ArticleSummary {
     id: string
     title: string
+    category: string
     publishDate: string
+    progress: string
+    permission: string
     collectNum: number
     commentNum: number
+    likeNum: number
+    clickNum: number
   }
 
   // 文章卡片
@@ -81,8 +111,8 @@ declare global {
     Email: string
     ImgUrl: string
     Role: string
-    Birthday: string
     MyPlan: string
+    Birthday?: string
     JobTitle?: string
     Bio?: string
   }

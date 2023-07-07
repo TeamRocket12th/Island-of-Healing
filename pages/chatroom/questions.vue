@@ -1,6 +1,10 @@
-<script setup></script>
+<script setup>
+definePageMeta({
+  layout: 'chatlayout'
+})
+</script>
 <template>
-  <main class="bg-sand-100">
+  <main>
     <ChatQuestions />
   </main>
 </template>

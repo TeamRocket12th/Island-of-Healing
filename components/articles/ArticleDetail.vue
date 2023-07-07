@@ -5,14 +5,14 @@ import { useUserStore } from '~/stores/user'
 const userStore = useUserStore()
 const { isLogin, userData } = storeToRefs(userStore)
 const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const mockApiBase = runtimeConfig.public.mockApiBase
 const articleDetail = ref<ArticleDetail | null>(null)
 const charge = ref(false)
 const route = useRoute()
 
 const getArticleDetail = async () => {
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/article/${route.params.id}`)
+    const res: ApiResponse = await $fetch(`${mockApiBase}/article/${route.params.id}`)
     if (res.statusCode === 200) {
       console.log(res.data)
       articleDetail.value = res.data
@@ -42,27 +42,48 @@ const insertEmoji = (emoji: any) => {
   showEmojiPicker.value = false
 }
 
-const isLocked = ref(true)
-const handleUnLock = () => {
-  if (!isLogin.value) {
-    alert('需要先登入才能閱讀文章喔')
-  } else if (userData.value.myPlan === 'free' && charge.value) {
-    alert('請先訂閱我們')
-  } else {
-    isLocked.value = !isLocked.value
-  }
+// const isLocked = ref(true)
+// const handleUnLock = () => {
+//   if (!isLogin.value) {
+//     alert('需要先登入才能閱讀文章喔')
+//   } else if (userData.value.myPlan === 'free' && charge.value) {
+//     alert('請先訂閱我們')
+//   } else {
+//     isLocked.value = !isLocked.value
+//   }
+// }
+
+const isShareLinkOpen = ref(false)
+const toggleShareLink = () => {
+  isShareLinkOpen.value = !isShareLinkOpen.value
 }
+const closeModal = (value: boolean) => {
+  isShareLinkOpen.value = value
+}
+
+watchEffect(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = isShareLinkOpen.value ? 'hidden' : 'auto'
+  }
+})
 </script>
 <template>
   <div v-if="articleDetail" class="mb-10">
+    <span v-if="articleDetail.charge" class="mb-3 flex items-center gap-1 text-primary-dark"
+      ><Icon name="material-symbols:lock-outline" size="16" /> 付費限定文章</span
+    >
     <div class="mb-5 flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <div class="h-8 w-8 overflow-hidden rounded-full">
-          <img src="https://picsum.photos/32" alt="writer" />
+        <div class="h-9 w-9">
+          <img src="https://picsum.photos/32" alt="writer" class="h-full w-full rounded-full" />
         </div>
         <div>
           <p class="text-xs">作家</p>
-          <p class="text-sm font-medium">{{ articleDetail?.writerInfo.name }}</p>
+          <p class="text-sm font-medium">
+            <NuxtLink :to="`/writer/${articleDetail?.writerInfo.id}`">{{
+              articleDetail?.writerInfo.name
+            }}</NuxtLink>
+          </p>
         </div>
       </div>
       <div>
@@ -102,30 +123,44 @@ const handleUnLock = () => {
             <li class="cursor-pointer">
               <Icon name="material-symbols:bookmark-outline-rounded" size="20" />
             </li>
-            <li class="cursor-pointer"><Icon name="mdi:share-variant-outline" size="20" /></li>
+            <li class="cursor-pointer" @click="toggleShareLink">
+              <Icon name="mdi:share-variant-outline" size="20" />
+            </li>
           </ul>
         </div>
       </div>
     </div>
   </div>
   <div v-if="articleDetail" class="mb-9 flex items-center justify-between py-6">
-    <div class="flex items-center">
-      <div class="mr-2 h-[60px] w-[60px]">
-        <img :src="articleDetail.writerInfo.imgUrl" alt="avatar" class="rounded-full" />
+    <div class="items-center md:flex">
+      <div class="flex justify-between sm:mr-2">
+        <img
+          :src="articleDetail.writerInfo.imgUrl"
+          alt="avatar"
+          class="h-[60px] w-[60px] rounded-full"
+        />
+        <button
+          class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:opacity-80 sm:hidden"
+        >
+          <Icon name="ic:baseline-plus" size="16" />追蹤
+        </button>
       </div>
       <div>
-        <p class="font-medium text-primary">作家·{{ articleDetail.writerInfo.name }}</p>
-        <p class="font-light text-primary-dark">{{ articleDetail.writerInfo.bio }}</p>
+        <NuxtLink :to="`/writer/${articleDetail?.writerInfo.id}`">
+          <p class="font-medium text-primary">作家·{{ articleDetail.writerInfo.name }}</p>
+          <p class="font-light text-primary-dark">{{ articleDetail.writerInfo.bio }}</p>
+        </NuxtLink>
       </div>
     </div>
     <div>
       <button
-        class="flex items-center rounded border bg-secondary px-3 py-2 text-white hover:opacity-80"
+        class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:opacity-80 sm:flex"
       >
         <Icon name="ic:baseline-plus" size="20" />追蹤
       </button>
     </div>
   </div>
+  <!--留言-->
   <div>
     <div class="mb-6 flex items-center justify-between">
       <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
@@ -137,10 +172,10 @@ const handleUnLock = () => {
         <div class="mr-2 h-9 w-9">
           <img :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />
         </div>
-        <span class="font-medium text-primary">{{ userData.name }}</span>
+        <span class="font-medium text-primary">{{ userData.nickName }}</span>
       </div>
-      <div class="grid grid-cols-7 gap-6">
-        <div class="relative col-span-6">
+      <div class="grid-cols-7 gap-6 text-right md:grid md:text-left">
+        <div class="relative col-span-6 mb-4 md:mb-0">
           <textarea
             ref="textarea"
             v-model="userComment"
@@ -164,10 +199,17 @@ const handleUnLock = () => {
             @select="insertEmoji"
           />
         </div>
-        <button class="h-10 rounded bg-secondary text-white hover:opacity-80">發表留言</button>
+        <button class="h-10 rounded bg-secondary p-2 text-white hover:opacity-80">發表留言</button>
       </div>
     </div>
   </div>
+  <section>
+    <h2 class="mb-6 font-serif-tc text-4xl font-bold text-primary md:text-2xl">你可能會喜歡</h2>
+    <RecArticleCard />
+  </section>
+  <Teleport to="body">
+    <ShareLink v-if="isShareLinkOpen" @close-modal="closeModal" />
+  </Teleport>
 </template>
 
 <style scoped></style>

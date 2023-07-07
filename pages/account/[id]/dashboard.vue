@@ -8,13 +8,13 @@ definePageMeta({
 })
 
 const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const mockApiBase = runtimeConfig.public.mockApiBase
 const route = useRoute()
 const writerStats = ref<WriterStats | null>(null)
 
 const getWriterStats = async () => {
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/account/${route.params.id}/writerstats`)
+    const res: ApiResponse = await $fetch(`${mockApiBase}/account/${route.params.id}/writerstats`)
     writerStats.value = res.data as WriterStats
     console.log(writerStats.value)
   } catch (error) {
@@ -80,8 +80,8 @@ const articles = [
 const { nowPage } = usePageName()
 </script>
 <template>
-  <div class="bg-white px-10 pt-10">
-    <h2 class="mb-10 text-2xl font-bold">後台數據</h2>
+  <div class="mb-40 border border-primary bg-white px-10 pt-10">
+    <h2 class="mb-10 font-serif-tc text-2xl font-bold leading-normal">後台數據</h2>
     <div>
       <MyDashboard v-if="writerStats" :writer-stats="writerStats" />
       <div class="mb-28 pb-14">

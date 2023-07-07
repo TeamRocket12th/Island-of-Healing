@@ -2,27 +2,42 @@
 import isWriter from '~/middleware/isWriter'
 
 definePageMeta({
-  title: '新增文章',
+  layout: 'postlayout',
   middleware: [isWriter],
   requiredAuth: true
 })
 
-const settingShow = ref()
+useHead({ title: '新增文章' })
+
+const settingShow = ref(false)
+const showRules = ref(false)
 const articleTitle = ref('')
 const settingUse = (value: boolean) => {
   settingShow.value = value
-  console.log(value)
 }
 const titleUse = (title: string) => {
-  console.log(title)
   articleTitle.value = title
 }
+
+const ruleUse = (value: boolean) => {
+  showRules.value = value
+}
+watchEffect(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = showRules.value ? 'hidden' : 'auto'
+  }
+})
 </script>
 
 <template>
-  <div class="bg-sand-100">
-    <PostEditor @post-upload="settingUse" @article-title="titleUse" />
-    <PostSetting v-show="settingShow" @post-upload="settingUse" />
+  <div>
+    <div class="bg-sand-100">
+      <PostEditor @post-upload="settingUse" @article-title="titleUse" @post-rules="ruleUse" />
+      <PostSetting v-if="settingShow" @post-upload="settingUse" />
+      <Teleport to="body">
+        <PostRules v-if="showRules" @post-rules="ruleUse" />
+      </Teleport>
+    </div>
   </div>
 </template>
 

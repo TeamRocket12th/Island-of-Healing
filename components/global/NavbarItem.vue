@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useUIStore } from '~/stores/ui'
 
 const userStore = useUserStore()
+const uiStore = useUIStore()
 const { isLogin, userData } = storeToRefs(userStore)
 const { userLogout } = userStore
+const { isWriterExpanded } = storeToRefs(uiStore)
 
 const showCategory = ref(false)
 
@@ -25,13 +28,23 @@ const showMobileCategory = ref(false)
 const toggleMobileCategory = () => {
   showMobileCategory.value = !showMobileCategory.value
 }
+
+const route = useRoute()
+
+const isUserPage = computed(() => {
+  if (route.meta.layout === 'userlayout') {
+    return true
+  } else {
+    return false
+  }
+})
 </script>
 
 <template>
   <header>
     <nav class="bg-secondary">
       <div class="container flex h-14 items-center justify-between">
-        <p class="mb-0 font-serif-tc font-medium text-sand-100">提供心靈療癒的庇護所</p>
+        <p class="font-serif-tc font-medium text-sand-100">提供心靈療癒的庇護所</p>
         <ul class="hidden items-center gap-6 sm:flex">
           <li v-if="!isLogin">
             <NuxtLink to="/login" class="font-serif-tc font-bold text-sand-100">登入</NuxtLink>
@@ -56,10 +69,13 @@ const toggleMobileCategory = () => {
 
               <ul
                 tabindex="0"
-                class="dropdown-content menu rounded-box relative top-[110%] z-10 w-52 bg-base-100 p-2 font-serif-tc text-base shadow"
+                class="dropdown-content relative top-[108%] z-[100] w-48 border-[0.5px] border-primary bg-sand-100 font-serif-tc text-base shadow"
               >
                 <li class="text-primary hover:bg-secondary hover:text-sand-100">
-                  <NuxtLink :to="`/account/${userData.id}/profile`" class="font-medium">
+                  <NuxtLink
+                    :to="`/account/${userData.id}/profile`"
+                    class="block p-[10px] font-medium"
+                  >
                     <Icon
                       name="material-symbols:manage-accounts-outline-rounded"
                       size="24"
@@ -69,19 +85,28 @@ const toggleMobileCategory = () => {
                   </NuxtLink>
                 </li>
                 <li class="text-primary hover:bg-secondary hover:text-sand-100">
-                  <NuxtLink :to="`/account/${userData.id}/collection`" class="font-medium">
+                  <NuxtLink
+                    :to="`/account/${userData.id}/collection`"
+                    class="block p-[10px] font-medium"
+                  >
                     <Icon name="material-symbols:bookmark-outline" size="24" class="mr-2" />
                     <span>我的收藏</span>
                   </NuxtLink>
                 </li>
                 <li class="text-primary hover:bg-secondary hover:text-sand-100">
-                  <NuxtLink :to="`/account/${userData.id}/following`" class="font-medium">
+                  <NuxtLink
+                    :to="`/account/${userData.id}/following`"
+                    class="block p-[10px] font-medium"
+                  >
                     <Icon name="ic:round-rss-feed" size="24" class="mr-2" />
                     <span>我的追蹤</span></NuxtLink
                   >
                 </li>
                 <li class="text-primary hover:bg-secondary hover:text-sand-100">
-                  <NuxtLink :to="`/account/${userData.id}/messages`" class="font-medium">
+                  <NuxtLink
+                    :to="`/account/${userData.id}/messages`"
+                    class="block p-[10px] font-medium"
+                  >
                     <Icon name="ic:baseline-mail-outline" size="24" class="mr-2" />
                     <span>我的訊息</span>
                   </NuxtLink>
@@ -90,7 +115,11 @@ const toggleMobileCategory = () => {
                   v-if="userData.role === 'writer'"
                   class="text-primary hover:bg-secondary hover:text-sand-100"
                 >
-                  <NuxtLink :to="`/account/${userData.id}/mywork`" class="font-medium">
+                  <NuxtLink
+                    :to="`/account/${userData.id}/mywork`"
+                    class="block p-[10px] font-medium"
+                    @click="isWriterExpanded = true"
+                  >
                     <Icon name="material-symbols:clarify-outline" size="24" class="mr-2" />
                     <span>我的文章</span>
                   </NuxtLink>
@@ -98,14 +127,14 @@ const toggleMobileCategory = () => {
                 <li class="text-primary">
                   <NuxtLink
                     :to="`/account/${userData.id}/pastorders`"
-                    class="font-medium hover:bg-secondary hover:text-sand-100"
+                    class="block p-[10px] font-medium hover:bg-secondary hover:text-sand-100"
                   >
                     <Icon name="ic:outline-receipt" size="24" class="mr-2" />
                     <span>歷史訂單</span>
                   </NuxtLink>
                 </li>
-                <li class="text-primary hover:bg-secondary hover:text-sand-100">
-                  <button class="flex items-center" @click="userLogout">
+                <li class="p-[10px] text-primary hover:bg-secondary hover:text-sand-100">
+                  <button class="flex w-full items-center" @click="userLogout">
                     <Icon name="ic:outline-logout" size="24" class="mr-2" />
                     <span class="font-medium">登出</span>
                   </button>
@@ -116,7 +145,9 @@ const toggleMobileCategory = () => {
         </ul>
       </div>
     </nav>
-    <div class="relative h-20 bg-sand-100 sm:h-[142px] sm:pt-5">
+    <div
+      class="relative h-20 border-b border-primary bg-sand-100 sm:h-[142px] sm:border-none sm:pt-5"
+    >
       <div class="container">
         <div class="relative py-4 sm:py-0">
           <h1 class="mb-3 text-left sm:text-center">
@@ -133,7 +164,8 @@ const toggleMobileCategory = () => {
           /></span>
         </div>
         <ul
-          class="hidden items-center justify-center gap-4 border-b border-primary font-serif-tc sm:flex"
+          class="hidden items-center justify-center gap-4 font-serif-tc sm:flex"
+          :class="isUserPage ? 'border-none' : 'border-primary sm:border-b'"
         >
           <li v-if="userData.role === 'writer'" class="pb-5">
             <NuxtLink to="/newstory" class="text-xl font-semibold leading-normal text-primary"
@@ -153,7 +185,7 @@ const toggleMobileCategory = () => {
             <button>精選文章</button>
             <ul
               v-show="showCategory"
-              class="absolute -left-20 top-full z-20 w-[164px] whitespace-nowrap border border-primary bg-white font-normal"
+              class="absolute -left-20 top-full z-[100] w-[164px] whitespace-nowrap border border-primary bg-white font-normal"
               @mouseover="showCategory = true"
               @mouseleave="showCategory = false"
             >

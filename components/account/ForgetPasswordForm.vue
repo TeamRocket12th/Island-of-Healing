@@ -1,26 +1,26 @@
 <script setup lang="ts">
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+
+const { emailRequired, emailRule } = useValidate()
+
 const user = reactive({
   account: ''
 })
-const emailRequired = (value: string) => {
-  if (value && value.trim()) {
-    return true
-  }
-  return '*電子郵件為必填'
-}
-
-const emailRule = (value: string) => {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (regex.test(value)) {
-    return true
-  }
-  return '*請輸入有效的電子郵件'
-}
 
 const alreadySend = ref<boolean>(false)
-const sendMail = (event: Event) => {
-  event.preventDefault()
-  alreadySend.value = true
+
+const sendResetPwd = async () => {
+  try {
+    const res = await $fetch(`${apiBase}/forgetpwd/?email=${user.account}`, {
+      headers: { 'Content-type': 'application/json' },
+      method: 'POST'
+    })
+    console.log(res)
+    alreadySend.value = true
+  } catch (error: any) {
+    console.log(error.response)
+  }
 }
 </script>
 <template>
@@ -29,7 +29,7 @@ const sendMail = (event: Event) => {
       <div
         class="flex w-full flex-col items-center justify-center px-[74px] py-[124px] md:border md:border-primary 3xl:relative 3xl:px-[516px] 3xl:py-[132px]"
       >
-        <div class="relative w-[288px] 3xl:static">
+        <div class="relative w-[322px] 3xl:static">
           <transition name="fade" mode="out-in">
             <p
               v-if="alreadySend"
@@ -60,9 +60,9 @@ const sendMail = (event: Event) => {
             <div class="relative">
               <button
                 class="btn w-full rounded bg-secondary text-[16px] font-bold text-white hover:bg-slate-600"
-                type="submit"
+                type="button"
                 :disabled="!meta.valid"
-                @click="sendMail"
+                @click="sendResetPwd"
               >
                 確定
               </button>

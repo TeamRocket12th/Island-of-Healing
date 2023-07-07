@@ -17,7 +17,7 @@ defineProps({
             <div class="h-[157px] overflow-hidden">
               <img :src="item.imgUrl" alt="cover-photo" class="h-full w-full object-cover" />
             </div>
-            <div class="bg-white pb-3 pl-3 pr-[14px] pt-2">
+            <div class="flex h-[126px] flex-col justify-between bg-white pb-3 pl-3 pr-[14px] pt-2">
               <div class="mb-3">
                 <p class="font-serif-tc text-xl font-bold leading-normal text-primary">
                   {{ item.title }}
