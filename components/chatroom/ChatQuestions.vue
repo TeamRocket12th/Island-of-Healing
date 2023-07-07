@@ -59,7 +59,7 @@ const questions = [
     ]
   }
 ]
-
+const router = useRouter()
 const answers = ref({})
 const maxCategory = ref('')
 const selectedRole = ref({})
@@ -70,9 +70,9 @@ const getCharacter = (result) => {
   return selectedRoles[0]
 }
 
-const scrollTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
+// const scrollTop = () => {
+//   window.scrollTo({ top: 0, behavior: 'smooth' })
+// }
 
 const submit = () => {
   if (answers.value['4']) {
@@ -91,7 +91,7 @@ const submit = () => {
       }
     }
     selectedRole.value = getCharacter(maxCategory.value)
-    scrollTop()
+    router.push(`/chatroom/${selectedRole.value.id}`)
   }
 }
 </script>

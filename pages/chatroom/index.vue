@@ -32,28 +32,28 @@ definePageMeta({
             class="h-full w-full"
           />
         </div>
-        <div class="absolute -left-[200px] top-32 z-10 h-[84px] w-[289px]">
+        <div class="absolute -left-[200px] top-32 z-10 max-h-28 w-[289px]">
           <img
             src="~/assets/images/chatroom/card-green.png"
             alt="card-green"
             class="h-full w-full object-cover"
           />
         </div>
-        <div class="absolute -left-[136px] top-64 z-40 h-[84px] w-[289px]">
+        <div class="absolute -left-[136px] top-64 z-40 max-h-28 w-[289px]">
           <img
             src="~/assets/images/chatroom/card-yellow.png"
             alt="card-yellow"
             class="h-full w-full object-cover"
           />
         </div>
-        <div class="absolute -right-40 -top-7 z-40 h-[84px] w-[289px]">
+        <div class="absolute -right-40 -top-7 z-40 max-h-28 w-[289px]">
           <img
             src="~/assets/images/chatroom/card-red.png"
-            alt="card-yellow"
+            alt="card-red"
             class="h-full w-full object-cover"
           />
         </div>
-        <div class="absolute -bottom-4 -right-56 z-40 h-28 w-[289px]">
+        <div class="absolute -bottom-4 -right-56 z-40 max-h-28 w-[289px]">
           <img
             src="~/assets/images/chatroom/card-blue.png"
             alt="card-blue"
@@ -94,7 +94,7 @@ definePageMeta({
               </p>
             </div>
             <button
-              class="test-btn mb-3 flex items-center py-3 pl-4 pr-3 text-2xl font-medium text-white shadow"
+              class="test-btn mb-3 flex items-center py-3 pl-4 pr-3 text-2xl font-medium text-white shadow hover:scale-110"
             >
               <NuxtLink to="/chatroom/questions">
                 開始測驗
@@ -103,7 +103,7 @@ definePageMeta({
                 </span>
               </NuxtLink>
             </button>
-            <button class="hover:scale-110">
+            <button class="transition-transform hover:scale-110">
               <NuxtLink to="/chatroom/characters" class="tracking-wide text-primary-dark underline"
                 >略過測驗</NuxtLink
               >
@@ -131,9 +131,7 @@ definePageMeta({
   backdrop-filter: blur(150px);
   transition: transform 0.3s ease;
 }
-.test-btn:hover {
-  transform: scale(1.1);
-}
+
 .rectangle-bg {
   background-image: url('~/assets/images/chatroom/chatroom-bg.png');
   background-size: cover;
