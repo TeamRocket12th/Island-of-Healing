@@ -1,25 +1,20 @@
 <script setup lang="ts">
+onMounted(() => {
+  const script = document.createElement('script')
+  script.src = 'https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js'
+  script.async = true
+  script.defer = true
+  document.body.appendChild(script)
+})
 const route = useRoute()
 const url = route.fullPath
-const props = defineProps({
-  isShareLinkOpen: {
-    type: Boolean,
-    default: false,
-    required: true
-  }
-})
+const lineShareUrl = `http://localhost:3000${url}`
 
 const emits = defineEmits(['close-modal'])
 
-const closeModal = () => {
-  emits('close-modal', false)
+const closeModal = (value: boolean) => {
+  emits('close-modal', value)
 }
-
-watchEffect(() => {
-  if (typeof document !== 'undefined') {
-    document.body.style.overflow = props.isShareLinkOpen ? 'hidden' : 'auto'
-  }
-})
 
 const showSuccessMsg = ref(false)
 
@@ -34,31 +29,54 @@ const copyUrl = () => {
 
 <template>
   <div
-    v-show="isShareLinkOpen"
     class="fixed inset-0 z-[999] flex items-center justify-center overflow-hidden bg-black bg-opacity-20"
-    @click.self="closeModal"
+    @click.self="closeModal(false)"
   >
     <div class="modal-box h-[234px] w-[518px] rounded">
-      <button class="btn-ghost btn-sm btn-circle btn absolute right-2 top-2" @click="closeModal">
+      <button
+        class="btn-ghost btn-sm btn-circle btn absolute right-2 top-2"
+        @click="closeModal(false)"
+      >
         ✕
       </button>
       <h3 class="mb-6 text-xl font-bold text-primary">分享</h3>
       <div class="relative flex justify-between">
         <ul class="mb-6 flex gap-7">
           <li class="flex cursor-pointer flex-col items-center justify-between">
-            <img src="~/assets/images/facebook.svg" alt="facebook" class="mb-1 h-[44px] w-[44px]" />
+            <!-- ${url}前面要放部屬的網址  -->
+            <NuxtLink :to="`https://www.facebook.com/sharer.php?u=${url}`" target="_blank">
+              <img
+                src="~/assets/images/facebook.svg"
+                alt="Facebook分享按鈕"
+                class="mb-1 h-[44px] w-[44px]"
+              />
+            </NuxtLink>
             <p class="text-xs">Facebook</p>
           </li>
           <li class="flex cursor-pointer flex-col items-center justify-between">
-            <img src="~/assets/images/twitter.svg" alt="twitter" class="mb-1 h-[44px] w-[44px]" />
+            <!-- ${url}前面要放部屬的網址  -->
+            <NuxtLink :to="`https://twitter.com/intent/tweet?url=${url}`" target="_blank">
+              <img
+                src="~/assets/images/twitter.svg"
+                alt="Twitter分享按鈕"
+                class="mb-1 h-[44px] w-[44px]"
+              />
+            </NuxtLink>
             <p class="text-xs">Twitter</p>
           </li>
           <li class="flex cursor-pointer flex-col items-center justify-between">
-            <img
-              src="~/assets/images/line.svg"
-              alt="line"
-              class="mb-1 mt-[3px] h-[38px] w-[38px]"
-            />
+            <NuxtLink
+              :to="`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(
+                lineShareUrl
+              )}`"
+              target="_blank"
+            >
+              <img
+                src="~/assets/images/line.svg"
+                alt="Line分享按鈕"
+                class="mb-1 mt-[3px] h-[38px] w-[38px]"
+              />
+            </NuxtLink>
             <p class="text-xs">Line</p>
           </li>
         </ul>

@@ -57,9 +57,15 @@ const isShareLinkOpen = ref(false)
 const toggleShareLink = () => {
   isShareLinkOpen.value = !isShareLinkOpen.value
 }
-const closeModal = (val: boolean) => {
-  isShareLinkOpen.value = val
+const closeModal = (value: boolean) => {
+  isShareLinkOpen.value = value
 }
+
+watchEffect(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = isShareLinkOpen.value ? 'hidden' : 'auto'
+  }
+})
 </script>
 <template>
   <div v-if="articleDetail" class="mb-10">
@@ -202,7 +208,7 @@ const closeModal = (val: boolean) => {
     <RecArticleCard />
   </section>
   <Teleport to="body">
-    <ShareLink :is-share-link-open="isShareLinkOpen" @close-modal="closeModal" />
+    <ShareLink v-if="isShareLinkOpen" @close-modal="closeModal" />
   </Teleport>
 </template>
 
