@@ -8,7 +8,7 @@ onMounted(() => {
 })
 const route = useRoute()
 const url = route.fullPath
-const lineShareUrl = `http://localhost:3000${route.fullPath}`
+const lineShareUrl = `http://localhost:3000${url}`
 const props = defineProps({
   isShareLinkOpen: {
     type: Boolean,
@@ -56,26 +56,38 @@ const copyUrl = () => {
           <li class="flex cursor-pointer flex-col items-center justify-between">
             <!-- ${url}前面要放部屬的網址  -->
             <NuxtLink :to="`https://www.facebook.com/sharer.php?u=${url}`" target="_blank">
-              <img src="~/assets/images/facebook.svg" alt="" class="mb-1 h-[44px] w-[44px]" />
+              <img
+                src="~/assets/images/facebook.svg"
+                alt="Facebook分享按鈕"
+                class="mb-1 h-[44px] w-[44px]"
+              />
             </NuxtLink>
             <p class="text-xs">Facebook</p>
           </li>
           <li class="flex cursor-pointer flex-col items-center justify-between">
             <!-- ${url}前面要放部屬的網址  -->
             <NuxtLink :to="`https://twitter.com/intent/tweet?url=${url}`" target="_blank">
-              <img src="~/assets/images/twitter.svg" alt="" class="mb-1 h-[44px] w-[44px]" />
+              <img
+                src="~/assets/images/twitter.svg"
+                alt="Twitter分享按鈕"
+                class="mb-1 h-[44px] w-[44px]"
+              />
             </NuxtLink>
             <p class="text-xs">Twitter</p>
           </li>
           <li class="flex cursor-pointer flex-col items-center justify-between">
-            <a
-              :href="`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(
+            <NuxtLink
+              :to="`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(
                 lineShareUrl
               )}`"
               target="_blank"
             >
-              <img src="~/assets/images/line.svg" alt="" class="mb-1 mt-[3px] h-[38px] w-[38px]" />
-            </a>
+              <img
+                src="~/assets/images/line.svg"
+                alt="Line分享按鈕"
+                class="mb-1 mt-[3px] h-[38px] w-[38px]"
+              />
+            </NuxtLink>
             <p class="text-xs">Line</p>
           </li>
         </ul>
