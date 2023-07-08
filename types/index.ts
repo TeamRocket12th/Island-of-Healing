@@ -85,7 +85,7 @@ declare global {
   }
 
   // 個人訊息
-  interface Message {
+  interface MyMsg {
     email: string
     imgUrl: string
     name: string
