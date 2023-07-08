@@ -46,14 +46,15 @@ const removeTag = (index: number) => {
   tags.value.splice(index, 1)
 }
 
-const summaryInput = ref('')
 const maxContentCount = 30
-const summaryCount = ref(`(${summaryInput.value.length}/${maxContentCount})`)
+const summaryCount = ref(`(${articleUse.article.Summary.length}/${maxContentCount})`)
 
-watch(summaryInput, (newValue) => {
-  summaryInput.value = articleUse.article.Summary
-  summaryCount.value = `(${newValue.length}/${maxContentCount})`
-})
+watch(
+  () => articleUse.article.Summary,
+  (newSummary) => {
+    summaryCount.value = `(${newSummary.length}/${maxContentCount})`
+  }
+)
 
 const textLengthRule = (value: string) => {
   if (value.length >= 30 || value.length === 30) {
@@ -312,7 +313,7 @@ const updateArticleCover = async (id: number) => {
               <label for="userIntro" class="mb-2 block text-primary"> 內容摘要</label>
               <VField
                 id="userIntro"
-                v-model="summaryInput"
+                v-model="articleUse.article.Summary"
                 name="userIntro"
                 as="textarea"
                 label="*內容摘要"
