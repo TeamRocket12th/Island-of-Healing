@@ -5,7 +5,7 @@
     <NavbarItem />
     <div class="flex flex-grow">
       <SettingSidebar class="hidden md:block" />
-      <main id="content" class="container">
+      <main id="content" class="container relative">
         <slot />
       </main>
     </div>

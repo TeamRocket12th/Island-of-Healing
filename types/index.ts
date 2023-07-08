@@ -85,13 +85,14 @@ declare global {
   }
 
   // 個人訊息
-  interface Message {
+  interface MyMsg {
     email: string
     imgUrl: string
     name: string
     canMessage: string
     date: string
     id: number
+    read: boolean
   }
 
   // 歷史訂單
