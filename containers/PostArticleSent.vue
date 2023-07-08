@@ -19,7 +19,7 @@ const ruleUse = (value: boolean) => {
 
 <template>
   <div>
-    <div class="bg-sand-100 sm:h-[1100px] md:h-fit">
+    <div class="bg-sand-100 sm:min-h-[1100px] md:h-fit">
       <PostEditor @post-upload="settingUse" @post-rules="ruleUse" @article-content="contentUse" />
       <PostSetting v-if="settingShow" @post-upload="settingUse" />
       <PostRules v-if="rulesShow" @post-rules="ruleUse" />

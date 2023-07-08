@@ -126,9 +126,12 @@ const postArticle = async () => {
       body: articleUse.article
     })
     if (res.StatusCode === 200) {
+      console.log(res)
       console.log(res.ArticleId)
       const articleId = res.ArticleId
-      updateArticleCover(articleId)
+      if (formData.get('articleCover')) {
+        updateArticleCover(articleId)
+      }
     }
   } catch (error: any) {
     console.log(error.response)
@@ -184,14 +187,14 @@ const updateArticleCover = async (id: number) => {
 </script>
 <template>
   <div
-    class="container absolute left-1/2 top-1/2 mt-48 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-10 md:fixed md:mt-0 md:pt-0"
+    class="container absolute left-1/2 top-1/2 mt-48 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-1 md:mt-0 md:pt-0"
   >
     <div class="col-span-12 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3">
       <div class="relative block md:flex">
         <Icon
           name="ic:baseline-close"
           size="24"
-          class="absolute -top-4 right-0 cursor-pointer text-primary md:top-0"
+          class="absolute -top-4 right-0 cursor-pointer text-primary md:fixed md:top-0"
           @click="postSent(false)"
         />
         <div class="w-full md:py-[54px] xl:px-[54px]">
@@ -247,11 +250,11 @@ const updateArticleCover = async (id: number) => {
               <span
                 v-for="(tag, index) in tags"
                 :key="index"
-                class="relative flex items-center gap-1 rounded-sm bg-[#D9D9D9] px-3"
+                class="relative flex items-center gap-1 rounded rounded-sm border-[0.5px] border-primary bg-sand-200 px-3 text-primary"
               >
                 {{ tag }}
                 <button @click="removeTag(index)">
-                  <Icon name="ic:baseline-close" size="12" class="absolute right-0 top-0" />
+                  <Icon name="ic:baseline-close" size="12" class="" />
                 </button>
               </span>
               <div>

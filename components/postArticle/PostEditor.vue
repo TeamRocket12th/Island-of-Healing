@@ -8,6 +8,7 @@ import { Image } from '@tiptap/extension-image'
 import { BulletList } from '@tiptap/extension-bullet-list'
 import { OrderedList } from '@tiptap/extension-ordered-list'
 import { Link } from '@tiptap/extension-link'
+import { Underline } from '@tiptap/extension-underline'
 import { HardBreak } from '@tiptap/extension-hard-break'
 import { Placeholder } from '@tiptap/extension-placeholder'
 import { Editor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
@@ -79,6 +80,7 @@ onMounted(() => {
       }),
       StarterKit,
       Document,
+      Underline,
       Paragraph.configure({
         HTMLAttributes: {
           class: 'text-p'
@@ -206,7 +208,7 @@ const insertImage = () => {
             <input
               v-model="articleUse.article.Title"
               type="text"
-              class="font-weight mb-3 h-20 w-full bg-sand-100 pt-8 text-4xl text-primary outline-none placeholder:text-sand-300"
+              class="font-weight mb-3 h-20 w-full bg-sand-100 pt-8 text-4xl font-bold text-primary outline-none placeholder:text-sand-300"
               placeholder="請輸入標題"
             />
             <div class="cursor-pointer" @click="rulesShow(true)">
@@ -242,7 +244,7 @@ const insertImage = () => {
               >
                 <button @click="addImage">
                   <Icon
-                    name="material-symbols:add-photo-alternate-outline"
+                    name="material-symbols:imagesmode-outline"
                     size="24"
                     class="rounded hover:bg-[#E9E4D9]"
                   />
@@ -278,7 +280,7 @@ const insertImage = () => {
                   @click="editor.chain().focus().undo().run()"
                 >
                   <Icon
-                    name="material-symbols:undo-rounded"
+                    name="material-symbols:reply"
                     size="24"
                     class="cursor-pointer rounded hover:bg-[#E9E4D9]"
                   />
@@ -288,7 +290,7 @@ const insertImage = () => {
                   @click="editor.chain().focus().redo().run()"
                 >
                   <Icon
-                    name="material-symbols:redo"
+                    name="material-symbols:forward-rounded"
                     size="24"
                     class="cursor-pointer rounded hover:bg-[#E9E4D9]"
                   />
@@ -302,7 +304,7 @@ const insertImage = () => {
                 <button
                   :disabled="!editor.can().chain().focus().toggleBold().run()"
                   :class="{ 'is-active': editor.isActive('bold') }"
-                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
+                  class="block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleBold().run()"
                 >
                   <Icon name="ic:baseline-format-bold" size="24" />
@@ -310,29 +312,29 @@ const insertImage = () => {
                 <button
                   :disabled="!editor.can().chain().focus().toggleItalic().run()"
                   :class="{ 'is-active': editor.isActive('italic') }"
-                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
+                  class="block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleItalic().run()"
                 >
                   <Icon name="ic:sharp-format-italic" size="24" />
                 </button>
                 <button
                   :class="{ 'is-active': editor.isActive('blockquote') }"
-                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
+                  class="block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleBlockquote().run()"
                 >
-                  <Icon name="ic:outline-format-quote" size="24" />
+                  <Icon name="material-symbols:format-quote-outline" size="24" />
                 </button>
                 <button
                   :disabled="!editor.can().chain().focus().toggleStrike().run()"
                   :class="{ 'is-active': editor.isActive('strike') }"
-                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
+                  class="block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleStrike().run()"
                 >
-                  <Icon name="ic:round-strikethrough-s" size="24" />
+                  <Icon name="material-symbols:strikethrough-s" size="24" />
                 </button>
                 <button
                   :class="{ 'is-active': editor.isActive('underline') }"
-                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
+                  class="block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleUnderline().run()"
                 >
                   <Icon name="material-symbols:format-underlined" size="24" />
@@ -340,24 +342,24 @@ const insertImage = () => {
                 <button
                   :disabled="!editor.can().chain().focus().toggleCode().run()"
                   :class="{ 'is-active': editor.isActive('code') }"
-                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
+                  class="block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleCode().run()"
                 >
-                  <Icon name="ic:baseline-code" size="24" />
+                  <Icon name="material-symbols:code" size="24" />
                 </button>
                 <button
                   :class="{ 'is-active': editor.isActive('bulletList') }"
-                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
+                  class="block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleBulletList().run()"
                 >
-                  <Icon name="ic:twotone-format-list-bulleted" size="24" />
+                  <Icon name="material-symbols:format-list-bulleted" size="24" />
                 </button>
                 <button
                   :class="{ 'is-active': editor.isActive('orderedList') }"
-                  class="ml-auto block rounded hover:bg-secondary hover:text-white"
+                  class="block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleOrderedList().run()"
                 >
-                  <Icon name="ic:round-format-list-numbered" size="24" />
+                  <Icon name="material-symbols:format-list-numbered" size="24" />
                 </button>
               </bubble-menu>
             </div>
@@ -405,7 +407,7 @@ const insertImage = () => {
       </div>
       <div
         v-if="editor && !selectedStatus"
-        class="absolute bottom-0 -mx-6 flex w-full justify-start gap-2 bg-[#E9E4D9] px-3 py-3 text-secondary sm:hidden"
+        class="absolute bottom-0 -mx-6 flex w-full justify-start gap-2 bg-[#E9E4D9] px-4 py-3 text-secondary sm:hidden"
       >
         <button
           :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
@@ -450,8 +452,8 @@ code {
   font-size: 0.8rem;
 }
 blockquote {
-  padding-left: 1rem;
-  border-left: 3px solid black;
+  padding-left: 10px;
+  border-left: 3px solid #3d1f03;
   margin-bottom: 16px;
 }
 
@@ -466,11 +468,18 @@ blockquote {
   margin: auto;
   padding: 12px;
 }
+.custom-bullet-list li {
+  margin-bottom: 40px;
+}
 
 .custom-ordered-list {
   list-style-type: numbered;
   margin: auto;
   padding: 12px;
+}
+
+.custom-ordered-list li {
+  margin-bottom: 40px;
 }
 
 .custom-link {
@@ -483,11 +492,15 @@ h2.custom-heading {
   font-size: 24px;
   color: #4e2a09;
   font-family: 'Noto Sans TC';
+  font-weight: 700;
+  margin-bottom: 16px;
 }
 h3.custom-heading {
   font-size: 20px;
   color: #4e2a09;
   font-family: 'Noto Sans TC';
+  font-weight: 500;
+  margin-bottom: 16px;
 }
 
 .text-p {
@@ -496,6 +509,8 @@ h3.custom-heading {
   font-family: 'Noto Sans TC';
   font-weight: 300;
   min-height: 24px;
+  letter-spacing: 2px;
+  line-height: 150%;
 }
 
 .myButton {
