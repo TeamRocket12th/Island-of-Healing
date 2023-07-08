@@ -63,16 +63,16 @@ declare global {
 
   // 文章摘要
   interface ArticleSummary {
-    id: string
-    title: string
-    category: string
-    publishDate: string
-    progress: string
-    permission: string
-    collectNum: number
-    commentNum: number
-    likeNum: number
-    clickNum: number
+    Id: string
+    Title: string
+    Category: string
+    Initdate: string
+    Progress: string
+    Pay: string
+    CollectNum: number
+    CommentNum: number
+    LikeNum?: number
+    ClickNum?: number
   }
 
   // 文章卡片
