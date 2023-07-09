@@ -1,12 +1,17 @@
 <script setup>
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
+
 definePageMeta({
   layout: 'chatlayout'
 })
+const userStore = useUserStore()
+const { userData } = storeToRefs(userStore)
 </script>
 
 <template>
-  <main>
-    <section class="container flex items-center justify-center pb-[441px] pt-[180px]">
+  <section>
+    <div class="container flex items-center justify-center pb-[441px] pt-[180px]">
       <div class="relative mx-auto h-[400px] w-[670px] pt-[197px]">
         <div class="absolute -left-24 -top-28 z-20 h-[200px] w-[200px]">
           <img
@@ -82,7 +87,9 @@ definePageMeta({
             <div class="h-10 w-10 overflow-hidden rounded-full bg-slate-200">
               <img src="~/assets/images/chatroom/chatroomavatar.png" alt="chatroomIcon" />
             </div>
-            <span class="text-xl text-primary">療癒組</span>
+            <span class="text-xl text-primary">{{
+              userData.nickName ? userData.nickName : '新島民'
+            }}</span>
           </div>
           <div class="flex flex-col items-center">
             <div class="mb-10 px-[106px]">
@@ -111,16 +118,11 @@ definePageMeta({
           </div>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 </template>
 
 <style scoped>
-.chatroom-bg {
-  background-image: url('~/assets/images/chatroom/AI-chatroom-desktop-bg.jpg');
-  background-position: center;
-  background-size: cover;
-}
 .test-btn {
   border-radius: 100px;
   background: linear-gradient(90deg, rgba(255, 138, 0, 0.74) 0%, #ffce94 100%);

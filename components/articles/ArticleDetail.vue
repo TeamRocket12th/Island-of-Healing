@@ -17,6 +17,8 @@ interface WriterHere {
   NickName: string
 }
 
+console.log(userData.value)
+
 const articleDetail = ref<ArticleDetail | null>(null)
 const writerInfo = ref<WriterHere | null>(null)
 const isCollecting = ref(false)
@@ -313,7 +315,7 @@ const addComment = async (id: number) => {
       <button class="font-medium text-primary-dark">查看全部</button>
     </div>
     <ArticleComment :comments="comments" />
-    <div class="mb-28">
+    <div v-if="isLogin" class="mb-28">
       <div class="mb-2 flex items-center">
         <div class="mr-2 h-9 w-9">
           <img :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />
@@ -352,6 +354,9 @@ const addComment = async (id: number) => {
           發表留言
         </button>
       </div>
+    </div>
+    <div v-else class="my-20 flex items-center justify-center text-primary-dark">
+      <p class="text-xl">要先登入才能留言喔</p>
     </div>
   </div>
   <section>

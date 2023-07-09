@@ -41,8 +41,8 @@ const isUserPage = computed(() => {
 </script>
 
 <template>
-  <header>
-    <nav class="border-b-[0.5px] border-primary bg-sand-100 sm:border-none">
+  <header class="bg-sand-100">
+    <nav class="border-b-[0.5px] border-primary sm:border-none">
       <div class="container">
         <div
           class="flex h-14 items-center justify-between py-4 sm:border-b-[0.5px] sm:border-primary"
@@ -161,9 +161,7 @@ const isUserPage = computed(() => {
         </div>
       </div>
     </nav>
-    <div
-      class="relative h-20 border-b-[0.5px] border-primary bg-sand-100 sm:h-[142px] sm:border-none sm:pt-5"
-    >
+    <div class="relative h-20 border-b-[0.5px] border-primary sm:h-[142px] sm:border-none sm:pt-5">
       <div class="container">
         <div class="relative py-4 sm:py-0">
           <h1 class="mb-3 text-left sm:text-center">
@@ -183,7 +181,7 @@ const isUserPage = computed(() => {
           class="hidden items-center justify-center gap-4 font-serif-tc sm:flex"
           :class="isUserPage ? 'border-none' : 'border-primary sm:border-b-[0.5px]'"
         >
-          <li v-if="userData.role === 'writer'" class="pb-5">
+          <li v-if="userData.role === 'writer'" class="whitespace-nowrap pb-5">
             <NuxtLink to="/newstory" class="text-xl font-semibold leading-normal text-primary"
               >發表文章</NuxtLink
             >
@@ -194,7 +192,7 @@ const isUserPage = computed(() => {
             >·</span
           >
           <li
-            class="relative pb-5 text-xl font-semibold leading-normal text-primary"
+            class="relative whitespace-nowrap pb-5 text-xl font-semibold leading-normal text-primary"
             @mouseover="showCategory = true"
             @mouseleave="showCategory = false"
           >
@@ -243,25 +241,25 @@ const isUserPage = computed(() => {
             </ul>
           </li>
           <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
-          <li class="pb-5">
+          <li class="whitespace-nowrap pb-5">
             <NuxtLink to="/chatroom" class="text-xl font-semibold leading-normal text-primary"
               >AI告解室</NuxtLink
             >
           </li>
           <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
-          <li class="pb-5">
+          <li class="whitespace-nowrap pb-5">
             <NuxtLink to="/" class="text-xl font-semibold text-primary" leading-normal
               >論壇</NuxtLink
             >
           </li>
           <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
-          <li class="pb-5">
+          <li class="whitespace-nowrap pb-5">
             <NuxtLink to="/plans" class="text-xl font-semibold leading-normal text-primary"
               >訂閱方案</NuxtLink
             >
           </li>
           <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
-          <li class="pb-5">
+          <li class="whitespace-nowrap pb-5">
             <NuxtLink to="/become_creater" class="text-xl font-semibold leading-normal text-primary"
               >成為作家</NuxtLink
             >

@@ -1,10 +1,8 @@
 export const useUserStore = defineStore(
   'auth',
   () => {
-    const authCookie = useCookie('auth')
+    const userInfo = useCookie('userInfo')
     const authToken = useCookie('token')
-
-    const router = useRouter()
     const userData = ref({
       email: '',
       id: '',
@@ -30,6 +28,7 @@ export const useUserStore = defineStore(
       userData.value.role = user.Role
       userData.value.avatar = user.ImgUrl
       userData.value.myPlan = user.MyPlan
+      userInfo.value = JSON.stringify(userData.value)
     }
 
     const getUserToken = (token: string) => {
@@ -38,8 +37,19 @@ export const useUserStore = defineStore(
 
     const userLogout = () => {
       isLogin.value = false
-      authCookie.value = null
+      userInfo.value = null
       authToken.value = null
+      userData.value = {
+        email: '',
+        id: '',
+        nickName: '',
+        role: 'guest',
+        avatar: '',
+        birthday: '',
+        myPlan: '',
+        jobTitle: '',
+        bio: ''
+      }
       const router = useRouter()
       if (router.currentRoute.value.meta.requiredAuth) {
         router.replace('/login')
@@ -48,16 +58,17 @@ export const useUserStore = defineStore(
       }
     }
 
-    const checkAuth = () => {
-      if (authToken.value) {
-        console.log('token 驗證成功')
-      } else {
-        authToken.value = null
-        isLogin.value = false
-        console.log('token 驗證失敗')
-        router.replace('/login')
-      }
-    }
+    // const checkAuth = () => {
+    //   if (authToken.value) {
+    //     console.log('token 驗證成功')
+    //   } else {
+    //     userInfo.value = null
+    //     authToken.value = null
+    //     isLogin.value = false
+    //     console.log('token 驗證失敗')
+    //     router.replace('/login')
+    //   }
+    // }
 
     return {
       isLogin,
@@ -65,8 +76,7 @@ export const useUserStore = defineStore(
       userLogin,
       getUserInfo,
       getUserToken,
-      userLogout,
-      checkAuth
+      userLogout
     }
   },
   {
