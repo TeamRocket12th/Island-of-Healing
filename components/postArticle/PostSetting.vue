@@ -250,11 +250,11 @@ const updateArticleCover = async (id: number) => {
               <span
                 v-for="(tag, index) in tags"
                 :key="index"
-                class="relative flex items-center gap-1 rounded rounded-sm border-[0.5px] border-primary bg-sand-200 px-3 text-primary"
+                class="relative flex items-center gap-1 rounded border-[0.5px] border-primary bg-sand-200 px-3 text-primary"
               >
                 {{ tag }}
                 <button @click="removeTag(index)">
-                  <Icon name="ic:baseline-close" size="12" class="" />
+                  <Icon name="ic:baseline-close" size="12" class="text-primary" />
                 </button>
               </span>
               <div>
@@ -296,19 +296,43 @@ const updateArticleCover = async (id: number) => {
               class="btn flex justify-between rounded border-secondary bg-white"
               @click="toggleCategory(true)"
             >
-              <span class="font-normal text-sand-300">{{ selectedCategory }}</span>
-              <Icon name="ic:round-arrow-drop-down" size="24" />
+              <span class="font-normal text-primary">{{ selectedCategory }}</span>
+              <Icon name="material-symbols:arrow-drop-down" size="24" class="text-primary" />
             </label>
             <ul
               v-if="toggleshowCategory"
               tabindex="0"
-              class="dropdown-content menu rounded-box w-full bg-base-100 p-2 shadow"
+              class="dropdown-content menu rounded-box w-full border-secondary bg-base-100 p-2 shadow"
               @click="toggleCategory(false)"
             >
-              <li><a @click="selectCategory('個人成長')">個人成長</a></li>
-              <li><a @click="selectCategory('情緒覺察')">情緒覺察</a></li>
-              <li><a @click="selectCategory('親密關係')">親密關係</a></li>
-              <li><a @click="selectCategory('日常練習')">日常練習</a></li>
+              <li>
+                <a
+                  class="text-primary hover:bg-secondary hover:text-white"
+                  @click="selectCategory('個人成長')"
+                  >個人成長</a
+                >
+              </li>
+              <li>
+                <a
+                  class="text-primary hover:bg-secondary hover:text-white"
+                  @click="selectCategory('情緒覺察')"
+                  >情緒覺察</a
+                >
+              </li>
+              <li>
+                <a
+                  class="text-primary hover:bg-secondary hover:text-white"
+                  @click="selectCategory('親密關係')"
+                  >親密關係</a
+                >
+              </li>
+              <li>
+                <a
+                  class="text-primary hover:bg-secondary hover:text-white"
+                  @click="selectCategory('日常練習')"
+                  >日常練習</a
+                >
+              </li>
             </ul>
           </div>
           <div>

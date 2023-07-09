@@ -197,7 +197,7 @@ const insertImage = () => {
 
 <template>
   <div
-    class="container grid grid-cols-1 pt-0 sm:pb-96 sm:pt-[72px] md:pb-0"
+    class="grid grid-cols-1 pt-0 sm:pb-96 sm:pt-[72px] md:pb-0"
     @dragover.prevent="handleDragOver"
     @drop.prevent="handleDrop"
   >
