@@ -3,8 +3,8 @@ import ArticleSideBar from '~/containers/ArticleSideBar.vue'
 </script>
 
 <template>
-  <main class="bg-sand-100 pb-6">
-    <section class="container">
+  <section class="bg-sand-100 pb-6">
+    <div class="container">
       <div class="grid-cols-12 gap-6 border-t border-primary pt-10 md:grid">
         <div class="col-span-full lg:col-span-7 lg:col-start-2">
           <ArticleDetail />
@@ -13,8 +13,8 @@ import ArticleSideBar from '~/containers/ArticleSideBar.vue'
           <ArticleSideBar />
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 </template>
 
 <style scoped></style>

@@ -38,6 +38,7 @@ const option = ref({
   }
 })
 
+// 追蹤人數
 const followers = [
   {
     year: '2021',
@@ -183,8 +184,29 @@ const followers = [
     ]
   }
 ]
+// 當前選中的年份索引
+const currentYearIndex = ref(followers.length - 1)
+console.log(currentYearIndex.value)
 
-// 作家收益數據
+// 是否有上一年
+const hasPrevYear = computed(() => currentYearIndex.value > 0)
+
+// 是否有下一年
+const hasNextYear = computed(() => currentYearIndex.value < followers.length - 1)
+
+const getPrevYearFollowers = () => {
+  if (currentYearIndex.value !== 0) {
+    currentYearIndex.value -= 1
+  }
+}
+
+const getNextYearFollowers = () => {
+  if (currentYearIndex.value < followers.length - 1) {
+    currentYearIndex.value += 1
+  }
+}
+
+// 收益數據
 const income = [
   {
     year: '2022',
@@ -499,17 +521,29 @@ const stats = computed(() => {
       <div class="mb-3 flex items-center justify-between bg-sand-200 p-3">
         <p class="text-xl font-medium text-primary">追蹤人數</p>
         <div>
-          <span class="mr-3 cursor-pointer"> <Icon name="ic:outline-arrow-back" size="24" /></span>
-          <span class="mr-6 cursor-pointer"
-            ><Icon name="ic:outline-arrow-forward" size="24"
-          /></span>
+          <button
+            class="mr-3 disabled:text-sand-300"
+            :disabled="!hasPrevYear"
+            @click="getPrevYearFollowers"
+          >
+            <Icon name="ic:outline-arrow-back" size="24" />
+          </button>
+          <button
+            class="mr-6 disabled:text-sand-300"
+            :disabled="!hasNextYear"
+            @click="getNextYearFollowers"
+          >
+            <Icon name="ic:outline-arrow-forward" size="24" />
+          </button>
           <span class="inline-block w-16 rounded bg-secondary py-1 text-center text-sm text-white"
             >年</span
           >
         </div>
       </div>
       <div class="flex justify-between">
-        <p class="ml-3 text-4xl font-medium leading-normal text-primary">2023年</p>
+        <p class="ml-3 text-4xl font-medium leading-normal text-primary">
+          {{ followers[currentYearIndex].year }} 年
+        </p>
         <ul class="flex items-center gap-10 pr-3">
           <li class="flex flex-col items-center">
             <span class="text-secondary">本日新增</span>
@@ -534,7 +568,9 @@ const stats = computed(() => {
         <h2 v-if="showYearlyIncome" class="text-3xl-plus text-primary">
           {{ selectedYear }}年 回顧
         </h2>
-        <h2 v-else class="text-3xl-plus text-primary">{{ selectedMonth }} 回顧</h2>
+        <h2 v-else class="text-3xl-plus text-primary">
+          {{ selectedMonth }} {{ selectedYear }}年 回顧
+        </h2>
         <div>
           <button
             type="button"

@@ -25,9 +25,9 @@ onMounted(() => {
 })
 </script>
 <template>
-  <div class="bg-sand-100">
+  <section>
     <LoginForm />
-  </div>
+  </section>
 </template>
 
 <style scoped></style>

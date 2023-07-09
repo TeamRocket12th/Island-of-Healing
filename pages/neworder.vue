@@ -22,12 +22,25 @@ watchEffect(() => {
   <main class="bg-sand-100 pb-[190px]">
     <OrderForm class="relative" @custom-order="orderForm" />
     <Teleport to="body">
-      <OrderConfirm v-if="orderStatus" @custom-order="orderForm" @get-result="showOrderResult" />
+      <Transition>
+        <OrderConfirm v-if="orderStatus" @custom-order="orderForm" @get-result="showOrderResult" />
+      </Transition>
     </Teleport>
     <Teleport to="body">
-      <OrderResult v-if="orderResult" @close-result="closeResult" />
+      <Transition>
+        <OrderResult v-if="orderResult" @close-result="closeResult" />
+      </Transition>
     </Teleport>
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.3s ease;
+}
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>

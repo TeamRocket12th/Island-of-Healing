@@ -5,7 +5,7 @@ if (error.value) {
 }
 </script>
 <template>
-  <div class="mb-40 border border-primary bg-sand-100 px-10 pb-40 pt-10">
+  <div class="mb-40 border-primary bg-sand-100 px-10 pb-40 pt-10 sm:border">
     <h2 class="mb-6 font-serif-tc text-2xl font-bold text-primary 3xl:mb-10">歷史訂單</h2>
     <div class="md:hidden">
       <ul

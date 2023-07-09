@@ -22,18 +22,16 @@ const getResult = (value: Boolean) => {
     class="fixed inset-0 z-[999] flex items-center justify-center overflow-hidden bg-black bg-opacity-20"
     @click.self="sendOrder(false)"
   >
-    <div class="container mb-10 mt-40 grid grid-cols-12 rounded-lg">
-      <div class="relative col-span-8 col-start-3 rounded-lg bg-white shadow">
+    <div class="mb-10 mt-10 w-[945px] rounded-lg">
+      <div class="relative rounded-lg bg-white shadow">
         <Icon
           name="ic:twotone-close"
           size="24"
           class="absolute right-0 top-0 mr-6 mt-6 cursor-pointer text-primary"
           @click="sendOrder(false)"
         />
-        <h2 class="my-[54px] text-center font-serif-tc text-2xl font-bold text-primary">
-          結帳確認
-        </h2>
-        <div class="m-6 rounded border-[0.5px] border-secondary p-3">
+        <h2 class="py-14 text-center font-serif-tc text-2xl font-bold text-primary">結帳確認</h2>
+        <div class="mx-6 rounded border-[0.5px] border-secondary p-3">
           <h3 class="mb-2 text-2xl font-medium text-primary">結帳金額</h3>
           <div class="flex justify-between border-b-[0.5px] border-secondary py-2">
             <h4 class="font-medium text-primary">方案名稱</h4>
@@ -67,7 +65,7 @@ const getResult = (value: Boolean) => {
             </div>
           </div>
         </div>
-        <div class="mb-16 flex justify-end gap-3 px-6">
+        <div class="flex justify-end gap-3 px-6 pb-16">
           <button
             class="rounded border px-6 py-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
             @click="sendOrder(false)"

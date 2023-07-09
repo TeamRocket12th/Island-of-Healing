@@ -1,8 +1,8 @@
 <script setup></script>
 <template>
-  <div class="bg-sand-100">
+  <section>
     <SignUpForm />
-  </div>
+  </section>
 </template>
 
 <style scoped></style>

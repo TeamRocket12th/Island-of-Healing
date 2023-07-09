@@ -20,9 +20,20 @@ watchEffect(() => {
   <div>
     <PlanManagement class="relative" @plan-cancel="showCancelModal" />
     <Teleport to="body">
-      <CancelPlan v-if="modalUse" @plan-cancel="hideCancelModal" />
+      <Transition>
+        <CancelPlan v-if="modalUse" @plan-cancel="hideCancelModal" />
+      </Transition>
     </Teleport>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
