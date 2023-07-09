@@ -5,9 +5,9 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="bg-sand-100">
+  <section>
     <ResetPasswordForm />
-  </div>
+  </section>
 </template>
 
 <style scoped></style>

@@ -16,7 +16,7 @@ interface UserInfo {
   Bio: string
 }
 
-const NickName = ref('')
+const NickName = ref<string>(userData.value.nickName)
 
 const userInfo: UserInfo = reactive({
   Birthday: null,
@@ -100,6 +100,7 @@ const textLengthRule = (value: string) => {
   }
 }
 
+// 更新使用者資料
 const updateUserInfo = async () => {
   if (!userToken.value) {
     return
@@ -125,7 +126,9 @@ const updateUserInfo = async () => {
     console.log(error.response)
   }
 }
-const updateUserPhoto = async (data: any) => {
+
+// 更新使用者大頭照
+const updateUserPhoto = async (data: FormData) => {
   if (!userToken.value) {
     return
   }

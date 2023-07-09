@@ -119,7 +119,7 @@ const handleLogin = async () => {
             <VErrorMessage name="password" class="block text-sm text-red-500" />
             <div class="relative mb-4">
               <button
-                type="button"
+                type="submit"
                 class="btn my-4 w-full rounded bg-secondary text-[16px] font-bold text-white hover:bg-slate-600 disabled:bg-[#cfccc9] disabled:text-white 3xl:mb-4"
                 :disabled="!meta.valid"
                 @click.prevent="handleLogin"
