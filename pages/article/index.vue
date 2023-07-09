@@ -59,8 +59,8 @@ const recArticles = [
 </script>
 
 <template>
-  <main class="bg-sand-100">
-    <section class="container">
+  <section class="bg-sand-100">
+    <div class="container">
       <div class="grid grid-cols-12 gap-6 border-primary pb-40 pt-10 sm:border-t">
         <div v-if="category !== 'all'" class="col-span-9">
           <ArticleList :title="categories[category]" :articles="articles" />
@@ -75,8 +75,8 @@ const recArticles = [
           <ArticleSideBar />
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 </template>
 
 <style scoped></style>

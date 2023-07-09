@@ -5,7 +5,7 @@ const cancelPlan = (value: boolean) => {
 }
 </script>
 <template>
-  <div class="grid grid-cols-12 border border-primary bg-sand-100">
+  <div class="mb-[147px] grid grid-cols-12 border border-primary bg-sand-100">
     <h2 class="col-span-2 pl-10 pt-10 font-serif-tc text-2xl font-bold text-primary">變更訂閱</h2>
     <div class="grid-start-3 col-span-8 px-3 py-32">
       <div class="mb-[27px] border border-secondary bg-white p-4">

@@ -5,18 +5,36 @@ import { useUserStore } from '~/stores/user'
 const userStore = useUserStore()
 const { isLogin, userData } = storeToRefs(userStore)
 const runtimeConfig = useRuntimeConfig()
-const mockApiBase = runtimeConfig.public.mockApiBase
-const articleDetail = ref<ArticleDetail | null>(null)
-const charge = ref(false)
+const apiBase = runtimeConfig.public.apiBase
+const userToken = useCookie('token')
 const route = useRoute()
 
+// 文章內作者資訊
+interface WriterHere {
+  Id: number
+  Bio: string
+  ImgUrl: string
+  NickName: string
+}
+
+const articleDetail = ref<ArticleDetail | null>(null)
+const writerInfo = ref<WriterHere | null>(null)
+const isCollecting = ref(false)
+const isLiking = ref(false)
+const comments = ref<Comment[]>([])
+
+// 取得單篇文章資訊
 const getArticleDetail = async () => {
+  const userId = isLogin.value ? userData.value.id : '0'
   try {
-    const res: ApiResponse = await $fetch(`${mockApiBase}/article/${route.params.id}`)
-    if (res.statusCode === 200) {
-      console.log(res.data)
-      articleDetail.value = res.data
-      charge.value = res.data.charge
+    const res: ApiResponse = await $fetch(`${apiBase}/readarticle/${route.params.id}/${userId}`)
+    console.log(res)
+    if (res.StatusCode === 200) {
+      articleDetail.value = res.ArticleData
+      writerInfo.value = res.WriterData
+      isCollecting.value = res.Collect
+      isLiking.value = res.Like
+      comments.value = res.Comment
     }
   } catch (error) {
     console.log(error)
@@ -32,8 +50,6 @@ const autoResize = () => {
   textarea.value!.style.height = '40px'
   textarea.value!.style.height = textarea.value!.scrollHeight + 'px'
 }
-
-onMounted(autoResize)
 
 const userComment = ref('')
 const showEmojiPicker = ref(false)
@@ -66,35 +82,151 @@ watchEffect(() => {
     document.body.style.overflow = isShareLinkOpen.value ? 'hidden' : 'auto'
   }
 })
+
+// 收藏文章
+const AddToCollection = async (id: number) => {
+  if (userToken.value) {
+    try {
+      const res: ApiResponse = await $fetch(`${apiBase}/article/collect/${id}`, {
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userToken.value}`
+        },
+        method: 'POST'
+      })
+      console.log(res)
+      if (res.StatusCode === 200) {
+        alert(res.Message)
+        getArticleDetail()
+      }
+    } catch (error: any) {
+      console.log(error.response)
+    }
+  }
+}
+
+// 取消收藏文章
+const cancelCollection = async (id: number) => {
+  if (userToken.value) {
+    try {
+      const res: ApiResponse = await $fetch(`${apiBase}/article/cancelcollect/${id}`, {
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userToken.value}`
+        },
+        method: 'PUT'
+      })
+      console.log(res)
+      if (res.StatusCode === 200) {
+        alert(res.Message)
+        getArticleDetail()
+      }
+    } catch (error: any) {
+      console.log(error.response)
+    }
+  }
+}
+
+// 給文章愛心
+const likeArticle = async (id: number) => {
+  if (userToken.value) {
+    try {
+      const res: ApiResponse = await $fetch(`${apiBase}/article/like/${id}`, {
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userToken.value}`
+        },
+        method: 'POST'
+      })
+      console.log(res)
+      if (res.StatusCode === 200) {
+        alert(res.Message)
+        getArticleDetail()
+      }
+    } catch (error: any) {
+      console.log(error.response)
+    }
+  }
+}
+
+// 取消文章愛心
+const unlikeArticle = async (id: number) => {
+  if (userToken.value) {
+    try {
+      const res: ApiResponse = await $fetch(`${apiBase}/article/cancellike/${id}`, {
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userToken.value}`
+        },
+        method: 'PUT'
+      })
+      console.log(res)
+      if (res.StatusCode === 200) {
+        alert(res.Message)
+        getArticleDetail()
+      }
+    } catch (error: any) {
+      console.log(error.response)
+    }
+  }
+}
+
+// 新增文章留言
+const addComment = async (id: number) => {
+  if (userToken.value) {
+    try {
+      const res: ApiResponse = await $fetch(`${apiBase}/articlecomment/create`, {
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userToken.value}`
+        },
+        method: 'POST',
+        body: {
+          Comment: userComment.value,
+          ArticleId: id
+        }
+      })
+      console.log(res)
+      if (res.StatusCode === 200) {
+        alert(res.Message)
+        userComment.value = ''
+        getArticleDetail()
+      }
+    } catch (error: any) {
+      console.log(error.response)
+    }
+  }
+}
 </script>
 <template>
   <div v-if="articleDetail" class="mb-10">
-    <span v-if="articleDetail.charge" class="mb-3 flex items-center gap-1 text-primary-dark"
+    <span v-if="articleDetail.Pay" class="mb-3 flex items-center gap-1 text-primary-dark"
       ><Icon name="material-symbols:lock-outline" size="16" /> 付費限定文章</span
     >
     <div class="mb-5 flex items-center justify-between">
       <div class="flex items-center gap-2">
         <div class="h-9 w-9">
-          <img src="https://picsum.photos/32" alt="writer" class="h-full w-full rounded-full" />
+          <img :src="writerInfo?.ImgUrl" alt="writer" class="h-full w-full rounded-full" />
         </div>
         <div>
           <p class="text-xs">作家</p>
           <p class="text-sm font-medium">
-            <NuxtLink :to="`/writer/${articleDetail?.writerInfo.id}`">{{
-              articleDetail?.writerInfo.name
-            }}</NuxtLink>
+            <NuxtLink :to="`/writer/${writerInfo?.Id}`">
+              {{ writerInfo?.NickName }}
+            </NuxtLink>
           </p>
         </div>
       </div>
       <div>
         <p class="font-light text-[#3D1F03]">
-          {{ articleDetail.createdTime }} 發表於 {{ articleDetail?.category }}
+          {{ useFormattedTime(articleDetail.Initdate) }} 發表於 {{ articleDetail?.Category }}
         </p>
       </div>
     </div>
     <!-- 文章內文 -->
-    <div class="relative max-h-[800px] overflow-hidden" :class="{ 'max-h-none': !isLocked }">
-      <div
+    <div class="relative max-h-[800px] overflow-hidden">
+      <!-- <div class="relative max-h-[800px] overflow-hidden" :class="{ 'max-h-none': !isLocked }"> -->
+      <!-- <div
         v-if="isLocked"
         class="payment-shade absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-sand-200"
       ></div>
@@ -109,19 +241,37 @@ watchEffect(() => {
         </span>
         <span v-if="userData.myPlan === 'free'">付費解鎖</span>
         <span v-else>繼續閱讀</span>
-      </button>
-      <h2 class="mb-6 text-[32px] font-bold">{{ articleDetail?.title }}</h2>
-      <img :src="articleDetail.coverUrl" alt="cover" class="mb-6 block" />
+      </button> -->
+      <h2 class="mb-6 text-[32px] font-bold">{{ articleDetail?.Title }}</h2>
+      <img :src="articleDetail.ImgUrl" alt="cover" class="mb-6 block" />
       <div class="border-b-[0.5px] border-primary pb-16">
-        <div v-dompurify-html="articleDetail.content" class="mb-9"></div>
+        <div v-dompurify-html="articleDetail?.Content" class="mb-9"></div>
         <div class="flex items-center justify-between">
-          <CategoryTag :tags="articleDetail.tags" />
+          <CategoryTag :tags="articleDetail.Tags" />
           <ul class="flex gap-3">
-            <li class="cursor-pointer">
+            <li v-if="!isLiking" class="cursor-pointer" @click="likeArticle(articleDetail.Id)">
               <Icon name="material-symbols:favorite-outline-rounded" size="20" />
             </li>
-            <li class="cursor-pointer">
+            <li
+              v-else
+              class="cursor-pointer text-secondary"
+              @click="unlikeArticle(articleDetail.Id)"
+            >
+              <Icon name="material-symbols:favorite-rounded" size="20" />
+            </li>
+            <li
+              v-if="!isCollecting"
+              class="cursor-pointer"
+              @click="AddToCollection(articleDetail.Id)"
+            >
               <Icon name="material-symbols:bookmark-outline-rounded" size="20" />
+            </li>
+            <li
+              v-else
+              class="cursor-pointer text-secondary"
+              @click="cancelCollection(articleDetail.Id)"
+            >
+              <Icon name="material-symbols:bookmark" size="20" />
             </li>
             <li class="cursor-pointer" @click="toggleShareLink">
               <Icon name="mdi:share-variant-outline" size="20" />
@@ -134,11 +284,7 @@ watchEffect(() => {
   <div v-if="articleDetail" class="mb-9 flex items-center justify-between py-6">
     <div class="items-center md:flex">
       <div class="flex justify-between sm:mr-2">
-        <img
-          :src="articleDetail.writerInfo.imgUrl"
-          alt="avatar"
-          class="h-[60px] w-[60px] rounded-full"
-        />
+        <img :src="writerInfo?.ImgUrl" alt="avatar" class="h-[60px] w-[60px] rounded-full" />
         <button
           class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:opacity-80 sm:hidden"
         >
@@ -146,9 +292,9 @@ watchEffect(() => {
         </button>
       </div>
       <div>
-        <NuxtLink :to="`/writer/${articleDetail?.writerInfo.id}`">
-          <p class="font-medium text-primary">作家·{{ articleDetail.writerInfo.name }}</p>
-          <p class="font-light text-primary-dark">{{ articleDetail.writerInfo.bio }}</p>
+        <NuxtLink :to="`/writer/${writerInfo?.Id}`">
+          <p class="font-medium text-primary">作家·{{ writerInfo?.NickName }}</p>
+          <p class="font-light text-primary-dark">{{ writerInfo?.Bio }}</p>
         </NuxtLink>
       </div>
     </div>
@@ -161,12 +307,12 @@ watchEffect(() => {
     </div>
   </div>
   <!--留言-->
-  <div>
+  <div v-if="articleDetail">
     <div class="mb-6 flex items-center justify-between">
       <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
       <button class="font-medium text-primary-dark">查看全部</button>
     </div>
-    <ArticleComment />
+    <ArticleComment :comments="comments" />
     <div class="mb-28">
       <div class="mb-2 flex items-center">
         <div class="mr-2 h-9 w-9">
@@ -199,7 +345,12 @@ watchEffect(() => {
             @select="insertEmoji"
           />
         </div>
-        <button class="h-10 rounded bg-secondary p-2 text-white hover:opacity-80">發表留言</button>
+        <button
+          class="h-10 rounded bg-secondary p-2 text-white hover:opacity-80"
+          @click="addComment(articleDetail?.Id)"
+        >
+          發表留言
+        </button>
       </div>
     </div>
   </div>
@@ -208,8 +359,19 @@ watchEffect(() => {
     <RecArticleCard />
   </section>
   <Teleport to="body">
-    <ShareLink v-if="isShareLinkOpen" @close-modal="closeModal" />
+    <Transition>
+      <ShareLink v-if="isShareLinkOpen" @close-modal="closeModal" />
+    </Transition>
   </Teleport>
 </template>
 
-<style scoped></style>
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>

@@ -39,6 +39,7 @@ const getUserInfo = async () => {
         userInfo.Birthday = res.Data.User.Birthday
         userInfo.JobTitle = res.Data.User.Jobtitle || ''
         userInfo.Bio = res.Data.User.Bio || ''
+        userData.value.avatar = res.Data.User.ImgUrl
       }
     } catch (error: any) {
       console.log(error.response)
@@ -52,6 +53,7 @@ const handleDateClick = (togglePopover: () => void) => {
   event?.preventDefault()
   togglePopover()
 }
+const birth = ref('')
 
 const formattedDate = computed(() => {
   if (userInfo.Birthday) {
@@ -59,26 +61,25 @@ const formattedDate = computed(() => {
     const year = selectedDate.getFullYear()
     const month = String(selectedDate.getMonth() + 1).padStart(2, '0')
     const day = String(selectedDate.getDate()).padStart(2, '0')
+    birth.value = `${year}-${month}-${day}`
     return `${year}-${month}-${day}`
   } else {
     return '請選擇日期'
   }
 })
 
-const selectedImage = ref(userData.value.avatar)
 const fileInput = ref<HTMLInputElement | null>(null)
 const openFilePicker = () => {
   fileInput.value?.click()
 }
 const selectFile = (event: Event) => {
-  const file = (event.target as HTMLInputElement).files?.[0]
-  if (file) {
-    const reader = new FileReader()
-    reader.onload = () => {
-      selectedImage.value = reader.result as string
-    }
-    reader.readAsDataURL(file)
-  }
+  const formData = new FormData()
+  const file: any = (event.target as HTMLInputElement).files?.[0]
+  console.log('file', file)
+
+  formData.append('userphoto', file)
+
+  updateUserPhoto(formData)
 }
 
 const maxCharacterCount = 30
@@ -124,6 +125,26 @@ const updateUserInfo = async () => {
     console.log(error.response)
   }
 }
+const updateUserPhoto = async (data: any) => {
+  if (!userToken.value) {
+    return
+  }
+  console.log(data)
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/upload/userphoto`, {
+      headers: {
+        Authorization: `Bearer ${userToken.value}`
+      },
+      method: 'PUT',
+      body: data
+    })
+    if (res.StatusCode === 200) {
+      getUserInfo()
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  }
+}
 </script>
 
 <template>
@@ -136,7 +157,7 @@ const updateUserInfo = async () => {
         <div class="flex flex-wrap pt-6 md:flex-nowrap lg:gap-4 lg:pt-10">
           <div class="mx-auto my-0">
             <div class="relative h-[100px] w-[100px] rounded-full bg-[#E9E4D9]">
-              <img :src="selectedImage" class="h-full w-full rounded-full" />
+              <img :src="userData.avatar" class="h-full w-full rounded-full" />
               <button
                 class="absolute bottom-0 right-0 flex h-9 w-9 items-center justify-center rounded-full bg-secondary"
                 @click="openFilePicker"
@@ -150,7 +171,7 @@ const updateUserInfo = async () => {
               <input ref="fileInput" type="file" style="display: none" @change="selectFile" />
             </div>
           </div>
-          <VForm class="w-full px-6 pt-6">
+          <VForm class="form w-full px-6 pt-6">
             <div class="mb-4 lg:mb-6">
               <label for="email" class="mb-2 block text-primary">常用信箱</label>
               <input
@@ -250,7 +271,7 @@ const updateUserInfo = async () => {
             </div>
             <div class="mb-16 flex w-full justify-end">
               <button
-                type="button"
+                type="submit"
                 class="rounded border bg-secondary px-[7px] py-2 text-white"
                 @click="updateUserInfo"
               >

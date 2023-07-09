@@ -8,7 +8,7 @@ const { getCategory, getYear } = useMyworkStore
 
 defineProps<{ nowPage: string }>()
 const categories = ['個人成長', '情緒察覺', '親密關係', '日常練習']
-const years = ['2020年', '2021年', '2022年', '2023年', '2024年']
+const years = ['2020年', '2021年', '2022年', '2023年']
 const isCategoriesOpen = ref(false)
 const isYearsOpen = ref(false)
 
@@ -22,7 +22,7 @@ const toggleYears = () => {
 
 const reset = () => {
   getCategory('選擇分類')
-  getYear('選擇時間')
+  getYear('選擇年份')
 }
 </script>
 <template>
@@ -32,7 +32,7 @@ const reset = () => {
         class="mr-11 cursor-pointer px-2 pb-2 text-primary"
         :class="{
           'border-b-2 border-primary':
-            selectedCategory === '選擇分類' && selectedYear === '選擇時間'
+            selectedCategory === '選擇分類' && selectedYear === '選擇年份'
         }"
         @click="reset"
         >全部</span
@@ -118,10 +118,31 @@ const reset = () => {
     <div v-if="nowPage === 'dashboard'" class="mb-[18px] flex w-full items-center justify-between">
       <p class="text-xl font-medium text-primary">貼文分析</p>
       <div class="flex items-center gap-3">
-        <div
+        <!-- <div
           class="flex cursor-pointer items-center rounded border border-primary px-2 py-1 text-sm text-primary"
         >
           選擇年份<Icon name="ic:round-arrow-drop-down" size="24" />
+        </div> -->
+        <div
+          class="relative flex cursor-pointer items-center justify-center rounded border border-primary bg-white px-2 py-1 text-primary"
+          @click="toggleYears"
+        >
+          <span class="text-sm leading-normal">{{ selectedYear }}</span>
+          <Icon name="material-symbols:arrow-drop-down" size="20" />
+          <ul
+            v-if="isYearsOpen"
+            class="absolute top-[105%] rounded border border-primary bg-white text-sm"
+          >
+            <li
+              v-for="(year, index) in years"
+              :key="index"
+              class="px-4 py-1 hover:bg-secondary hover:text-sand-100"
+              :class="{ 'border-b border-[edeae6]': index !== years.length - 1 }"
+              @click="getYear(year)"
+            >
+              {{ year }}
+            </li>
+          </ul>
         </div>
         <div
           class="flex cursor-pointer items-center rounded border border-primary px-2 py-1 text-sm text-primary"

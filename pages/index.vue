@@ -5,7 +5,7 @@ useHead({
 </script>
 
 <template>
-  <div class="bg-sand-100">
+  <div>
     <BannerArea />
     <LatestArticleCard />
     <TrendingCreater />

@@ -50,29 +50,28 @@ declare global {
 
   // 文章詳細內容
   interface ArticleDetail {
-    id: string
-    charge: boolean
-    title: string
-    coverUrl: string
-    content: string
-    createdTime: string
-    category: string
-    tags: string[]
-    writerInfo: Writer
+    Id: number
+    ImgUrl: string
+    Pay: boolean
+    Title: string
+    Content: string
+    Initdate: string
+    Tags: string[]
+    Category: string
   }
 
   // 文章摘要
   interface ArticleSummary {
-    id: string
-    title: string
-    category: string
-    publishDate: string
-    progress: string
-    permission: string
-    collectNum: number
-    commentNum: number
-    likeNum: number
-    clickNum: number
+    Id: string
+    Title: string
+    Category: string
+    Initdate: string
+    Progress: string
+    Pay: string
+    CollectNum: number
+    CommentNum: number
+    LikeNum?: number
+    ClickNum?: number
   }
 
   // 文章卡片
@@ -84,14 +83,24 @@ declare global {
     date: string
   }
 
+  // 文章留言
+  interface Comment {
+    Comment: string
+    CommentId: number
+    ImgUrl: string
+    Initdate: string
+    NickName: string
+  }
+
   // 個人訊息
-  interface Message {
+  interface MyMsg {
     email: string
     imgUrl: string
     name: string
     canMessage: string
     date: string
     id: number
+    read: boolean
   }
 
   // 歷史訂單
