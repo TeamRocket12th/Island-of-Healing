@@ -196,7 +196,9 @@ watchEffect(() => {
                 </label>
               </div>
             </td>
-            <td class="py-[10px] text-primary-dark md:w-[31%]">{{ item.Title }}</td>
+            <td class="py-[10px] text-primary-dark md:w-[31%]">
+              <NuxtLink :to="`/article/${item.Id}`">{{ item.Title }}</NuxtLink>
+            </td>
             <td class="py-[10px] text-primary-dark md:w-[14%]">{{ item.CollectNum }}</td>
             <td class="py-[10px] text-primary-dark md:w-[14%]">{{ formatDate(item.Initdate) }}</td>
             <td class="py-[10px] text-primary-dark md:w-[14%]">{{ item.CommentNum }}</td>
@@ -282,15 +284,15 @@ watchEffect(() => {
             </td>
           </tr>
         </tbody>
-        <!-- <tbody v-else>
-          <tr v-for="item in articles" :key="item.id" class="text-center">
-            <td class="w-[31%] py-[10px] text-primary-dark">{{ item.title }}</td>
-            <td class="w-[14%] py-[10px] text-primary-dark">{{ item.publishDate }}</td>
-            <td class="w-[14%] py-[10px] text-primary-dark">{{ item.likeNum }}</td>
-            <td class="w-[14%] py-[10px] text-primary-dark">{{ item.clickNum }}</td>
-            <td class="w-[17%] py-[10px] text-primary-dark">{{ item.commentNum }}</td>
+        <tbody v-else>
+          <tr v-for="item in articles" :key="item.Id" class="text-center">
+            <td class="w-[31%] py-[10px] text-primary-dark">{{ item.Title }}</td>
+            <td class="w-[14%] py-[10px] text-primary-dark">{{ formatDate(item.Initdate) }}</td>
+            <td class="w-[14%] py-[10px] text-primary-dark"></td>
+            <td class="w-[14%] py-[10px] text-primary-dark"></td>
+            <td class="w-[17%] py-[10px] text-primary-dark">{{ item.CommentNum }}</td>
           </tr>
-        </tbody> -->
+        </tbody>
       </table>
     </div>
   </div>

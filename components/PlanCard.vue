@@ -15,7 +15,7 @@
       <button
         class="btn-active btn mx-auto mb-10 block h-[60px] w-[180px] rounded bg-secondary px-4 py-3 text-2xl font-medium text-white hover:bg-slate-600 xl:mb-[84px] 3xl:mb-[84px]"
       >
-        立即註冊體驗
+        立即註冊
       </button>
       <img
         src="~/assets/images/work-work-from-home-01.svg"

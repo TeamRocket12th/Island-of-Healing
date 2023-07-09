@@ -1,7 +1,9 @@
 <template>
-  <div id="app">
+  <div class="flex min-h-screen flex-col">
     <NavbarItem />
-    <slot />
+    <main class="flex-grow bg-sand-100">
+      <slot />
+    </main>
     <FooterItem />
   </div>
 </template>

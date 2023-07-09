@@ -50,15 +50,14 @@ declare global {
 
   // 文章詳細內容
   interface ArticleDetail {
-    id: string
-    charge: boolean
-    title: string
-    coverUrl: string
-    content: string
-    createdTime: string
-    category: string
-    tags: string[]
-    writerInfo: Writer
+    Id: number
+    ImgUrl: string
+    Pay: boolean
+    Title: string
+    Content: string
+    Initdate: string
+    Tags: string[]
+    Category: string
   }
 
   // 文章摘要
@@ -82,6 +81,15 @@ declare global {
     imgUrl: string
     writer: string
     date: string
+  }
+
+  // 文章留言
+  interface Comment {
+    Comment: string
+    CommentId: number
+    ImgUrl: string
+    Initdate: string
+    NickName: string
   }
 
   // 個人訊息

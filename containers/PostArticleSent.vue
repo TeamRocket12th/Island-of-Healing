@@ -22,9 +22,20 @@ const ruleUse = (value: boolean) => {
     <div class="bg-sand-100 sm:h-[1100px] md:h-fit">
       <PostEditor @post-upload="settingUse" @post-rules="ruleUse" @article-content="contentUse" />
       <PostSetting v-if="settingShow" @post-upload="settingUse" />
-      <PostRules v-if="rulesShow" @post-rules="ruleUse" />
+      <Transition>
+        <PostRules v-if="rulesShow" @post-rules="ruleUse" />
+      </Transition>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
