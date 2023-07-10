@@ -17,8 +17,6 @@ interface WriterHere {
   NickName: string
 }
 
-console.log(userData.value)
-
 const articleDetail = ref<ArticleDetail | null>(null)
 const writerInfo = ref<WriterHere | null>(null)
 const isCollecting = ref(false)
@@ -314,7 +312,7 @@ const addComment = async (id: number) => {
       <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
       <button class="font-medium text-primary-dark">查看全部</button>
     </div>
-    <ArticleComment :comments="comments" />
+    <ArticleComment :comments="comments" :get-article-detail="getArticleDetail" />
     <div v-if="isLogin" class="mb-28">
       <div class="mb-2 flex items-center">
         <div class="mr-2 h-9 w-9">
@@ -340,12 +338,14 @@ const addComment = async (id: number) => {
               size="20"
               class="absolute right-[10px] top-[10px] text-secondary hover:text-primary"
           /></span>
-          <EmojiPicker
-            v-if="showEmojiPicker"
-            ref="emojiPicker"
-            class="absolute right-[10px] top-8"
-            @select="insertEmoji"
-          />
+          <ClientOnly>
+            <EmojiPicker
+              v-if="showEmojiPicker"
+              ref="emojiPicker"
+              class="absolute right-[10px] top-8"
+              @select="insertEmoji"
+            />
+          </ClientOnly>
         </div>
         <button
           class="h-10 rounded bg-secondary p-2 text-white hover:opacity-80"

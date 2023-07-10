@@ -86,6 +86,7 @@ declare global {
   // 文章留言
   interface Comment {
     Comment: string
+    UserId: number
     CommentId: number
     ImgUrl: string
     Initdate: string
@@ -114,7 +115,7 @@ declare global {
 
   // 使用者資訊
   interface UserInfo {
-    Uid: string
+    Uid: number | null
     NickName: string
     Email: string
     ImgUrl: string
