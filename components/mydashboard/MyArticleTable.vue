@@ -52,6 +52,10 @@ onMounted(getMyArticles)
 
 // 刪除單篇文章
 const delArticle = async (id: number) => {
+  if (!userToken.value) {
+    return
+  }
+
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/article/delete/${id}`, {
       headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` },
@@ -204,7 +208,9 @@ watchEffect(() => {
             <td class="py-[10px] text-primary-dark md:w-[14%]">{{ item.CommentNum }}</td>
             <td class="py-[10px] text-primary-dark md:w-[17%]">
               <button type="button">
-                <Icon name="material-symbols:edit-outline" size="24" class="mr-3" />
+                <NuxtLink :to="`/editor/${item.Id}`">
+                  <Icon name="material-symbols:edit-outline" size="24" class="mr-3"
+                /></NuxtLink>
               </button>
               <button type="button" class="mr-3">
                 <Icon name="ic:outline-visibility" size="24" />
@@ -273,7 +279,9 @@ watchEffect(() => {
             </td>
             <td class="w-[17%] py-[10px] text-primary-dark">
               <button type="button" class="mr-3">
-                <Icon name="material-symbols:edit-outline" size="24" />
+                <NuxtLink :to="`/editor/${item.Id}`">
+                  <Icon name="material-symbols:edit-outline" size="24" class="mr-3"
+                /></NuxtLink>
               </button>
               <button v-if="nowPage !== 'progress'" type="button" class="mr-3">
                 <Icon name="ic:outline-visibility" size="24" />

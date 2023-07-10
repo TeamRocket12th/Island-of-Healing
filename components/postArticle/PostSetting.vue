@@ -1,6 +1,12 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useArticle } from '~/stores/article'
+import { useUserStore } from '~/stores/user'
 const articleUse = useArticle()
+const route = useRoute()
+const router = useRouter()
+const userStore = useUserStore()
+const { userData } = storeToRefs(userStore)
 
 const selectedCategory = ref('個人成長')
 const toggleshowCategory = ref(false)
@@ -32,28 +38,27 @@ const postSent = (value: boolean) => {
   emits('post-upload', value)
 }
 const newTag = ref<string>('')
-const tags = ref<string[]>([])
-
+const tags = articleUse.article.Tags
 const addTag = () => {
-  if (newTag.value && !tags.value.includes(newTag.value)) {
-    tags.value.push(newTag.value)
-    articleUse.article.Tags = tags.value
+  if (newTag.value && !tags.includes(newTag.value)) {
+    tags.push(newTag.value)
     newTag.value = ''
   }
 }
 
 const removeTag = (index: number) => {
-  tags.value.splice(index, 1)
+  tags.splice(index, 1)
 }
 
-const summaryInput = ref('')
 const maxContentCount = 30
-const summaryCount = ref(`(${summaryInput.value.length}/${maxContentCount})`)
+const summaryCount = ref(`(${articleUse.article.Summary.length}/${maxContentCount})`)
 
-watch(summaryInput, (newValue) => {
-  summaryInput.value = articleUse.article.Summary
-  summaryCount.value = `(${newValue.length}/${maxContentCount})`
-})
+watch(
+  () => articleUse.article.Summary,
+  (newSummary) => {
+    summaryCount.value = `(${newSummary.length}/${maxContentCount})`
+  }
+)
 
 const textLengthRule = (value: string) => {
   if (value.length >= 30 || value.length === 30) {
@@ -113,6 +118,7 @@ const handleDrop = (event: DragEvent) => {
   // console.log(formData.get('articleCover'))
 }
 
+// 新增文章
 const postArticle = async () => {
   if (!userToken.value) {
     return
@@ -125,9 +131,35 @@ const postArticle = async () => {
       body: articleUse.article
     })
     if (res.StatusCode === 200) {
-      console.log(res.ArticleId)
+      alert('新增成功！')
       const articleId = res.ArticleId
       updateArticleCover(articleId)
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  }
+}
+
+// 更新文章
+const updateArticle = async () => {
+  if (!userToken.value) {
+    return
+  }
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/article/update/${route.params.id}`, {
+      headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` },
+      method: 'PUT',
+      body: articleUse.article
+    })
+
+    if (res.StatusCode === 200) {
+      console.log(res)
+      alert(res.Message)
+
+      if (formData.get('articleCover')) {
+        const id = Number(route.params.id)
+        updateArticleCover(id)
+      }
     }
   } catch (error: any) {
     console.log(error.response)
@@ -143,13 +175,41 @@ onUnmounted(() => {
 const saveDraft = () => {
   articleUse.article.Progress = 0
   console.log(articleUse.article)
-  postArticle()
+  if (route.params.id) {
+    updateArticle()
+  } else {
+    postArticle()
+  }
+  articleUse.article.Title = ''
+  articleUse.article.Content = ''
+  articleUse.article.Summary = ''
+  selectedCategory.value = '個人成長'
+  selectedOption.value = '免費'
+  selectedImage.value = ''
+  articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
+  setTimeout(() => {
+    router.push(`/account/${userData.value.id}/drafts`)
+  }, 1000)
 }
 
 const createPost = () => {
   articleUse.article.Progress = 1
-  console.log(articleUse.article)
-  postArticle()
+  if (route.params.id) {
+    updateArticle()
+  } else {
+    postArticle()
+  }
+  articleUse.article.Title = ''
+  articleUse.article.Content = ''
+  articleUse.article.Summary = ''
+  selectedCategory.value = '個人成長'
+  selectedOption.value = '免費'
+  selectedImage.value = ''
+  articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
+
+  setTimeout(() => {
+    router.push(`/account/${userData.value.id}/mywork`)
+  }, 1000)
 }
 
 const selectedOption = ref('免費')
@@ -180,10 +240,29 @@ const updateArticleCover = async (id: number) => {
     console.log(error.response)
   }
 }
+
+const props = defineProps({
+  articleData: {
+    type: Object,
+    default: () => {}
+  }
+})
+onMounted(() => {
+  if (route.params.id) {
+    selectedCategory.value = props.articleData.Category
+    console.log(props.articleData.Tags)
+    if (props.articleData.Pay) {
+      selectedOption.value = '付費'
+    } else {
+      selectedOption.value = '免費'
+    }
+    selectedImage.value = props.articleData.ImgUrl
+  }
+})
 </script>
 <template>
   <div
-    class="container absolute left-1/2 top-1/2 mt-48 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-10 md:fixed md:mt-0 md:pt-0"
+    class="container absolute left-1/2 top-1/2 mt-48 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-10 md:mt-0 md:pt-0"
   >
     <div class="col-span-12 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3">
       <div class="relative block md:flex">
@@ -312,7 +391,7 @@ const updateArticleCover = async (id: number) => {
               <label for="userIntro" class="mb-2 block text-primary"> 內容摘要</label>
               <VField
                 id="userIntro"
-                v-model="summaryInput"
+                v-model="articleUse.article.Summary"
                 name="userIntro"
                 as="textarea"
                 label="*內容摘要"

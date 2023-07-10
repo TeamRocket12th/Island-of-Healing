@@ -44,8 +44,18 @@ const rulesShow = (value) => {
   emits('post-rules', value)
 }
 
-// 輸出
+const props = defineProps({
+  htmlContent: {
+    type: String,
+    default: ''
+  },
+  articleData: {
+    type: Object,
+    default: () => {}
+  }
+})
 
+// 輸出
 const newJson = ref('')
 // const newHtml = ref('')
 const htmlOutput = ref('')
@@ -115,6 +125,7 @@ onMounted(() => {
       })
     ]
   })
+  editor.value.commands.setContent(`${props.htmlContent}`)
 })
 
 onBeforeUnmount(() => {
@@ -191,6 +202,11 @@ const insertImage = () => {
 //   const html = editor.value.getHTML()
 //   newHtml.value = html
 // }
+
+// onBeforeUpdate(() => {
+//   console.log(`${props.htmlContent}`)
+//   editor.value.commands.setContent(`${props.htmlContent}`)
+// })
 </script>
 
 <template>

@@ -22,7 +22,7 @@
           <li
             class="border-b border-[#A09385] p-5 font-serif-tc text-base font-medium leading-normal sm:border-b-0 sm:p-0 sm:text-sm"
           >
-            <NuxtLink to="/chatroom"><p class="text-sand-100">AI 告解室</p></NuxtLink>
+            <NuxtLink to="/chatroom"><p class="text-sand-100">AI 相談室</p></NuxtLink>
           </li>
           <li
             class="border-b border-[#A09385] p-5 font-serif-tc text-base font-medium leading-normal sm:border-b-0 sm:p-0 sm:text-sm"
