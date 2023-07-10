@@ -89,50 +89,48 @@ onMounted(() => {
           <ul>
             <li class="mb-6 flex items-center">
               <Icon class="mr-2 mt-1" name="ic:outline-check-circle" size="25" />
-              <!-- <div class="flex w-6 items-center justify-center p-1"> -->
-              <!-- <ClientOnly>
+              <!-- <div class="flex w-6 items-center justify-center p-1"> 
+               <ClientOnly>
                   <div
                     ref="circleProgress1"
                     class="circle relative h-3 w-3 items-center justify-center rounded-full bg-slate-500"
                   ></div
-                ></ClientOnly> -->
-              <!-- </div> -->
+                ></ClientOnly> 
+               </div> -->
               <p class="text-xl text-primary-dark 3xl:text-2xl">建立個人品牌</p>
             </li>
             <li class="mb-6 flex items-center">
               <Icon class="mr-2 mt-1" name="ic:outline-check-circle" size="25" />
-              <!-- <div class="flex w-6 items-center justify-center p-1"> -->
-              <!-- <ClientOnly>
+              <!-- <div class="flex w-6 items-center justify-center p-1">  <ClientOnly>
                   <div
                     ref="circleProgress2"
                     class="circle relative h-3 w-3 items-center justify-center rounded-full bg-slate-500"
                   ></div
-                ></ClientOnly> -->
-              <!-- </div> -->
+                ></ClientOnly> 
+               </div> -->
               <p class="text-xl text-primary-dark 3xl:text-2xl">增加曝光機會</p>
             </li>
             <li class="mb-6 flex items-center">
               <Icon class="mr-2 mt-1" name="ic:outline-check-circle" size="25" />
-              <!-- <div class="flex w-6 items-center justify-center p-1"> -->
-              <!-- <ClientOnly>
+              <!-- <div class="flex w-6 items-center justify-center p-1"
+                <ClientOnly>
                   <div
                     ref="circleProgress3"
                     class="circle relative h-3 w-3 items-center justify-center rounded-full bg-slate-500"
                   ></div
-                ></ClientOnly> -->
-              <!-- </div> -->
+                ></ClientOnly>
+              </div> -->
               <p class="text-xl text-primary-dark 3xl:text-2xl">開起論壇話題互動</p>
             </li>
             <li class="mb-6 flex items-center">
               <Icon class="mr-2 mt-1" name="ic:outline-check-circle" size="25" />
-              <!-- <div class="flex w-6 items-center justify-center p-1"> -->
-              <!-- <ClientOnly>
+              <!-- <div class="flex w-6 items-center justify-center p-1"> <ClientOnly>
                   <div
                     ref="circleProgress4"
                     class="circle relative h-3 w-3 items-center justify-center rounded-full bg-slate-500"
                   ></div
-                ></ClientOnly> -->
-              <!-- </div> -->
+                ></ClientOnly> 
+              </div> -->
               <p class="text-xl text-primary-dark 3xl:text-2xl">數據分析儀表板管理</p>
             </li>
           </ul>
