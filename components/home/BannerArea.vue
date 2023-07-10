@@ -4,7 +4,7 @@
   <section class="container mb-16">
     <div class="grid-rows-2 sm:grid sm:grid-cols-12 sm:px-3">
       <div
-        class="col-span-4 border-b-[0.5px] border-primary pb-[27px] pl-3 pr-3 pt-3 sm:border-b-0 sm:border-r-[0.5px] sm:pb-0"
+        class="col-span-4 border-b-[0.5px] border-primary p-4 sm:border-b-0 sm:border-r-[0.5px] sm:pb-0"
       >
         <NuxtLink :to="`/article/id`">
           <div>
@@ -25,7 +25,7 @@
         </NuxtLink>
       </div>
       <div
-        class="col-span-4 border-b-[0.5px] border-primary pb-[27px] pl-3 pr-3 pt-3 sm:row-span-2 sm:border-b-0 sm:border-r-[0.5px] sm:pb-0"
+        class="col-span-4 border-b-[0.5px] border-primary p-4 sm:row-span-2 sm:border-b-0 sm:border-r-[0.5px] sm:pb-0"
       >
         <NuxtLink :to="`/article/id`">
           <div>
@@ -47,9 +47,7 @@
           </div>
         </NuxtLink>
       </div>
-      <div
-        class="col-span-4 border-b border-primary pb-[27px] pl-3 pr-3 pt-3 sm:border-b-0 sm:pb-0"
-      >
+      <div class="col-span-4 border-b border-primary p-4 sm:border-b-0 sm:pb-0">
         <NuxtLink :to="`/article/id`">
           <div>
             <div class="relative mb-3 h-[267px] max-w-full sm:h-auto sm:w-auto">
@@ -71,7 +69,7 @@
         </NuxtLink>
       </div>
       <div
-        class="col-span-4 border-b-[0.5px] border-primary pb-[27px] pl-3 pr-3 pt-3 sm:border-b-0 sm:border-r sm:border-t-[0.5px] sm:pb-0"
+        class="col-span-4 border-b-[0.5px] border-primary p-4 sm:border-b-0 sm:border-r sm:border-t-[0.5px] sm:pb-0"
       >
         <NuxtLink :to="`/article/id`">
           <div>
@@ -92,7 +90,7 @@
         </NuxtLink>
       </div>
       <div
-        class="col-span-4 border-b-[0.5px] border-t-0 border-primary pb-[27px] pl-3 pr-3 pt-3 sm:border-b-0 sm:border-t-[0.5px] sm:pb-0"
+        class="col-span-4 border-b-[0.5px] border-t-0 border-primary p-4 sm:border-b-0 sm:border-t-[0.5px] sm:pb-0"
       >
         <NuxtLink :to="`/article/id`">
           <div>
