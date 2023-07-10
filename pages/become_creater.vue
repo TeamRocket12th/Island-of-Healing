@@ -1,11 +1,10 @@
-<script setup>
+<script setup lang="ts">
 definePageMeta({
-  layout: 'none'
+  layout: 'landinglayout'
 })
 </script>
-
 <template>
-  <div>作家LandingPage</div>
+  <div class="bg-sand-100"><LandingIntro /></div>
 </template>
 
 <style scoped></style>
