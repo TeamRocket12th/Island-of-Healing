@@ -29,6 +29,5 @@ export default defineNuxtConfig({
       apiBase: 'https://islandofhealing.rocket-coding.com/api',
       mockApiBase: 'http://localhost:4000'
     }
-  },
-  plugins: [{ src: '~/plugins/jquery', mode: 'client' }]
+  }
 })
