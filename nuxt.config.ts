@@ -1,6 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    'nuxt-icon',
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
+    'nuxt-swiper'
+  ],
   typescript: {
     typeCheck: true
   },
@@ -23,5 +29,6 @@ export default defineNuxtConfig({
       apiBase: 'https://islandofhealing.rocket-coding.com/api',
       mockApiBase: 'http://localhost:4000'
     }
-  }
+  },
+  plugins: [{ src: '~/plugins/jquery', mode: 'client' }]
 })

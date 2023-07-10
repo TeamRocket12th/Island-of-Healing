@@ -1,11 +1,9 @@
-<script setup>
-definePageMeta({
-  layout: 'none'
-})
-</script>
+<script setup></script>
 
 <template>
-  <div>作家LandingPage</div>
+  <div>
+    <LandingFeatures />
+  </div>
 </template>
 
 <style scoped></style>
