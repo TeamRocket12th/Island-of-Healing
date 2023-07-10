@@ -82,13 +82,13 @@ onMounted(() => {
 <template>
   <div class="bg-sand-100 px-10 py-10 lg:px-0">
     <div class="container">
-      <div class="flex flex-col items-center md:flex-row">
+      <div class="flex flex-col md:flex-row">
         <div class="mb-4 flex flex-col md:mb-0 md:w-1/2">
-          <h3 class="mb-5 text-[40px] text-primary">在 小島聊癒所 創作，你可以...</h3>
+          <h3 class="mb-5 text-[40px] font-bold text-primary">在 小島聊癒所 創作，你可以...</h3>
 
           <ul>
             <li class="mb-6 flex items-center">
-              <Icon class="mr-2 mt-1" name="ic:outline-check-circle" size="25" />
+              <Icon class="mr-2" name="ic:outline-check-circle" size="20" />
               <!-- <div class="flex w-6 items-center justify-center p-1"> 
                <ClientOnly>
                   <div
@@ -97,10 +97,10 @@ onMounted(() => {
                   ></div
                 ></ClientOnly> 
                </div> -->
-              <p class="text-xl text-primary-dark 3xl:text-2xl">建立個人品牌</p>
+              <p class="text-xl font-medium text-primary-dark 3xl:text-2xl">建立個人品牌</p>
             </li>
             <li class="mb-6 flex items-center">
-              <Icon class="mr-2 mt-1" name="ic:outline-check-circle" size="25" />
+              <Icon class="mr-2" name="ic:outline-check-circle" size="20" />
               <!-- <div class="flex w-6 items-center justify-center p-1">  <ClientOnly>
                   <div
                     ref="circleProgress2"
@@ -108,10 +108,10 @@ onMounted(() => {
                   ></div
                 ></ClientOnly> 
                </div> -->
-              <p class="text-xl text-primary-dark 3xl:text-2xl">增加曝光機會</p>
+              <p class="text-xl font-medium text-primary-dark 3xl:text-2xl">增加曝光機會</p>
             </li>
             <li class="mb-6 flex items-center">
-              <Icon class="mr-2 mt-1" name="ic:outline-check-circle" size="25" />
+              <Icon class="mr-2" name="ic:outline-check-circle" size="20" />
               <!-- <div class="flex w-6 items-center justify-center p-1"
                 <ClientOnly>
                   <div
@@ -120,10 +120,10 @@ onMounted(() => {
                   ></div
                 ></ClientOnly>
               </div> -->
-              <p class="text-xl text-primary-dark 3xl:text-2xl">開起論壇話題互動</p>
+              <p class="text-xl font-medium text-primary-dark 3xl:text-2xl">開起論壇話題互動</p>
             </li>
             <li class="mb-6 flex items-center">
-              <Icon class="mr-2 mt-1" name="ic:outline-check-circle" size="25" />
+              <Icon class="mr-2" name="ic:outline-check-circle" size="20" />
               <!-- <div class="flex w-6 items-center justify-center p-1"> <ClientOnly>
                   <div
                     ref="circleProgress4"
@@ -131,7 +131,7 @@ onMounted(() => {
                   ></div
                 ></ClientOnly> 
               </div> -->
-              <p class="text-xl text-primary-dark 3xl:text-2xl">數據分析儀表板管理</p>
+              <p class="text-xl font-medium text-primary-dark 3xl:text-2xl">數據分析儀表板管理</p>
             </li>
           </ul>
         </div>
