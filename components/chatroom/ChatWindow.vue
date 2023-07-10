@@ -13,6 +13,10 @@ const chatMessages = {
 }
 
 const askQuestion = async () => {
+  if (!question.value) {
+    alert('請先輸入問題')
+    return
+  }
   chatMessages.clientMsgs.push({
     role: 'user',
     content: question.value
@@ -55,33 +59,40 @@ onUpdated(() => {
 </script>
 
 <template>
-  <section class="container py-12">
-    <h2 class="text-center text-4xl">療天時間</h2>
-    <div class="mx-auto py-8">
-      <div class="mx-auto max-w-md">
-        <div class="relative rounded-md bg-zinc-50 shadow">
+  <section class="container py-10">
+    <div class="grid grid-cols-12">
+      <div class="col-span-8 col-start-3">
+        <div class="relative rounded-md">
           <!-- Message container -->
           <div id="message-container" ref="scrollContainer" class="h-[500px] overflow-y-scroll p-4">
             <ChatBubbles :chat-messages="chatMessages" :answer="answer" />
           </div>
           <!-- Input form -->
-          <div class="absolute -bottom-10 flex w-full items-center justify-center">
-            <input
-              v-model.trim="question"
-              type="text"
-              class="w-full rounded-l-md border border-r-0 border-slate-400 py-1 indent-4"
-              placeholder="說點什麼吧？"
-              @keydown.enter="handleEnterKey"
-            />
-            <button
-              class="w-[50px] rounded-r-md border bg-green-900 py-1 hover:bg-green-700"
-              @click="generateAnswer"
-            >
-              <Icon name="tabler:send" size="20" color="white" />
-            </button>
+          <div class="absolute -bottom-12 flex w-full items-center justify-center">
+            <div class="relative w-full">
+              <input
+                v-model.trim="question"
+                type="text"
+                class="w-full rounded-md border border-secondary px-4 py-2 placeholder:text-sand-300 focus:outline-secondary"
+                placeholder="說點什麼吧？"
+                @keydown.enter="handleEnterKey"
+              />
+              <button
+                class="absolute right-0 h-full w-[50px] rounded-r-md py-1 text-secondary hover:bg-secondary hover:text-white"
+                @click="askQuestion"
+              >
+                <Icon name="material-symbols:send-outline" size="20" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+::-webkit-scrollbar {
+  display: none;
+}
+</style>

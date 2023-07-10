@@ -1,7 +1,7 @@
 export const myWorkStore = defineStore('mywork', () => {
   // 作家後台 - 我的文章
   const selectedCategory = ref('選擇分類')
-  const selectedYear = ref('選擇時間')
+  const selectedYear = ref('選擇年份')
 
   const getCategory = (category: string) => {
     selectedCategory.value = category

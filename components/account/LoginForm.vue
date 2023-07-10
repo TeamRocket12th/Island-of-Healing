@@ -36,7 +36,7 @@ const handleLogin = async () => {
 }
 </script>
 <template>
-  <section class="container flex items-center justify-center pb-[55px] font-serif-tc">
+  <div class="container flex items-center justify-center pb-[55px] font-serif-tc">
     <div class="flex h-[605px] w-full">
       <div
         class="flex w-full flex-col items-center justify-center px-[74px] py-[124px] md:border md:border-primary 3xl:px-[516px] 3xl:py-[132px]"
@@ -119,7 +119,7 @@ const handleLogin = async () => {
             <VErrorMessage name="password" class="block text-sm text-red-500" />
             <div class="relative mb-4">
               <button
-                type="button"
+                type="submit"
                 class="btn my-4 w-full rounded bg-secondary text-[16px] font-bold text-white hover:bg-slate-600 disabled:bg-[#cfccc9] disabled:text-white 3xl:mb-4"
                 :disabled="!meta.valid"
                 @click.prevent="handleLogin"
@@ -142,5 +142,5 @@ const handleLogin = async () => {
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>

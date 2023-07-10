@@ -10,7 +10,7 @@ selectCharacterId(id as string)
 </script>
 
 <template>
-  <main class="bg-sand-100 pb-20">
+  <main class="pb-20">
     <ChatWindow />
   </main>
 </template>
