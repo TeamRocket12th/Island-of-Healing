@@ -1,11 +1,29 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
+import { usePaymentStore } from '~/stores/payment'
+
+const userStore = useUserStore()
+const { userData } = storeToRefs(userStore)
+
+const { getCustomerInfo } = usePaymentStore()
+
 const plan = {
   name: '月付讀到飽專案',
   price: 120
 }
-const emits = defineEmits(['custom-order'])
-const sentOrder = (value: boolean) => {
+
+const customerData = ref<CustomerData>({
+  nickName: userData.value.nickName,
+  email: userData.value.email,
+  phone: '0989123456',
+  planId: 1
+})
+
+const emits = defineEmits(['custom-order', 'get-customer-data', 'get-payment-data'])
+const sendOrder = (value: boolean, data: CustomerData) => {
   emits('custom-order', value)
+  getCustomerInfo(data)
 }
 </script>
 
@@ -18,6 +36,7 @@ const sentOrder = (value: boolean) => {
           <label for="name" class="mb-2 block text-primary-dark">顧客名稱:</label>
           <input
             id="name"
+            v-model="customerData.nickName"
             type="text"
             name="name"
             required
@@ -28,6 +47,7 @@ const sentOrder = (value: boolean) => {
           <label for="email" class="mb-2 block text-primary-dark">電子郵件:</label>
           <input
             id="email"
+            v-model="customerData.email"
             type="email"
             name="email"
             required
@@ -38,8 +58,10 @@ const sentOrder = (value: boolean) => {
           <label for="phone" class="mb-2 block text-primary-dark">電話號碼:</label>
           <input
             id="phone"
+            v-model="customerData.phone"
             type="tel"
             name="phone"
+            maxlength="10"
             required
             class="block w-full rounded border border-secondary px-3 py-2"
           />
@@ -67,7 +89,7 @@ const sentOrder = (value: boolean) => {
         <button
           type="button"
           class="block w-full rounded border bg-secondary px-3 py-2 text-white"
-          @click="sentOrder(true)"
+          @click="sendOrder(true, customerData)"
         >
           同意並送出
         </button>

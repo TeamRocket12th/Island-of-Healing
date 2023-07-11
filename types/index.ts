@@ -89,7 +89,7 @@ declare global {
     UserId: number
     CommentId: number
     ImgUrl: string
-    Initdate: string
+    LatestDate: string
     NickName: string
   }
 
@@ -135,6 +135,13 @@ declare global {
     totalComments: number
     totalInteractions: number
     totalClicks: number
+  }
+
+  interface CustomerData {
+    nickName: string
+    email: string
+    phone: string
+    planId: number
   }
 
   // AI聊天訊息

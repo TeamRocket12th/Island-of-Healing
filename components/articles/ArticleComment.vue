@@ -42,9 +42,10 @@ const insertEmoji = (emoji: any) => {
 }
 
 const autoResizeE = () => {
+  console.log(editArea.value[0].style)
   if (editArea.value[0]) {
     editArea.value[0].style.height = 'auto'
-    editArea.value[0].style.height = `${editArea.value.scrollHeight}px`
+    editArea.value[0].style.height = `${editArea.value[0].scrollHeight}px`
   }
 }
 
@@ -144,10 +145,7 @@ const delComment = async (id: number) => {
             </div>
           </div>
         </div>
-        <div
-          v-if="comment.UserId === userData.id && editingId === comment.CommentId"
-          class="flex items-center gap-2"
-        >
+        <div v-if="comment.UserId === userData.id && editingId === comment.CommentId">
           <div class="mb-4 grid-cols-7 gap-5 md:mb-0 md:grid">
             <div class="relative col-span-6">
               <textarea
@@ -182,6 +180,7 @@ const delComment = async (id: number) => {
               發表留言
             </button>
           </div>
+          <button class="text-sm text-[#1E40AF] underline" @click="editingId = null">取消</button>
         </div>
         <div v-else class="flex justify-between">
           <p class="mb-2 w-4/5 font-light text-primary-dark md:mb-0">
@@ -189,7 +188,7 @@ const delComment = async (id: number) => {
           </p>
           <span
             class="font-sm self-end justify-self-end whitespace-nowrap font-light text-[#3D1F03]"
-            >{{ useFormattedTime(comment.Initdate) }}</span
+            >{{ useFormattedTime(comment.LatestDate) }}</span
           >
         </div>
       </div>

@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { usePaymentStore } from '~/stores/payment'
+
+const { paymentData, customerData } = storeToRefs(usePaymentStore())
+const { createOrder } = usePaymentStore()
+console.log(paymentData.value)
+console.log(customerData.value)
+
 const userData = {
   userName: '林小明',
   userMail: 'abc0000@gmail.com',
@@ -14,6 +22,16 @@ const sendOrder = (value: Boolean) => {
 }
 const getResult = (value: Boolean) => {
   emits('get-result', value)
+}
+
+const form = ref<HTMLFormElement | null>(null)
+
+const handleSubmit = async () => {
+  await createOrder(customerData.value)
+  if (paymentData.value && form.value) {
+    // Submit the form manually if paymentData is set
+    form.value.submit()
+  }
 }
 </script>
 
@@ -54,30 +72,53 @@ const getResult = (value: Boolean) => {
           <div class="flex justify-between">
             <div>
               <h4 class="my-2 font-medium text-primary">付款方式</h4>
-              <span class="text-secondary">{{ userData.plan.paymentMethod }}</span>
+              <span class="text-secondary">信用卡</span>
             </div>
             <div>
               <h4 class="my-2 font-medium text-primary">顧客資訊</h4>
               <div>
-                <p class="mb-1 text-secondary">聯絡人：{{ userData.userName }}</p>
-                <p class="text-secondary">聯絡信箱：{{ userData.userMail }}</p>
+                <p class="mb-1 text-secondary">聯絡人：{{ customerData.nickName }}</p>
+                <p class="mb-1 text-secondary">聯絡信箱：{{ customerData.email }}</p>
+                <p class="text-secondary">聯絡電話：{{ customerData.phone }}</p>
               </div>
             </div>
           </div>
         </div>
         <div class="flex justify-end gap-3 px-6 pb-16">
-          <button
-            class="rounded border px-6 py-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
-            @click="sendOrder(false)"
+          <form
+            ref="form"
+            name="Newebpay"
+            method="post"
+            action="https://ccore.newebpay.com/MPG/mpg_gateway"
+            @submit.prevent="handleSubmit"
           >
-            返回修改
-          </button>
-          <button
-            class="rounded border px-6 py-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
-            @click="getResult(true)"
-          >
-            確認付款
-          </button>
+            <!-- 設定 hidden 可以隱藏不用給使用者看的資訊 -->
+            <!-- 藍新金流商店代號 -->
+            <input
+              id="MerchantID"
+              type="hidden"
+              name="MerchantID"
+              :value="paymentData.MerchantID"
+            />
+            <!-- 交易資料透過 Key 及 IV 進行 AES 加密 -->
+            <input id="TradeInfo" type="hidden" name="TradeInfo" :value="paymentData.TradeInfo" />
+            <!-- 經過上述 AES 加密過的字串，透過商店 Key 及 IV 進行 SHA256 加密 -->
+            <input id="TradeSha" type="hidden" name="TradeSha" :value="paymentData.TradeSha" />
+            <!-- 串接程式版本 -->
+            <input id="Version" type="hidden" name="Version" :value="paymentData.Version" />
+            <input
+              type="button"
+              value="返回修改"
+              class="mr-3 cursor-pointer rounded border px-6 py-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+              @click="sendOrder(false)"
+            />
+            <!-- 直接執行送出 -->
+            <input
+              type="submit"
+              value="確認付款"
+              class="cursor-pointer rounded border px-6 py-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+            />
+          </form>
         </div>
       </div>
     </div>

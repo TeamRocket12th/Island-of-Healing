@@ -17,6 +17,8 @@ interface WriterHere {
   NickName: string
 }
 
+console.log(userData.value)
+
 const articleDetail = ref<ArticleDetail | null>(null)
 const writerInfo = ref<WriterHere | null>(null)
 const isCollecting = ref(false)
@@ -338,14 +340,12 @@ const addComment = async (id: number) => {
               size="20"
               class="absolute right-[10px] top-[10px] text-secondary hover:text-primary"
           /></span>
-          <ClientOnly>
-            <EmojiPicker
-              v-if="showEmojiPicker"
-              ref="emojiPicker"
-              class="absolute right-[10px] top-8"
-              @select="insertEmoji"
-            />
-          </ClientOnly>
+          <EmojiPicker
+            v-if="showEmojiPicker"
+            ref="emojiPicker"
+            class="absolute right-[10px] top-8"
+            @select="insertEmoji"
+          />
         </div>
         <button
           class="h-10 rounded bg-secondary p-2 text-white hover:opacity-80"
