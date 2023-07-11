@@ -2,7 +2,7 @@
 <template>
   <div class="bg-sand-100">
     <div
-      class="container relative mb-12 flex h-[364px] flex-col items-center justify-center px-10 text-center lg:h-[584px]"
+      class="container relative flex h-[364px] flex-col items-center justify-center px-10 pb-12 text-center lg:h-[584px]"
     >
       <h3 class="z-10 mb-12 text-[40px] font-bold text-primary">
         打造個人品牌，發掘內容創作的無限可能

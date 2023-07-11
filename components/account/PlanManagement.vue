@@ -1,18 +1,60 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
 const emits = defineEmits(['plan-cancel'])
 const cancelPlan = (value: boolean) => {
   emits('plan-cancel', value)
 }
+const userStore = useUserStore()
+const { userData } = storeToRefs(userStore)
+
+const allPlans = ref([
+  {
+    id: 1,
+    sub: 'monthly',
+    name: '月付讀到飽專案'
+  },
+  {
+    id: 2,
+    sub: 'yearly',
+    name: '年付讀到飽專案'
+  },
+  {
+    id: 3,
+    sub: 'free',
+    name: '免費專案'
+  }
+])
+
+const otherPlans = allPlans.value.filter((plan) => plan.sub !== userData.value.myPlan)
+console.log(otherPlans)
+
+const renderPlan = (plan: string) => {
+  switch (plan) {
+    case 'free':
+      return '免費專案'
+    case 'monthly':
+      return '月付讀到飽專案'
+    case 'yearly':
+      return '年付讀到飽專案'
+    default:
+      return '免費專案'
+  }
+}
+
+const myPlan = computed(() => {
+  return renderPlan(userData.value.myPlan)
+})
 </script>
 <template>
   <div class="mb-[147px] grid grid-cols-12 border border-primary bg-sand-100">
     <h2 class="col-span-2 pl-10 pt-10 font-serif-tc text-2xl font-bold text-primary">變更訂閱</h2>
     <div class="grid-start-3 col-span-8 px-3 py-32">
-      <div class="mb-[27px] border border-secondary bg-white p-4">
+      <div class="mb-7 border border-secondary bg-white p-4">
         <h3 class="mb-5 text-xl font-medium text-primary">目前方案</h3>
         <div class="flex justify-between text-primary-dark">
-          <p>月付讀到飽專案</p>
-          <ul class="list-disc">
+          <p>{{ myPlan }}</p>
+          <ul v-if="userData.myPlan !== 'free'" class="list-disc">
             <li class="mb-2">下次扣款日：2023/07/04</li>
             <li class="mb-[14px]">閱讀權限至：2023/07/04</li>
           </ul>
@@ -28,16 +70,25 @@ const cancelPlan = (value: boolean) => {
           <button class="border-primary text-primary">重新訂閱</button>
         </div>
       </div>
-      <div class="border border-secondary bg-white p-4">
+      <div
+        v-for="plan in otherPlans"
+        :key="plan.id"
+        class="mb-7 border border-secondary bg-white p-4"
+      >
         <h3 class="mb-5 text-xl font-medium text-primary">可用方案</h3>
-        <p class="mb-3 text-primary-dark">年付讀到飽專案</p>
-        <div class="mb-[10px]">
+        <p class="mb-3 text-primary-dark">{{ plan.name }}</p>
+        <div v-if="plan.sub !== userData.myPlan" class="mb-[10px]">
           <NuxtLink to="/plans" class="border-b border-primary text-primary">瞭解更多</NuxtLink>
         </div>
-        <div class="flex justify-end">
+        <div v-if="plan.sub !== userData.myPlan" class="flex justify-end">
           <NuxtLink to="/neworder" class="rounded bg-secondary px-3 py-2 text-white"
             >選擇方案</NuxtLink
           >
+        </div>
+        <div v-else class="flex justify-end">
+          <button class="border-b border-primary text-primary" @click="cancelPlan(true)">
+            取消訂閱
+          </button>
         </div>
       </div>
     </div>

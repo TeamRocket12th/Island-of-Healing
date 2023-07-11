@@ -266,7 +266,7 @@ const updateUserPhoto = async (data: FormData) => {
               <div class="mb-12 flex justify-between gap-8 lg:mb-9 lg:justify-start">
                 <h4 class="text-2xl font-medium text-primary">訂閱管理</h4>
                 <nuxt-link
-                  to="/account/{userData.userId}/myplan"
+                  :to="`/account/${userData.id}/myplan`"
                   class="rounded border border-secondary px-2 py-[3px] text-secondary"
                   >變更訂閱</nuxt-link
                 >
