@@ -131,9 +131,24 @@ const postArticle = async () => {
       body: articleUse.article
     })
     if (res.StatusCode === 200) {
-      alert('新增成功！')
+      console.log(res)
+      console.log(res.ArticleId)
       const articleId = res.ArticleId
-      updateArticleCover(articleId)
+
+      articleUse.article.Title = ''
+      articleUse.article.Content = ''
+      articleUse.article.Summary = ''
+      selectedCategory.value = '個人成長'
+      selectedOption.value = '免費'
+      selectedImage.value = ''
+      articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
+
+      setTimeout(() => {
+        router.push(`/account/${userData.value.id}/mywork`)
+      }, 1000)
+      if (formData.get('articleCover')) {
+        updateArticleCover(articleId)
+      }
     }
   } catch (error: any) {
     console.log(error.response)
@@ -155,6 +170,17 @@ const updateArticle = async () => {
     if (res.StatusCode === 200) {
       console.log(res)
       alert(res.Message)
+      articleUse.article.Title = ''
+      articleUse.article.Content = ''
+      articleUse.article.Summary = ''
+      selectedCategory.value = '個人成長'
+      selectedOption.value = '免費'
+      selectedImage.value = ''
+      articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
+
+      setTimeout(() => {
+        router.push(`/account/${userData.value.id}/mywork`)
+      }, 1000)
 
       if (formData.get('articleCover')) {
         const id = Number(route.params.id)
@@ -180,16 +206,6 @@ const saveDraft = () => {
   } else {
     postArticle()
   }
-  articleUse.article.Title = ''
-  articleUse.article.Content = ''
-  articleUse.article.Summary = ''
-  selectedCategory.value = '個人成長'
-  selectedOption.value = '免費'
-  selectedImage.value = ''
-  articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
-  setTimeout(() => {
-    router.push(`/account/${userData.value.id}/drafts`)
-  }, 1000)
 }
 
 const createPost = () => {
@@ -199,17 +215,6 @@ const createPost = () => {
   } else {
     postArticle()
   }
-  articleUse.article.Title = ''
-  articleUse.article.Content = ''
-  articleUse.article.Summary = ''
-  selectedCategory.value = '個人成長'
-  selectedOption.value = '免費'
-  selectedImage.value = ''
-  articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
-
-  setTimeout(() => {
-    router.push(`/account/${userData.value.id}/mywork`)
-  }, 1000)
 }
 
 const selectedOption = ref('免費')
@@ -256,7 +261,12 @@ onMounted(() => {
     } else {
       selectedOption.value = '免費'
     }
-    selectedImage.value = props.articleData.ImgUrl
+    console.log(props.articleData.ImgUrl)
+    if (props.articleData.ImgUrl !== '') {
+      selectedImage.value = props.articleData.ImgUrl
+    } else {
+      selectedImage.value = ''
+    }
   }
 })
 </script>
@@ -277,11 +287,16 @@ onMounted(() => {
             <h3 class="mb-3 text-base text-primary">文章封面</h3>
             <div>
               <div
-                class="h-[200px] max-w-full overflow-hidden bg-sand-200 bg-cover bg-center"
+                class="relative h-[200px] max-w-full overflow-hidden bg-sand-200 bg-cover bg-center"
                 :style="{ backgroundImage: `url(${previewImage})` }"
                 @dragover.prevent="handleDragOver"
                 @drop.prevent="handleDrop"
               >
+                <p
+                  class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xl font-normal text-sand-300"
+                >
+                  照片拖曳上傳
+                </p>
                 <img
                   v-if="selectedImage"
                   class="pointer-events-none h-[200px] w-full"
