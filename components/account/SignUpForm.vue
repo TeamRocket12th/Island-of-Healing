@@ -153,7 +153,7 @@ const handleSignUp = async () => {
                 type="submit"
                 class="btn w-full rounded bg-secondary font-bold text-white hover:bg-slate-600 disabled:bg-[#cfccc9] disabled:text-white"
                 :disabled="!meta.valid"
-                @click="handleSignUp"
+                @click.prevent="handleSignUp"
               >
                 註冊
               </button>
