@@ -38,16 +38,17 @@ const postSent = (value: boolean) => {
   emits('post-upload', value)
 }
 const newTag = ref<string>('')
-const tags = articleUse.article.Tags
+
 const addTag = () => {
-  if (newTag.value && !tags.includes(newTag.value)) {
-    tags.push(newTag.value)
+  if (newTag.value && !articleUse.article.Tags.includes(newTag.value)) {
+    articleUse.article.Tags.push(newTag.value)
+
     newTag.value = ''
   }
 }
 
 const removeTag = (index: number) => {
-  tags.splice(index, 1)
+  articleUse.article.Tags.splice(index, 1)
 }
 
 const maxContentCount = 30
@@ -118,7 +119,7 @@ const handleDrop = (event: DragEvent) => {
   // console.log(formData.get('articleCover'))
 }
 
-// 新增文章
+//  新增文章
 const postArticle = async () => {
   if (!userToken.value) {
     return
@@ -133,6 +134,7 @@ const postArticle = async () => {
     if (res.StatusCode === 200) {
       console.log(res)
       console.log(res.ArticleId)
+      alert('新增成功')
       const articleId = res.ArticleId
 
       articleUse.article.Title = ''
@@ -154,7 +156,6 @@ const postArticle = async () => {
     console.log(error.response)
   }
 }
-
 // 更新文章
 const updateArticle = async () => {
   if (!userToken.value) {
@@ -169,11 +170,12 @@ const updateArticle = async () => {
 
     if (res.StatusCode === 200) {
       console.log(res)
-      alert(res.Message)
+      alert('更新成功')
+      console.log(articleUse.article.ArticlesClassId)
       articleUse.article.Title = ''
       articleUse.article.Content = ''
       articleUse.article.Summary = ''
-      selectedCategory.value = '個人成長'
+      articleUse.article.ArticlesClassId = 1
       selectedOption.value = '免費'
       selectedImage.value = ''
       articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
@@ -198,6 +200,7 @@ onUnmounted(() => {
   }
 })
 
+// 新增草稿按鈕
 const saveDraft = () => {
   articleUse.article.Progress = 0
   console.log(articleUse.article)
@@ -208,6 +211,7 @@ const saveDraft = () => {
   }
 }
 
+// 新增文章按鈕
 const createPost = () => {
   articleUse.article.Progress = 1
   if (route.params.id) {
@@ -226,6 +230,7 @@ watch(selectedOption, (newValue) => {
   }
 })
 
+// 更新圖片封面
 const updateArticleCover = async (id: number) => {
   if (!userToken.value) {
     return
@@ -245,23 +250,25 @@ const updateArticleCover = async (id: number) => {
     console.log(error.response)
   }
 }
-
 const props = defineProps({
   articleData: {
     type: Object,
     default: () => {}
   }
 })
+
 onMounted(() => {
   if (route.params.id) {
     selectedCategory.value = props.articleData.Category
+    selectCategory(selectedCategory.value)
     console.log(props.articleData.Tags)
+    articleUse.article.Tags = props.articleData.Tags
     if (props.articleData.Pay) {
       selectedOption.value = '付費'
     } else {
       selectedOption.value = '免費'
     }
-    console.log(props.articleData.ImgUrl)
+    // console.log(props.articleData.ImgUrl)
     if (props.articleData.ImgUrl !== '') {
       selectedImage.value = props.articleData.ImgUrl
     } else {
@@ -275,14 +282,16 @@ onMounted(() => {
     class="container absolute left-1/2 top-1/2 mt-48 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-10 md:mt-0 md:pt-0"
   >
     <div class="col-span-12 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3">
-      <VForm v-slot="{ meta }">
-        <div class="relative block md:flex">
+      <div class="block">
+        <div class="flex w-full justify-end">
           <Icon
             name="ic:baseline-close"
             size="24"
-            class="absolute -top-4 right-0 cursor-pointer text-primary md:top-0"
+            class="cursor-pointer text-primary md:top-0"
             @click="postSent(false)"
           />
+        </div>
+        <div class="relative block md:flex">
           <div class="w-full md:py-[54px] xl:px-[54px]">
             <h3 class="mb-3 text-base text-primary">文章封面</h3>
             <div>
@@ -292,11 +301,6 @@ onMounted(() => {
                 @dragover.prevent="handleDragOver"
                 @drop.prevent="handleDrop"
               >
-                <p
-                  class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xl font-normal text-sand-300"
-                >
-                  照片拖曳上傳
-                </p>
                 <img
                   v-if="selectedImage"
                   class="pointer-events-none h-[200px] w-full"
@@ -304,6 +308,11 @@ onMounted(() => {
                   alt="Selected Image"
                 />
                 <input ref="fileInput" type="file" style="display: none" @change="selectFile" />
+                <p
+                  class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xl tracking-[0.6px] text-sand-300"
+                >
+                  照片拖曳上傳
+                </p>
               </div>
               <div class="flex justify-between">
                 <p class="text-sm text-secondary">建議上傳尺寸820x312內</p>
@@ -318,7 +327,7 @@ onMounted(() => {
             </div>
             <div class="mb-4">
               <label for="articleTitle" class="mb-2 block text-base text-primary">文章標題</label>
-              <div>
+              <VForm>
                 <VField
                   id="articleTitle"
                   v-model="articleUse.article.Title"
@@ -330,7 +339,7 @@ onMounted(() => {
                   rules="required"
                 />
                 <VErrorMessage name="articleTitle" class="text-sm text-primary" />
-              </div>
+              </VForm>
             </div>
             <div class="mb-5 md:mb-0">
               <h3 class="mb-2 text-base text-primary">新增標籤</h3>
@@ -339,13 +348,13 @@ onMounted(() => {
               >
                 <Icon name="material-symbols:sell-outline" size="24" class="text-secondary" />
                 <span
-                  v-for="(tag, index) in tags"
+                  v-for="(tag, index) in articleUse.article.Tags"
                   :key="index"
-                  class="relative flex items-center gap-1 rounded-sm bg-[#D9D9D9] px-3"
+                  class="relative flex items-center gap-1 rounded border-[0.5px] border-primary bg-sand-200 px-3 text-primary"
                 >
                   {{ tag }}
                   <button @click="removeTag(index)">
-                    <Icon name="ic:baseline-close" size="12" class="absolute right-0 top-0" />
+                    <Icon name="ic:baseline-close" size="12" class="text-primary" />
                   </button>
                 </span>
                 <div>
@@ -387,23 +396,47 @@ onMounted(() => {
                 class="btn flex justify-between rounded border-secondary bg-white"
                 @click="toggleCategory(true)"
               >
-                <span class="font-normal text-sand-300">{{ selectedCategory }}</span>
-                <Icon name="ic:round-arrow-drop-down" size="24" />
+                <span class="font-normal text-primary">{{ selectedCategory }}</span>
+                <Icon name="material-symbols:arrow-drop-down" size="24" class="text-primary" />
               </label>
               <ul
                 v-if="toggleshowCategory"
                 tabindex="0"
-                class="dropdown-content menu rounded-box w-full bg-base-100 p-2 shadow"
+                class="dropdown-content menu rounded-box w-full border-secondary bg-base-100 p-2 shadow"
                 @click="toggleCategory(false)"
               >
-                <li><a @click="selectCategory('個人成長')">個人成長</a></li>
-                <li><a @click="selectCategory('情緒覺察')">情緒覺察</a></li>
-                <li><a @click="selectCategory('親密關係')">親密關係</a></li>
-                <li><a @click="selectCategory('日常練習')">日常練習</a></li>
+                <li>
+                  <a
+                    class="text-primary hover:bg-secondary hover:text-white"
+                    @click="selectCategory('個人成長')"
+                    >個人成長</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="text-primary hover:bg-secondary hover:text-white"
+                    @click="selectCategory('情緒覺察')"
+                    >情緒覺察</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="text-primary hover:bg-secondary hover:text-white"
+                    @click="selectCategory('親密關係')"
+                    >親密關係</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="text-primary hover:bg-secondary hover:text-white"
+                    @click="selectCategory('日常練習')"
+                    >日常練習</a
+                  >
+                </li>
               </ul>
             </div>
             <div>
-              <div class="mb-10">
+              <VForm class="mb-10">
                 <label for="userIntro" class="mb-2 block text-primary"> 內容摘要</label>
                 <VField
                   id="userIntro"
@@ -421,27 +454,25 @@ onMounted(() => {
                   <VErrorMessage name="userIntro" class="text-primary" />
                   <p class="absolute right-0 text-primary-dark">{{ summaryCount }}</p>
                 </div>
-              </div>
+              </VForm>
             </div>
           </div>
           <div class="flex justify-end md:absolute md:bottom-0 md:right-0">
             <button
               class="md:mb-0text-secondary mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white"
-              :disabled="!meta.valid"
               @click="saveDraft"
             >
               儲存草稿
             </button>
             <button
               class="md:mb-0text-secondary mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white"
-              :disabled="!meta.valid"
               @click="createPost"
             >
               確認送出
             </button>
           </div>
         </div>
-      </VForm>
+      </div>
     </div>
   </div>
 </template>
