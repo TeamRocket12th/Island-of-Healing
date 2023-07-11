@@ -3,6 +3,7 @@
 <template>
   <div>
     <LandingFeatures />
+    <LandingFeedback />
   </div>
 </template>
 
