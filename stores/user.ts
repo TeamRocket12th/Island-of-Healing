@@ -61,14 +61,13 @@ export const useUserStore = defineStore(
 
     const checkAuth = () => {
       if (authToken.value) {
-        console.log('token 驗證成功')
-      } else {
-        isLogin.value = false
-        userInfo.value = null
-        authToken.value = null
-        console.log('token 驗證失敗')
-        router.replace('/login')
+        return
       }
+      isLogin.value = false
+      userInfo.value = null
+      authToken.value = null
+      console.log('token 驗證失敗')
+      router.replace('/login')
     }
 
     return {
