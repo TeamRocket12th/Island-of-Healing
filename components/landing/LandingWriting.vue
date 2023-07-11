@@ -1,16 +1,16 @@
 <script setup lang="ts"></script>
 <template>
-  <section class="container">
-    <h3 class="mb-5 text-center text-4xl font-bold text-primary-dark md:mb-4 md:text-4xl-plus">
+  <section class="container mb-10 lg:mb-[66px]">
+    <h3 class="mb-5 text-center text-4xl font-bold text-primary-dark lg:mb-4 lg:text-4xl-plus">
       強大而直觀的寫作工具
     </h3>
-    <p class="mb-12 text-center text-base font-[350px] text-primary-dark md:mb-[100px] md:text-2xl">
+    <p class="mb-12 text-center text-base font-[350px] text-primary-dark lg:mb-[100px] lg:text-2xl">
       讓您專注於創作，輕鬆實現您的想法和故事。
     </p>
-    <div class="flex flex-wrap md:flex-nowrap">
-      <div class="order-2 w-full md:order-1 md:w-1/3">
+    <div class="flex flex-wrap lg:flex-nowrap">
+      <div class="order-2 w-full lg:order-1 lg:w-1/3">
         <div class="produce1 mb-11 flex w-full gap-4">
-          <div class="w-1/3">
+          <div>
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] border-secondary bg-sand-200"
             >
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="produce2 mb-11 flex w-full gap-4">
-          <div class="w-1/3">
+          <div>
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] border-secondary bg-sand-200"
             >
@@ -39,8 +39,8 @@
             </p>
           </div>
         </div>
-        <div class="produce2 flex w-full gap-4">
-          <div class="w-1/3">
+        <div class="produce3 flex w-full gap-4 pb-10">
+          <div>
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] bg-sand-200"
             >
@@ -55,7 +55,7 @@
           </div>
         </div>
       </div>
-      <div class="order-1 md:order-2">影片影片影片</div>
+      <div class="order-1 w-full lg:order-2 lg:w-2/3">影片影片影片</div>
     </div>
   </section>
 </template>
@@ -63,22 +63,22 @@
 <style>
 /* .produce1 h4,
 .produce1 p {
-  animation: fontSizeChange 15s infinite;
+  animation: hightlight 15s infinite;
 }
 
 .produce2 h4,
 .produce2 p {
-  animation: fontSizeChange 15s infinite;
+  animation: hightlight 15s infinite;
   animation-delay: 5s;
 }
 
 .produce3 h4,
 .produce3 p {
-  animation: fontSizeChange 15s infinite;
+  animation: hightlight 15s infinite;
   animation-delay: 10s;
 } */
 
-/* @keyframes fontSizeChange {
+/* @keyframes hightlight {
   0% {
     transform: scale(1);
   }
