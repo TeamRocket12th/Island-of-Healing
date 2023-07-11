@@ -9,6 +9,7 @@ definePageMeta({
     <LandingWriting />
     <LandingFeatures />
     <LandingFeedback />
+    <LandingBrand />
   </div>
 </template>
 

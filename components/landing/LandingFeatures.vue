@@ -80,7 +80,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-sand-100 px-10 py-10 lg:px-0">
+  <div class="bg-sand-100 px-10 py-10 pb-0 sm:pb-20 lg:px-0 lg:pb-10">
     <div class="container">
       <div class="flex flex-col md:flex-row">
         <div class="mb-4 flex flex-col md:mb-0 md:w-1/2">
