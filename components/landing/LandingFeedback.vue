@@ -105,12 +105,12 @@ const feedBacks2 = [
                 class="h-full w-full object-cover"
               />
             </div>
-            <div class="ml-2 flex flex-col">
-              <p>{{ item.name }}</p>
-              <p>{{ item.position }}</p>
+            <div class="ml-3 flex flex-col">
+              <p class="text-lg tracking-wider text-primary">{{ item.name }}</p>
+              <p class="text-secondary">{{ item.position }}</p>
             </div>
           </div>
-          <p>{{ item.content }}</p>
+          <p class="font-[350] leading-6 tracking-widest text-primary-dark">{{ item.content }}</p>
         </li>
       </ul>
       <ul
@@ -129,12 +129,12 @@ const feedBacks2 = [
                 class="h-full w-full object-cover"
               />
             </div>
-            <div class="ml-2 flex flex-col">
-              <p>{{ item.name }}</p>
-              <p>{{ item.position }}</p>
+            <div class="ml-3 flex flex-col">
+              <p class="text-lg tracking-wider text-primary">{{ item.name }}</p>
+              <p class="text-secondary">{{ item.position }}</p>
             </div>
           </div>
-          <p>{{ item.content }}</p>
+          <p class="font-[350] leading-6 tracking-widest text-primary-dark">{{ item.content }}</p>
         </li>
       </ul>
     </div>
