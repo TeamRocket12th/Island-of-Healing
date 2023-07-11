@@ -244,7 +244,9 @@ watchEffect(() => {
                 </label>
               </div>
             </td>
-            <td class="w-[31%] py-[10px] text-primary-dark">{{ item.Title }}</td>
+            <td class="w-[31%] py-[10px] text-primary-dark">
+              <NuxtLink :to="`/article/${item.Id}`">{{ item.Title }}</NuxtLink>
+            </td>
             <td
               v-if="nowPage === 'progress'"
               class="w-[14%] py-[10px]"
@@ -273,21 +275,25 @@ watchEffect(() => {
               </div>
             </td>
             <td v-else class="w-[14%] py-[10px]">-</td>
-            <td class="w-[14%] py-[10px] text-primary-dark">{{ formatDate(item.Initdate) }}</td>
+            <td class="w-[14%] py-[10px] text-primary-dark">-</td>
             <td class="w-[14%] py-[10px] text-primary-dark">
               {{ item.Pay ? '付費會員' : '所有人' }}
             </td>
             <td class="w-[17%] py-[10px] text-primary-dark">
               <button type="button" class="mr-3">
                 <NuxtLink :to="`/editor/${item.Id}`">
-                  <Icon name="material-symbols:edit-outline" size="24" class="mr-3"
+                  <Icon name="material-symbols:edit-outline" size="24"
                 /></NuxtLink>
               </button>
               <button v-if="nowPage !== 'progress'" type="button" class="mr-3">
                 <Icon name="ic:outline-visibility" size="24" />
               </button>
               <button type="button">
-                <Icon name="material-symbols:delete-outline" size="24" />
+                <Icon
+                  name="material-symbols:delete-outline"
+                  size="24"
+                  @click="delArticle(item.Id)"
+                />
               </button>
             </td>
           </tr>
