@@ -265,164 +265,168 @@ onMounted(() => {
     class="container absolute left-1/2 top-1/2 mt-48 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-10 md:mt-0 md:pt-0"
   >
     <div class="col-span-12 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3">
-      <div class="relative block md:flex">
-        <Icon
-          name="ic:baseline-close"
-          size="24"
-          class="absolute -top-4 right-0 cursor-pointer text-primary md:top-0"
-          @click="postSent(false)"
-        />
-        <div class="w-full md:py-[54px] xl:px-[54px]">
-          <h3 class="mb-3 text-base text-primary">文章封面</h3>
-          <div>
-            <div
-              class="h-[200px] max-w-full overflow-hidden bg-sand-200 bg-cover bg-center"
-              :style="{ backgroundImage: `url(${previewImage})` }"
-              @dragover.prevent="handleDragOver"
-              @drop.prevent="handleDrop"
-            >
-              <img
-                v-if="selectedImage"
-                class="pointer-events-none h-[200px] w-full"
-                :src="selectedImage"
-                alt="Selected Image"
-              />
-              <input ref="fileInput" type="file" style="display: none" @change="selectFile" />
-            </div>
-            <div class="flex justify-between">
-              <p class="text-sm text-secondary">建議上傳尺寸820x312內</p>
-              <button
-                class="mb-2 mt-6 flex items-center justify-center rounded border bg-secondary p-2"
-                @click="openFilePicker"
+      <VForm v-slot="{ meta }">
+        <div class="relative block md:flex">
+          <Icon
+            name="ic:baseline-close"
+            size="24"
+            class="absolute -top-4 right-0 cursor-pointer text-primary md:top-0"
+            @click="postSent(false)"
+          />
+          <div class="w-full md:py-[54px] xl:px-[54px]">
+            <h3 class="mb-3 text-base text-primary">文章封面</h3>
+            <div>
+              <div
+                class="h-[200px] max-w-full overflow-hidden bg-sand-200 bg-cover bg-center"
+                :style="{ backgroundImage: `url(${previewImage})` }"
+                @dragover.prevent="handleDragOver"
+                @drop.prevent="handleDrop"
               >
-                <Icon name="material-symbols:add" size="16" class="text-white" />
-                <span class="text-sm text-white">新增封面</span>
-              </button>
-            </div>
-          </div>
-          <div class="mb-4">
-            <label for="articleTitle" class="mb-2 block text-base text-primary">文章標題</label>
-            <VForm>
-              <VField
-                id="articleTitle"
-                v-model="articleUse.article.Title"
-                name="articleTitle"
-                type="text"
-                placeholder="請輸入文章標題"
-                label="*文章標題"
-                class="w-full rounded border border-secondary px-3 py-2 text-primary outline-none placeholder:text-sand-300"
-                rules="required"
-              />
-              <VErrorMessage name="articleTitle" class="text-sm text-primary" />
-            </VForm>
-          </div>
-          <div class="mb-5 md:mb-0">
-            <h3 class="mb-2 text-base text-primary">新增標籤</h3>
-            <div
-              class="flex flex-wrap items-center gap-2 rounded border border-secondary bg-white px-3 py-2"
-            >
-              <Icon name="material-symbols:sell-outline" size="24" class="text-secondary" />
-              <span
-                v-for="(tag, index) in tags"
-                :key="index"
-                class="relative flex items-center gap-1 rounded-sm bg-[#D9D9D9] px-3"
-              >
-                {{ tag }}
-                <button @click="removeTag(index)">
-                  <Icon name="ic:baseline-close" size="12" class="absolute right-0 top-0" />
+                <img
+                  v-if="selectedImage"
+                  class="pointer-events-none h-[200px] w-full"
+                  :src="selectedImage"
+                  alt="Selected Image"
+                />
+                <input ref="fileInput" type="file" style="display: none" @change="selectFile" />
+              </div>
+              <div class="flex justify-between">
+                <p class="text-sm text-secondary">建議上傳尺寸820x312內</p>
+                <button
+                  class="mb-2 mt-6 flex items-center justify-center rounded border bg-secondary p-2"
+                  @click="openFilePicker"
+                >
+                  <Icon name="material-symbols:add" size="16" class="text-white" />
+                  <span class="text-sm text-white">新增封面</span>
                 </button>
-              </span>
+              </div>
+            </div>
+            <div class="mb-4">
+              <label for="articleTitle" class="mb-2 block text-base text-primary">文章標題</label>
               <div>
-                <input
-                  v-model="newTag"
-                  placeholder="請輸入文章標籤"
-                  class="bg-sand pl-1 text-primary outline-none placeholder:text-sand-300"
-                  @keyup.enter="addTag"
+                <VField
+                  id="articleTitle"
+                  v-model="articleUse.article.Title"
+                  name="articleTitle"
+                  type="text"
+                  placeholder="請輸入文章標題"
+                  label="*文章標題"
+                  class="w-full rounded border border-secondary px-3 py-2 text-primary outline-none placeholder:text-sand-300"
+                  rules="required"
                 />
+                <VErrorMessage name="articleTitle" class="text-sm text-primary" />
+              </div>
+            </div>
+            <div class="mb-5 md:mb-0">
+              <h3 class="mb-2 text-base text-primary">新增標籤</h3>
+              <div
+                class="flex flex-wrap items-center gap-2 rounded border border-secondary bg-white px-3 py-2"
+              >
+                <Icon name="material-symbols:sell-outline" size="24" class="text-secondary" />
+                <span
+                  v-for="(tag, index) in tags"
+                  :key="index"
+                  class="relative flex items-center gap-1 rounded-sm bg-[#D9D9D9] px-3"
+                >
+                  {{ tag }}
+                  <button @click="removeTag(index)">
+                    <Icon name="ic:baseline-close" size="12" class="absolute right-0 top-0" />
+                  </button>
+                </span>
+                <div>
+                  <input
+                    v-model="newTag"
+                    placeholder="請輸入文章標籤"
+                    class="bg-sand pl-1 text-primary outline-none placeholder:text-sand-300"
+                    @keyup.enter="addTag"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="md:mb-[54px] md:ml-6 md:w-2/3 md:pt-[54px]">
-          <fieldset class="mb-10 block">
-            <legend class="mb-2 text-base text-primary">閱讀權限</legend>
-            <div class="flex items-center gap-3">
-              <div>
-                <input
-                  id="free"
-                  v-model="selectedOption"
-                  type="radio"
-                  name="drone"
-                  value="免費"
-                  checked
-                />
-                <label for="free" class="text-secondary">所有人觀看</label>
+          <div class="md:mb-[54px] md:ml-6 md:w-2/3 md:pt-[54px]">
+            <fieldset class="mb-10 block">
+              <legend class="mb-2 text-base text-primary">閱讀權限</legend>
+              <div class="flex items-center gap-3">
+                <div>
+                  <input
+                    id="free"
+                    v-model="selectedOption"
+                    type="radio"
+                    name="drone"
+                    value="免費"
+                    checked
+                  />
+                  <label for="free" class="text-secondary">所有人觀看</label>
+                </div>
+                <div>
+                  <input id="pay" v-model="selectedOption" type="radio" name="drone" value="付費" />
+                  <label for="pay" class="text-secondary">付費會員觀看</label>
+                </div>
               </div>
-              <div>
-                <input id="pay" v-model="selectedOption" type="radio" name="drone" value="付費" />
-                <label for="pay" class="text-secondary">付費會員觀看</label>
+            </fieldset>
+            <div class="dropdown mb-5 block">
+              <h3 class="mb-2 text-base text-primary">文章分類</h3>
+              <label
+                tabindex="0"
+                class="btn flex justify-between rounded border-secondary bg-white"
+                @click="toggleCategory(true)"
+              >
+                <span class="font-normal text-sand-300">{{ selectedCategory }}</span>
+                <Icon name="ic:round-arrow-drop-down" size="24" />
+              </label>
+              <ul
+                v-if="toggleshowCategory"
+                tabindex="0"
+                class="dropdown-content menu rounded-box w-full bg-base-100 p-2 shadow"
+                @click="toggleCategory(false)"
+              >
+                <li><a @click="selectCategory('個人成長')">個人成長</a></li>
+                <li><a @click="selectCategory('情緒覺察')">情緒覺察</a></li>
+                <li><a @click="selectCategory('親密關係')">親密關係</a></li>
+                <li><a @click="selectCategory('日常練習')">日常練習</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="mb-10">
+                <label for="userIntro" class="mb-2 block text-primary"> 內容摘要</label>
+                <VField
+                  id="userIntro"
+                  v-model="articleUse.article.Summary"
+                  name="userIntro"
+                  as="textarea"
+                  label="*內容摘要"
+                  :rules="textLengthRule"
+                  maxlength="30"
+                  rows="4"
+                  class="w-full rounded border border-secondary py-[7px] pl-3 text-primary outline-none placeholder:text-sand-300"
+                  placeholder="輸入你的文章摘要..."
+                />
+                <div class="relative flex">
+                  <VErrorMessage name="userIntro" class="text-primary" />
+                  <p class="absolute right-0 text-primary-dark">{{ summaryCount }}</p>
+                </div>
               </div>
             </div>
-          </fieldset>
-          <div class="dropdown mb-5 block">
-            <h3 class="mb-2 text-base text-primary">文章分類</h3>
-            <label
-              tabindex="0"
-              class="btn flex justify-between rounded border-secondary bg-white"
-              @click="toggleCategory(true)"
-            >
-              <span class="font-normal text-sand-300">{{ selectedCategory }}</span>
-              <Icon name="ic:round-arrow-drop-down" size="24" />
-            </label>
-            <ul
-              v-if="toggleshowCategory"
-              tabindex="0"
-              class="dropdown-content menu rounded-box w-full bg-base-100 p-2 shadow"
-              @click="toggleCategory(false)"
-            >
-              <li><a @click="selectCategory('個人成長')">個人成長</a></li>
-              <li><a @click="selectCategory('情緒覺察')">情緒覺察</a></li>
-              <li><a @click="selectCategory('親密關係')">親密關係</a></li>
-              <li><a @click="selectCategory('日常練習')">日常練習</a></li>
-            </ul>
           </div>
-          <div>
-            <VForm class="mb-10">
-              <label for="userIntro" class="mb-2 block text-primary"> 內容摘要</label>
-              <VField
-                id="userIntro"
-                v-model="articleUse.article.Summary"
-                name="userIntro"
-                as="textarea"
-                label="*內容摘要"
-                :rules="textLengthRule"
-                maxlength="30"
-                rows="4"
-                class="w-full rounded border border-secondary py-[7px] pl-3 text-primary outline-none placeholder:text-sand-300"
-                placeholder="輸入你的文章摘要..."
-              />
-              <div class="relative flex">
-                <VErrorMessage name="userIntro" class="text-primary" />
-                <p class="absolute right-0 text-primary-dark">{{ summaryCount }}</p>
-              </div>
-            </VForm>
+          <div class="flex justify-end md:absolute md:bottom-0 md:right-0">
+            <button
+              class="md:mb-0text-secondary mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white"
+              :disabled="!meta.valid"
+              @click="saveDraft"
+            >
+              儲存草稿
+            </button>
+            <button
+              class="md:mb-0text-secondary mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white"
+              :disabled="!meta.valid"
+              @click="createPost"
+            >
+              確認送出
+            </button>
           </div>
         </div>
-        <div class="flex justify-end md:absolute md:bottom-0 md:right-0">
-          <button
-            class="md:mb-0text-secondary mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white"
-            @click="saveDraft"
-          >
-            儲存草稿
-          </button>
-          <button
-            class="md:mb-0text-secondary mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white"
-            @click="createPost"
-          >
-            確認送出
-          </button>
-        </div>
-      </div>
+      </VForm>
     </div>
   </div>
 </template>
