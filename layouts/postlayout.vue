@@ -37,10 +37,9 @@ const toggleMobileCategory = () => {
         >
           <div class="flex">
             <NuxtLink to="/" class="font-serif-tc text-3xl-plus font-bold text-primary sm:text-2xl"
-              >小島聊癒所</NuxtLink
+              ><h1>小島聊癒所</h1></NuxtLink
             >
           </div>
-
           <div class="relative py-4 sm:py-0">
             <span
               class="absolute right-0 top-1/4 z-10 cursor-pointer text-primary sm:hidden"
