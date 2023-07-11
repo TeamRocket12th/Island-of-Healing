@@ -45,8 +45,18 @@ const rulesShow = (value) => {
   emits('post-rules', value)
 }
 
-// 輸出
+const props = defineProps({
+  htmlContent: {
+    type: String,
+    default: ''
+  },
+  articleData: {
+    type: Object,
+    default: () => {}
+  }
+})
 
+// 輸出
 const newJson = ref('')
 // const newHtml = ref('')
 const htmlOutput = ref('')
@@ -117,6 +127,7 @@ onMounted(() => {
       })
     ]
   })
+  editor.value.commands.setContent(`${props.htmlContent}`)
 })
 
 onBeforeUnmount(() => {
@@ -193,6 +204,11 @@ const insertImage = () => {
 //   const html = editor.value.getHTML()
 //   newHtml.value = html
 // }
+
+// onBeforeUpdate(() => {
+//   console.log(`${props.htmlContent}`)
+//   editor.value.commands.setContent(`${props.htmlContent}`)
+// })
 </script>
 
 <template>
@@ -203,21 +219,32 @@ const insertImage = () => {
   >
     <div class="relative col-span-12">
       <div class="flex flex-wrap">
-        <div class="order-2 mx-0 w-full sm:order-1 lg:mx-48 xl:mx-[280px]">
-          <div class="relative sm:flex sm:justify-end">
+        <div class="mx-0 w-full lg:mx-48 xl:mx-[280px]">
+          <div>
+            <div class="flex justify-end sm:gap-4">
+              <div class="flex cursor-pointer items-center" @click="rulesShow(true)">
+                <Icon
+                  name="material-symbols:info-outline"
+                  size="24"
+                  class="mx-auto cursor-pointer text-sand-300"
+                  @click="rulesShow(true)"
+                />
+              </div>
+              <div class="flex justify-end">
+                <button
+                  class="rounded px-3 py-[7px] text-sand-300 duration-100 hover:text-secondary sm:text-secondary sm:hover:bg-secondary sm:hover:text-white"
+                  @click="postSent(true)"
+                >
+                  發表貼文
+                </button>
+              </div>
+            </div>
             <input
               v-model="articleUse.article.Title"
               type="text"
               class="font-weight mb-3 h-20 w-full bg-sand-100 pt-8 text-4xl font-bold text-primary outline-none placeholder:text-sand-300"
               placeholder="請輸入標題"
             />
-            <div class="cursor-pointer" @click="rulesShow(true)">
-              <Icon
-                name="material-symbols:info-outline"
-                size="24"
-                class="absolute -top-[30px] right-5 mr-5 text-sand-300 sm:static"
-              />
-            </div>
           </div>
           <div class="mb-6">
             <div v-if="editor" class="mb-6 hidden min-h-[36px] sm:flex">
@@ -368,16 +395,6 @@ const insertImage = () => {
             </div>
             <!-- <div v-dompurify-html="newHtml"></div> -->
           </div>
-        </div>
-        <div
-          class="order-1 mb-0 flex w-full justify-end gap-0 sm:order-2 sm:mb-20 sm:gap-3 lg:mx-48 xl:mx-[280px]"
-        >
-          <button
-            class="mr-16 rounded px-3 py-[7px] text-sand-300 duration-100 hover:text-secondary sm:mr-0 sm:text-secondary sm:hover:bg-secondary sm:hover:text-white"
-            @click="postSent(true)"
-          >
-            發表貼文
-          </button>
         </div>
       </div>
     </div>

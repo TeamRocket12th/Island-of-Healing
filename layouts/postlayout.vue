@@ -229,7 +229,7 @@ const toggleMobileCategory = () => {
               to="/chatroom"
               class="block py-5 font-serif-tc font-semibold text-primary"
               @click="toggleMobileMenu"
-              >AI告解室</NuxtLink
+              >AI 相談室</NuxtLink
             >
           </li>
           <li class="border-b border-primary">

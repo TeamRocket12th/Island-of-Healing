@@ -243,7 +243,7 @@ const isUserPage = computed(() => {
           <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
           <li class="whitespace-nowrap pb-5">
             <NuxtLink to="/chatroom" class="text-xl font-semibold leading-normal text-primary"
-              >AI告解室</NuxtLink
+              >AI 相談室</NuxtLink
             >
           </li>
           <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
