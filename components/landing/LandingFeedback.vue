@@ -78,19 +78,19 @@ const feedBacks2 = [
 </script>
 <template>
   <div class="bg-sand-100">
-    <div class="relative py-20">
+    <div class="relative py-10 sm:py-20">
       <div class="mb-20 px-10 text-center text-primary">
         <h3 class="mb-4 text-[40px] font-bold">50,000+位人氣作家推薦</h3>
         <p class="text-2xl font-[350]">還在等什麼！快跟其他創作者一起體驗 展開內容創作之旅</p>
       </div>
       <span
-        class="absolute left-0 hidden h-[500px] w-[400px] bg-gradient-to-r from-sand-100 xl:block"
+        class="absolute left-0 hidden w-[400px] bg-gradient-to-r from-sand-100 xl:block xl:h-[600px]"
       ></span>
       <span
-        class="absolute right-0 hidden h-[500px] w-[400px] bg-gradient-to-l from-sand-100 xl:block"
+        class="absolute right-0 hidden w-[400px] bg-gradient-to-l from-sand-100 xl:block xl:h-[600px]"
       ></span>
       <ul
-        class="line-1 mb-4 flex flex-col justify-between gap-4 overflow-hidden lg:flex-row lg:flex-wrap lg:px-10 xl:flex-nowrap xl:px-0"
+        class="line-1 mb-4 flex flex-col justify-between gap-4 overflow-hidden md:flex-row md:px-10 xl:flex-nowrap xl:px-0"
       >
         <li
           v-for="item in feedBacks1"
@@ -146,6 +146,14 @@ const feedBacks2 = [
   width: 90%;
   gap: 2rem;
 }
+@media (min-width: 768px) {
+  .line-1 li {
+    width: 48%;
+  }
+  ul.line-1 {
+    flex-wrap: wrap;
+  }
+}
 @media (min-width: 1280px) {
   .line-1 li:first-child {
     margin-left: -100px;
@@ -158,6 +166,9 @@ const feedBacks2 = [
   }
   .line-2 li:last-child {
     margin-right: -270px;
+  }
+  ul.line-1 {
+    flex-wrap: nowrap;
   }
 }
 </style>

@@ -4,6 +4,7 @@
   <div>
     <LandingFeatures />
     <LandingFeedback />
+    <LandingBrand />
   </div>
 </template>
 
