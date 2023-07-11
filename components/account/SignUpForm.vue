@@ -150,7 +150,7 @@ const handleSignUp = async () => {
             <VErrorMessage name="passwordCheck" class="block text-sm text-red-500" />
             <div class="relative my-4">
               <button
-                type="button"
+                type="submit"
                 class="btn w-full rounded bg-secondary font-bold text-white hover:bg-slate-600 disabled:bg-[#cfccc9] disabled:text-white"
                 :disabled="!meta.valid"
                 @click="handleSignUp"

@@ -5,7 +5,7 @@ export const useUserStore = defineStore(
     const authToken = useCookie('token')
     const userData = ref({
       email: '',
-      id: '',
+      id: null as number | null,
       nickName: '',
       role: 'guest',
       avatar: '',
@@ -41,7 +41,7 @@ export const useUserStore = defineStore(
       authToken.value = null
       userData.value = {
         email: '',
-        id: '',
+        id: null,
         nickName: '',
         role: 'guest',
         avatar: '',

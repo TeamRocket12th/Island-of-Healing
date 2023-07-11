@@ -4,7 +4,11 @@ definePageMeta({
 })
 </script>
 <template>
-  <div class="bg-sand-100"><LandingIntro /></div>
+  <div class="bg-sand-100">
+    <LandingIntro />
+    <LandingWriting />
+    <LandingFeatures />
+  </div>
 </template>
 
 <style scoped></style>
