@@ -46,7 +46,7 @@ const copyUrl = () => {
             <!-- ${url}前面要放部屬的網址  -->
             <NuxtLink :to="`https://www.facebook.com/sharer.php?u=${url}`" target="_blank">
               <img
-                src="~/assets/images/facebook.svg"
+                src="~/assets/images/sharelink/facebook.svg"
                 alt="Facebook分享按鈕"
                 class="mb-1 h-[44px] w-[44px]"
               />
@@ -57,7 +57,7 @@ const copyUrl = () => {
             <!-- ${url}前面要放部屬的網址  -->
             <NuxtLink :to="`https://twitter.com/intent/tweet?url=${url}`" target="_blank">
               <img
-                src="~/assets/images/twitter.svg"
+                src="~/assets/images/sharelink/twitter.svg"
                 alt="Twitter分享按鈕"
                 class="mb-1 h-[44px] w-[44px]"
               />
@@ -72,7 +72,7 @@ const copyUrl = () => {
               target="_blank"
             >
               <img
-                src="~/assets/images/line.svg"
+                src="~/assets/images/sharelink/line.svg"
                 alt="Line分享按鈕"
                 class="mb-1 mt-[3px] h-[38px] w-[38px]"
               />

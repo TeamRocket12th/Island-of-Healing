@@ -174,7 +174,7 @@ const updateUserPhoto = async (data: FormData) => {
               <input ref="fileInput" type="file" style="display: none" @change="selectFile" />
             </div>
           </div>
-          <VForm class="form w-full px-6 pt-6">
+          <VForm v-slot="{ meta }" class="form w-full px-6 pt-6">
             <div class="mb-4 lg:mb-6">
               <label for="email" class="mb-2 block text-primary">常用信箱</label>
               <input
@@ -276,6 +276,7 @@ const updateUserPhoto = async (data: FormData) => {
               <button
                 type="submit"
                 class="rounded border bg-secondary px-[7px] py-2 text-white"
+                :disabled="!meta.valid"
                 @click="updateUserInfo"
               >
                 儲存變更

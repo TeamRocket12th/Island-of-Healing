@@ -18,7 +18,7 @@
         立即註冊
       </button>
       <img
-        src="~/assets/images/work-work-from-home-01.svg"
+        src="~/assets/images/plancard/work-work-from-home-01.svg"
         class="mx-auto w-[402px] xl:w-[600px]"
         alt=""
       />
@@ -35,7 +35,7 @@
         <li class="flex flex-col items-center justify-between">
           <div class="relative h-[300px] w-[330px]">
             <img
-              src="~/assets/images/creator-1.svg"
+              src="~/assets/images/plancard/creator-1.svg"
               alt="membership"
               class="absolute bottom-0 mb-3"
             />
@@ -45,7 +45,7 @@
         <li class="flex flex-col items-center justify-between">
           <div class="relative h-[300px] w-[330px]">
             <img
-              src="~/assets/images/creator-2.svg"
+              src="~/assets/images/plancard/creator-2.svg"
               alt="membership"
               class="absolute bottom-0 mb-3"
             />
@@ -55,7 +55,7 @@
         <li class="flex flex-col items-center justify-between">
           <div class="relative h-[300px] w-[330px]">
             <img
-              src="~/assets/images/creator-3.svg"
+              src="~/assets/images/plancard/creator-3.svg"
               alt="membership"
               class="absolute bottom-0 mb-3"
             />

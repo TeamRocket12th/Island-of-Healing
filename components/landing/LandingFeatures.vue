@@ -80,13 +80,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-sand-100 px-10 py-10 lg:px-0">
+  <div class="bg-sand-100 px-10 py-10 pb-0 sm:pb-20 lg:px-0 lg:pb-10">
     <div class="container">
       <div class="flex flex-col md:flex-row">
         <div class="mb-4 flex flex-col md:mb-0 md:w-1/2">
           <h3 class="mb-5 text-[40px] font-bold text-primary">在 小島聊癒所 創作，你可以...</h3>
 
-          <ul>
+          <ul class="mb-8">
             <li class="mb-6 flex items-center">
               <Icon class="mr-2" name="ic:outline-check-circle" size="20" />
               <!-- <div class="flex w-6 items-center justify-center p-1"> 

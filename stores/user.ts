@@ -1,6 +1,7 @@
 export const useUserStore = defineStore(
   'auth',
   () => {
+    const router = useRouter()
     const userInfo = useCookie('userInfo')
     const authToken = useCookie('token')
     const userData = ref({
@@ -58,17 +59,17 @@ export const useUserStore = defineStore(
       }
     }
 
-    // const checkAuth = () => {
-    //   if (authToken.value) {
-    //     console.log('token 驗證成功')
-    //   } else {
-    //     userInfo.value = null
-    //     authToken.value = null
-    //     isLogin.value = false
-    //     console.log('token 驗證失敗')
-    //     router.replace('/login')
-    //   }
-    // }
+    const checkAuth = () => {
+      if (authToken.value) {
+        console.log('token 驗證成功')
+      } else {
+        isLogin.value = false
+        userInfo.value = null
+        authToken.value = null
+        console.log('token 驗證失敗')
+        router.replace('/login')
+      }
+    }
 
     return {
       isLogin,
@@ -76,7 +77,8 @@ export const useUserStore = defineStore(
       userLogin,
       getUserInfo,
       getUserToken,
-      userLogout
+      userLogout,
+      checkAuth
     }
   },
   {
