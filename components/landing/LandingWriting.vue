@@ -67,7 +67,9 @@
           </div>
         </div>
       </div>
-      <div class="relative order-1 w-full lg:order-2 lg:w-2/3">
+      <div
+        class="relative order-1 w-full rounded border-[0.5px] border-sand-300 py-4 shadow-md lg:order-2 lg:w-2/3"
+      >
         <video class="video1 w-full" autoplay loop>
           <source src="~/assets/video.mp4" type="video/mp4" />
         </video>

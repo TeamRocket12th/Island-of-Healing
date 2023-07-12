@@ -218,7 +218,7 @@ const insertImage = () => {
       <div class="flex flex-wrap">
         <div class="mx-0 w-full lg:mx-48 xl:mx-[280px]">
           <div>
-            <div class="flex justify-end sm:gap-4">
+            <div class="flex justify-end sm:mt-4 sm:gap-4">
               <div class="flex cursor-pointer items-center" @click="rulesShow(true)">
                 <Icon
                   name="material-symbols:info-outline"

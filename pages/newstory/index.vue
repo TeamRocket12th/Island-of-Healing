@@ -30,6 +30,27 @@ onMounted(() => {
   articleUse.article.Tags = []
   articleUse.article.Summary = ''
 })
+
+const handleResize = () => {
+  if (typeof document !== 'undefined') {
+    if (window.innerWidth > 767) {
+      document.body.style.overflow = settingShow.value ? 'hidden' : 'auto'
+    } else {
+      document.body.style.overflow = 'auto'
+    }
+  }
+}
+
+watch(settingShow, handleResize)
+
+onMounted(() => {
+  handleResize()
+  window.addEventListener('resize', handleResize)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+})
 </script>
 
 <template>
