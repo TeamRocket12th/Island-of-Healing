@@ -8,7 +8,7 @@
         打造個人品牌，發掘內容創作的無限可能
       </h3>
       <button
-        class="btn z-10 flex h-[60px] w-[140px] items-center rounded bg-secondary text-2xl font-medium tracking-wide text-white"
+        class="btn z-10 flex h-[60px] w-[140px] items-center rounded bg-secondary text-2xl font-medium tracking-wide text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
       >
         開始使用
       </button>

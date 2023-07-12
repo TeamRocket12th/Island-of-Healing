@@ -162,7 +162,7 @@ const updateUserPhoto = async (data: FormData) => {
             <div class="relative h-[100px] w-[100px] rounded-full bg-[#E9E4D9]">
               <img :src="userData.avatar" class="h-full w-full rounded-full" />
               <button
-                class="absolute bottom-0 right-0 flex h-9 w-9 items-center justify-center rounded-full bg-secondary"
+                class="absolute bottom-0 right-0 flex h-9 w-9 items-center justify-center rounded-full bg-secondary hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
                 @click="openFilePicker"
               >
                 <Icon
@@ -259,7 +259,7 @@ const updateUserPhoto = async (data: FormData) => {
                 <h4 class="text-2xl font-medium text-primary">重置密碼</h4>
                 <nuxt-link
                   to="/resetpassword"
-                  class="rounded border border-secondary px-2 py-[3px] text-secondary"
+                  class="rounded border border-secondary bg-white px-2 py-[3px] text-secondary hover:bg-btn-hover hover:text-white active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
                   >修改密碼</nuxt-link
                 >
               </div>
@@ -267,7 +267,7 @@ const updateUserPhoto = async (data: FormData) => {
                 <h4 class="text-2xl font-medium text-primary">訂閱管理</h4>
                 <nuxt-link
                   :to="`/account/${userData.id}/myplan`"
-                  class="rounded border border-secondary px-2 py-[3px] text-secondary"
+                  class="rounded border border-secondary bg-white px-2 py-[3px] text-secondary hover:bg-btn-hover hover:text-white active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
                   >變更訂閱</nuxt-link
                 >
               </div>
@@ -275,7 +275,7 @@ const updateUserPhoto = async (data: FormData) => {
             <div class="mb-16 flex w-full justify-end">
               <button
                 type="submit"
-                class="rounded border bg-secondary px-[7px] py-2 text-white disabled:bg-[#cfccc9] disabled:text-white"
+                class="rounded border bg-secondary px-[7px] py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
                 :disabled="!meta.valid"
                 @click="updateUserInfo"
               >

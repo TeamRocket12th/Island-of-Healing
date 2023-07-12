@@ -40,13 +40,13 @@ const shortenBio = (bio: string) => {
         </span>
         <button
           v-if="writer.isFollowing"
-          class="flex items-center whitespace-nowrap rounded border bg-secondary px-2 py-1 text-sm text-white"
+          class="flex items-center whitespace-nowrap rounded border bg-secondary px-2 py-1 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
         >
           <Icon name="material-symbols:fitbit-check-small" size="20" />追蹤中
         </button>
         <button
           v-else
-          class="flex items-center whitespace-nowrap rounded border bg-secondary px-2 py-1 text-sm text-white"
+          class="flex items-center whitespace-nowrap rounded border bg-secondary px-2 py-1 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
         >
           <Icon name="ic:baseline-plus" size="20" />追蹤
         </button>

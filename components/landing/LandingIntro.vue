@@ -8,7 +8,9 @@
       我們致力於提供一個讓你發揮創作潛能的 寫作文章平台。
     </p>
     <div class="text-center">
-      <button class="mb-9 rounded bg-secondary px-4 py-3 text-2xl text-white">
+      <button
+        class="mb-9 rounded bg-secondary px-4 py-3 text-2xl text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+      >
         <NuxtLink to=""></NuxtLink>開始使用
       </button>
     </div>
