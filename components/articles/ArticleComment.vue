@@ -43,7 +43,6 @@ const insertEmoji = (emoji: any) => {
 }
 
 const autoResizeE = () => {
-  console.log(editArea.value[0].style)
   if (editArea.value[0]) {
     editArea.value[0].style.height = 'auto'
     editArea.value[0].style.height = `${editArea.value[0].scrollHeight}px`
@@ -179,6 +178,7 @@ const delComment = async (id: number) => {
             </div>
             <button
               class="col-span-1 h-10 whitespace-nowrap rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+              :disabled="!editingContent"
               @click="updateComment(comment.CommentId)"
             >
               發表留言
