@@ -275,7 +275,7 @@ const updateUserPhoto = async (data: FormData) => {
             <div class="mb-16 flex w-full justify-end">
               <button
                 type="submit"
-                class="rounded border bg-secondary px-[7px] py-2 text-white disabled:opacity-30"
+                class="rounded border bg-secondary px-[7px] py-2 text-white disabled:bg-[#cfccc9] disabled:text-white"
                 :disabled="!meta.valid"
                 @click.prevent="updateUserInfo"
               >
