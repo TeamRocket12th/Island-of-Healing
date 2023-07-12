@@ -429,8 +429,8 @@ watchEffect(() => {
                   <li>
                     <a
                       class="text-primary hover:bg-secondary hover:text-white"
-                      @click="selectCategory('情緒覺察')"
-                      >情緒覺察</a
+                      @click="selectCategory('情緒察覺')"
+                      >情緒察覺</a
                     >
                   </li>
                   <li>
