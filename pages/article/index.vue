@@ -43,6 +43,7 @@ if (Array.isArray(categoryValue)) {
 const category = ref((categoryValue as string) || 'all')
 
 const articles = ref<ArticleCard[]>([])
+const selectedArticles = ref<ArticleCard[]>([])
 
 const recArticles = [
   {
@@ -77,7 +78,7 @@ const recArticles = [
 const scrollTop = () => {
   window.scrollTo({
     top: 0,
-    behavior: 'smooth' // 如果你想要滾動有平滑過渡，使用 'smooth'
+    behavior: 'smooth'
   })
 }
 
@@ -91,6 +92,7 @@ const changeNowPage = (p: string) => {
 // 取得所有文章
 const getAllArticles = async (page = '1') => {
   changeNowPage(page)
+  scrollTop()
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/readallarticles`, {
       headers: {
@@ -106,7 +108,7 @@ const getAllArticles = async (page = '1') => {
     if (res.StatusCode === 200) {
       console.log(res.Message)
       articles.value = res.LatestArticleData
-      scrollTop()
+      selectedArticles.value = res.SelectedArticleData
     }
   } catch (error: any) {
     console.log(error.response)
@@ -184,7 +186,7 @@ watch(category, (newVal, oldVal) => {
         </div>
         <div v-else class="col-span-9">
           <ArticleList title="最新文章" :articles="articles" />
-          <ArticleList title="精選文章" :articles="recArticles" />
+          <ArticleList title="精選文章" :articles="selectedArticles" />
           <ArticleList title="你可能會喜歡" :articles="recArticles" />
         </div>
         <div class="col-span-3">

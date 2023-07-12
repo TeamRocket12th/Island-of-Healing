@@ -34,18 +34,18 @@ const { formatDate } = useDateFormat()
                   </p>
                 </div>
                 <div class="flex items-end justify-end gap-2">
-                  <span class="cursor-pointer"
-                    ><Icon
-                      name="material-symbols:bookmark-outline-rounded"
-                      size="16"
-                      class="text-sand-300"
+                  <span v-if="!item.UserCollect" class="cursor-pointer text-sand-300"
+                    ><Icon name="material-symbols:bookmark-outline-rounded" size="16"
                   /></span>
-                  <span class="cursor-pointer"
-                    ><Icon
-                      name="material-symbols:favorite-outline-rounded"
-                      size="16"
-                      class="text-sand-300"
+                  <span v-else class="cursor-pointer text-secondary">
+                    <Icon name="material-symbols:bookmark" size="16" />
+                  </span>
+                  <span v-if="!item.UserLike" class="cursor-pointer text-sand-300"
+                    ><Icon name="material-symbols:favorite-outline-rounded" size="16"
                   /></span>
+                  <span v-else class="cursor-pointer text-secondary">
+                    <Icon name="material-symbols:favorite-rounded" size="16" />
+                  </span>
                 </div>
               </div>
             </div>
