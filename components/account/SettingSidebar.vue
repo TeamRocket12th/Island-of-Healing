@@ -22,7 +22,7 @@ const { toggleWriterSettings } = uiStore
       <li class="px-4">
         <NuxtLink
           :to="`/account/${userData.id}/profile`"
-          class="block w-full px-6 py-3 hover:bg-secondary hover:text-sand-100"
+          class="block w-full px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
         >
           <div class="flex items-center">
             <Icon name="material-symbols:manage-accounts-outline-rounded" size="24" class="mr-2" />
@@ -33,7 +33,7 @@ const { toggleWriterSettings } = uiStore
       <li class="px-4">
         <NuxtLink
           :to="`/account/${userData.id}/collection`"
-          class="block w-full px-6 py-3 hover:bg-secondary hover:text-sand-100"
+          class="block w-full px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
         >
           <div class="flex items-center">
             <Icon name="material-symbols:bookmark-outline" size="24" class="mr-2" />
@@ -44,7 +44,7 @@ const { toggleWriterSettings } = uiStore
       <li class="px-4">
         <NuxtLink
           :to="`/account/${userData.id}/following`"
-          class="block w-full px-6 py-3 hover:bg-secondary hover:text-sand-100"
+          class="block w-full px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
         >
           <div class="flex items-center">
             <Icon name="ic:round-rss-feed" size="24" class="mr-2" />
@@ -55,7 +55,7 @@ const { toggleWriterSettings } = uiStore
       <li class="px-4">
         <NuxtLink
           :to="`/account/${userData.id}/messages`"
-          class="block w-full px-6 py-3 hover:bg-secondary hover:text-sand-100"
+          class="block w-full px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
         >
           <div class="flex items-center">
             <Icon name="ic:baseline-mail-outline" size="24" class="mr-2" />
@@ -65,7 +65,7 @@ const { toggleWriterSettings } = uiStore
       </li>
       <li v-if="userData.role === 'writer'" class="px-4">
         <div
-          class="flex w-full cursor-pointer items-center px-6 py-3 hover:bg-secondary hover:text-sand-100"
+          class="flex w-full cursor-pointer items-center px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
           @click="toggleWriterSettings"
         >
           <Icon name="material-symbols:clarify-outline" size="24" class="mr-2" />
@@ -83,7 +83,9 @@ const { toggleWriterSettings } = uiStore
           class="flex flex-col items-center overflow-hidden transition-all duration-500"
           :class="isWriterExpanded ? 'max-h-96' : 'max-h-0'"
         >
-          <li class="w-full hover:bg-secondary hover:text-sand-100">
+          <li
+            class="w-full hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+          >
             <NuxtLink :to="`/account/${userData.id}/mywork`" class="block px-6 py-3">
               <div class="flex items-center">
                 <Icon name="ph:dot-outline-fill" class="mr-4" />
@@ -91,7 +93,9 @@ const { toggleWriterSettings } = uiStore
               </div>
             </NuxtLink>
           </li>
-          <li class="w-full hover:bg-secondary hover:text-sand-100">
+          <li
+            class="w-full hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+          >
             <NuxtLink :to="`/account/${userData.id}/progress`" class="block px-6 py-3">
               <div class="flex items-center">
                 <Icon name="ph:dot-outline-fill" class="mr-4" />
@@ -99,7 +103,9 @@ const { toggleWriterSettings } = uiStore
               </div>
             </NuxtLink>
           </li>
-          <li class="w-full hover:bg-secondary hover:text-sand-100">
+          <li
+            class="w-full hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+          >
             <NuxtLink :to="`/account/${userData.id}/drafts`" class="block px-6 py-3">
               <div class="flex items-center">
                 <Icon name="ph:dot-outline-fill" class="mr-4" />
@@ -110,7 +116,7 @@ const { toggleWriterSettings } = uiStore
           <li class="w-full">
             <NuxtLink
               :to="`/account/${userData.id}/dashboard`"
-              class="block px-6 py-3 hover:bg-secondary hover:text-sand-100"
+              class="block px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
             >
               <div class="flex items-center">
                 <Icon name="material-symbols:bar-chart" size="24" class="mr-2" />
@@ -123,7 +129,7 @@ const { toggleWriterSettings } = uiStore
       <li class="px-4">
         <NuxtLink
           :to="`/account/${userData.id}/pastorders`"
-          class="block w-full px-6 py-3 hover:bg-secondary hover:text-sand-100"
+          class="block w-full px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
         >
           <div class="flex items-center">
             <Icon name="ic:outline-receipt" size="24" class="mr-2" />

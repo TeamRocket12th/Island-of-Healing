@@ -535,7 +535,8 @@ const stats = computed(() => {
           >
             <Icon name="ic:outline-arrow-forward" size="24" />
           </button>
-          <span class="inline-block w-16 rounded bg-secondary py-1 text-center text-sm text-white"
+          <span
+            class="inline-block w-16 rounded bg-secondary py-1 text-center text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
             >年</span
           >
         </div>
@@ -591,7 +592,10 @@ const stats = computed(() => {
           <button
             type="button"
             class="mr-3 w-16 rounded border border-secondary py-1 text-sm font-medium text-secondary hover:bg-secondary hover:text-white"
-            :class="{ 'bg-secondary text-white': incomeView === 'year' }"
+            :class="{
+              'bg-secondary text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white':
+                incomeView === 'year'
+            }"
             @click="sumYearlyIncome"
           >
             年
@@ -599,7 +603,10 @@ const stats = computed(() => {
           <button
             type="button"
             class="w-16 rounded border border-secondary py-1 text-sm font-medium text-secondary hover:bg-secondary hover:text-white"
-            :class="{ 'bg-secondary text-white': incomeView === 'month' }"
+            :class="{
+              'bg-secondary text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white':
+                incomeView === 'month'
+            }"
             @click="showMonthlyIncome"
           >
             月

@@ -288,7 +288,7 @@ const addComment = async (id: number) => {
       <div class="flex justify-between sm:mr-2">
         <img :src="writerInfo?.ImgUrl" alt="avatar" class="h-[60px] w-[60px] rounded-full" />
         <button
-          class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:opacity-80 sm:hidden"
+          class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
         >
           <Icon name="ic:baseline-plus" size="16" />追蹤
         </button>
@@ -302,7 +302,7 @@ const addComment = async (id: number) => {
     </div>
     <div>
       <button
-        class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:opacity-80 sm:flex"
+        class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
       >
         <Icon name="ic:baseline-plus" size="20" />追蹤
       </button>
@@ -348,7 +348,7 @@ const addComment = async (id: number) => {
           />
         </div>
         <button
-          class="h-10 rounded bg-secondary p-2 text-white hover:opacity-80"
+          class="h-10 rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
           @click="addComment(articleDetail?.Id)"
         >
           發表留言

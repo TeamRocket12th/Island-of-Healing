@@ -84,7 +84,9 @@ const myPlan = computed(() => {
           <NuxtLink to="/plans" class="border-b border-primary text-primary">瞭解更多</NuxtLink>
         </div>
         <div v-if="plan.sub !== userData.myPlan" class="flex justify-end">
-          <NuxtLink to="/neworder" class="rounded bg-secondary px-3 py-2 text-white"
+          <NuxtLink
+            to="/neworder"
+            class="rounded bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
             >選擇方案</NuxtLink
           >
         </div>

@@ -109,14 +109,14 @@ const handleSubmit = async () => {
             <input
               type="button"
               value="返回修改"
-              class="mr-3 cursor-pointer rounded border px-6 py-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+              class="mr-3 cursor-pointer rounded border px-6 py-[7px] text-secondary duration-100 hover:bg-btn-hover hover:text-white active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
               @click="sendOrder(false)"
             />
             <!-- 直接執行送出 -->
             <input
               type="submit"
               value="確認付款"
-              class="cursor-pointer rounded border px-6 py-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+              class="cursor-pointer rounded border px-6 py-[7px] text-secondary duration-100 hover:bg-btn-hover hover:text-white active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
             />
           </form>
         </div>

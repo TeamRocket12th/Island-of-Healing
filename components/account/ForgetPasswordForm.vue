@@ -59,7 +59,7 @@ const sendResetPwd = async () => {
 
             <div class="relative">
               <button
-                class="btn w-full rounded bg-secondary text-[16px] font-bold text-white hover:bg-slate-600"
+                class="btn w-full rounded bg-secondary text-[16px] font-bold text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
                 type="button"
                 :disabled="!meta.valid"
                 @click="sendResetPwd"
