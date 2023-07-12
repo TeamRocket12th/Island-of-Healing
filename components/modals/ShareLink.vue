@@ -97,7 +97,7 @@ const copyUrl = () => {
         />
         <button
           type="button"
-          class="btn-sm btn h-10 rounded bg-secondary px-6 py-2 font-normal text-white hover:bg-slate-600"
+          class="btn-sm btn h-10 rounded bg-secondary px-6 py-2 font-normal text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
           @click="copyUrl"
         >
           複製

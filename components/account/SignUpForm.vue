@@ -151,7 +151,7 @@ const handleSignUp = async () => {
             <div class="relative my-4">
               <button
                 type="submit"
-                class="btn w-full rounded bg-secondary font-bold text-white hover:bg-slate-600 disabled:bg-[#cfccc9] disabled:text-white"
+                class="btn w-full rounded bg-secondary font-bold text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
                 :disabled="!meta.valid"
                 @click.prevent="handleSignUp"
               >

@@ -32,7 +32,7 @@ defineProps({
       </ul>
     </div>
     <button
-      class="mb-16 flex w-full items-center justify-center gap-2 rounded-md bg-secondary px-3 py-2 text-white"
+      class="mb-16 flex w-full items-center justify-center gap-2 rounded-md bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
     >
       <Icon name="ic:round-plus" size="24" />
       <span>追蹤</span>

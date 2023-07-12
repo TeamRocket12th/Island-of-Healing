@@ -114,7 +114,7 @@ const resetPwd = async () => {
             <div class="relative mt-4">
               <button
                 type="button"
-                class="btn w-full rounded bg-secondary text-[16px] font-bold text-white hover:bg-slate-600"
+                class="btn w-full rounded bg-secondary text-[16px] font-bold text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
                 @click="resetPwd"
               >
                 儲存變更及登入

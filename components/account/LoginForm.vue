@@ -120,7 +120,7 @@ const handleLogin = async () => {
             <div class="relative mb-4">
               <button
                 type="submit"
-                class="btn my-4 w-full rounded bg-secondary text-[16px] font-bold text-white hover:bg-slate-600 disabled:bg-[#cfccc9] disabled:text-white 3xl:mb-4"
+                class="btn my-4 w-full rounded bg-secondary text-[16px] font-bold text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white 3xl:mb-4"
                 :disabled="!meta.valid"
                 @click.prevent="handleLogin"
               >

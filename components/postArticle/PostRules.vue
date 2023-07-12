@@ -32,7 +32,10 @@ const showRules = (value: boolean) => {
       </p>
       <span class="my-10 block sm:mt-4">其餘規定請參閱板規，若有疑問請聯絡平台。</span>
       <div class="flex justify-center p-4">
-        <button class="rounded bg-secondary p-[7px] text-white" @click="showRules(false)">
+        <button
+          class="rounded bg-secondary p-[7px] text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+          @click="showRules(false)"
+        >
           我瞭解了
         </button>
       </div>
