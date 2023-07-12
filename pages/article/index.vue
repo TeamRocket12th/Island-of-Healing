@@ -1,13 +1,37 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import ArticleList from '~/containers/ArticleList.vue'
 import ArticleSideBar from '~/containers/ArticleSideBar.vue'
+import { useUserStore } from '~/stores/user'
+
+const { userData } = storeToRefs(useUserStore())
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+
 const router = useRouter()
 
+// 文章分類代號
+// 1=個人成長;2=情緒察覺;3=親密關係;4=日常練習;5=尚未分類
 const categories: Record<string, string> = {
   'personal-growth': '個人成長',
   'emotional-awareness': '情緒察覺',
   'intimate-relationships': '親密關係',
   'daily-practice': '日常練習'
+}
+
+const getCategoriesNum = (category: string) => {
+  switch (category) {
+    case 'personal-growth':
+      return '1'
+    case 'emotional-awareness':
+      return '2'
+    case 'intimate-relationships':
+      return '3'
+    case 'daily-practice':
+      return '4'
+    default:
+      break
+  }
 }
 
 let categoryValue = router.currentRoute.value.query.category
@@ -18,44 +42,136 @@ if (Array.isArray(categoryValue)) {
 
 const category = ref((categoryValue as string) || 'all')
 
+const articles = ref<ArticleCard[]>([])
+
+const recArticles = [
+  {
+    ArticleImgUrl: 'https://picsum.photos/312/234',
+    Id: 1,
+    Initdate: '2023-03-20',
+    Title: '重拾自我價值：探索內在的力量',
+    UserCollect: false,
+    UserLike: false,
+    WriterNickName: '李柚子'
+  },
+  {
+    ArticleImgUrl: 'https://picsum.photos/312/234',
+    Id: 2,
+    Initdate: '2023-03-20',
+    Title: '認識自我與擁抱內在小孩的旅程',
+    UserCollect: false,
+    UserLike: false,
+    WriterNickName: '莉莉安'
+  },
+  {
+    ArticleImgUrl: 'https://picsum.photos/312/234',
+    Id: 3,
+    Initdate: '2023-03-20',
+    Title: '別離與成長：好好道別的力量',
+    UserCollect: false,
+    UserLike: false,
+    WriterNickName: '馬克'
+  }
+]
+
+const scrollTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth' // 如果你想要滾動有平滑過渡，使用 'smooth'
+  })
+}
+
+// 分頁
+const nowPage = ref('1')
+const pages = ['1', '2', '3', '4', '5']
+const changeNowPage = (p: string) => {
+  nowPage.value = p
+}
+
+// 取得所有文章
+const getAllArticles = async (page = '1') => {
+  changeNowPage(page)
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/readallarticles`, {
+      headers: {
+        'Content-type': 'application/json'
+      },
+      method: 'POST',
+      body: {
+        Page: page,
+        UserId: userData.value.id || '0'
+      }
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      console.log(res.Message)
+      articles.value = res.LatestArticleData
+      scrollTop()
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  }
+}
+
+// 取得特定分類文章
+const getSpArticles = async (nowPage: string, category: string) => {
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/readcategoryarticles`, {
+      headers: {
+        'Content-type': 'application/json'
+      },
+      method: 'POST',
+      body: {
+        ArticlesCategoryId: getCategoriesNum(category),
+        Page: nowPage,
+        UserId: userData.value.id || '0'
+      }
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      console.log(res.Message)
+      articles.value = res.ArticleData
+      scrollTop()
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  }
+}
+
+const handleReading = (page: string) => {
+  changeNowPage(page)
+  if (category.value === 'all') {
+    getAllArticles(nowPage.value)
+  } else {
+    getSpArticles(nowPage.value, category.value)
+  }
+}
+
+onMounted(() => {
+  if (category.value === 'all') {
+    getAllArticles(nowPage.value)
+  } else {
+    getSpArticles(nowPage.value, category.value)
+  }
+})
+
 watchEffect(() => {
   let categoryValue = router.currentRoute.value.query.category
 
   if (Array.isArray(categoryValue)) {
     categoryValue = categoryValue[0]
   }
-
   category.value = (categoryValue as string) || 'all'
 })
 
-const { data: articles, error } = getMockData<ArticleCard>(`article?category=${category.value}`)
-if (error.value) {
-  console.error('Error fetching data: ', error.value)
-}
-
-const recArticles = [
-  {
-    id: 1,
-    imgUrl: 'https://picsum.photos/312/234',
-    title: '重拾自我價值：探索內在的力量',
-    writer: '李柚子',
-    date: '2023-03-20'
-  },
-  {
-    id: 2,
-    imgUrl: 'https://picsum.photos/312/234',
-    title: '認識自我與擁抱內在小孩的旅程',
-    writer: '莉莉安',
-    date: '2023-03-20'
-  },
-  {
-    id: 3,
-    imgUrl: 'https://picsum.photos/312/234',
-    title: '別離與成長：好好道別的力量',
-    writer: '馬克',
-    date: '2023-03-20'
+watch(category, (newVal, oldVal) => {
+  if (newVal !== oldVal && newVal !== 'all') {
+    getSpArticles('1', newVal)
+    nowPage.value = '1'
+  } else {
+    getAllArticles(nowPage.value)
   }
-]
+})
 </script>
 
 <template>
@@ -73,6 +189,19 @@ const recArticles = [
         </div>
         <div class="col-span-3">
           <ArticleSideBar />
+        </div>
+        <div class="col-span-9 text-center">
+          <div class="join">
+            <button
+              v-for="(p, index) in pages"
+              :key="index"
+              class="join-item btn"
+              :class="{ 'btn-active': nowPage === p }"
+              @click="handleReading(p)"
+            >
+              {{ p }}
+            </button>
+          </div>
         </div>
       </div>
     </div>

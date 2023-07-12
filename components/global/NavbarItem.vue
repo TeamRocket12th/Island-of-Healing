@@ -148,8 +148,8 @@ const isUserPage = computed(() => {
                       <span>歷史訂單</span>
                     </NuxtLink>
                   </li>
-                  <li class="p-[10px] text-primary hover:bg-secondary hover:text-sand-100">
-                    <button class="flex w-full items-center" @click="userLogout">
+                  <li class="text-primary hover:bg-secondary hover:text-sand-100">
+                    <button class="flex w-full items-center p-[10px]" @click="userLogout">
                       <Icon name="ic:outline-logout" size="24" class="mr-2" />
                       <span class="font-medium">登出</span>
                     </button>

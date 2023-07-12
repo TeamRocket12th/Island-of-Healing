@@ -2,12 +2,12 @@
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 
-const userStore = useUserStore()
-const { isLogin, userData } = storeToRefs(userStore)
+const { isLogin, userData } = storeToRefs(useUserStore())
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 const route = useRoute()
+const { useFormattedTime } = useDateFormat()
 
 // 文章內作者資訊
 interface WriterHere {

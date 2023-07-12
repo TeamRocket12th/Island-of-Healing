@@ -317,6 +317,7 @@ onMounted(() => {
                 <div class="flex justify-between">
                   <p class="text-sm text-secondary">建議上傳尺寸820x312內</p>
                   <button
+                    type="button"
                     class="mb-2 mt-6 flex items-center justify-center rounded border bg-secondary p-2"
                     @click="openFilePicker"
                   >
@@ -360,7 +361,7 @@ onMounted(() => {
                       v-model="newTag"
                       placeholder="請輸入文章標籤"
                       class="bg-sand pl-1 text-primary outline-none placeholder:text-sand-300"
-                      @keyup.enter="addTag"
+                      @keydown.enter.prevent="addTag"
                     />
                   </div>
                 </div>
