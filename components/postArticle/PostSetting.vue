@@ -278,8 +278,6 @@ onMounted(() => {
 
 const photoAlert = ref(true)
 watchEffect(() => {
-  console.log(selectedImage.value)
-  console.log(previewImage.value)
   if (selectedImage.value !== '' || previewImage.value !== null) {
     photoAlert.value = false
   } else {
@@ -289,7 +287,7 @@ watchEffect(() => {
 </script>
 <template>
   <div
-    class="container absolute left-1/2 top-1/2 mt-[200px] grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-10 md:mt-16 md:h-screen md:pt-0"
+    class="container absolute left-1/2 top-1/2 mt-[200px] grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-12 md:mt-16 md:h-screen md:pt-0"
   >
     <div class="col-span-12 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3">
       <div class="block">

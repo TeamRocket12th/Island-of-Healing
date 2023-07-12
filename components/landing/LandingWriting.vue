@@ -69,7 +69,7 @@
       </div>
       <div class="relative order-1 w-full lg:order-2 lg:w-2/3">
         <video class="video1 w-full" autoplay loop>
-          <source src="~/assets/video.mp4" type="video/mp4" />
+          <source src="~/assets/video2.mp4" type="video/mp4" />
         </video>
       </div>
     </div>
