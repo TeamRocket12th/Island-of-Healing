@@ -2,6 +2,8 @@
 definePageMeta({
   layout: 'landinglayout'
 })
+
+useHead({ title: '成為作家' })
 </script>
 <template>
   <div class="bg-sand-100">
