@@ -38,6 +38,7 @@ const CustomParagraphNode = Node.create({
 const emits = defineEmits(['post-upload', 'article-content', 'post-rules'])
 const postSent = (value) => {
   emits('post-upload', value)
+
   const html = editor.value.getHTML()
   emits('article-content', html)
 }
@@ -212,16 +213,12 @@ const insertImage = () => {
 </script>
 
 <template>
-  <div
-    class="grid grid-cols-1 pt-0 sm:pb-96 sm:pt-[72px] md:pb-0"
-    @dragover.prevent="handleDragOver"
-    @drop.prevent="handleDrop"
-  >
+  <div class="grid grid-cols-12" @dragover.prevent="handleDragOver" @drop.prevent="handleDrop">
     <div class="relative col-span-12">
       <div class="flex flex-wrap">
         <div class="mx-0 w-full lg:mx-48 xl:mx-[280px]">
           <div>
-            <div class="flex justify-end sm:gap-4">
+            <div class="flex justify-end sm:mt-4 sm:gap-4">
               <div class="flex cursor-pointer items-center" @click="rulesShow(true)">
                 <Icon
                   name="material-symbols:info-outline"
@@ -483,7 +480,7 @@ blockquote {
 .custom-bullet-list {
   list-style-type: disc;
   margin: auto;
-  padding: 12px;
+  padding: 20px;
 }
 .custom-bullet-list li {
   margin-bottom: 40px;
@@ -492,7 +489,7 @@ blockquote {
 .custom-ordered-list {
   list-style-type: numbered;
   margin: auto;
-  padding: 12px;
+  padding: 20px;
 }
 
 .custom-ordered-list li {

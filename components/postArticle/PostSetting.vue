@@ -187,11 +187,11 @@ const updateArticle = async () => {
   }
 }
 
-onUnmounted(() => {
-  if (previewImage.value) {
-    URL.revokeObjectURL(previewImage.value)
-  }
-})
+// onUnmounted(() => {
+//   if (previewImage.value) {
+//     URL.revokeObjectURL(previewImage.value)
+//   }
+// })
 
 // 新增草稿按鈕
 const saveDraft = () => {
@@ -275,10 +275,19 @@ onMounted(() => {
     }
   }
 })
+
+const photoAlert = ref(true)
+watchEffect(() => {
+  if (selectedImage.value !== '' || previewImage.value !== null) {
+    photoAlert.value = false
+  } else {
+    photoAlert.value = true
+  }
+})
 </script>
 <template>
   <div
-    class="container absolute left-1/2 top-1/2 mt-48 grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-10 md:mt-0 md:pt-0"
+    class="container absolute left-1/2 top-1/2 mt-[200px] grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-12 md:mt-16 md:h-screen md:pt-0"
   >
     <div class="col-span-12 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3">
       <div class="block">
@@ -309,6 +318,7 @@ onMounted(() => {
                   />
                   <input ref="fileInput" type="file" style="display: none" @change="selectFile" />
                   <p
+                    v-if="photoAlert"
                     class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xl tracking-[0.6px] text-sand-300"
                   >
                     照片拖曳上傳
@@ -360,7 +370,7 @@ onMounted(() => {
                       v-model="newTag"
                       placeholder="請輸入文章標籤"
                       class="bg-sand pl-1 text-primary outline-none placeholder:text-sand-300"
-                      @keyup.enter="addTag"
+                      @keydown.enter.prevent="addTag"
                     />
                   </div>
                 </div>
@@ -419,8 +429,8 @@ onMounted(() => {
                   <li>
                     <a
                       class="text-primary hover:bg-secondary hover:text-white"
-                      @click="selectCategory('情緒覺察')"
-                      >情緒覺察</a
+                      @click="selectCategory('情緒察覺')"
+                      >情緒察覺</a
                     >
                   </li>
                   <li>
@@ -463,14 +473,14 @@ onMounted(() => {
             </div>
             <div class="flex justify-end md:absolute md:bottom-0 md:right-0">
               <button
-                class="md:mb-0text-secondary mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white"
+                class="mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white disabled:text-sand-300 disabled:hover:bg-[#cfccc9] md:mb-0"
                 :disabled="!meta.valid"
                 @click.prevent="saveDraft"
               >
                 儲存草稿
               </button>
               <button
-                class="md:mb-0text-secondary mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white"
+                class="mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white disabled:text-sand-300 disabled:hover:bg-[#cfccc9] md:mb-0"
                 :disabled="!meta.valid"
                 @click.prevent="createPost"
               >
