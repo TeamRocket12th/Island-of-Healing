@@ -277,7 +277,7 @@ const updateUserPhoto = async (data: FormData) => {
                 type="submit"
                 class="rounded border bg-secondary px-[7px] py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
                 :disabled="!meta.valid"
-                @click="updateUserInfo"
+                @click.prevent="updateUserInfo"
               >
                 儲存變更
               </button>

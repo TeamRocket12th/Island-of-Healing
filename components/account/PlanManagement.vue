@@ -7,6 +7,7 @@ const cancelPlan = (value: boolean) => {
 }
 const userStore = useUserStore()
 const { userData } = storeToRefs(userStore)
+console.log(userData.value)
 
 const allPlans = ref([
   {
@@ -27,7 +28,6 @@ const allPlans = ref([
 ])
 
 const otherPlans = allPlans.value.filter((plan) => plan.sub !== userData.value.myPlan)
-console.log(otherPlans)
 
 const renderPlan = (plan: string) => {
   switch (plan) {
@@ -59,8 +59,11 @@ const myPlan = computed(() => {
             <li class="mb-[14px]">閱讀權限至：2023/07/04</li>
           </ul>
         </div>
-        <div class="mb-4 border-[0.5px] border-secondary"></div>
-        <div class="flex justify-end">
+        <div
+          class="border-[0.5px] border-secondary"
+          :class="userData.myPlan === 'free' ? 'my-10' : 'mb-4'"
+        ></div>
+        <div v-if="userData.myPlan !== 'free'" class="flex justify-end">
           <button class="border-b border-primary text-primary" @click="cancelPlan(true)">
             取消訂閱
           </button>
@@ -87,7 +90,10 @@ const myPlan = computed(() => {
             >選擇方案</NuxtLink
           >
         </div>
-        <div v-else class="flex justify-end">
+        <div
+          v-if="plan.sub === userData.myPlan && userData.myPlan !== 'free'"
+          class="flex justify-end"
+        >
           <button class="border-b border-primary text-primary" @click="cancelPlan(true)">
             取消訂閱
           </button>

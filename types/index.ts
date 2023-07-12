@@ -76,11 +76,13 @@ declare global {
 
   // 文章卡片
   interface ArticleCard {
-    id: number
-    title: string
-    imgUrl: string
-    writer: string
-    date: string
+    ArticleImgUrl: string
+    Id: number
+    Initdate: string
+    Title: string
+    UserCollect: boolean
+    UserLike: boolean
+    WriterNickName: string
   }
 
   // 文章留言

@@ -2,12 +2,12 @@
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 
-const userStore = useUserStore()
-const { isLogin, userData } = storeToRefs(userStore)
+const { isLogin, userData } = storeToRefs(useUserStore())
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 const route = useRoute()
+const { useFormattedTime } = useDateFormat()
 
 // 文章內作者資訊
 interface WriterHere {
@@ -17,13 +17,12 @@ interface WriterHere {
   NickName: string
 }
 
-console.log(userData.value)
-
 const articleDetail = ref<ArticleDetail | null>(null)
 const writerInfo = ref<WriterHere | null>(null)
 const isCollecting = ref(false)
 const isLiking = ref(false)
 const comments = ref<Comment[]>([])
+const haveCover = ref(false)
 
 // 取得單篇文章資訊
 const getArticleDetail = async () => {
@@ -37,6 +36,9 @@ const getArticleDetail = async () => {
       isCollecting.value = res.Collect
       isLiking.value = res.Like
       comments.value = res.Comment
+      if (res.ArticleData.ImgUrl !== '') {
+        haveCover.value = true
+      }
     }
   } catch (error) {
     console.log(error)
@@ -44,6 +46,8 @@ const getArticleDetail = async () => {
 }
 
 onMounted(getArticleDetail)
+
+const { AddToCollection, cancelCollection, likeArticle, unlikeArticle } = useArticleActions()
 
 const textarea = ref<HTMLTextAreaElement | null>(null)
 const emojiPicker = ref<any>(null)
@@ -84,94 +88,6 @@ watchEffect(() => {
     document.body.style.overflow = isShareLinkOpen.value ? 'hidden' : 'auto'
   }
 })
-
-// 收藏文章
-const AddToCollection = async (id: number) => {
-  if (userToken.value) {
-    try {
-      const res: ApiResponse = await $fetch(`${apiBase}/article/collect/${id}`, {
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${userToken.value}`
-        },
-        method: 'POST'
-      })
-      console.log(res)
-      if (res.StatusCode === 200) {
-        alert(res.Message)
-        getArticleDetail()
-      }
-    } catch (error: any) {
-      console.log(error.response)
-    }
-  }
-}
-
-// 取消收藏文章
-const cancelCollection = async (id: number) => {
-  if (userToken.value) {
-    try {
-      const res: ApiResponse = await $fetch(`${apiBase}/article/cancelcollect/${id}`, {
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${userToken.value}`
-        },
-        method: 'PUT'
-      })
-      console.log(res)
-      if (res.StatusCode === 200) {
-        alert(res.Message)
-        getArticleDetail()
-      }
-    } catch (error: any) {
-      console.log(error.response)
-    }
-  }
-}
-
-// 給文章愛心
-const likeArticle = async (id: number) => {
-  if (userToken.value) {
-    try {
-      const res: ApiResponse = await $fetch(`${apiBase}/article/like/${id}`, {
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${userToken.value}`
-        },
-        method: 'POST'
-      })
-      console.log(res)
-      if (res.StatusCode === 200) {
-        alert(res.Message)
-        getArticleDetail()
-      }
-    } catch (error: any) {
-      console.log(error.response)
-    }
-  }
-}
-
-// 取消文章愛心
-const unlikeArticle = async (id: number) => {
-  if (userToken.value) {
-    try {
-      const res: ApiResponse = await $fetch(`${apiBase}/article/cancellike/${id}`, {
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${userToken.value}`
-        },
-        method: 'PUT'
-      })
-      console.log(res)
-      if (res.StatusCode === 200) {
-        alert(res.Message)
-        getArticleDetail()
-      }
-    } catch (error: any) {
-      console.log(error.response)
-    }
-  }
-}
 
 // 新增文章留言
 const addComment = async (id: number) => {
@@ -245,33 +161,37 @@ const addComment = async (id: number) => {
         <span v-else>繼續閱讀</span>
       </button> -->
       <h2 class="mb-6 text-[32px] font-bold">{{ articleDetail?.Title }}</h2>
-      <img :src="articleDetail.ImgUrl" alt="cover" class="mb-6 block" />
+      <img v-if="haveCover" :src="articleDetail.ImgUrl" alt="cover" class="mb-6 block" />
       <div class="border-b-[0.5px] border-primary pb-16">
         <div v-dompurify-html="articleDetail?.Content" class="mb-9"></div>
         <div class="flex items-center justify-between">
           <CategoryTag :tags="articleDetail.Tags" />
           <ul class="flex gap-3">
-            <li v-if="!isLiking" class="cursor-pointer" @click="likeArticle(articleDetail.Id)">
+            <li
+              v-if="!isLiking"
+              class="cursor-pointer"
+              @click="likeArticle(articleDetail.Id, getArticleDetail)"
+            >
               <Icon name="material-symbols:favorite-outline-rounded" size="20" />
             </li>
             <li
               v-else
               class="cursor-pointer text-secondary"
-              @click="unlikeArticle(articleDetail.Id)"
+              @click="unlikeArticle(articleDetail.Id, getArticleDetail)"
             >
               <Icon name="material-symbols:favorite-rounded" size="20" />
             </li>
             <li
               v-if="!isCollecting"
               class="cursor-pointer"
-              @click="AddToCollection(articleDetail.Id)"
+              @click="AddToCollection(articleDetail.Id, getArticleDetail)"
             >
               <Icon name="material-symbols:bookmark-outline-rounded" size="20" />
             </li>
             <li
               v-else
               class="cursor-pointer text-secondary"
-              @click="cancelCollection(articleDetail.Id)"
+              @click="cancelCollection(articleDetail.Id, getArticleDetail)"
             >
               <Icon name="material-symbols:bookmark" size="20" />
             </li>
@@ -310,9 +230,8 @@ const addComment = async (id: number) => {
   </div>
   <!--留言-->
   <div v-if="articleDetail">
-    <div class="mb-6 flex items-center justify-between">
+    <div class="mb-6">
       <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
-      <button class="font-medium text-primary-dark">查看全部</button>
     </div>
     <ArticleComment :comments="comments" :get-article-detail="getArticleDetail" />
     <div v-if="isLogin" class="mb-28">
@@ -349,6 +268,7 @@ const addComment = async (id: number) => {
         </div>
         <button
           class="h-10 rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+          :disabled="!userComment"
           @click="addComment(articleDetail?.Id)"
         >
           發表留言
