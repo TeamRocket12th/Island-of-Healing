@@ -44,40 +44,40 @@ const { userData } = storeToRefs(userStore)
             class="h-full w-full object-cover"
           />
         </div>
-        <div class="absolute -left-[136px] top-64 z-40 max-h-28 w-[289px]">
+        <div class="card-yellow absolute left-0 top-72 z-40 max-h-28 w-[289px]">
           <img
             src="~/assets/images/chatroom/card-yellow.png"
             alt="card-yellow"
             class="h-full w-full object-cover"
           />
+          <div class="absolute -top-14 left-4 z-50 h-[70px] w-16">
+            <img
+              src="~/assets/images/chatroom/heart.png"
+              alt="heart-icon"
+              class="h-full w-full object-cover"
+            />
+          </div>
         </div>
-        <div class="absolute -right-40 -top-7 z-40 max-h-28 w-[289px]">
+        <div class="card-red absolute -right-40 -top-7 z-40 max-h-28 w-[289px]">
           <img
             src="~/assets/images/chatroom/card-red.png"
             alt="card-red"
             class="h-full w-full object-cover"
           />
         </div>
-        <div class="absolute -bottom-4 -right-56 z-40 max-h-28 w-[289px]">
+        <div class="card-blue absolute -bottom-4 -right-56 z-40 max-h-28 w-[289px]">
           <img
             src="~/assets/images/chatroom/card-blue.png"
             alt="card-blue"
             class="h-full w-full object-cover"
           />
-        </div>
-        <div class="absolute -left-28 z-40 h-[70px] w-16">
-          <img
-            src="~/assets/images/chatroom/heart.png"
-            alt="heart-icon"
-            class="h-full w-full object-cover"
-          />
-        </div>
-        <div class="absolute -right-24 bottom-20 z-40 h-[70px] w-16">
-          <img
-            src="~/assets/images/chatroom/question.png"
-            alt="question-icon"
-            class="h-full w-full object-cover"
-          />
+          <div class="absolute bottom-[84px] right-28 z-40 h-[70px] w-16">
+            <img
+              src="~/assets/images/chatroom/question.png"
+              alt="question-icon"
+              class="h-full w-full object-cover"
+            />
+          </div>
         </div>
 
         <div
@@ -138,5 +138,33 @@ const { userData } = storeToRefs(userStore)
   background-image: url('~/assets/images/chatroom/chatroom-bg.png');
   background-size: cover;
   background-position: center;
+}
+.card-yellow {
+  animation: spin 4s linear infinite;
+}
+
+.card-red {
+  animation: spinReverse 4s linear infinite;
+}
+
+.card-blue {
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) translate(10px) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg) translate(10px) rotate(-360deg);
+  }
+}
+@keyframes spinReverse {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) translate(10px) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-360deg) translate(10px) rotate(360deg);
+  }
 }
 </style>
