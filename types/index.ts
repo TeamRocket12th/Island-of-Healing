@@ -7,12 +7,12 @@ declare global {
 
   // 作家資訊
   interface Writer {
-    name: string
-    id: string
-    jobTitle: string
-    bio: string
-    imgUrl: string
-    isFollowing: boolean
+    NickName: string
+    WriterId: number
+    JobTitle: string
+    Bio: string
+    ImgUrl: string
+    IsFollowing: boolean
   }
 
   // 作者個人頁面
