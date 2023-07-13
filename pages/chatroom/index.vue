@@ -101,7 +101,7 @@ const { userData } = storeToRefs(userStore)
               </p>
             </div>
             <button
-              class="test-btn mb-3 flex items-center py-3 pl-4 pr-3 text-2xl font-medium text-white shadow hover:scale-110"
+              class="btn-test mb-3 flex items-center py-3 pl-4 pr-3 text-2xl font-medium text-white shadow hover:scale-110"
             >
               <NuxtLink to="/chatroom/questions">
                 開始測驗
@@ -123,7 +123,7 @@ const { userData } = storeToRefs(userStore)
 </template>
 
 <style scoped>
-.test-btn {
+.btn-test {
   border-radius: 100px;
   background: linear-gradient(90deg, rgba(255, 138, 0, 0.74) 0%, #ffce94 100%);
   box-shadow: -8px 0px 15px 0px rgba(255, 255, 255, 0.4) inset,
