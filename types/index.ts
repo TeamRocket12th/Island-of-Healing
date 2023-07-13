@@ -7,35 +7,38 @@ declare global {
 
   // 作家資訊
   interface Writer {
-    name: string
-    id: string
-    jobTitle: string
-    bio: string
-    imgUrl: string
-    isFollowing: boolean
+    NickName: string
+    WriterId: number
+    JobTitle: string
+    Bio: string
+    ImgUrl: string
+    IsFollowing: boolean
   }
 
   // 作者個人頁面
 
   // 作者個人文章
-  interface Work {
-    id: string
-    title: string
-    coverUrl: string
-    summary: string
-    createdDate: string
+  interface WriterWork {
+    Id: number
+    ImgUrl: string
+    Title: string
+    Summary: string
+    InitDate: string
+    Collect: false
+    Like: false
   }
 
   // 作者個人資訊
   interface WriterInfo {
-    id: string
-    name: string
-    jobTitle: string
-    bio: string
-    imgUrl: string
-    followerNum: number
-    followingNum: number
-    work: Work[]
+    Id: number
+    Bio: string
+    ArticlesNum: string
+    FanNum: number
+    Follow: boolean
+    FollowNum: number
+    ImgUrl: string
+    JobTitle: string
+    NickName: string
   }
 
   // 文章

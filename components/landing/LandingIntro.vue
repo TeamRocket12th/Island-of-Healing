@@ -1,4 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const emits = defineEmits(['writer-rules'])
+const showRules = (value: boolean) => {
+  emits('writer-rules', value)
+}
+</script>
 <template>
   <section class="container">
     <h2 class="mb-5 text-center text-4xl font-bold text-primary md:text-5xl">
@@ -9,9 +14,10 @@
     </p>
     <div class="text-center">
       <button
-        class="mb-9 rounded bg-secondary px-4 py-3 text-2xl text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+        class="mb-9 rounded bg-secondary px-4 py-3 text-2xl text-white"
+        @click="showRules(true)"
       >
-        <NuxtLink to=""></NuxtLink>開始使用
+        開始使用
       </button>
     </div>
     <div class="flex flex-wrap justify-center pb-20 lg:pb-[200px] xl:flex-nowrap">
