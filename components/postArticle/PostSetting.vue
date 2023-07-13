@@ -462,7 +462,7 @@ watchEffect(() => {
                     :rules="textLengthRule"
                     maxlength="30"
                     rows="4"
-                    class="w-full rounded border border-secondary py-[7px] pl-3 text-primary outline-none placeholder:text-sand-300"
+                    class="w-full rounded border border-secondary p-3 py-[7px] text-primary outline-none placeholder:text-sand-300"
                     placeholder="輸入你的文章摘要..."
                   />
                   <div class="relative flex">

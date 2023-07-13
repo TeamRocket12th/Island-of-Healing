@@ -9,9 +9,7 @@
     </p>
     <div class="flex flex-wrap gap-[37px] lg:flex-nowrap">
       <div class="order-2 w-full lg:order-1 lg:w-1/3">
-        <div
-          class="produce1 mb-11 w-full gap-4 rounded-2xl lg:flex lg:border-[0.5px] lg:border-sand-300 lg:px-4 lg:py-3"
-        >
+        <div class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3">
           <div class="flex justify-center lg:block">
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] border-secondary bg-sand-200"
@@ -28,9 +26,7 @@
             </p>
           </div>
         </div>
-        <div
-          class="produce2 mb-11 w-full gap-4 rounded-2xl lg:flex lg:border-[0.5px] lg:border-sand-300 lg:px-4 lg:py-3"
-        >
+        <div class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3">
           <div class="flex justify-center lg:block">
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] border-secondary bg-sand-200"
@@ -47,9 +43,7 @@
             </p>
           </div>
         </div>
-        <div
-          class="produce3 mb-11 w-full gap-4 rounded-2xl lg:flex lg:border-[0.5px] lg:border-sand-300 lg:px-4 lg:py-3"
-        >
+        <div class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3">
           <div class="flex justify-center lg:block">
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] bg-sand-200"
@@ -68,7 +62,10 @@
         </div>
       </div>
       <div
-        class="relative order-1 w-full rounded border-[0.5px] border-sand-300 py-4 shadow-md lg:order-2 lg:w-2/3"
+        class="order-1 w-full rounded border-[0.5px] border-primary bg-sand-100 p-[1px] lg:order-2 lg:w-2/3"
+        style="
+          box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+        "
       >
         <video class="video1 w-full" autoplay loop>
           <source src="~/assets/video.mp4" type="video/mp4" />
@@ -78,110 +75,4 @@
   </section>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .produce1 {
-    animation: highlight-1 5s infinite;
-  }
-
-  .produce2 {
-    animation: highlight-2 5s infinite;
-    animation-delay: 1s;
-  }
-
-  .produce3 {
-    animation: highlight-3 5s infinite;
-    animation-delay: 1s;
-  }
-
-  @keyframes highlight-1 {
-    0% {
-      box-shadow: 0px 0px 0px 0px;
-    }
-
-    25% {
-      box-shadow: 0px 4px 8px -4px;
-      background-color: #eeeae1;
-    }
-
-    75% {
-      box-shadow: 0px 0px 0px 0px;
-    }
-
-    100% {
-      box-shadow: 0px 0px 0px 0px;
-    }
-  }
-
-  @keyframes highlight-2 {
-    0% {
-      box-shadow: 0px 0px 0px 0px;
-    }
-
-    25% {
-      box-shadow: 0px 4px 8px -4px;
-      background-color: #eeeae1;
-    }
-
-    75% {
-      box-shadow: 0px 0px 0px 0px;
-    }
-
-    100% {
-      box-shadow: 0px 0px 0px 0px;
-    }
-  }
-
-  @keyframes highlight-3 {
-    0% {
-      box-shadow: 0px 0px 0px 0px;
-    }
-
-    25% {
-      box-shadow: 0px 0px 0px 0px;
-    }
-
-    75% {
-      box-shadow: 0px 4px 8px -4px;
-      background-color: #eeeae1;
-    }
-
-    100% {
-      box-shadow: 0px 4px 8px -4px;
-      background-color: #eeeae1;
-    }
-  }
-}
-
-/* @keyframes fade {
-  0% {
-    opacity: 1;
-  }
-  33.33% {
-    opacity: 0;
-  }
-  66.66% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.video1 {
-  animation: fade 20s infinite;
-}
-
-.video2 {
-  animation: fade 15s infinite 10s;
-}
-
-.video3 {
-  animation: fade 15s infinite 6s;
-}
-
-.video2,
-.video3 {
-  opacity: 0;
-} */
-</style>
+<style></style>

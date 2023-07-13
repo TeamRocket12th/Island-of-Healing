@@ -164,43 +164,58 @@ const swapOff = () => {
   textNavbarShow.value = false
 }
 
-const previewImage = ref(null)
-const blobUrl = ref(null)
-const handleDragOver = (event) => {
-  event.preventDefault()
-}
-const handleDrop = (event) => {
-  event.preventDefault()
-  const file = event.dataTransfer.files[0]
+// 拖曳圖片進入
+// const formData = new FormData()
+// const previewImage = ref(null)
+// const blobUrl = ref(null)
+// const handleDragOver = (event) => {
+//   event.preventDefault()
+// }
 
-  const reader = new FileReader()
-  reader.onload = () => {
-    previewImage.value = reader.result
-  }
-  reader.readAsDataURL(file)
-}
-onUnmounted(() => {
-  if (previewImage.value) {
-    URL.revokeObjectURL(previewImage.value)
-  }
-})
-watch(previewImage, (newValue) => {
-  if (newValue) {
-    insertImage()
-  }
-})
+// const handleDrop = (event) => {
+//   event.preventDefault()
+//   const file = event.dataTransfer.files[0]
+//   const reader = new FileReader()
+//   reader.onload = () => {
+//     previewImage.value = reader.result
+//   }
+//   reader.readAsDataURL(file)
+//   console.log(file)
+//   const combinedFile = new File([file], file.name, { type: file.type })
+//   formData.append('articleCover', combinedFile)
+//   console.log(combinedFile)
+//   // formData.append('articleCover', file)
+// }
+// onUnmounted(() => {
+//   if (previewImage.value) {
+//     URL.revokeObjectURL(previewImage.value)
+//   }
+// })
 
-const insertImage = () => {
-  const imageSrc = blobUrl.value
-  if (imageSrc) {
-    editor.value.commands.insertContent({
-      type: 'image',
-      attrs: {
-        src: imageSrc
-      }
-    })
-  }
-}
+// watch(previewImage, (newValue) => {
+//   if (newValue) {
+//     console.log(newValue)
+//     blobUrl.value = newValue
+//     insertImage()
+//     //  console.log(formData.getAll('articleCover'))
+//   }
+// })
+// watch(formData.getAll('articleCover'), (newValue) => {
+//   console.log(newValue)
+// })
+
+// const insertImage = () => {
+//   const imageSrc = blobUrl.value
+
+//   if (imageSrc) {
+//     editor.value.commands.insertContent({
+//       type: 'image',
+//       attrs: {
+//         src: imageSrc
+//       }
+//     })
+//   }
+// }
 // const sentHtml = () => {
 //   const html = editor.value.getHTML()
 //   newHtml.value = html
@@ -236,12 +251,11 @@ const insertImage = () => {
                 </button>
               </div>
             </div>
-            <input
+            <textarea
               v-model="articleUse.article.Title"
-              type="text"
-              class="font-weight mb-3 h-20 w-full bg-sand-100 pt-8 text-4xl font-bold text-primary outline-none placeholder:text-sand-300"
+              class="font-weight mb-3 h-28 w-full resize-none bg-sand-100 pt-4 text-4xl font-bold text-primary outline-none placeholder:text-sand-300"
               placeholder="請輸入標題"
-            />
+            ></textarea>
           </div>
           <div class="mb-6">
             <div v-if="editor" class="mb-6 hidden min-h-[36px] sm:flex">
@@ -483,7 +497,7 @@ blockquote {
   padding: 20px;
 }
 .custom-bullet-list li {
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 }
 
 .custom-ordered-list {
@@ -493,7 +507,7 @@ blockquote {
 }
 
 .custom-ordered-list li {
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 }
 
 .custom-link {
