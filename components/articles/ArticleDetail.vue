@@ -15,6 +15,7 @@ interface WriterHere {
   Bio: string
   ImgUrl: string
   NickName: string
+  Follow: boolean
 }
 
 const articleDetail = ref<ArticleDetail | null>(null)
@@ -91,28 +92,77 @@ watchEffect(() => {
 
 // 新增文章留言
 const addComment = async (id: number) => {
-  if (userToken.value) {
-    try {
-      const res: ApiResponse = await $fetch(`${apiBase}/articlecomment/create`, {
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${userToken.value}`
-        },
-        method: 'POST',
-        body: {
-          Comment: userComment.value,
-          ArticleId: id
-        }
-      })
-      console.log(res)
-      if (res.StatusCode === 200) {
-        alert(res.Message)
-        userComment.value = ''
-        getArticleDetail()
+  if (!userToken.value) {
+    return
+  }
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/articlecomment/create`, {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userToken.value}`
+      },
+      method: 'POST',
+      body: {
+        Comment: userComment.value,
+        ArticleId: id
       }
-    } catch (error: any) {
-      console.log(error.response)
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      alert(res.Message)
+      userComment.value = ''
+      getArticleDetail()
     }
+  } catch (error: any) {
+    console.log(error.response)
+  }
+}
+
+// 追蹤作家
+const followWriter = async (id: number) => {
+  if (!userToken.value) {
+    alert('請先登入')
+    return
+  }
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/writer/follow/${id}`, {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userToken.value}`
+      },
+      method: 'POST'
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      alert(res.Message)
+      getArticleDetail()
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  }
+}
+
+// 取消追蹤作家
+const unFollowWriter = async (id: number) => {
+  if (!userToken.value) {
+    alert('請先登入')
+    return
+  }
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/writer/cancelfollow/${id}`, {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userToken.value}`
+      },
+      method: 'DELETE'
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      alert(res.Message)
+      getArticleDetail()
+    }
+  } catch (error: any) {
+    console.log(error.response)
   }
 }
 </script>
@@ -208,9 +258,16 @@ const addComment = async (id: number) => {
       <div class="flex justify-between sm:mr-2">
         <img :src="writerInfo?.ImgUrl" alt="avatar" class="h-[60px] w-[60px] rounded-full" />
         <button
+          v-if="!writerInfo?.Follow"
           class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
         >
           <Icon name="ic:baseline-plus" size="16" />追蹤
+        </button>
+        <button
+          v-else
+          class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
+        >
+          追蹤中
         </button>
       </div>
       <div>
@@ -222,9 +279,18 @@ const addComment = async (id: number) => {
     </div>
     <div>
       <button
+        v-if="!writerInfo?.Follow"
         class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
+        @click="followWriter(writerInfo?.Id!)"
       >
         <Icon name="ic:baseline-plus" size="20" />追蹤
+      </button>
+      <button
+        v-else
+        class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
+        @click="unFollowWriter(writerInfo?.Id!)"
+      >
+        <Icon name="material-symbols:fitbit-check-small" size="20" />追蹤中
       </button>
     </div>
   </div>

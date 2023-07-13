@@ -1,14 +1,22 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
+
+const userStore = useUserStore()
+const { isLogin, userData } = storeToRefs(userStore)
+
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const route = useRoute()
 const writerInfo = ref<WriterInfo | null>(null)
 
 const getWriterInfo = async () => {
+  const userId = isLogin.value ? userData.value.id : '0'
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/writer/${route.params.id}`)
+    const res: ApiResponse = await $fetch(`${apiBase}/writerarticles/${route.params.id}/${userId}`)
+    console.log(res)
     if (res.statusCode === 200) {
-      writerInfo.value = res.data
+      console.log(res.Message)
     }
   } catch (error) {
     console.log(error)
