@@ -7,6 +7,7 @@ const { userData } = storeToRefs(userStore)
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
+const { useFormattedTime } = useDateFormat()
 
 const props = defineProps({
   comments: {
@@ -42,7 +43,6 @@ const insertEmoji = (emoji: any) => {
 }
 
 const autoResizeE = () => {
-  console.log(editArea.value[0].style)
   if (editArea.value[0]) {
     editArea.value[0].style.height = 'auto'
     editArea.value[0].style.height = `${editArea.value[0].scrollHeight}px`
@@ -125,19 +125,22 @@ const delComment = async (id: number) => {
             >
               <div v-if="comment.UserId === userData.id" class="flex flex-col">
                 <button
-                  class="cursor-pointer border-b border-primary py-1 text-primary hover:bg-secondary hover:text-white"
+                  class="cursor-pointer border-b border-primary py-1 text-primary hover:bg-btn-hover hover:text-white active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
                   @click="startToEdit(comment.CommentId, comment.Comment)"
                 >
                   編輯
                 </button>
                 <button
-                  class="py-1 text-primary hover:bg-secondary hover:text-white"
+                  class="py-1 text-primary hover:bg-btn-hover hover:text-white active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
                   @click="delComment(comment.CommentId)"
                 >
                   刪除
                 </button>
               </div>
-              <div v-else class="text-primary hover:bg-secondary hover:text-white">
+              <div
+                v-else
+                class="text-primary hover:bg-btn-hover hover:text-white active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+              >
                 <button class="cursor-pointer py-1" @click="toggleEditBtns(comment.CommentId)">
                   檢舉留言
                 </button>
@@ -174,7 +177,8 @@ const delComment = async (id: number) => {
               </ClientOnly>
             </div>
             <button
-              class="col-span-1 h-10 whitespace-nowrap rounded bg-secondary p-2 text-white hover:opacity-80"
+              class="col-span-1 h-10 whitespace-nowrap rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+              :disabled="!editingContent"
               @click="updateComment(comment.CommentId)"
             >
               發表留言

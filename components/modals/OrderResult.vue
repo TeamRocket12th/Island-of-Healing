@@ -62,14 +62,14 @@ const isOrderOK = ref(true)
         <div class="flex justify-end p-3">
           <button
             v-if="isOrderOK"
-            class="rounded border bg-secondary p-[7px] text-sm text-white"
+            class="rounded border bg-secondary p-[7px] text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
             @click="closeResult(false)"
           >
             繼續購物
           </button>
           <button
             v-else
-            class="rounded border bg-secondary p-[7px] text-sm text-white"
+            class="rounded border bg-secondary p-[7px] text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
             @click="closeResult(false)"
           >
             確定

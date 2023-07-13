@@ -29,7 +29,7 @@ const creaters = [
         <p class="mb-1 text-center font-serif-tc font-bold text-primary">{{ creater.name }}</p>
         <p class="mb-4 text-center text-sm font-light text-primary">{{ creater.jobTitle }}</p>
         <button
-          class="m-auto flex items-center rounded bg-secondary px-3 py-2 text-white hover:opacity-90"
+          class="m-auto flex items-center rounded bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
         >
           <Icon name="ic:outline-plus" size="16" />
           <span class="text-sm leading-normal">追蹤</span>

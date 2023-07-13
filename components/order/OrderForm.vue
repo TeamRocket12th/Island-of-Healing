@@ -88,7 +88,7 @@ const sendOrder = (value: boolean, data: CustomerData) => {
       <div class="px-16">
         <button
           type="button"
-          class="block w-full rounded border bg-secondary px-3 py-2 text-white"
+          class="block w-full rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
           @click="sendOrder(true, customerData)"
         >
           同意並送出

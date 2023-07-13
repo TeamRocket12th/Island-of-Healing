@@ -13,7 +13,7 @@
         讓我們一起啟程，發現內在的力量和自由，愛上生活的潛力。
       </p>
       <button
-        class="btn-active btn mx-auto mb-10 block h-[60px] w-[180px] rounded bg-secondary px-4 py-3 text-2xl font-medium text-white hover:bg-slate-600 xl:mb-[84px] 3xl:mb-[84px]"
+        class="btn-active btn mx-auto mb-10 block h-[60px] w-[180px] rounded bg-secondary px-4 py-3 text-2xl font-medium text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white xl:mb-[84px] 3xl:mb-[84px]"
       >
         立即註冊
       </button>
@@ -107,7 +107,7 @@
           </ul>
         </div>
         <button
-          class="btn h-[38px] w-[68%] bg-secondary text-white hover:bg-slate-500 3xl:w-[286px]"
+          class="btn h-[38px] w-[68%] bg-secondary text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white 3xl:w-[286px]"
         >
           立即訂閱
         </button>
@@ -144,7 +144,7 @@
           </ul>
         </div>
         <button
-          class="btn h-[38px] w-[68%] bg-secondary text-white hover:bg-slate-500 3xl:w-[286px]"
+          class="btn h-[38px] w-[68%] bg-secondary text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white 3xl:w-[286px]"
         >
           立即訂閱
         </button>

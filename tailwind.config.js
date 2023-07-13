@@ -53,7 +53,12 @@ module.exports = {
         },
         secondary: '#796959',
         assistant: '#9F816C',
-        graydate: '#828282'
+        graydate: '#828282',
+        btn: {
+          hover: '#6D5E50',
+          active: '#615447',
+          disabled: '#AFA59B'
+        }
       }
     }
   },

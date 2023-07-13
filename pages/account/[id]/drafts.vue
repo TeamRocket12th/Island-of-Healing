@@ -20,7 +20,10 @@ if (error.value) {
     <div class="mb-6 items-center justify-between md:flex">
       <h2 class="mb-16 font-serif-tc text-2xl font-bold">我的草稿</h2>
       <div class="flex items-center">
-        <NuxtLink to="/newstory" class="mr-4 rounded-[4px] bg-secondary px-3 py-2 text-white">
+        <NuxtLink
+          to="/newstory"
+          class="mr-4 rounded-[4px] bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+        >
           <div class="flex items-center"><Icon name="ic:outline-plus" size="20" /> 新增文章</div>
         </NuxtLink>
         <SearchInput />
