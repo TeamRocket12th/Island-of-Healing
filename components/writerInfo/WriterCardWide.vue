@@ -1,21 +1,15 @@
 <script setup lang="ts">
-// import { writer } from 'repl'
+import { storeToRefs } from 'pinia'
+import { useLoading } from '~/stores/loading'
+const { isLoading } = storeToRefs(useLoading())
 
 defineProps({
   writerInfo: {
     type: Array as () => Writer[],
-    required: true,
-    default: () => []
+    default: () => [],
+    required: true
   }
 })
-
-const shortenBio = (bio: string) => {
-  let shortBio = bio
-  if (bio && bio.length > 13) {
-    shortBio = bio.substring(0, 13) + '...'
-  }
-  return shortBio
-}
 
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
@@ -37,7 +31,7 @@ const followWriter = async (id: number, writerInfo: Writer[]) => {
     console.log(res)
     if (res.StatusCode === 200) {
       alert(res.Message)
-      const writer = writerInfo.find((writer: any) => writer.WriterId === id)
+      const writer = writerInfo.find((writer: Writer) => writer.WriterId === id)
       if (writer) {
         writer.IsFollowing = true
       }
@@ -65,7 +59,7 @@ const unFollowWriter = async (id: number, writerInfo: Writer[]) => {
     if (res.StatusCode === 200) {
       alert(res.Message)
 
-      const writer = writerInfo.find((writer: any) => writer.WriterId === id)
+      const writer = writerInfo.find((writer: Writer) => writer.WriterId === id)
       if (writer) {
         writer.IsFollowing = false
       }
@@ -78,7 +72,10 @@ const unFollowWriter = async (id: number, writerInfo: Writer[]) => {
 
 <template>
   <div>
-    <ul v-if="writerInfo.length > 0" class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:px-28">
+    <ul
+      v-if="!isLoading && writerInfo.length > 0"
+      class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:px-28"
+    >
       <li
         v-for="writer in writerInfo"
         :key="writer.WriterId"
@@ -93,9 +90,7 @@ const unFollowWriter = async (id: number, writerInfo: Writer[]) => {
               ><p class="font-medium text-primary">{{ writer.NickName }}</p></NuxtLink
             >
 
-            <p class="text-sm text-primary-dark">
-              {{ writer.JobTitle }}。{{ shortenBio(writer.Bio) }}
-            </p>
+            <p class="text-sm text-primary-dark">{{ writer.JobTitle }}。{{ writer.Bio }}</p>
           </div>
         </span>
         <button
@@ -114,7 +109,10 @@ const unFollowWriter = async (id: number, writerInfo: Writer[]) => {
         </button>
       </li>
     </ul>
-    <span v-else>Loading...</span>
+    <p v-else-if="!isLoading && writerInfo.length === 0" class="text-center text-2xl text-primary">
+      目前還沒有追蹤作家
+    </p>
+    <span v-if="isLoading">Loading...</span>
   </div>
 </template>
 <style scoped></style>
