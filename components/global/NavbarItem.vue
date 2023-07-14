@@ -148,6 +148,19 @@ const isUserPage = computed(() => {
                       <span>歷史訂單</span>
                     </NuxtLink>
                   </li>
+                  <li
+                    v-if="userData.role === 'user'"
+                    class="text-primary hover:bg-secondary hover:text-sand-100"
+                  >
+                    <NuxtLink
+                      :to="`/account/${userData.id}/application`"
+                      class="block p-[10px] font-medium"
+                      @click="isWriterExpanded = true"
+                    >
+                      <Icon name="material-symbols:clarify-outline" size="24" class="mr-2" />
+                      <span>成為作家</span>
+                    </NuxtLink>
+                  </li>
                   <li class="text-primary hover:bg-secondary hover:text-sand-100">
                     <button class="flex w-full items-center p-[10px]" @click="userLogout">
                       <Icon name="ic:outline-logout" size="24" class="mr-2" />

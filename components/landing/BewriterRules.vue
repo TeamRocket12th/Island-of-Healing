@@ -22,7 +22,12 @@ const steps = {
   step4: {
     id: 4,
     title: '等待審核通知',
-    content: []
+    content: [
+      '審核流程可能需要 3-5 個工作天，請耐心等待。',
+      '您將在審核結果出爐後收到通知，通常是透過電子郵件或 使用者帳戶的訊息系統。',
+      '審核通過，您將獲得作家身份，並能夠開始寫作！',
+      '審核不通過，您將收到相關說明或建議，以幫助您提升作 家身份的申請。'
+    ]
   }
 }
 
@@ -60,9 +65,11 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
     <div class="flex border-[0.5px] border-sand-300">
       <div class="w-[55%] px-6 pb-12 pt-24">
         <h3 class="mb-4 block pl-1 text-xl font-medium text-primary-dark">
-          {{ steps[step].title }}
+          {{ steps[`${step}`].title }}
         </h3>
-        <img :src="imageUrl" alt="成為作家" class="mb-5" />
+        <div class="mb-5 h-[430px] overflow-y-hidden">
+          <img :src="imageUrl" alt="成為作家" />
+        </div>
         <div class="flex justify-end gap-4">
           <button
             class="rounded px-5 py-2 text-secondary hover:bg-secondary hover:text-white"
@@ -70,10 +77,7 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
           >
             返回
           </button>
-          <button
-            class="rounded px-3 py-2 text-secondary hover:bg-secondary hover:text-white"
-            @click="nextStep"
-          >
+          <button class="rounded bg-secondary px-3 py-2 text-white" @click="nextStep">
             下一步
           </button>
         </div>
@@ -82,7 +86,7 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
         <h2 class="mb-8 text-center text-2xl font-bold text-primary">申請作家身份流程</h2>
         <ul>
           <li v-for="(stepKey, index) in steps" :key="index" :class="['flex', 'gap-4']">
-            <div class="flex w-8 flex-wrap justify-center">
+            <div class="flex h-36 w-8 flex-wrap justify-center">
               <div>
                 <div
                   :class="[
@@ -113,7 +117,7 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
               :class="{
                 'text-secondary': currentStep >= stepKey.id,
                 'opacity-20': currentStep < stepKey.id,
-                'text-sand-300': currentStep < stepKey.id
+                'text-primary-dark': currentStep < stepKey.id
               }"
             >
               <h4 class="text-base font-medium">{{ stepKey.title }}</h4>
