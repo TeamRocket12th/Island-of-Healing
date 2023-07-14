@@ -48,7 +48,7 @@
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] bg-sand-200"
             >
-              <img src="~/assets/images/landingpage/markdown-icon.svg" alt="" class="" />
+              <img src="/landingpage/markdown-icon.svg" alt="" class="" />
             </div>
           </div>
           <div>

@@ -13,17 +13,17 @@
         開始使用
       </button>
       <img
-        src="/landing/pen.png"
+        src="/landingpage/pen.png"
         alt=""
         class="absolute bottom-[170px] z-0 hidden w-[248px] lg:right-[2%] lg:block 2xl:xl:right-[10%]"
       />
       <img
-        src="/landing/line.png"
+        src="/landingpage/line.png"
         alt=""
         class="absolute bottom-[170px] z-0 hidden w-[500px] lg:right-[2%] lg:block 2xl:right-[4%]"
       />
       <img
-        src="/landing/note.png"
+        src="/landingpage/note.png"
         alt=""
         class="absolute bottom-[160px] z-0 hidden w-[383px] lg:left-[5%] lg:block 2xl:left-[12%]"
       />

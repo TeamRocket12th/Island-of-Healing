@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const images = ref([
-  { src: 'image1', alt: '建立個人品牌' },
-  { src: 'image2', alt: '增加曝光機會' },
-  { src: 'image3', alt: '開起論壇話題互動' },
-  { src: 'image4', alt: '數據分析儀表板管理' }
+  { src: 'landingpage/article-list', alt: '建立個人品牌' },
+  { src: 'landingpage/creators', alt: '增加曝光機會' },
+  { src: 'landingpage/forum', alt: '開起論壇話題互動' },
+  { src: 'landingpage/writer-backstage', alt: '數據分析儀表板管理' }
 ])
 
 const currentIndex = ref(0)

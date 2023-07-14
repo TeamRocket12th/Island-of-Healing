@@ -137,6 +137,17 @@ const { toggleWriterSettings } = uiStore
           </div>
         </NuxtLink>
       </li>
+      <li v-if="userData.role === 'user'" class="px-4">
+        <NuxtLink
+          :to="`/account/${userData.id}/application`"
+          class="block w-full px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+        >
+          <div class="flex items-center">
+            <Icon name="ic:baseline-mail-outline" size="24" class="mr-2" />
+            <p>成為作家</p>
+          </div>
+        </NuxtLink>
+      </li>
     </ul>
   </aside>
 </template>

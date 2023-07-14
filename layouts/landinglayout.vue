@@ -12,7 +12,7 @@ const toggleMobileMenu = () => {
 </script>
 <template>
   <div>
-    <nav class="bg-sand-100 pb-10 sm:pb-[120px]">
+    <nav class="bg-sand-100">
       <div class="container flex h-14 items-center justify-between border-b-[0.5px] border-primary">
         <div class="flex gap-9">
           <NuxtLink to="/" class="font-serif-tc text-2xl font-bold text-primary"
@@ -34,7 +34,7 @@ const toggleMobileMenu = () => {
         </div>
         <div class="hidden items-center gap-6 sm:flex">
           <button class="rounded bg-secondary px-2 py-1 text-white">
-            <NuxtLink to="/login">開始使用</NuxtLink>
+            <NuxtLink to="/become_creater/steps">開始使用</NuxtLink>
           </button>
         </div>
       </div>

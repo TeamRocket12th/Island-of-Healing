@@ -1,77 +1,135 @@
 <script setup lang="ts">
-const emits = defineEmits(['writer-rules'])
-const showRules = (value: boolean) => {
-  emits('writer-rules', value)
+const steps = {
+  step1: {
+    id: 1,
+    title: '成為會員',
+    content: ['提供必要的個人電子郵件和密碼。', '完成註冊程序，建立您的使用者帳戶。']
+  },
+  step2: {
+    id: 2,
+    title: '登入帳號，進入會員設定頁面',
+    content: ['在個人設定選項中，選擇成為作家。']
+  },
+  step3: {
+    id: 3,
+    title: '完成基本資料後送出審核',
+    content: [
+      '在成為作家身份選項中，填寫您的基本資料、寫作經驗等。',
+      '確保提供的資料是正確和完整的。',
+      '上傳您的作品供審核參考。'
+    ]
+  },
+  step4: {
+    id: 4,
+    title: '等待審核通知',
+    content: [
+      '審核流程可能需要 3-5 個工作天，請耐心等待。',
+      '您將在審核結果出爐後收到通知，通常是透過電子郵件或 使用者帳戶的訊息系統。',
+      '審核通過，您將獲得作家身份，並能夠開始寫作！',
+      '審核不通過，您將收到相關說明或建議，以幫助您提升作 家身份的申請。'
+    ]
+  }
 }
+
+const step = ref('step1')
+const currentStep = ref(1)
+const nextStep = () => {
+  const currentStepIndex = Object.keys(steps).indexOf(step.value)
+  const nextStepIndex = currentStepIndex + 1
+  if (nextStepIndex < Object.keys(steps).length) {
+    step.value = Object.keys(steps)[nextStepIndex]
+  }
+  if (currentStep.value < 4) {
+    currentStep.value++
+  }
+}
+const backStep = () => {
+  const currentStepIndex = Object.keys(steps).indexOf(step.value)
+  const prevStepIndex = currentStepIndex - 1
+  if (prevStepIndex >= 0) {
+    step.value = Object.keys(steps)[prevStepIndex]
+  }
+  if (currentStep.value > 1) {
+    currentStep.value--
+  }
+}
+
+watch(step, (newStep) => {
+  step.value = newStep
+})
+
+const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
 </script>
 <template>
-  <div
-    class="fixed inset-0 z-[999] flex h-fit items-center justify-center overflow-hidden bg-black bg-opacity-20 pt-20 sm:mx-0 sm:h-auto"
-    @click.self="showRules(false)"
-  >
-    <div class="rounded-[4.8px] bg-sand-100 sm:bg-white sm:shadow">
-      <div
-        class="flex items-center justify-center gap-2 border-b-sand-200 p-4 pt-8 sm:justify-between sm:pt-4"
-      >
-        <h3 class="my-0 text-xl text-primary">申請作家身份流程</h3>
-        <Icon
-          name="mdi:close-thick"
-          size="24"
-          class="absolute right-4 top-0 cursor-pointer text-primary sm:static"
-          @click="showRules(false)"
-        />
+  <div class="container pb-[168px] pt-[94px]">
+    <div class="flex border-[0.5px] border-sand-300">
+      <div class="w-[55%] px-6 pb-12 pt-24">
+        <h3 class="mb-4 block pl-1 text-xl font-medium text-primary-dark">
+          {{ steps[`${step}`].title }}
+        </h3>
+        <div class="mb-5 h-[430px] overflow-y-hidden">
+          <img :src="imageUrl" alt="成為作家" />
+        </div>
+        <div class="flex justify-end gap-4">
+          <button
+            class="rounded px-5 py-2 text-secondary hover:bg-secondary hover:text-white"
+            @click="backStep"
+          >
+            返回
+          </button>
+          <button class="rounded bg-secondary px-3 py-2 text-white" @click="nextStep">
+            下一步
+          </button>
+        </div>
       </div>
-      <div class="h-[1px] w-full bg-secondary"></div>
-      <div class="m-4 text-primary-dark">
-        <ol class="list-decimal pl-4 leading-9 tracking-[0.48px]">
-          <li>
-            成為會員
-            <ul class="mb-3 list-disc pl-6">
-              <li>提供必要的個人資料，包括姓名、電子郵件地址和密碼。</li>
-              <li>完成註冊程序，建立您的使用者帳戶。</li>
-            </ul>
+      <div class="w-[45%] border-l-[0.5px] border-sand-300 px-6 py-12">
+        <h2 class="mb-8 text-center text-2xl font-bold text-primary">申請作家身份流程</h2>
+        <ul>
+          <li v-for="(stepKey, index) in steps" :key="index" :class="['flex', 'gap-4']">
+            <div class="flex h-36 w-8 flex-wrap justify-center">
+              <div>
+                <div
+                  :class="[
+                    'flex',
+                    'h-8',
+                    'w-8',
+                    'items-center',
+                    'justify-center',
+                    'rounded-full',
+                    {
+                      'bg-secondary': currentStep >= stepKey.id,
+                      'bg-sand-300': currentStep < stepKey.id
+                    }
+                  ]"
+                >
+                  <Icon
+                    v-if="currentStep >= stepKey.id"
+                    name="material-symbols:check-small"
+                    size="24"
+                    class="text-white"
+                  />
+                  <p v-else class="text-white">{{ stepKey.id }}</p>
+                </div>
+              </div>
+              <div class="h-[112px] w-[2px] bg-sand-300"></div>
+            </div>
+            <div
+              :class="{
+                'text-secondary': currentStep >= stepKey.id,
+                'opacity-20': currentStep < stepKey.id,
+                'text-primary-dark': currentStep < stepKey.id
+              }"
+            >
+              <h4 class="text-base font-medium">{{ stepKey.title }}</h4>
+              <ul class="list-disc pl-5 text-base">
+                <li v-for="item in stepKey.content" :key="item">{{ item }}</li>
+              </ul>
+            </div>
           </li>
-          <li>
-            登入帳號，進入會員設定頁面
-            <ul class="mb-3 list-disc pl-6">
-              <li>在個人設定選項中，選擇成為作家。</li>
-            </ul>
-          </li>
-          <li>
-            完成基本資料後送出審核
-            <ul class="mb-3 list-disc pl-6">
-              <li>在成為作家身份選項中，填寫您的基本資料、寫作經驗等。</li>
-              <li>確保提供的資料是正確和完整的。</li>
-              <li>上傳您的作品供審核參考。</li>
-            </ul>
-          </li>
-          <li>
-            等待審核通知
-            <ul class="mb-3 list-disc pl-6">
-              <li>審核流程可能需要一段時間，請耐心等待。</li>
-              <li>您將在審核結果出爐後收到通知，通常是透過電子郵件或使用者帳戶的訊息系統。</li>
-              <li>如果您的申請被接受，您將獲得作家身份，並能夠開始寫作！</li>
-              <li>如果您的申請被拒絕，您將收到相關說明或建議，以幫助您提升作家身份的申請。</li>
-            </ul>
-          </li>
-        </ol>
-        <p>感謝您的理解和耐心等待。</p>
-        <p>如果您有任何疑問或需要進一步的協助，請隨時聯繫我們的客服團隊。</p>
-        <span class="my-4 block sm:mt-4">其餘規定請參閱板規，若有疑問請聯絡平台。</span>
-      </div>
-      <div class="flex justify-end gap-2 border-t border-secondary p-4">
-        <button
-          class="rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white"
-          @click="showRules(false)"
-        >
-          先不要
-        </button>
-        <button
-          class="rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white"
-        >
-          <NuxtLink to="/signup">開始註冊</NuxtLink>
-        </button>
+        </ul>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped></style>

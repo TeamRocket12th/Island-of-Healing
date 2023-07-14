@@ -5,7 +5,7 @@ const showRules = (value: boolean) => {
 }
 </script>
 <template>
-  <section class="container">
+  <section class="container pt-10 sm:pt-[120px]">
     <h2 class="mb-5 text-center text-4xl font-bold text-primary md:text-5xl">
       專注寫作，輕鬆建立個人品牌和讀者群
     </h2>
@@ -17,17 +17,13 @@ const showRules = (value: boolean) => {
         class="mb-9 rounded bg-secondary px-4 py-3 text-2xl text-white"
         @click="showRules(true)"
       >
-        開始使用
+        <NuxtLink to="/become_creater/steps">開始使用</NuxtLink>
       </button>
     </div>
     <div class="flex flex-wrap justify-center pb-20 lg:pb-[200px] xl:flex-nowrap">
       <div class="relative w-full lg:w-2/3">
-        <img src="~/assets/images/landingpage/bg-desktop.png" alt="" />
-        <img
-          src="~/assets/images/landingpage/bg-iphone.png"
-          alt=""
-          class="absolute bottom-0 w-1/5"
-        />
+        <img src="/landingpage/bg-desktop.png" alt="" />
+        <img src="/landingpage/bg-iphone.png" alt="" class="absolute bottom-0 w-1/5" />
       </div>
       <div class="w-full text-center lg:w-1/3 lg:text-left">
         <div class="mb-9 md:mb-6">
