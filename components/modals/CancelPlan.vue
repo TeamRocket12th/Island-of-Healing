@@ -3,6 +3,7 @@ const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 
+// 取消續訂
 const unsubscribe = async () => {
   if (!userToken.value) {
     return

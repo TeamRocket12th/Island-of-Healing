@@ -62,6 +62,16 @@ declare global {
     Tags: string[]
     Category: string
     Summary: string
+    IsRead: boolean
+  }
+
+  // 文章內作者資訊
+  interface DetailWriter {
+    Id: number
+    Bio: string
+    ImgUrl: string
+    NickName: string
+    Follow: boolean
   }
 
   // 文章摘要
@@ -87,6 +97,8 @@ declare global {
     UserCollect: boolean
     UserLike: boolean
     WriterNickName: string
+    Category: string
+    Summary: string
   }
 
   // 文章留言

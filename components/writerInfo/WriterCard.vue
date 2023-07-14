@@ -5,13 +5,21 @@ import { useUserStore } from '~/stores/user'
 const { userData } = storeToRefs(useUserStore())
 
 defineProps({
+  writerId: {
+    type: String,
+    required: true
+  },
+  userId: {
+    type: String,
+    required: true
+  },
   writerInfo: {
     type: Object as () => WriterInfo,
     default: () => {},
     required: true
   },
   getWriterInfo: {
-    type: Function as unknown as () => () => Promise<void>,
+    type: Function as unknown as () => (articleId: string, userId: string) => Promise<void>,
     required: true
   }
 })
@@ -47,7 +55,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
     <button
       v-if="!writerInfo.Follow && writerInfo.Id !== userData.id"
       class="mb-16 flex w-full items-center justify-center gap-2 rounded-md bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-      @click="followWriter(writerInfo.Id, getWriterInfo)"
+      @click="followWriter(writerInfo.Id, writerId, userId, getWriterInfo)"
     >
       <Icon name="ic:round-plus" size="24" />
       <span>追蹤</span>
@@ -55,7 +63,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
     <button
       v-else-if="writerInfo.Follow && writerInfo.Id !== userData.id"
       class="mb-16 flex w-full items-center justify-center gap-2 rounded-md bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-      @click="unFollowWriter(writerInfo.Id, getWriterInfo)"
+      @click="unFollowWriter(writerInfo.Id, writerId, userId, getWriterInfo)"
     >
       <Icon name="material-symbols:fitbit-check-small" size="24" />
       <span>追蹤中</span>
