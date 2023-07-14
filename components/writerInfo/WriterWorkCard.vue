@@ -7,13 +7,6 @@ defineProps({
   }
 })
 
-const shortenSummary = (summary: string) => {
-  let shortSummary = summary
-  if (summary && summary.length > 50) {
-    shortSummary = summary.substring(0, 50) + '...'
-  }
-  return shortSummary
-}
 const { formatDate } = useDateFormat()
 </script>
 
@@ -30,11 +23,13 @@ const { formatDate } = useDateFormat()
             <div class="h-[186px] w-full md:h-[168px] md:w-[30%]">
               <img :src="work.ImgUrl" alt="cover" class="h-full w-full object-cover" />
             </div>
-            <div class="flex h-[168px] flex-col justify-between md:w-[70%]">
+            <div class="flex h-auto w-full flex-col justify-between md:h-[168px] md:w-[70%]">
               <h3 class="mb-3 font-serif-tc text-xl font-bold text-primary">
                 {{ work.Title }}
               </h3>
-              <p class="mb-[30px] text-primary-dark">{{ shortenSummary(work.Summary) }}</p>
+              <p v-if="work.Summary" class="mb-[30px] text-primary-dark">
+                {{ work.Summary }}
+              </p>
               <div class="flex justify-between">
                 <p class="text-sm font-light text-primary-dark">{{ formatDate(work.InitDate) }}</p>
                 <div class="flex items-end justify-end gap-2">

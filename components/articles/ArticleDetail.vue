@@ -24,6 +24,7 @@ const isCollecting = ref(false)
 const isLiking = ref(false)
 const comments = ref<Comment[]>([])
 const haveCover = ref(false)
+const isLock = ref(true)
 
 // 取得單篇文章資訊
 // const getArticleDetail = async () => {
@@ -46,6 +47,7 @@ const haveCover = ref(false)
 //   }
 // }
 
+// 取得單篇文章資訊 useFetch
 const getArticleDetail = async () => {
   const userId = isLogin.value ? userData.value.id : '0'
   const articleId = route.params.id
@@ -59,6 +61,7 @@ const getArticleDetail = async () => {
     isCollecting.value = data.value.Collect
     isLiking.value = data.value.Like
     comments.value = data.value.Comment
+    isLock.value = data.value.ArticleData.Pay
     if (data.value.ArticleData.ImgUrl !== '') {
       haveCover.value = true
     }
@@ -75,6 +78,7 @@ onMounted(() => {
   })
 })
 
+// 對文章做的動作
 const { AddToCollection, cancelCollection, likeArticle, unlikeArticle } = useArticleActions()
 
 const textarea = ref<HTMLTextAreaElement | null>(null)
@@ -92,17 +96,38 @@ const insertEmoji = (emoji: any) => {
   showEmojiPicker.value = false
 }
 
-// const isLocked = ref(true)
-// const handleUnLock = () => {
-//   if (!isLogin.value) {
-//     alert('需要先登入才能閱讀文章喔')
-//   } else if (userData.value.myPlan === 'free' && charge.value) {
-//     alert('請先訂閱我們')
-//   } else {
-//     isLocked.value = !isLocked.value
-//   }
-// }
+// 計算付費文章點擊數+1
+const markArticleAsRead = async (id: number) => {
+  isLock.value = !isLock.value
+  if (!userToken.value) {
+    return
+  }
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/paidarticleclick/${id}`, {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userToken.value}`
+      },
+      method: 'POST'
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      alert(res.Message)
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  }
+}
 
+const keepReading = () => {
+  if (!isLogin.value) {
+    alert('需要先登入才能閱讀文章喔')
+  } else if (userData.value.myPlan === 'free' && articleDetail.value!.Pay) {
+    alert('請先訂閱我們')
+  }
+}
+
+// 分享連結Modal
 const isShareLinkOpen = ref(false)
 const toggleShareLink = () => {
   isShareLinkOpen.value = !isShareLinkOpen.value
@@ -173,63 +198,72 @@ const { followWriter, unFollowWriter } = useWriterActions()
       </div>
     </div>
     <!-- 文章內文 -->
-    <div class="relative max-h-[800px] overflow-hidden">
-      <!-- <div class="relative max-h-[800px] overflow-hidden" :class="{ 'max-h-none': !isLocked }"> -->
-      <!-- <div
-        v-if="isLocked"
-        class="payment-shade absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-sand-200"
-      ></div>
-      <button
-        v-if="isLocked"
-        class="font-sm absolute bottom-10 left-1/2 flex -translate-x-2/4 transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
-        @click="handleUnLock"
-      >
-        <span class="pb-1">
-          <Icon v-if="userData.myPlan === 'free'" name="ic:outline-paid" size="18" />
-          <Icon v-else name="material-symbols:arrow-circle-down-outline" size="18" />
-        </span>
-        <span v-if="userData.myPlan === 'free'">付費解鎖</span>
-        <span v-else>繼續閱讀</span>
-      </button> -->
+    <div class="relative">
       <h2 class="mb-6 text-[32px] font-bold">{{ articleDetail?.Title }}</h2>
       <img v-if="haveCover" :src="articleDetail.ImgUrl" alt="cover" class="mb-6 block" />
-      <div class="border-b-[0.5px] border-primary pb-16">
-        <div v-dompurify-html="articleDetail?.Content" class="mb-9"></div>
-        <div class="flex items-center justify-between">
-          <CategoryTag :tags="articleDetail.Tags" />
-          <ul class="flex gap-3">
-            <li
-              v-if="!isLiking"
-              class="cursor-pointer"
-              @click="likeArticle(articleDetail.Id, getArticleDetail)"
-            >
-              <Icon name="material-symbols:favorite-outline-rounded" size="20" />
-            </li>
-            <li
-              v-else
-              class="cursor-pointer text-secondary"
-              @click="unlikeArticle(articleDetail.Id, getArticleDetail)"
-            >
-              <Icon name="material-symbols:favorite-rounded" size="20" />
-            </li>
-            <li
-              v-if="!isCollecting"
-              class="cursor-pointer"
-              @click="AddToCollection(articleDetail.Id, getArticleDetail)"
-            >
-              <Icon name="material-symbols:bookmark-outline-rounded" size="20" />
-            </li>
-            <li
-              v-else
-              class="cursor-pointer text-secondary"
-              @click="cancelCollection(articleDetail.Id, getArticleDetail)"
-            >
-              <Icon name="material-symbols:bookmark" size="20" />
-            </li>
-            <li class="cursor-pointer" @click="toggleShareLink">
-              <Icon name="mdi:share-variant-outline" size="20" />
-            </li>
-          </ul>
+      <div v-if="isLock">
+        <p class="mb-10 text-xl font-medium text-primary">關於本文： {{ articleDetail.Summary }}</p>
+      </div>
+      <div v-if="isLock" class="flex justify-center">
+        <button
+          v-if="userData.myPlan === 'free' && articleDetail.Pay"
+          class="font-sm flex transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
+          @click="keepReading"
+        >
+          <span class="pb-1"><Icon name="ic:outline-paid" size="18" /></span>
+          <span>付費解鎖</span>
+        </button>
+        <button
+          v-else
+          class="font-sm flex transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
+          @click="markArticleAsRead(articleDetail.Id)"
+        >
+          <span class="pb-1"
+            ><Icon name="material-symbols:arrow-circle-down-outline" size="18"
+          /></span>
+          <span>繼續閱讀</span>
+        </button>
+      </div>
+      <!--文章本體-->
+      <div v-else>
+        <div class="border-b-[0.5px] border-primary pb-16">
+          <div v-dompurify-html="articleDetail?.Content" class="mb-9"></div>
+          <div class="flex items-center justify-between">
+            <CategoryTag :tags="articleDetail.Tags" />
+            <ul class="flex gap-3">
+              <li
+                v-if="!isLiking"
+                class="cursor-pointer"
+                @click="likeArticle(articleDetail.Id, getArticleDetail)"
+              >
+                <Icon name="material-symbols:favorite-outline-rounded" size="20" />
+              </li>
+              <li
+                v-else
+                class="cursor-pointer text-secondary"
+                @click="unlikeArticle(articleDetail.Id, getArticleDetail)"
+              >
+                <Icon name="material-symbols:favorite-rounded" size="20" />
+              </li>
+              <li
+                v-if="!isCollecting"
+                class="cursor-pointer"
+                @click="AddToCollection(articleDetail.Id, getArticleDetail)"
+              >
+                <Icon name="material-symbols:bookmark-outline-rounded" size="20" />
+              </li>
+              <li
+                v-else
+                class="cursor-pointer text-secondary"
+                @click="cancelCollection(articleDetail.Id, getArticleDetail)"
+              >
+                <Icon name="material-symbols:bookmark" size="20" />
+              </li>
+              <li class="cursor-pointer" @click="toggleShareLink">
+                <Icon name="mdi:share-variant-outline" size="20" />
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -261,14 +295,14 @@ const { followWriter, unFollowWriter } = useWriterActions()
     </div>
     <div>
       <button
-        v-if="!writerInfo?.Follow"
+        v-if="!writerInfo?.Follow && writerInfo?.Id !== userData.id"
         class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
         @click="followWriter(writerInfo?.Id!, getArticleDetail)"
       >
         <Icon name="ic:baseline-plus" size="20" />追蹤
       </button>
       <button
-        v-else
+        v-else-if="writerInfo?.Follow && writerInfo?.Id !== userData.id"
         class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
         @click="unFollowWriter(writerInfo?.Id!, getArticleDetail)"
       >
@@ -277,7 +311,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
     </div>
   </div>
   <!--留言-->
-  <div v-if="articleDetail">
+  <div v-if="articleDetail && !isLock">
     <div class="mb-6">
       <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
     </div>
