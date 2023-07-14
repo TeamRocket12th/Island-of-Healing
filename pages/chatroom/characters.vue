@@ -5,7 +5,7 @@ definePageMeta({
 </script>
 
 <template>
-  <main class="bg-sand-100">
+  <main>
     <ChatList />
   </main>
 </template>

@@ -1,9 +1,15 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
+
+const { userData } = storeToRefs(useUserStore())
+const router = useRouter()
+
 const data = {
   success: {
     alert: '謝謝您！您的訂單已經成立！',
     content: '訂單確認電郵已經發送到您的電子郵箱：',
-    userEmail: 'abc0000@gmail.com'
+    userEmail: userData.value.email
   },
   failed: {
     alert: '很抱歉！您的訂單付款失敗！',
@@ -14,6 +20,7 @@ const data = {
 const emits = defineEmits(['close-result'])
 const closeResult = (value: boolean) => {
   emits('close-result', value)
+  router.replace('/')
 }
 
 const isOrderOK = ref(true)

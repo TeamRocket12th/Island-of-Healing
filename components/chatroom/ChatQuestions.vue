@@ -20,7 +20,7 @@ const questions = [
     title: '2. 如果可以擁有一種超能力，你希望具備以下哪一項？',
     options: [
       {
-        text: '時空凍結：能夠暫停時間，讓你有更多時間陪伴親人或愛人，享受片刻寧靜',
+        text: '時空凍結：能夠暫停時間，有更多時間陪伴在乎的人',
         category: 'intimate-relationships'
       },
       { text: '心靈導航：能夠洞察他人的情緒和需求', category: 'emotional-awareness' },
@@ -70,10 +70,6 @@ const getCharacter = (result) => {
   return selectedRoles[0]
 }
 
-// const scrollTop = () => {
-//   window.scrollTo({ top: 0, behavior: 'smooth' })
-// }
-
 const submit = () => {
   if (answers.value['4']) {
     const valuesArray = Object.values(answers.value)
@@ -103,7 +99,7 @@ const submit = () => {
         <div
           v-for="(option, oIndex) in question.options"
           :key="oIndex"
-          class="mb-2 flex items-center gap-1 space-x-2 text-primary-dark"
+          class="mb-5 flex items-center gap-2 space-x-2 text-primary-dark md:mb-2"
         >
           <input
             :id="option.text"
@@ -113,7 +109,7 @@ const submit = () => {
             :value="option.category"
             class="form-radio cursor-pointer text-primary"
           />
-          <label :for="option.text" class="cursor-pointer text-xl">{{ option.text }}</label>
+          <label :for="option.text" class="cursor-pointer md:text-xl">{{ option.text }}</label>
         </div>
       </div>
       <div class="mt-20 text-center">
