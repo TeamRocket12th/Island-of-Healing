@@ -60,11 +60,15 @@ onUpdated(() => {
 
 <template>
   <section class="container py-10">
-    <div class="grid grid-cols-12">
+    <div class="grid-cols-12 sm:grid">
       <div class="col-span-8 col-start-3">
         <div class="relative rounded-md">
           <!-- Message container -->
-          <div id="message-container" ref="scrollContainer" class="h-[500px] overflow-y-scroll p-4">
+          <div
+            id="message-container"
+            ref="scrollContainer"
+            class="h-[500px] overflow-y-scroll sm:p-4"
+          >
             <ChatBubbles :chat-messages="chatMessages" :answer="answer" />
           </div>
           <!-- Input form -->

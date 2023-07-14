@@ -49,7 +49,6 @@ const haveCover = ref(false)
 const getArticleDetail = async () => {
   const userId = isLogin.value ? userData.value.id : '0'
   const articleId = route.params.id
-  console.log(userId, articleId)
   const { data, error } = await useFetch<ApiResponse>(
     `${apiBase}/readarticle/${articleId}/${userId}`
   )
@@ -308,12 +307,14 @@ const { followWriter, unFollowWriter } = useWriterActions()
               size="20"
               class="absolute right-[10px] top-[10px] text-secondary hover:text-primary"
           /></span>
-          <EmojiPicker
-            v-if="showEmojiPicker"
-            ref="emojiPicker"
-            class="absolute right-[10px] top-8"
-            @select="insertEmoji"
-          />
+          <ClientOnly>
+            <EmojiPicker
+              v-if="showEmojiPicker"
+              ref="emojiPicker"
+              class="absolute right-[10px] top-8"
+              @select="insertEmoji"
+            />
+          </ClientOnly>
         </div>
         <button
           class="h-10 rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"

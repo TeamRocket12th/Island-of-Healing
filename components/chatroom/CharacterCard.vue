@@ -10,7 +10,7 @@ const showDesc = ref(false)
 
 <template>
   <div
-    class="card-bg flex h-[468px] w-full flex-col items-center rounded-2xl px-11 pt-20 shadow-xl transition-all duration-150 hover:scale-105"
+    class="card-bg flex h-[468px] w-full flex-col items-center rounded-2xl px-11 pt-20 shadow-xl transition-all duration-1000 hover:scale-105"
     @mouseenter="showDesc = true"
     @mouseleave="showDesc = false"
   >
@@ -18,17 +18,17 @@ const showDesc = ref(false)
       <img :src="c.imgUrl" alt="chat-role" class="h-[100px] w-[100px] rounded-full" />
     </div>
     <div
-      class="flex flex-col items-center transition-all duration-500"
+      class="flex flex-col items-center transition-all duration-1000"
       :class="showDesc ? 'h-56' : 'h-20'"
     >
       <h2 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ c.name }}</h2>
       <p
-        class="desc mb-6 items-center text-center font-light text-primary"
+        class="desc items-center text-center font-light text-primary"
         :class="showDesc ? 'visible' : 'hidden'"
       >
         {{ c.desc }}
       </p>
-      <div>
+      <div class="pt-6">
         <NuxtLink :to="`/chatroom/${c.id}`">
           <button class="btn-orange px-4 py-3 text-xl font-medium text-white hover:scale-110">
             開始聊天
@@ -58,7 +58,6 @@ const showDesc = ref(false)
   );
   box-shadow: 3px 5px 4px 1px #fff inset, -4px -4px 34px 0px #fcf2ec inset,
     0px 20px 25px -5px rgba(0, 0, 0, 0.1), 0px 8px 10px -6px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(100px);
 }
 .desc {
   max-height: 0;
