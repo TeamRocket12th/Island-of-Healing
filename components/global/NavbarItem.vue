@@ -155,7 +155,6 @@ const isUserPage = computed(() => {
                     <NuxtLink
                       :to="`/account/${userData.id}/application`"
                       class="block p-[10px] font-medium"
-                      @click="isWriterExpanded = true"
                     >
                       <Icon name="material-symbols:clarify-outline" size="24" class="mr-2" />
                       <span>成為作家</span>
