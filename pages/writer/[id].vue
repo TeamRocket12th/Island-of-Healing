@@ -10,11 +10,12 @@ const apiBase = runtimeConfig.public.apiBase
 const route = useRoute()
 const writerInfo = ref<WriterInfo | null>(null)
 const writerWorks = ref<WriterWork[]>([])
+const userId = isLogin.value ? String(userData.value.id) : '0'
+const writerId = route.params.id as string
 
-const getWriterInfo = async () => {
-  const userId = isLogin.value ? userData.value.id : '0'
+const getWriterInfo = async (writerId: string, userId: string) => {
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/writerarticles/${route.params.id}/${userId}`)
+    const res: ApiResponse = await $fetch(`${apiBase}/writerarticles/${writerId}/${userId}`)
     console.log(res)
     if (res.StatusCode === 200) {
       writerInfo.value = res.WriterData
@@ -25,14 +26,21 @@ const getWriterInfo = async () => {
   }
 }
 
-onMounted(getWriterInfo)
+onMounted(() => {
+  getWriterInfo(writerId, userId)
+})
 </script>
 
 <template>
   <main class="bg-sand-100 pb-40">
     <section v-if="writerInfo" class="container grid-cols-12 gap-6 pb-[188px] pt-[60px] lg:grid">
       <div class="lg:col-span-4">
-        <WriterCard :writer-info="writerInfo" :get-writer-info="getWriterInfo" />
+        <WriterCard
+          :writer-info="writerInfo"
+          :get-writer-info="getWriterInfo"
+          :user-id="userId"
+          :writer-id="writerId"
+        />
       </div>
       <div class="lg:col-span-8">
         <WriterWorkCard :writer-works="writerWorks" />

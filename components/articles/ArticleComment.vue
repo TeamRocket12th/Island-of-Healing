@@ -14,6 +14,14 @@ const props = defineProps({
     type: Array as () => Comment[],
     required: true
   },
+  articleId: {
+    type: String,
+    required: true
+  },
+  userId: {
+    type: String,
+    required: true
+  },
   getArticleDetail: {
     type: Function,
     required: true
@@ -70,7 +78,7 @@ const updateComment = async (id: number) => {
     if (res.StatusCode === 200) {
       alert(res.Message)
       editingId.value = null
-      props.getArticleDetail()
+      props.getArticleDetail(props.articleId, props.userId)
     }
   } catch (error: any) {
     console.log(error.response)
@@ -94,7 +102,7 @@ const delComment = async (id: number) => {
     console.log(res)
     if (res.StatusCode === 200) {
       alert(res.Message)
-      props.getArticleDetail()
+      props.getArticleDetail(props.articleId, props.userId)
     }
   } catch (error: any) {
     console.log(error.response)

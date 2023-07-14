@@ -120,6 +120,7 @@ const getAllArticles = async (page = '1') => {
   changeNowPage(page)
   scrollTop()
   const { data, error } = await useFetch<ApiResponse>(`${apiBase}/readallarticles`, {
+    key: 'getAllArticles',
     headers: {
       'Content-type': 'application/json'
     },

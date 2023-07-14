@@ -1,9 +1,18 @@
+// 追蹤/取消追蹤作家
 export const useWriterActions = () => {
   const runtimeConfig = useRuntimeConfig()
   const apiBase = runtimeConfig.public.apiBase
   const userToken = useCookie('token')
 
-  const followWriter = async (id: number, refresh: () => Promise<void>) => {
+  // SecondId 在重新取得文章時，帶入文章ID
+  // SecondId 在重新取得作家資訊時，帶入作家ID
+
+  const followWriter = async (
+    id: number,
+    secondId: string,
+    userId: string,
+    refresh: (secondId: string, userId: string) => Promise<void>
+  ) => {
     if (!userToken.value) {
       alert('請先登入')
       return
@@ -19,14 +28,19 @@ export const useWriterActions = () => {
       console.log(res)
       if (res.StatusCode === 200) {
         alert(res.Message)
-        refresh()
+        refresh(secondId, userId)
       }
     } catch (error: any) {
       console.log(error.response)
     }
   }
 
-  const unFollowWriter = async (id: number, refresh: () => Promise<void>) => {
+  const unFollowWriter = async (
+    id: number,
+    secondId: string,
+    userId: string,
+    refresh: (secondId: string, userId: string) => Promise<void>
+  ) => {
     if (!userToken.value) {
       alert('請先登入')
       return
@@ -42,7 +56,7 @@ export const useWriterActions = () => {
       console.log(res)
       if (res.StatusCode === 200) {
         alert(res.Message)
-        refresh()
+        refresh(secondId, userId)
       }
     } catch (error: any) {
       console.log(error.response)
