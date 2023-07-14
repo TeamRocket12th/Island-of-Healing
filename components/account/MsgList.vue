@@ -9,7 +9,6 @@ const props = defineProps({
 
 const showSmWindow = ref(false)
 const selectedId = ref(props.messages[0].id)
-console.log(selectedId.value)
 
 const emits = defineEmits(['get-msg', 'toggle-smwindow'])
 const selectMsg = (id: number) => {

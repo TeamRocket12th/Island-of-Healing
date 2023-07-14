@@ -12,8 +12,8 @@ const { formatDate } = useDateFormat()
 <template>
   <div>
     <div>
-      <ul class="grid grid-cols-3 gap-6">
-        <li v-for="item in articles" :key="item.Id" class="col-span-1 border">
+      <ul class="grid-cols-2 gap-6 sm:grid md:grid-cols-3">
+        <li v-for="item in articles" :key="item.Id" class="col-span-1 mb-6 border sm:mb-0">
           <NuxtLink :to="`/article/${item.Id}`">
             <div class="h-[157px] overflow-hidden">
               <img :src="item.ArticleImgUrl" alt="cover-photo" class="h-full w-full object-cover" />

@@ -61,6 +61,7 @@ declare global {
     Initdate: string
     Tags: string[]
     Category: string
+    Summary: string
   }
 
   // 文章摘要

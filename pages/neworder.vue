@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const route = useRoute()
-console.log(route.query.status)
 
 onMounted(() => {
   if (route.query.status === 'success') {
