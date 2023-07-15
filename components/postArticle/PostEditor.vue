@@ -98,7 +98,6 @@ onMounted(() => {
         }
       }),
       Text,
-
       Image.configure({
         allowBase64: true
       }),
@@ -488,7 +487,6 @@ blockquote {
 .ProseMirror {
   outline: none;
   overflow-y: scroll;
-  padding: 8px;
 }
 
 .custom-bullet-list {

@@ -9,5 +9,8 @@ export const useArticle = defineStore('article', () => {
     Progress: 0
   })
 
-  return { article }
+  const previewImage = ref('')
+  const selectedImage = ref('')
+
+  return { article, previewImage, selectedImage }
 })

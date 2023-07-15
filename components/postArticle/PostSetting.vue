@@ -70,7 +70,6 @@ const textLengthRule = (value: string) => {
 }
 
 const formData = new FormData()
-const selectedImage = ref<string>('')
 const fileInput = ref<HTMLInputElement | null>(null)
 
 // 點擊取得本機圖片
@@ -79,12 +78,12 @@ const openFilePicker = (): void => {
 }
 
 const selectFile = (event: Event) => {
-  previewImage.value = ''
+  articleUse.previewImage = ''
   const file: any = (event.target as HTMLInputElement).files?.[0]
   if (file) {
     const reader = new FileReader()
     reader.onload = () => {
-      selectedImage.value = reader.result as string
+      articleUse.selectedImage = reader.result as string
     }
     reader.readAsDataURL(file)
   }
@@ -96,19 +95,18 @@ const selectFile = (event: Event) => {
   // console.log(formData.get('articleCover'))
 }
 
-const previewImage = ref<string | null>(null)
 const handleDragOver = (event: DragEvent) => {
   event.preventDefault()
 }
 // 拖曳取得本機圖片
 const handleDrop = (event: DragEvent) => {
   event.preventDefault()
-  selectedImage.value = ''
+  articleUse.selectedImage = ''
   const file: File = event.dataTransfer!.files[0]
   const reader = new FileReader()
   // sentArticleCoverImg(formData)
   reader.onload = () => {
-    previewImage.value = reader.result as string
+    articleUse.previewImage = reader.result as string
   }
   reader.readAsDataURL(file)
   if (formData.get('articleCover')) {
@@ -142,7 +140,7 @@ const postArticle = async () => {
       articleUse.article.Summary = ''
       selectedCategory.value = '個人成長'
       selectedOption.value = '免費'
-      selectedImage.value = ''
+      articleUse.selectedImage = ''
       articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
 
       if (formData.get('articleCover')) {
@@ -174,7 +172,7 @@ const updateArticle = async () => {
       articleUse.article.Summary = ''
       articleUse.article.ArticlesClassId = 1
       selectedOption.value = '免費'
-      selectedImage.value = ''
+      articleUse.selectedImage = ''
       articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
 
       if (formData.get('articleCover')) {
@@ -269,16 +267,16 @@ onMounted(() => {
     }
     // console.log(props.articleData.ImgUrl)
     if (props.articleData.ImgUrl !== '') {
-      selectedImage.value = props.articleData.ImgUrl
+      articleUse.selectedImage = props.articleData.ImgUrl
     } else {
-      selectedImage.value = ''
+      articleUse.selectedImage = ''
     }
   }
 })
 
 const photoAlert = ref(true)
 watchEffect(() => {
-  if (selectedImage.value !== '' || previewImage.value !== null) {
+  if (articleUse.selectedImage !== '' || articleUse.previewImage !== null) {
     photoAlert.value = false
   } else {
     photoAlert.value = true
@@ -306,14 +304,14 @@ watchEffect(() => {
               <div>
                 <div
                   class="relative h-[200px] max-w-full overflow-hidden bg-sand-200 bg-cover bg-center"
-                  :style="{ backgroundImage: `url(${previewImage})` }"
+                  :style="{ backgroundImage: `url(${articleUse.previewImage})` }"
                   @dragover.prevent="handleDragOver"
                   @drop.prevent="handleDrop"
                 >
                   <img
-                    v-if="selectedImage"
+                    v-if="articleUse.selectedImage"
                     class="pointer-events-none h-[200px] w-full"
-                    :src="selectedImage"
+                    :src="articleUse.selectedImage"
                     alt="Selected Image"
                   />
                   <input ref="fileInput" type="file" style="display: none" @change="selectFile" />
