@@ -29,7 +29,11 @@ const getAllArticles = async (page = '1') => {
     console.log(error.value)
   }
 }
-onMounted(getAllArticles)
+onMounted(() => {
+  nextTick(() => {
+    getAllArticles('1')
+  })
+})
 </script>
 <template>
   <section class="container mb-6">
