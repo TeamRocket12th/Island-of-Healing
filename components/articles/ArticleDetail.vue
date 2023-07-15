@@ -24,8 +24,6 @@ const {
   getArticleDetail
 } = useArticleDetail()
 
-console.log(isLock.value)
-
 onMounted(() => {
   nextTick(() => {
     getArticleDetail(articleId, userId)
@@ -73,7 +71,7 @@ const markArticleAsRead = async (id: number) => {
   }
 }
 
-const keepReading = (id) => {
+const keepReading = (id: number) => {
   if (!isLogin.value) {
     alert('需要先登入才能閱讀文章喔')
   } else if (userData.value.myPlan === 'free' && articleDetail.value!.Pay) {
@@ -125,7 +123,6 @@ const addComment = async (id: number, articleId: string, userId: string) => {
     console.log(error.response)
   }
 }
-console.log(isLogin.value)
 
 const { followWriter, unFollowWriter } = useWriterActions()
 </script>

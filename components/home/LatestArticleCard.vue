@@ -3,37 +3,56 @@ import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 
 const { userData } = storeToRefs(useUserStore())
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+// const runtimeConfig = useRuntimeConfig()
+// const apiBase = runtimeConfig.public.apiBase
 const articles = ref<ArticleCard[]>([])
 const { formatDate } = useDateFormat()
 
-const getAllArticles = async (page = '1') => {
-  const { data, error } = await useFetch<ApiResponse>(`${apiBase}/readallarticles`, {
-    key: 'getAllArticles',
-    headers: {
-      'Content-type': 'application/json'
-    },
-    method: 'POST',
-    body: {
-      Page: page,
-      UserId: userData.value.id || '0'
-    }
-  })
-  console.log(data.value)
+// const getAllArticles = async (page = '1') => {
+//   const { data, error } = await useFetch<ApiResponse>(`${apiBase}/readallarticles`, {
+//     key: 'getAllArticles',
+//     headers: {
+//       'Content-type': 'application/json'
+//     },
+//     method: 'POST',
+//     body: {
+//       Page: page,
+//       UserId: userData.value.id || '0'
+//     }
+//   })
+//   console.log(data.value)
 
-  if (data.value!.StatusCode === 200) {
-    articles.value = data.value!.LatestArticleData
+//   if (data.value!.StatusCode === 200) {
+//     articles.value = data.value!.LatestArticleData
+//   }
+//   if (error.value) {
+//     console.log(error.value)
+//   }
+// }
+
+// onMounted(() => {
+//   nextTick(() => {
+//     getAllArticles('1')
+//   })
+// })
+
+const { data } = await useFetch<ApiResponse>('/api/allarticles', {
+  headers: {
+    'Content-type': 'application/json'
+  },
+  method: 'POST',
+  body: {
+    Page: 1,
+    UserId: userData.value.id || '0'
   }
-  if (error.value) {
-    console.log(error.value)
-  }
-}
-onMounted(() => {
-  nextTick(() => {
-    getAllArticles('1')
-  })
 })
+
+if (data.value!.StatusCode === 200) {
+  console.log(data.value)
+  articles.value = data.value!.LatestArticleData
+} else {
+  console.error(data.value!._data.Message)
+}
 </script>
 <template>
   <section class="container mb-6">
@@ -42,39 +61,44 @@ onMounted(() => {
         <h2 class="font-serif-tc text-4xl font-bold text-primary">最新文章</h2>
         <div class="h-[0.5px] w-[150px] bg-primary"></div>
       </div>
-      <SearchInput class="hidden sm:block" />
+      <ClientOnly>
+        <SearchInput class="hidden sm:block" />
+      </ClientOnly>
     </div>
-    <ul class="mb-3 grid-cols-12 gap-4 md:grid">
-      <li
-        v-for="article in articles"
-        :key="article.Id"
-        class="mb-3 flex h-auto grow flex-col p-4 md:col-span-6 lg:col-span-4"
-      >
-        <div class="flex w-full justify-between">
-          <div class="flex flex-col">
-            <div class="mb-1 flex">
-              <h3 class="font-serif-tc font-semibold text-primary">{{ article.Category }}</h3>
+    <ClientOnly>
+      <ul class="mb-3 grid-cols-12 gap-4 md:grid">
+        <li
+          v-for="article in articles"
+          :key="article.Id"
+          class="mb-3 flex h-auto grow flex-col p-4 md:col-span-6 lg:col-span-4"
+        >
+          <div class="flex w-full justify-between">
+            <div class="flex flex-col">
+              <div class="mb-1 flex">
+                <h3 class="font-serif-tc font-semibold text-primary">{{ article.Category }}</h3>
+              </div>
+              <p class="mb-3 font-serif-tc text-sm font-light text-[#828282] sm:text-primary-dark">
+                {{ formatDate(article.Initdate) }}
+              </p>
             </div>
-            <p class="mb-3 font-serif-tc text-sm font-light text-[#828282] sm:text-primary-dark">
-              {{ formatDate(article.Initdate) }}
-            </p>
           </div>
-        </div>
-        <NuxtLink :to="`article/${article.Id}`">
-          <div class="flex flex-col">
-            <div class="mb-3 h-[267px] max-w-full">
-              <img
-                :src="article.ArticleImgUrl"
-                alt="article-cover"
-                class="h-full w-full object-cover"
-              />
+          <NuxtLink :to="`article/${article.Id}`">
+            <div class="flex flex-col">
+              <div class="mb-3 h-[267px] max-w-full">
+                <img
+                  :src="article.ArticleImgUrl"
+                  alt="article-cover"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+              <h4 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ article.Title }}</h4>
+              <p class="flex-grow font-light text-primary-dark">{{ article.Summary }}</p>
             </div>
-            <h4 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ article.Title }}</h4>
-            <p class="flex-grow font-light text-primary-dark">{{ article.Summary }}</p>
-          </div>
-        </NuxtLink>
-      </li>
-    </ul>
+          </NuxtLink>
+        </li>
+      </ul>
+    </ClientOnly>
+
     <div class="flex justify-center">
       <NuxtLink to="/article" class="font-serif-tc text-xl font-semibold text-primary">
         <div class="flex items-center">
