@@ -15,7 +15,7 @@ const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 // 追蹤作家
-const followWriter = async (id: number, writerInfo: Writer[]) => {
+const followWriter = async (id: number, writer: Writer) => {
   if (!userToken.value) {
     alert('請先登入')
     return
@@ -31,10 +31,7 @@ const followWriter = async (id: number, writerInfo: Writer[]) => {
     console.log(res)
     if (res.StatusCode === 200) {
       alert(res.Message)
-      const writer = writerInfo.find((writer: Writer) => writer.WriterId === id)
-      if (writer) {
-        writer.IsFollowing = true
-      }
+      writer.IsFollowing = !writer.IsFollowing
     }
   } catch (error: any) {
     console.log(error.response)
@@ -42,7 +39,7 @@ const followWriter = async (id: number, writerInfo: Writer[]) => {
 }
 
 // 取消追蹤作家
-const unFollowWriter = async (id: number, writerInfo: Writer[]) => {
+const unFollowWriter = async (id: number, writer: Writer) => {
   if (!userToken.value) {
     alert('請先登入')
     return
@@ -58,12 +55,7 @@ const unFollowWriter = async (id: number, writerInfo: Writer[]) => {
     console.log(res)
     if (res.StatusCode === 200) {
       alert(res.Message)
-
-      const writer = writerInfo.find((writer: Writer) => writer.WriterId === id)
-      console.log(writer)
-      if (writer) {
-        writer.IsFollowing = false
-      }
+      writer.IsFollowing = !writer.IsFollowing
     }
   } catch (error: any) {
     console.log(error.response)
@@ -97,14 +89,14 @@ const unFollowWriter = async (id: number, writerInfo: Writer[]) => {
         <button
           v-if="writer.IsFollowing"
           class="flex items-center whitespace-nowrap rounded border bg-secondary px-2 py-1 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-          @click="unFollowWriter(writer.WriterId, writerInfo)"
+          @click="unFollowWriter(writer.WriterId, writer)"
         >
           <Icon name="material-symbols:fitbit-check-small" size="20" />追蹤中
         </button>
         <button
           v-else
           class="flex items-center whitespace-nowrap rounded border bg-secondary px-2 py-1 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-          @click="followWriter(writer.WriterId, writerInfo)"
+          @click="followWriter(writer.WriterId, writer)"
         >
           <Icon name="ic:baseline-plus" size="20" />追蹤
         </button>
