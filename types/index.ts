@@ -97,8 +97,8 @@ declare global {
     UserCollect: boolean
     UserLike: boolean
     WriterNickName: string
-    Category: string
-    Summary: string
+    Category?: string
+    Summary?: string
   }
 
   // 文章留言
