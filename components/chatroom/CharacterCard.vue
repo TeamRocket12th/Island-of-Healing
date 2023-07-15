@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
+
+const { isLogin } = storeToRefs(useUserStore())
+const router = useRouter()
 defineProps({
   c: {
     type: Object,
@@ -6,6 +11,15 @@ defineProps({
   }
 })
 const showDesc = ref(false)
+
+const checkIsLogin = (roleId: string) => {
+  if (!isLogin.value) {
+    alert('請先登入才能聊天喔')
+    router.push('/login')
+  } else {
+    router.push(`/chatroom/${roleId}`)
+  }
+}
 </script>
 
 <template>
@@ -29,11 +43,13 @@ const showDesc = ref(false)
         {{ c.desc }}
       </p>
       <div class="pt-6">
-        <NuxtLink :to="`/chatroom/${c.id}`">
-          <button class="btn-orange px-4 py-3 text-xl font-medium text-white hover:scale-110">
-            開始聊天
-          </button>
-        </NuxtLink>
+        <button
+          type="button"
+          class="btn-orange px-4 py-3 text-xl font-medium text-white hover:scale-110"
+          @click="checkIsLogin(c.id)"
+        >
+          開始聊天
+        </button>
       </div>
     </div>
   </div>
