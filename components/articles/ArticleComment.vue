@@ -179,7 +179,7 @@ const delComment = async (id: number) => {
                 <EmojiPicker
                   v-if="showEmojiPicker"
                   ref="emojiPicker"
-                  class="absolute right-[10px] top-8"
+                  class="absolute right-[10px] top-8 z-[60]"
                   @select="insertEmoji"
                 />
               </ClientOnly>

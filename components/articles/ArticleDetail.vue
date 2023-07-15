@@ -299,7 +299,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
             ><Icon
               name="ic:outline-sentiment-satisfied-alt"
               size="20"
-              class="absolute right-[10px] top-[10px] text-secondary hover:text-primary"
+              class="absolute right-[10px] top-[10px] z-50 text-secondary hover:text-primary"
           /></span>
           <ClientOnly>
             <EmojiPicker
