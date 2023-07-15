@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     autoImports: ['defineStore', ['defineStore', 'definePiniaStore']]
   },
   build: {
-    transpile: [/echarts/]
+    transpile: [/echarts/, '@vee-validate/rules']
   },
   components: [
     {

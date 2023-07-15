@@ -33,6 +33,8 @@ const steps = {
 
 const step = ref('step1')
 const currentStep = ref(1)
+const stepsKey = step.value as 'step1' | 'step2' | 'step3' | 'step4'
+
 const nextStep = () => {
   const currentStepIndex = Object.keys(steps).indexOf(step.value)
   const nextStepIndex = currentStepIndex + 1
@@ -65,7 +67,7 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
     <div class="flex border-[0.5px] border-sand-300">
       <div class="w-[55%] px-6 pb-12 pt-24">
         <h3 class="mb-4 block pl-1 text-xl font-medium text-primary-dark">
-          {{ steps[`${step}`].title }}
+          {{ steps[`${stepsKey}`].title }}
         </h3>
         <div class="mb-5 h-[430px] overflow-y-hidden">
           <img :src="imageUrl" alt="成為作家" />
