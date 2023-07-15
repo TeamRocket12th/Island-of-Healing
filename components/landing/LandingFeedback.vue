@@ -79,7 +79,7 @@ const feedBacks2 = [
 <template>
   <div class="bg-sand-100">
     <div class="relative py-10 sm:py-20">
-      <div class="mb-20 px-10 text-center text-primary">
+      <div class="mb-20 px-10 text-center text-primary" data-aos="fade-up">
         <h3 class="mb-4 text-[40px] font-bold">50,000+位人氣作家推薦</h3>
         <p class="text-2xl font-[350]">還在等什麼！快跟其他創作者一起體驗 展開內容創作之旅</p>
       </div>
@@ -90,6 +90,7 @@ const feedBacks2 = [
         class="absolute right-0 hidden w-[400px] bg-gradient-to-l from-sand-100 xl:block xl:h-[600px]"
       ></span>
       <ul
+        data-aos="fade-right"
         class="line-1 mb-4 flex flex-col justify-between gap-4 overflow-hidden md:flex-row md:px-10 xl:flex-nowrap xl:px-0"
       >
         <li
@@ -114,6 +115,7 @@ const feedBacks2 = [
         </li>
       </ul>
       <ul
+        data-aos="fade-left"
         class="line-2 mb-10 hidden flex-col justify-between gap-4 overflow-hidden xl:flex xl:flex-row"
       >
         <li
