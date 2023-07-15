@@ -1,15 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt'],
-  typescript: {
-    typeCheck: true
-  },
+  // typescript: {
+  //   typeCheck: true
+  // },
   css: ['@/assets/css/main.css'],
   pinia: {
     autoImports: ['defineStore', ['defineStore', 'definePiniaStore']]
   },
   build: {
-    transpile: [/echarts/]
+    transpile: [/echarts/, '@vee-validate/rules']
   },
   components: [
     {
