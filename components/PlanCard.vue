@@ -1,25 +1,42 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+useHead({
+  link: [
+    {
+      rel: 'stylesheet',
+      href: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
+    }
+  ],
+  script: [
+    {
+      src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js',
+      async: true
+    }
+  ]
+})
+</script>
 
 <template>
   <div class="bg-gradient-to-b from-[#FAF9F3] to-[#FFFFFF]">
     <section class="container py-10 lg:py-[100px] xl:py-[124px]">
       <h3
-        class="mb-4 text-center text-4xl font-bold leading-[54px] text-primary 3xl:mb-8 3xl:text-[64px]"
+        class="animate__animated animate__slideInLeft mb-4 text-center text-4xl font-bold leading-[54px] text-primary 3xl:mb-8 3xl:text-[64px]"
       >
         <div class="lg:inline">享⁠受⁠零⁠廣⁠告⁠干⁠擾⁠的</div>
         <div class="lg:inline">⁠閱讀⁠體⁠驗</div>
       </h3>
-      <p class="mb-8 px-12 text-center text-primary lg:text-2xl">
+      <p
+        class="animate__animated animate__slideInRight mb-8 px-12 text-center text-primary lg:text-2xl"
+      >
         讓我們一起啟程，發現內在的力量和自由，愛上生活的潛力。
       </p>
       <button
-        class="btn-active btn mx-auto mb-10 block h-[60px] w-[180px] rounded bg-secondary px-4 py-3 text-2xl font-medium text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white xl:mb-[84px] 3xl:mb-[84px]"
+        class="animate__animated animate__slideInUp btn-active btn z-10 mx-auto mb-10 block h-[60px] w-[180px] rounded bg-secondary px-4 py-3 text-2xl font-medium text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white xl:mb-[84px] 3xl:mb-[84px]"
       >
         立即註冊
       </button>
       <img
         src="~/assets/images/plancard/work-work-from-home-01.svg"
-        class="mx-auto w-[402px] xl:w-[600px]"
+        class="animate__animated animate__fadeInDown mx-auto w-[402px] xl:w-[600px]"
         alt=""
       />
     </section>
@@ -27,11 +44,15 @@
   <div class="bg-white">
     <section class="container py-10 pb-[100px] lg:py-[100px] xl:py-[124px]">
       <h3
+        data-aos="fade-right"
         class="mb-10 text-center text-4xl font-bold leading-[54px] text-primary 3xl:mb-8 3xl:text-5xl"
       >
         加入會員有什麼好處？
       </h3>
-      <ul class="grid grid-flow-col grid-rows-3 gap-4 lg:grid-rows-1 3xl:gap-[110px]">
+      <ul
+        class="grid grid-flow-col grid-rows-3 gap-4 lg:grid-rows-1 3xl:gap-[110px]"
+        data-aos="fade-left"
+      >
         <li class="flex flex-col items-center justify-between">
           <div class="relative h-[300px] w-[330px]">
             <img
@@ -40,7 +61,9 @@
               class="absolute bottom-0 mb-3"
             />
           </div>
-          <p class="text-xl font-bold text-primary">⁠零⁠廣⁠告⁠干⁠擾⁠的⁠閱讀⁠體⁠驗</p>
+          <p class="text-xl font-bold text-primary" data-aos="fade-up">
+            ⁠零⁠廣⁠告⁠干⁠擾⁠的⁠閱讀⁠體⁠驗
+          </p>
         </li>
         <li class="flex flex-col items-center justify-between">
           <div class="relative h-[300px] w-[330px]">
@@ -50,7 +73,7 @@
               class="absolute bottom-0 mb-3"
             />
           </div>
-          <p class="text-xl font-bold text-primary">無限使用AI相談室</p>
+          <p class="text-xl font-bold text-primary" data-aos="fade-up">無限使用AI相談室</p>
         </li>
         <li class="flex flex-col items-center justify-between">
           <div class="relative h-[300px] w-[330px]">
@@ -60,13 +83,13 @@
               class="absolute bottom-0 mb-3"
             />
           </div>
-          <p class="text-xl font-bold text-primary">提供交流和支持的社群</p>
+          <p class="text-xl font-bold text-primary" data-aos="fade-up">提供交流和支持的社群</p>
         </li>
       </ul>
     </section>
   </div>
   <div class="container py-10 lg:py-[100px] xl:py-[124px]">
-    <div class="mb-10 text-center lg:mb-20">
+    <div class="mb-10 text-center lg:mb-20" data-aos="fade-up">
       <h2 class="mb-4 text-4xl font-bold text-primary 3xl:text-5xl">選擇適合你的閱讀方案</h2>
       <h3 class="text-secondary">
         <div class="lg:inline">在你的移動設備、電腦和其他裝置上盡情</div>
@@ -75,6 +98,7 @@
     </div>
     <div class="flex flex-col-reverse gap-6 md:grid md:grid-cols-12">
       <div
+        data-aos="fade-right"
         class="col-span-full flex h-[560px] flex-col items-center justify-center rounded-lg bg-white text-primary shadow-[0_2px_20px_2px_rgba(0,0,0,0.05)] md:col-span-6 lg:col-span-5 lg:col-start-2 xl:col-span-4 xl:col-start-3"
       >
         <div class="mb-6 flex items-baseline">
@@ -113,6 +137,7 @@
         </button>
       </div>
       <div
+        data-aos="fade-left"
         class="shadow-top col-span-full flex h-[560px] flex-col items-center justify-center rounded-lg bg-white text-primary shadow-[0_2px_20px_2px_rgba(0,0,0,0.05)] md:col-span-6 lg:col-span-5 lg:col-start-7 xl:col-span-4"
       >
         <div class="mb-6 flex items-baseline">
@@ -152,7 +177,7 @@
     </div>
   </div>
   <div class="bg-white">
-    <section class="container py-10 pb-[100px] lg:py-[100px] xl:py-[124px]">
+    <section class="container py-10 pb-[100px] lg:py-[100px] xl:py-[124px]" data-aos="fade-up">
       <h3
         class="mb-10 text-center text-4xl font-bold leading-[54px] text-primary 3xl:mb-8 3xl:text-5xl"
       >

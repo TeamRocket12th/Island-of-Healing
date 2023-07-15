@@ -1,15 +1,21 @@
 <script setup lang="ts"></script>
 <template>
   <section class="container mb-10 lg:mb-[66px]">
-    <h3 class="mb-5 text-center text-4xl font-bold text-primary-dark lg:mb-4 lg:text-4xl-plus">
+    <h3
+      class="mb-5 text-center text-4xl font-bold text-primary-dark lg:mb-4 lg:text-4xl-plus"
+      data-aos="fade-up"
+    >
       強大而直觀的寫作工具
     </h3>
-    <p class="mb-12 text-center text-base font-[350px] text-primary-dark lg:mb-[100px] lg:text-2xl">
+    <p
+      class="mb-12 text-center text-base font-[350px] text-primary-dark lg:mb-[100px] lg:text-2xl"
+      data-aos="fade-up"
+    >
       讓您專注於創作，輕鬆實現您的想法和故事。
     </p>
     <div class="flex flex-wrap gap-[37px] lg:flex-nowrap">
       <div class="order-2 w-full lg:order-1 lg:w-1/3">
-        <div class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3">
+        <div class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3" data-aos="fade-right">
           <div class="flex justify-center lg:block">
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] border-secondary bg-sand-200"
@@ -26,7 +32,7 @@
             </p>
           </div>
         </div>
-        <div class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3">
+        <div class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3" data-aos="fade-right">
           <div class="flex justify-center lg:block">
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] border-secondary bg-sand-200"
@@ -43,7 +49,7 @@
             </p>
           </div>
         </div>
-        <div class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3">
+        <div class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3" data-aos="fade-right">
           <div class="flex justify-center lg:block">
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] bg-sand-200"
@@ -62,13 +68,20 @@
         </div>
       </div>
       <div
+        data-aos="fade-left"
+        data-aos-anchor-placement="center-bottom"
         class="order-1 w-full rounded border-[0.5px] border-primary bg-sand-100 p-[1px] lg:order-2 lg:w-2/3"
         style="
           box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
         "
       >
         <video class="video1 w-full" autoplay loop>
-          <source src="~/assets/video.mp4" type="video/mp4" />
+          <source
+            src="~/assets/video.mp4"
+            type="video/mp4"
+            data-aos="fade-left"
+            data-aos-anchor-placement="center-bottom"
+          />
         </video>
       </div>
     </div>

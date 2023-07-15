@@ -17,6 +17,12 @@ export default defineNuxtConfig({
       pathPrefix: false
     }
   ],
+  plugins: [
+    {
+      src: '~/plugins/aos.client.ts',
+      mode: 'client'
+    }
+  ],
   runtimeConfig: {
     apiKey: process.env.CHATGPT_API_KEY,
     public: {
