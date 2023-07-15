@@ -24,6 +24,8 @@ const {
   getArticleDetail
 } = useArticleDetail()
 
+console.log(isLock.value)
+
 onMounted(() => {
   nextTick(() => {
     getArticleDetail(articleId, userId)
@@ -71,11 +73,13 @@ const markArticleAsRead = async (id: number) => {
   }
 }
 
-const keepReading = () => {
+const keepReading = (id) => {
   if (!isLogin.value) {
     alert('需要先登入才能閱讀文章喔')
   } else if (userData.value.myPlan === 'free' && articleDetail.value!.Pay) {
     alert('請先訂閱我們')
+  } else {
+    markArticleAsRead(id)
   }
 }
 
@@ -121,6 +125,7 @@ const addComment = async (id: number, articleId: string, userId: string) => {
     console.log(error.response)
   }
 }
+console.log(isLogin.value)
 
 const { followWriter, unFollowWriter } = useWriterActions()
 </script>
@@ -129,7 +134,9 @@ const { followWriter, unFollowWriter } = useWriterActions()
     <span v-if="articleDetail.Pay && !isRead" class="mb-3 flex items-center gap-1 text-primary-dark"
       ><Icon name="material-symbols:lock-outline" size="16" /> 付費限定文章</span
     >
-    <span v-else class="mb-3 flex items-center gap-1 text-primary-dark"
+    <span
+      v-else-if="articleDetail.Pay && isRead"
+      class="mb-3 flex items-center gap-1 text-primary-dark"
       ><Icon name="material-symbols:lock-open-outline" size="16" /> 文章已解鎖</span
     >
     <div class="mb-5 flex items-center justify-between">
@@ -161,17 +168,17 @@ const { followWriter, unFollowWriter } = useWriterActions()
       </div>
       <div v-if="isLock && !isRead" class="flex justify-center">
         <button
-          v-if="userData.myPlan === 'free' && articleDetail.Pay"
+          v-if="userData.myPlan === 'free' && isLock"
           class="font-sm flex transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
-          @click="keepReading"
+          @click="keepReading(articleDetail.Id)"
         >
           <span class="pb-1"><Icon name="ic:outline-paid" size="18" /></span>
           <span>付費解鎖</span>
         </button>
         <button
-          v-else
+          v-if="!isRead && isLock"
           class="font-sm flex transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
-          @click="markArticleAsRead(articleDetail.Id)"
+          @click="keepReading(articleDetail.Id)"
         >
           <span class="pb-1"
             ><Icon name="material-symbols:arrow-circle-down-outline" size="18"

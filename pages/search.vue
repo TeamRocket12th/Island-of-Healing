@@ -12,7 +12,7 @@ const { userData } = storeToRefs(useUserStore())
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const route = useRoute()
-const userId = String(userData.value.id) || '0'
+const userId = userData.value.id ? String(userData.value.id) : '0'
 
 const dataLoaded = ref(false)
 const searchArticles = ref<ArticleCard[]>([])
