@@ -205,7 +205,7 @@ watch(category, (newVal, oldVal) => {
 </script>
 
 <template>
-  <section class="bg-sand-100">
+  <section>
     <div class="container">
       <div class="grid-cols-12 gap-6 border-primary pb-40 pt-10 sm:border-t md:grid">
         <div v-if="category !== 'all'" class="col-span-full lg:col-span-9">

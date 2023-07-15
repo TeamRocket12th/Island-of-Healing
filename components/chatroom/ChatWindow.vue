@@ -59,7 +59,7 @@ onUpdated(() => {
 </script>
 
 <template>
-  <section class="container py-10">
+  <section class="animate-fadein container py-10">
     <div class="grid-cols-12 sm:grid">
       <div class="col-span-8 col-start-3">
         <div class="relative rounded-md">
@@ -98,5 +98,19 @@ onUpdated(() => {
 <style scoped>
 ::-webkit-scrollbar {
   display: none;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fadein {
+  animation-name: fadein;
+  animation-duration: 0.6s;
+  animation-fill-mode: both;
 }
 </style>
