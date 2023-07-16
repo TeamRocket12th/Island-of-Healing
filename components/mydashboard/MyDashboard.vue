@@ -4,32 +4,79 @@ import { CanvasRenderer } from 'echarts/renderers'
 import { LineChart } from 'echarts/charts'
 import { TitleComponent, TooltipComponent, LegendComponent } from 'echarts/components'
 import VChart from 'vue-echarts'
+import { storeToRefs } from 'pinia'
+import { myWorkStore } from '~/stores/mywork'
 
-defineProps({
-  writerStats: {
-    type: Object as () => WriterStats,
-    required: true
-  }
-})
+const { overviewYear, overviewMonth } = storeToRefs(myWorkStore())
+const { getOverViewYear, getOverViewMonth } = myWorkStore()
+
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+const userToken = useCookie('token')
 
 use([CanvasRenderer, LineChart, TitleComponent, TooltipComponent, LegendComponent])
 
 const incomeView = ref('month')
 
+// 追蹤人數
+const followMonths = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+]
+
+const followYears = ['2020', '2021', '2022', '2023']
+const followYearIndex = ref(followYears.length - 1)
+
+const followerOverview = ref<FollowerOverview | null>(null)
+const chartMonths = ref<number[]>([])
+const chartMonthIndex = ref(11)
+
+const goNextYear = () => {
+  if (followYearIndex.value !== followYears.length - 1) {
+    followYearIndex.value += 1
+  }
+}
+
+const goPrevYear = () => {
+  if (followYearIndex.value !== 0) {
+    followYearIndex.value -= 1
+  }
+}
+
 const option = ref({
   xAxis: {
-    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+    triggerEvent: true
   },
-  yAxis: {},
+  yAxis: {
+    minInterval: 1
+  },
   series: [
     {
-      data: [20, 15, 30, 20, 30, 33, 38, 25, 33, 24, 20, 15],
+      data: chartMonths.value,
       type: 'line',
       areaStyle: {
         color: '#3354F4',
         opacity: 0.4
       },
-      smooth: true
+      smooth: true,
+      markLine: {
+        silent: true, // 使markLine不觸發事件
+        lineStyle: {
+          color: 'red' // 提示線的顏色
+        },
+        data: []
+      }
     }
   ],
   tooltip: {
@@ -38,173 +85,41 @@ const option = ref({
   }
 })
 
-// 追蹤人數
-const followers = [
-  {
-    year: '2021',
-    monthly: [
-      {
-        month: '1月',
-        followersCount: 20
-      },
-      {
-        month: '2月',
-        followersCount: 20
-      },
-      {
-        month: '3月',
-        followersCount: 20
-      },
-      {
-        month: '4月',
-        followersCount: 20
-      },
-      {
-        month: '5月',
-        followersCount: 20
-      },
-      {
-        month: '6月',
-        followersCount: 20
-      },
-      {
-        month: '7月',
-        followersCount: 30
-      },
-      {
-        month: '8月',
-        followersCount: 70
-      },
-      {
-        month: '9月',
-        followersCount: 60
-      },
-      {
-        month: '10月',
-        followersCount: 40
-      },
-      {
-        month: '11月',
-        followersCount: 30
-      },
-      {
-        month: '12月',
-        followersCount: 50
-      }
-    ]
-  },
-  {
-    year: '2022',
-    monthly: [
-      {
-        month: '1月',
-        followersCount: 20
-      },
-      {
-        month: '2月',
-        followersCount: 20
-      },
-      {
-        month: '3月',
-        followersCount: 20
-      },
-      {
-        month: '4月',
-        followersCount: 20
-      },
-      {
-        month: '5月',
-        followersCount: 20
-      },
-      {
-        month: '6月',
-        followersCount: 20
-      },
-      {
-        month: '7月',
-        followersCount: 30
-      },
-      {
-        month: '8月',
-        followersCount: 70
-      },
-      {
-        month: '9月',
-        followersCount: 60
-      },
-      {
-        month: '10月',
-        followersCount: 40
-      },
-      {
-        month: '11月',
-        followersCount: 30
-      },
-      {
-        month: '12月',
-        followersCount: 50
-      }
-    ]
-  },
-  {
-    year: '2023',
-    monthly: [
-      {
-        month: '1月',
-        followersCount: 10
-      },
-      {
-        month: '2月',
-        followersCount: 30
-      },
-      {
-        month: '3月',
-        followersCount: 30
-      },
-      {
-        month: '4月',
-        followersCount: 30
-      },
-      {
-        month: '5月',
-        followersCount: 40
-      },
-      {
-        month: '6月',
-        followersCount: 80
-      },
-      {
-        month: '7月',
-        followersCount: 70
-      },
-      {
-        month: '8月',
-        followersCount: 60
-      }
-    ]
-  }
-]
-// 當前選中的年份索引
-const currentYearIndex = ref(followers.length - 1)
-console.log(currentYearIndex.value)
-
-// 是否有上一年
-const hasPrevYear = computed(() => currentYearIndex.value > 0)
-
-// 是否有下一年
-const hasNextYear = computed(() => currentYearIndex.value < followers.length - 1)
-
-const getPrevYearFollowers = () => {
-  if (currentYearIndex.value !== 0) {
-    currentYearIndex.value -= 1
+const handleClick = (params: any) => {
+  console.log(params)
+  if (params.componentType === 'xAxis') {
+    chartMonthIndex.value = params.dataIndex // 更新當前選擇的月份
+    // if (chartRef.value) {
+    //   chartRef.value.dispatchAction({
+    //     type: 'markLine',
+    //     seriesIndex: 0, // 對應到series中的索引
+    //     dataIndex: params.dataIndex, // 點擊的月份對應的索引
+    //     name: params.name // 點擊的月份
+    //   })
+    // }
   }
 }
 
-const getNextYearFollowers = () => {
-  if (currentYearIndex.value < followers.length - 1) {
-    currentYearIndex.value += 1
+const getFollowerOverview = async (year: string) => {
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/writer/numberoffans/${year}`, {
+      headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      followerOverview.value = res.NumberOfFansData
+      chartMonths.value = followMonths.map((month) => res.NumberOfFansData[month])
+      option.value.series[0].data = chartMonths.value
+      chartMonthIndex.value = Number(overviewMonth.value) - 1
+    }
+  } catch (error: any) {
+    console.log(error.response)
   }
 }
+
+watchEffect(async () => {
+  await getFollowerOverview(followYears[followYearIndex.value])
+})
 
 // 收益數據
 const income = [
@@ -369,150 +284,38 @@ const showMonthlyIncome = () => {
 }
 
 // 文章數據總覽
-const data = reactive([
-  {
-    id: '1',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    category: '個人成長',
-    publishDate: '2020-05-27',
-    progress: '待審核',
-    collectNum: 324,
-    commentNum: 58,
-    likeNum: 130,
-    clickNum: 200,
-    permission: '所有人'
-  },
-  {
-    id: '2',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    category: '個人成長',
-    publishDate: '2021-05-27',
-    progress: '審核中',
-    collectNum: 324,
-    commentNum: 58,
-    likeNum: 130,
-    clickNum: 200,
-    permission: '所有人'
-  },
-  {
-    id: '3',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    category: '情緒察覺',
-    publishDate: '2022-05-27',
-    progress: '審核成功',
-    collectNum: 324,
-    commentNum: 58,
-    likeNum: 130,
-    clickNum: 200,
-    permission: '付費會員'
-  },
-  {
-    id: '4',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    category: '親密關係',
-    publishDate: '2023-05-27',
-    progress: '審核成功',
-    collectNum: 324,
-    commentNum: 58,
-    likeNum: 130,
-    clickNum: 200,
-    permission: '付費會員'
-  },
-  {
-    id: '5',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    category: '日常練習',
-    publishDate: '2023-05-27',
-    progress: '審核失敗',
-    collectNum: 324,
-    commentNum: 58,
-    likeNum: 130,
-    clickNum: 200,
-    permission: '付費會員'
-  },
-  {
-    id: '6',
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    category: '日常練習',
-    publishDate: '2024-05-27',
-    progress: '審核失敗',
-    collectNum: 324,
-    commentNum: 58,
-    likeNum: 130,
-    clickNum: 200,
-    permission: '付費會員'
-  }
-])
+const isYearsOpen = ref(false)
+const isMonthsOpen = ref(false)
+const years = ['2020', '2021', '2022', '2023']
+const months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
 
-interface Stats {
-  [key: string]: {
-    articleCount: number
-    collectNum: number
-    commentNum: number
-    likeNum: number
-    clickNum: number
-    interaction: number
+const toggleYears = () => {
+  isYearsOpen.value = !isYearsOpen.value
+}
+
+const toggleMonths = () => {
+  isMonthsOpen.value = !isMonthsOpen.value
+}
+
+const writerOverview = ref<WriterOverview | null>(null)
+
+const getWriterOverview = async (year: string, month: string) => {
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/writer/overview/${year}/${month}`, {
+      headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      writerOverview.value = res.OverviewData
+      console.log(res.Message)
+    }
+  } catch (error: any) {
+    console.log(error.response)
   }
 }
 
-const stats = computed(() => {
-  const yearlyStats: Stats = {}
-  const monthlyStats: Stats = {}
-  data.forEach((item) => {
-    const date = new Date(item.publishDate)
-    const year = date.getFullYear()
-    const month = `${year}-${date.getMonth() + 1}`
-
-    if (!yearlyStats[year]) {
-      yearlyStats[year] = {
-        articleCount: 0,
-        collectNum: 0,
-        commentNum: 0,
-        likeNum: 0,
-        clickNum: 0,
-        interaction: 0
-      }
-    }
-    yearlyStats[year].articleCount++
-    yearlyStats[year].collectNum += item.collectNum
-    yearlyStats[year].commentNum += item.commentNum
-    yearlyStats[year].likeNum += item.likeNum
-    yearlyStats[year].clickNum += item.clickNum
-
-    if (!monthlyStats[month]) {
-      monthlyStats[month] = {
-        articleCount: 0,
-        collectNum: 0,
-        commentNum: 0,
-        likeNum: 0,
-        clickNum: 0,
-        interaction: 0
-      }
-    }
-    monthlyStats[month].articleCount++
-    monthlyStats[month].collectNum += item.collectNum
-    monthlyStats[month].commentNum += item.commentNum
-    monthlyStats[month].likeNum += item.likeNum
-    monthlyStats[month].clickNum += item.clickNum
-  })
-
-  const followerCount = 1590
-  const totalStats = data.reduce(
-    (acc, item) => {
-      acc.articleCount++
-      acc.collectNum += item.collectNum
-      acc.commentNum += item.commentNum
-      acc.likeNum += item.likeNum
-      acc.clickNum += item.clickNum
-      acc.interaction = Math.round(
-        ((acc.likeNum + acc.commentNum + acc.collectNum) / followerCount) * 100
-      )
-      return acc
-    },
-    { articleCount: 0, collectNum: 0, commentNum: 0, likeNum: 0, clickNum: 0, interaction: 0 }
-  )
-
-  return { yearlyStats, monthlyStats, totalStats }
+watchEffect(async () => {
+  await getWriterOverview(overviewYear.value, overviewMonth.value)
 })
 </script>
 <template>
@@ -523,15 +326,15 @@ const stats = computed(() => {
         <div>
           <button
             class="mr-3 disabled:text-sand-300"
-            :disabled="!hasPrevYear"
-            @click="getPrevYearFollowers"
+            :disabled="followYearIndex === 0"
+            @click="goPrevYear"
           >
             <Icon name="ic:outline-arrow-back" size="24" />
           </button>
           <button
             class="mr-6 disabled:text-sand-300"
-            :disabled="!hasNextYear"
-            @click="getNextYearFollowers"
+            :disabled="followYearIndex === followYears.length - 1"
+            @click="goNextYear"
           >
             <Icon name="ic:outline-arrow-forward" size="24" />
           </button>
@@ -543,25 +346,28 @@ const stats = computed(() => {
       </div>
       <div class="flex justify-between">
         <p class="ml-3 text-4xl font-medium leading-normal text-primary">
-          {{ followers[currentYearIndex].year }} 年
+          {{ followYears[followYearIndex] }} 年
         </p>
         <ul class="flex items-center gap-10 pr-3">
           <li class="flex flex-col items-center">
-            <span class="text-secondary">本日新增</span>
-            <span class="text-2xl font-medium">{{ writerStats.totalFollowers }} 人</span>
-          </li>
-          <li class="flex flex-col items-center">
-            <span class="text-secondary">本月新增</span>
-            <span class="text-2xl font-medium">{{ writerStats.totalFollowers }} 人</span>
+            <span class="text-secondary">{{ chartMonthIndex + 1 }}月新增</span>
+            <span class="text-2xl font-medium">{{ chartMonths[chartMonthIndex] }} 人</span>
           </li>
           <li class="flex flex-col items-center">
             <span class="text-secondary">總人數</span>
-            <span class="text-2xl font-medium">{{ writerStats.totalFollowers }} 人</span>
+            <span class="text-2xl font-medium">{{ followerOverview?.Total }} 人</span>
           </li>
         </ul>
       </div>
       <client-only>
-        <v-chart class="chart" :option="option" autoresize />
+        <v-chart
+          v-if="chartMonths.length > 0"
+          ref="chartRef"
+          class="chart"
+          :option="option"
+          autoresize
+          @click="handleClick"
+        />
       </client-only>
     </div>
     <div class="col-span-5 flex flex-col justify-between">
@@ -644,17 +450,53 @@ const stats = computed(() => {
     </div>
     <div class="col-span-full mb-5 py-4">
       <div class="mb-6 flex items-center justify-between">
-        <p class="text-xl font-medium text-primary">總覽</p>
+        <p class="text-xl font-medium text-primary">
+          {{ `${overviewYear} 年 - ${overviewMonth} 月` }} 總覽
+        </p>
         <div class="flex items-center gap-3">
-          <div
-            class="flex cursor-pointer items-center rounded border border-primary px-2 py-1 text-sm text-primary"
-          >
-            選擇年份<Icon name="ic:round-arrow-drop-down" size="24" />
-          </div>
-          <div
-            class="flex cursor-pointer items-center rounded border border-primary px-2 py-1 text-sm text-primary"
-          >
-            選擇月份<Icon name="ic:round-arrow-drop-down" size="24" />
+          <div class="flex items-center gap-3">
+            <div
+              class="relative flex cursor-pointer items-center justify-center rounded border border-primary bg-white px-2 py-1 text-primary"
+              @click="toggleYears"
+            >
+              <span class="w-14 text-center text-sm leading-normal">{{ overviewYear }} 年</span>
+              <Icon name="material-symbols:arrow-drop-down" size="20" />
+              <ul
+                v-if="isYearsOpen"
+                class="absolute top-[105%] rounded border border-primary bg-white text-sm"
+              >
+                <li
+                  v-for="(year, index) in years"
+                  :key="index"
+                  class="px-4 py-1 hover:bg-secondary hover:text-sand-100"
+                  :class="{ 'border-b border-[edeae6]': index !== years.length - 1 }"
+                  @click="getOverViewYear(year)"
+                >
+                  {{ year }}
+                </li>
+              </ul>
+            </div>
+            <div
+              class="relative flex cursor-pointer items-center rounded border border-primary px-2 py-1 text-sm text-primary"
+              @click="toggleMonths"
+            >
+              <span class="w-10 text-center text-sm leading-normal">{{ overviewMonth }} 月</span>
+              <Icon name="ic:round-arrow-drop-down" size="24" />
+              <ul
+                v-if="isMonthsOpen"
+                class="absolute top-[105%] h-36 overflow-y-scroll rounded border border-primary bg-white text-sm"
+              >
+                <li
+                  v-for="(month, index) in months"
+                  :key="index"
+                  class="px-4 py-1 hover:bg-secondary hover:text-sand-100"
+                  :class="{ 'border-b border-[edeae6]': index !== months.length - 1 }"
+                  @click="getOverViewMonth(month)"
+                >
+                  {{ month }}
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -670,14 +512,14 @@ const stats = computed(() => {
               <th class="py-3">總點擊</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="writerOverview">
             <tr class="text-primary-dark">
-              <td class="py-3">{{ stats.totalStats.articleCount }}</td>
-              <td class="py-3">{{ stats.totalStats.collectNum }}</td>
-              <td class="py-3">{{ stats.totalStats.likeNum }}</td>
-              <td class="py-3">{{ stats.totalStats.commentNum }}</td>
-              <td class="py-3">{{ stats.totalStats.interaction }}</td>
-              <td class="py-3">{{ stats.totalStats.clickNum }}</td>
+              <td class="py-3">{{ writerOverview!.TotalArticles }}</td>
+              <td class="py-3">{{ writerOverview!.TotalCollects }}</td>
+              <td class="py-3">{{ writerOverview!.TotalLikes }}</td>
+              <td class="py-3">{{ writerOverview!.TotalComments }}</td>
+              <td class="py-3">{{ writerOverview!.TotalInteractions }}</td>
+              <td class="py-3">{{ writerOverview!.TotalClicks }}</td>
             </tr>
           </tbody>
         </table>

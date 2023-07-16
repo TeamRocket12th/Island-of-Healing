@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { myWorkStore } from '~/stores/mywork'
 
-const { selectedCategory, selectedYear, progressTab } = storeToRefs(myWorkStore())
+const { selectedCategory, selectedYear, selectedMonth, progressTab } = storeToRefs(myWorkStore())
 
 interface TableData {
   [property: string]: any
@@ -18,11 +18,9 @@ const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 const articles = ref<ArticleSummary[]>([])
+const articleAnalysis = ref<ArticleData[]>([])
 
-// const { data: articles, error } = getMockData<ArticleSummary>('account', 'mywork')
-// if (error.value) {
-//   console.error('Error fetching data: ', error.value)
-// }
+const dataLoaded = ref(false)
 
 // 取得作家後台文章列表
 const getMyArticles = async () => {
@@ -40,6 +38,24 @@ const getMyArticles = async () => {
   }
 }
 
+onMounted(getMyArticles)
+
+// 取得作家後台文章數據
+const getAnalysis = async (year: string, month: string) => {
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/writer/articleanalysis/${year}/${month}`, {
+      headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      articleAnalysis.value = res.ArticleAnalysisData
+      dataLoaded.value = true
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  }
+}
+
 const formatDate = (dateStr: string) => {
   const formatteddate = new Date(dateStr)
   const year = formatteddate.getFullYear()
@@ -48,16 +64,18 @@ const formatDate = (dateStr: string) => {
   return `${year}-${month}-${day}`
 }
 
-onMounted(getMyArticles)
+watchEffect(async () => {
+  await getAnalysis(selectedYear.value, selectedMonth.value)
+})
 
 // 刪除單篇文章
-const delArticle = async (id: number) => {
-  if (!userToken.value) {
+const delArticle = async (item: TableData) => {
+  if (!userToken.value || item.Progress === '審核中') {
     return
   }
 
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/article/delete/${id}`, {
+    const res: ApiResponse = await $fetch(`${apiBase}/article/delete/${item.Id}`, {
       headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` },
       method: 'DELETE'
     })
@@ -280,7 +298,11 @@ watchEffect(() => {
               {{ item.Pay ? '付費會員' : '所有人' }}
             </td>
             <td class="w-[17%] py-[10px] text-primary-dark">
-              <button type="button" class="mr-3">
+              <button
+                type="button"
+                class="mr-3 disabled:text-btn-disabled"
+                :disabled="item.Progress === '審核中'"
+              >
                 <NuxtLink :to="`/editor/${item.Id}`">
                   <Icon name="material-symbols:edit-outline" size="24"
                 /></NuxtLink>
@@ -288,23 +310,30 @@ watchEffect(() => {
               <button v-if="nowPage !== 'progress'" type="button" class="mr-3">
                 <Icon name="ic:outline-visibility" size="24" />
               </button>
-              <button type="button">
-                <Icon
-                  name="material-symbols:delete-outline"
-                  size="24"
-                  @click="delArticle(item.Id)"
-                />
+              <button
+                type="button"
+                class="disabled:text-btn-disabled"
+                :disabled="item.Progress === '審核中'"
+              >
+                <Icon name="material-symbols:delete-outline" size="24" @click="delArticle(item)" />
               </button>
             </td>
           </tr>
         </tbody>
-        <tbody v-else>
-          <tr v-for="item in articles" :key="item.Id" class="text-center">
-            <td class="w-[31%] py-[10px] text-primary-dark">{{ item.Title }}</td>
-            <td class="w-[14%] py-[10px] text-primary-dark">{{ formatDate(item.Initdate) }}</td>
-            <td class="w-[14%] py-[10px] text-primary-dark"></td>
-            <td class="w-[14%] py-[10px] text-primary-dark"></td>
-            <td class="w-[17%] py-[10px] text-primary-dark">{{ item.CommentNum }}</td>
+        <tbody v-if="articleAnalysis.length > 0 && nowPage === 'dashboard'">
+          <tr v-for="article in articleAnalysis" :key="article.Id" class="text-center">
+            <td class="w-[31%] py-[10px] text-primary-dark">{{ article.Title }}</td>
+            <td class="w-[14%] py-[10px] text-primary-dark">{{ formatDate(article.Initdate) }}</td>
+            <td class="w-[14%] py-[10px] text-primary-dark">{{ article.Likes }}</td>
+            <td class="w-[14%] py-[10px] text-primary-dark">{{ article.Clicks }}</td>
+            <td class="w-[17%] py-[10px] text-primary-dark">{{ article.Comments }}</td>
+          </tr>
+        </tbody>
+        <tbody v-else-if="articleAnalysis.length === 0 && dataLoaded">
+          <tr>
+            <td colspan="6" class="pt-10 text-center text-2xl font-medium text-primary">
+              找不到文章
+            </td>
           </tr>
         </tbody>
       </table>
