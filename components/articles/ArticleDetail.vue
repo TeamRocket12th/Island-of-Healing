@@ -8,46 +8,29 @@ const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 const route = useRoute()
 const { useFormattedTime } = useDateFormat()
-
-// 文章內作者資訊
-interface WriterHere {
-  Id: number
-  Bio: string
-  ImgUrl: string
-  NickName: string
-  Follow: boolean
-}
-
-const articleDetail = ref<ArticleDetail | null>(null)
-const writerInfo = ref<WriterHere | null>(null)
-const isCollecting = ref(false)
-const isLiking = ref(false)
-const comments = ref<Comment[]>([])
-const haveCover = ref(false)
+const userId = isLogin.value ? String(userData.value.id) : '0'
+const articleId = route.params.id as string
 
 // 取得單篇文章資訊
-const getArticleDetail = async () => {
-  const userId = isLogin.value ? userData.value.id : '0'
-  try {
-    const res: ApiResponse = await $fetch(`${apiBase}/readarticle/${route.params.id}/${userId}`)
-    console.log(res)
-    if (res.StatusCode === 200) {
-      articleDetail.value = res.ArticleData
-      writerInfo.value = res.WriterData
-      isCollecting.value = res.Collect
-      isLiking.value = res.Like
-      comments.value = res.Comment
-      if (res.ArticleData.ImgUrl !== '') {
-        haveCover.value = true
-      }
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
+const {
+  articleDetail,
+  writerInfo,
+  isCollecting,
+  isLiking,
+  comments,
+  haveCover,
+  isLock,
+  isRead,
+  getArticleDetail
+} = useArticleDetail()
 
-onMounted(getArticleDetail)
+onMounted(() => {
+  nextTick(() => {
+    getArticleDetail(articleId, userId)
+  })
+})
 
+// 對文章做的動作
 const { AddToCollection, cancelCollection, likeArticle, unlikeArticle } = useArticleActions()
 
 const textarea = ref<HTMLTextAreaElement | null>(null)
@@ -65,17 +48,40 @@ const insertEmoji = (emoji: any) => {
   showEmojiPicker.value = false
 }
 
-// const isLocked = ref(true)
-// const handleUnLock = () => {
-//   if (!isLogin.value) {
-//     alert('需要先登入才能閱讀文章喔')
-//   } else if (userData.value.myPlan === 'free' && charge.value) {
-//     alert('請先訂閱我們')
-//   } else {
-//     isLocked.value = !isLocked.value
-//   }
-// }
+// 計算付費文章點擊數+1
+const markArticleAsRead = async (id: number) => {
+  isLock.value = !isLock.value
+  if (!userToken.value) {
+    return
+  }
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/paidarticleclick/${id}`, {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userToken.value}`
+      },
+      method: 'POST'
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      alert(res.Message)
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  }
+}
 
+const keepReading = (id: number) => {
+  if (!isLogin.value) {
+    alert('需要先登入才能閱讀文章喔')
+  } else if (userData.value.myPlan === 'free' && articleDetail.value!.Pay) {
+    alert('請先訂閱我們')
+  } else {
+    markArticleAsRead(id)
+  }
+}
+
+// 分享連結Modal
 const isShareLinkOpen = ref(false)
 const toggleShareLink = () => {
   isShareLinkOpen.value = !isShareLinkOpen.value
@@ -91,7 +97,7 @@ watchEffect(() => {
 })
 
 // 新增文章留言
-const addComment = async (id: number) => {
+const addComment = async (id: number, articleId: string, userId: string) => {
   if (!userToken.value) {
     return
   }
@@ -111,65 +117,24 @@ const addComment = async (id: number) => {
     if (res.StatusCode === 200) {
       alert(res.Message)
       userComment.value = ''
-      getArticleDetail()
+      getArticleDetail(articleId, userId)
     }
   } catch (error: any) {
     console.log(error.response)
   }
 }
 
-// 追蹤作家
-const followWriter = async (id: number) => {
-  if (!userToken.value) {
-    alert('請先登入')
-    return
-  }
-  try {
-    const res: ApiResponse = await $fetch(`${apiBase}/writer/follow/${id}`, {
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${userToken.value}`
-      },
-      method: 'POST'
-    })
-    console.log(res)
-    if (res.StatusCode === 200) {
-      alert(res.Message)
-      getArticleDetail()
-    }
-  } catch (error: any) {
-    console.log(error.response)
-  }
-}
-
-// 取消追蹤作家
-const unFollowWriter = async (id: number) => {
-  if (!userToken.value) {
-    alert('請先登入')
-    return
-  }
-  try {
-    const res: ApiResponse = await $fetch(`${apiBase}/writer/cancelfollow/${id}`, {
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${userToken.value}`
-      },
-      method: 'DELETE'
-    })
-    console.log(res)
-    if (res.StatusCode === 200) {
-      alert(res.Message)
-      getArticleDetail()
-    }
-  } catch (error: any) {
-    console.log(error.response)
-  }
-}
+const { followWriter, unFollowWriter } = useWriterActions()
 </script>
 <template>
   <div v-if="articleDetail" class="mb-10">
-    <span v-if="articleDetail.Pay" class="mb-3 flex items-center gap-1 text-primary-dark"
+    <span v-if="articleDetail.Pay && !isRead" class="mb-3 flex items-center gap-1 text-primary-dark"
       ><Icon name="material-symbols:lock-outline" size="16" /> 付費限定文章</span
+    >
+    <span
+      v-else-if="articleDetail.Pay && isRead"
+      class="mb-3 flex items-center gap-1 text-primary-dark"
+      ><Icon name="material-symbols:lock-open-outline" size="16" /> 文章已解鎖</span
     >
     <div class="mb-5 flex items-center justify-between">
       <div class="flex items-center gap-2">
@@ -192,63 +157,72 @@ const unFollowWriter = async (id: number) => {
       </div>
     </div>
     <!-- 文章內文 -->
-    <div class="relative max-h-[800px] overflow-hidden">
-      <!-- <div class="relative max-h-[800px] overflow-hidden" :class="{ 'max-h-none': !isLocked }"> -->
-      <!-- <div
-        v-if="isLocked"
-        class="payment-shade absolute left-0 top-0 h-full w-full bg-gradient-to-b from-transparent to-sand-200"
-      ></div>
-      <button
-        v-if="isLocked"
-        class="font-sm absolute bottom-10 left-1/2 flex -translate-x-2/4 transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
-        @click="handleUnLock"
-      >
-        <span class="pb-1">
-          <Icon v-if="userData.myPlan === 'free'" name="ic:outline-paid" size="18" />
-          <Icon v-else name="material-symbols:arrow-circle-down-outline" size="18" />
-        </span>
-        <span v-if="userData.myPlan === 'free'">付費解鎖</span>
-        <span v-else>繼續閱讀</span>
-      </button> -->
+    <div class="relative">
       <h2 class="mb-6 text-[32px] font-bold">{{ articleDetail?.Title }}</h2>
       <img v-if="haveCover" :src="articleDetail.ImgUrl" alt="cover" class="mb-6 block" />
-      <div class="border-b-[0.5px] border-primary pb-16">
-        <div v-dompurify-html="articleDetail?.Content" class="mb-9"></div>
-        <div class="flex items-center justify-between">
-          <CategoryTag :tags="articleDetail.Tags" />
-          <ul class="flex gap-3">
-            <li
-              v-if="!isLiking"
-              class="cursor-pointer"
-              @click="likeArticle(articleDetail.Id, getArticleDetail)"
-            >
-              <Icon name="material-symbols:favorite-outline-rounded" size="20" />
-            </li>
-            <li
-              v-else
-              class="cursor-pointer text-secondary"
-              @click="unlikeArticle(articleDetail.Id, getArticleDetail)"
-            >
-              <Icon name="material-symbols:favorite-rounded" size="20" />
-            </li>
-            <li
-              v-if="!isCollecting"
-              class="cursor-pointer"
-              @click="AddToCollection(articleDetail.Id, getArticleDetail)"
-            >
-              <Icon name="material-symbols:bookmark-outline-rounded" size="20" />
-            </li>
-            <li
-              v-else
-              class="cursor-pointer text-secondary"
-              @click="cancelCollection(articleDetail.Id, getArticleDetail)"
-            >
-              <Icon name="material-symbols:bookmark" size="20" />
-            </li>
-            <li class="cursor-pointer" @click="toggleShareLink">
-              <Icon name="mdi:share-variant-outline" size="20" />
-            </li>
-          </ul>
+      <div v-if="isLock">
+        <p class="mb-10 text-xl font-medium text-primary">關於本文： {{ articleDetail.Summary }}</p>
+      </div>
+      <div v-if="isLock && !isRead" class="flex justify-center">
+        <button
+          v-if="userData.myPlan === 'free' && isLock"
+          class="font-sm flex transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
+          @click="keepReading(articleDetail.Id)"
+        >
+          <span class="pb-1"><Icon name="ic:outline-paid" size="18" /></span>
+          <span>付費解鎖</span>
+        </button>
+        <button
+          v-if="!isRead && isLock"
+          class="font-sm flex transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
+          @click="keepReading(articleDetail.Id)"
+        >
+          <span class="pb-1"
+            ><Icon name="material-symbols:arrow-circle-down-outline" size="18"
+          /></span>
+          <span>繼續閱讀</span>
+        </button>
+      </div>
+      <!--文章本體-->
+      <div v-else>
+        <div class="border-b-[0.5px] border-primary pb-16">
+          <div v-dompurify-html="articleDetail?.Content" class="mb-9"></div>
+          <div class="flex items-center justify-between">
+            <CategoryTag :tags="articleDetail.Tags" />
+            <ul class="flex gap-3">
+              <li
+                v-if="!isLiking"
+                class="cursor-pointer"
+                @click="likeArticle(articleDetail.Id, articleId, userId, getArticleDetail)"
+              >
+                <Icon name="material-symbols:favorite-outline-rounded" size="20" />
+              </li>
+              <li
+                v-else
+                class="cursor-pointer text-secondary"
+                @click="unlikeArticle(articleDetail.Id, articleId, userId, getArticleDetail)"
+              >
+                <Icon name="material-symbols:favorite-rounded" size="20" />
+              </li>
+              <li
+                v-if="!isCollecting"
+                class="cursor-pointer"
+                @click="AddToCollection(articleDetail.Id, articleId, userId, getArticleDetail)"
+              >
+                <Icon name="material-symbols:bookmark-outline-rounded" size="20" />
+              </li>
+              <li
+                v-else
+                class="cursor-pointer text-secondary"
+                @click="cancelCollection(articleDetail.Id, articleId, userId, getArticleDetail)"
+              >
+                <Icon name="material-symbols:bookmark" size="20" />
+              </li>
+              <li class="cursor-pointer" @click="toggleShareLink">
+                <Icon name="mdi:share-variant-outline" size="20" />
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -267,6 +241,7 @@ const unFollowWriter = async (id: number) => {
           v-else
           class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
         >
+          <Icon name="material-symbols:fitbit-check-small" size="20" />
           追蹤中
         </button>
       </div>
@@ -279,27 +254,32 @@ const unFollowWriter = async (id: number) => {
     </div>
     <div>
       <button
-        v-if="!writerInfo?.Follow"
+        v-if="!writerInfo?.Follow && writerInfo?.Id !== userData.id"
         class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
-        @click="followWriter(writerInfo?.Id!)"
+        @click="followWriter(writerInfo?.Id!, articleId, userId, getArticleDetail)"
       >
         <Icon name="ic:baseline-plus" size="20" />追蹤
       </button>
       <button
-        v-else
+        v-else-if="writerInfo?.Follow && writerInfo?.Id !== userData.id"
         class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
-        @click="unFollowWriter(writerInfo?.Id!)"
+        @click="unFollowWriter(writerInfo?.Id!, articleId, userId, getArticleDetail)"
       >
         <Icon name="material-symbols:fitbit-check-small" size="20" />追蹤中
       </button>
     </div>
   </div>
   <!--留言-->
-  <div v-if="articleDetail">
+  <div v-if="!isLock">
     <div class="mb-6">
       <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
     </div>
-    <ArticleComment :comments="comments" :get-article-detail="getArticleDetail" />
+    <ArticleComment
+      :comments="comments"
+      :article-id="articleId"
+      :user-id="userId"
+      :get-article-detail="getArticleDetail"
+    />
     <div v-if="isLogin" class="mb-28">
       <div class="mb-2 flex items-center">
         <div class="mr-2 h-9 w-9">
@@ -323,19 +303,21 @@ const unFollowWriter = async (id: number) => {
             ><Icon
               name="ic:outline-sentiment-satisfied-alt"
               size="20"
-              class="absolute right-[10px] top-[10px] text-secondary hover:text-primary"
+              class="absolute right-[10px] top-[10px] z-50 text-secondary hover:text-primary"
           /></span>
-          <EmojiPicker
-            v-if="showEmojiPicker"
-            ref="emojiPicker"
-            class="absolute right-[10px] top-8"
-            @select="insertEmoji"
-          />
+          <ClientOnly>
+            <EmojiPicker
+              v-if="showEmojiPicker"
+              ref="emojiPicker"
+              class="absolute right-[10px] top-8"
+              @select="insertEmoji"
+            />
+          </ClientOnly>
         </div>
         <button
           class="h-10 rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
           :disabled="!userComment"
-          @click="addComment(articleDetail?.Id)"
+          @click="addComment(articleDetail?.Id as number, articleId, userId)"
         >
           發表留言
         </button>

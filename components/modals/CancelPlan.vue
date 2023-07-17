@@ -1,6 +1,34 @@
 <script setup lang="ts">
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+const userToken = useCookie('token')
+
+// 取消續訂
+const unsubscribe = async () => {
+  if (!userToken.value) {
+    return
+  }
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/cancelrenewmembership`, {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userToken.value}`
+      },
+      method: 'PUT'
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      alert(res.Message)
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  }
+}
+
 const emits = defineEmits(['plan-cancel', 'cancel-check'])
+
 const cancelPlan = (value: boolean) => {
+  unsubscribe()
   emits('plan-cancel', value)
 }
 </script>
@@ -31,6 +59,7 @@ const cancelPlan = (value: boolean) => {
         </button>
         <button
           class="rounded p-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+          @click="cancelPlan(false)"
         >
           取消方案
         </button>

@@ -1,4 +1,12 @@
 <script setup lang="ts">
+const route = useRoute()
+
+onMounted(() => {
+  if (route.query.status === 'success') {
+    orderResult.value = true
+  }
+})
+
 const orderStatus = ref(false)
 const orderResult = ref(false)
 const orderForm = (value: boolean) => {

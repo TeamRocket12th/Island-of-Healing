@@ -328,7 +328,7 @@ watchEffect(() => {
                   <p class="text-sm text-secondary">建議上傳尺寸820x312內</p>
                   <button
                     type="button"
-                    class="mb-2 mt-6 flex items-center justify-center rounded border bg-secondary p-2 hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+                    class="mb-2 mt-6 flex items-center justify-center rounded border bg-secondary p-2 disabled:bg-btn-disabled disabled:text-white"
                     @click="openFilePicker"
                   >
                     <Icon name="material-symbols:add" size="16" class="text-white" />

@@ -59,12 +59,16 @@ onUpdated(() => {
 </script>
 
 <template>
-  <section class="container py-10">
-    <div class="grid grid-cols-12">
+  <section class="animate-fadein container py-10">
+    <div class="grid-cols-12 sm:grid">
       <div class="col-span-8 col-start-3">
         <div class="relative rounded-md">
           <!-- Message container -->
-          <div id="message-container" ref="scrollContainer" class="h-[500px] overflow-y-scroll p-4">
+          <div
+            id="message-container"
+            ref="scrollContainer"
+            class="h-[500px] overflow-y-scroll sm:p-4"
+          >
             <ChatBubbles :chat-messages="chatMessages" :answer="answer" />
           </div>
           <!-- Input form -->
@@ -94,5 +98,19 @@ onUpdated(() => {
 <style scoped>
 ::-webkit-scrollbar {
   display: none;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fadein {
+  animation-name: fadein;
+  animation-duration: 0.6s;
+  animation-fill-mode: both;
 }
 </style>

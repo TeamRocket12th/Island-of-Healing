@@ -33,6 +33,7 @@ const steps = {
 
 const step = ref('step1')
 const currentStep = ref(1)
+
 const nextStep = () => {
   const currentStepIndex = Object.keys(steps).indexOf(step.value)
   const nextStepIndex = currentStepIndex + 1
@@ -70,11 +71,13 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
         <h3
           class="mb-2 block w-full pl-1 text-center text-base font-medium text-primary-dark md:text-left md:text-xl"
         >
-          {{ steps[`${step}`].title }}
+          {{ steps[step as keyof typeof steps].title }}
         </h3>
         <div class="item-center flex flex-wrap justify-center md:hidden">
           <ul class="mb-5 list-disc pl-5 text-base text-primary-dark">
-            <li v-for="item in steps[`${step}`].content" :key="item">{{ item }}</li>
+            <li v-for="item in steps[step as keyof typeof steps].content" :key="item">
+              {{ item }}
+            </li>
           </ul>
         </div>
         <div class="mb-5 h-[430px] overflow-y-hidden">

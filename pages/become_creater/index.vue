@@ -6,7 +6,7 @@ definePageMeta({
 useHead({ title: '成為作家' })
 </script>
 <template>
-  <div class="bg-sand-100">
+  <div class="overflow-hidden bg-sand-100">
     <LandingIntro />
     <LandingWriting />
     <LandingFeatures />

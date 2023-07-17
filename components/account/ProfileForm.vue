@@ -8,8 +8,6 @@ const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 
-console.log(userData)
-
 interface UserInfo {
   Birthday: null | string
   JobTitle: string

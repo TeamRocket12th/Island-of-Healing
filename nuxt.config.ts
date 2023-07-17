@@ -9,12 +9,18 @@ export default defineNuxtConfig({
     autoImports: ['defineStore', ['defineStore', 'definePiniaStore']]
   },
   build: {
-    transpile: [/echarts/]
+    transpile: [/echarts/, '@vee-validate/rules']
   },
   components: [
     {
       path: '~/components',
       pathPrefix: false
+    }
+  ],
+  plugins: [
+    {
+      src: '~/plugins/aos.client.ts',
+      mode: 'client'
     }
   ],
   runtimeConfig: {

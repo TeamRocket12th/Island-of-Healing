@@ -7,35 +7,38 @@ declare global {
 
   // 作家資訊
   interface Writer {
-    name: string
-    id: string
-    jobTitle: string
-    bio: string
-    imgUrl: string
-    isFollowing: boolean
+    NickName: string
+    WriterId: number
+    JobTitle: string
+    Bio: string
+    ImgUrl: string
+    IsFollowing: boolean
   }
 
   // 作者個人頁面
 
   // 作者個人文章
-  interface Work {
-    id: string
-    title: string
-    coverUrl: string
-    summary: string
-    createdDate: string
+  interface WriterWork {
+    Id: number
+    ImgUrl: string
+    Title: string
+    Summary: string
+    InitDate: string
+    Collect: false
+    Like: false
   }
 
   // 作者個人資訊
   interface WriterInfo {
-    id: string
-    name: string
-    jobTitle: string
-    bio: string
-    imgUrl: string
-    followerNum: number
-    followingNum: number
-    work: Work[]
+    Id: number
+    Bio: string
+    ArticlesNum: string
+    FanNum: number
+    Follow: boolean
+    FollowNum: number
+    ImgUrl: string
+    JobTitle: string
+    NickName: string
   }
 
   // 文章
@@ -58,6 +61,17 @@ declare global {
     Initdate: string
     Tags: string[]
     Category: string
+    Summary: string
+    IsRead: boolean
+  }
+
+  // 文章內作者資訊
+  interface DetailWriter {
+    Id: number
+    Bio: string
+    ImgUrl: string
+    NickName: string
+    Follow: boolean
   }
 
   // 文章摘要
@@ -83,6 +97,8 @@ declare global {
     UserCollect: boolean
     UserLike: boolean
     WriterNickName: string
+    Category?: string
+    Summary?: string
   }
 
   // 文章留言

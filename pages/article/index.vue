@@ -89,29 +89,55 @@ const changeNowPage = (p: string) => {
   nowPage.value = p
 }
 
-// 取得所有文章
+// 取得所有文章 $fetch
+// const getAllArticles = async (page = '1') => {
+//   changeNowPage(page)
+//   scrollTop()
+//   try {
+//     const res: ApiResponse = await $fetch(`${apiBase}/readallarticles`, {
+//       headers: {
+//         'Content-type': 'application/json'
+//       },
+//       method: 'POST',
+//       body: {
+//         Page: page,
+//         UserId: userData.value.id || '0'
+//       }
+//     })
+//     console.log(res)
+//     if (res.StatusCode === 200) {
+//       console.log(res.Message)
+//       articles.value = res.LatestArticleData
+//       selectedArticles.value = res.SelectedArticleData
+//     }
+//   } catch (error: any) {
+//     console.log(error.response)
+//   }
+// }
+
+// 取得所有文章 useFetch
 const getAllArticles = async (page = '1') => {
   changeNowPage(page)
   scrollTop()
-  try {
-    const res: ApiResponse = await $fetch(`${apiBase}/readallarticles`, {
-      headers: {
-        'Content-type': 'application/json'
-      },
-      method: 'POST',
-      body: {
-        Page: page,
-        UserId: userData.value.id || '0'
-      }
-    })
-    console.log(res)
-    if (res.StatusCode === 200) {
-      console.log(res.Message)
-      articles.value = res.LatestArticleData
-      selectedArticles.value = res.SelectedArticleData
+  const { data, error } = await useFetch<ApiResponse>(`${apiBase}/readallarticles`, {
+    key: 'getAllArticles',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    method: 'POST',
+    body: {
+      Page: page,
+      UserId: userData.value.id || '0'
     }
-  } catch (error: any) {
-    console.log(error.response)
+  })
+  console.log(data.value)
+
+  if (data.value!.StatusCode === 200) {
+    articles.value = data.value!.LatestArticleData
+    selectedArticles.value = data.value!.SelectedArticleData
+  }
+  if (error.value) {
+    console.log(error.value)
   }
 }
 
@@ -150,11 +176,13 @@ const handleReading = (page: string) => {
 }
 
 onMounted(() => {
-  if (category.value === 'all') {
-    getAllArticles(nowPage.value)
-  } else {
-    getSpArticles(nowPage.value, category.value)
-  }
+  nextTick(() => {
+    if (category.value === 'all') {
+      getAllArticles(nowPage.value)
+    } else {
+      getSpArticles(nowPage.value, category.value)
+    }
+  })
 })
 
 watchEffect(() => {
@@ -177,37 +205,44 @@ watch(category, (newVal, oldVal) => {
 </script>
 
 <template>
-  <section class="bg-sand-100">
+  <section>
     <div class="container">
-      <div class="grid grid-cols-12 gap-6 border-primary pb-40 pt-10 sm:border-t">
-        <div v-if="category !== 'all'" class="col-span-9">
+      <div class="grid-cols-12 gap-6 border-primary pb-40 pt-10 sm:border-t md:grid">
+        <div v-if="category !== 'all'" class="col-span-full lg:col-span-9">
           <ArticleList :title="categories[category]" :articles="articles" />
           <ArticleList title="你可能會喜歡" :articles="recArticles" />
         </div>
-        <div v-else class="col-span-9">
+        <div v-else class="col-span-full lg:col-span-9">
           <ArticleList title="最新文章" :articles="articles" />
           <ArticleList title="精選文章" :articles="selectedArticles" />
           <ArticleList title="你可能會喜歡" :articles="recArticles" />
         </div>
-        <div class="col-span-3">
+        <div class="col-span-3 hidden lg:block">
           <ArticleSideBar />
         </div>
         <div class="col-span-9 text-center">
-          <div class="join">
+          <span class="rounded border-b border-l border-t border-sand-200 py-3">
             <button
               v-for="(p, index) in pages"
               :key="index"
-              class="join-item btn"
-              :class="{ 'btn-active': nowPage === p }"
+              class="btn-page border-r border-sand-200 px-4 py-3 hover:bg-secondary hover:text-white"
+              :class="nowPage === p ? 'bg-secondary text-white' : 'bg-white text-secondary'"
               @click="handleReading(p)"
             >
               {{ p }}
             </button>
-          </div>
+          </span>
         </div>
       </div>
     </div>
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+.btn-page:first-child {
+  border-radius: 4px 0 0 4px;
+}
+.btn-page:last-child {
+  border-radius: 0 4px 4px 0;
+}
+</style>

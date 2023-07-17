@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useUserStore } from '~/stores/user'
 
-const userStore = useUserStore()
-const { userLogin, getUserInfo, getUserToken } = userStore
+const { userLogin, getUserInfo, getUserToken } = useUserStore()
 const { emailRequired, emailRule, passwordRequired, passwordRule } = useValidate()
 
 const runtimeConfig = useRuntimeConfig()
