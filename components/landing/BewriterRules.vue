@@ -33,7 +33,6 @@ const steps = {
 
 const step = ref('step1')
 const currentStep = ref(1)
-const stepsKey = step.value as 'step1' | 'step2' | 'step3' | 'step4'
 
 const nextStep = () => {
   const currentStepIndex = Object.keys(steps).indexOf(step.value)
@@ -63,12 +62,24 @@ watch(step, (newStep) => {
 const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
 </script>
 <template>
-  <div class="container pb-[168px] pt-[94px]">
-    <div class="flex border-[0.5px] border-sand-300">
-      <div class="w-[55%] px-6 pb-12 pt-24">
-        <h3 class="mb-4 block pl-1 text-xl font-medium text-primary-dark">
-          {{ steps[`${stepsKey}`].title }}
+  <div class="container pb-16 pt-10 md:pb-[168px] md:pt-[94px]">
+    <div class="flex border-sand-300 md:border-[0.5px]">
+      <div class="w-full px-6 pb-10 md:w-[55%] md:pb-12 md:pt-24">
+        <h2 class="mb-8 block text-center text-2xl font-bold text-primary md:hidden">
+          {{ `申請作家身份流程 (${currentStep}/4)` }}
+        </h2>
+        <h3
+          class="mb-2 block w-full pl-1 text-center text-base font-medium text-primary-dark md:text-left md:text-xl"
+        >
+          {{ steps[step as keyof typeof steps].title }}
         </h3>
+        <div class="item-center flex flex-wrap justify-center md:hidden">
+          <ul class="mb-5 list-disc pl-5 text-base text-primary-dark">
+            <li v-for="item in steps[step as keyof typeof steps].content" :key="item">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
         <div class="mb-5 h-[430px] overflow-y-hidden">
           <img :src="imageUrl" alt="成為作家" />
         </div>
@@ -79,12 +90,25 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
           >
             返回
           </button>
-          <button class="rounded bg-secondary px-3 py-2 text-white" @click="nextStep">
+          <button
+            v-if="currentStep !== 4"
+            class="rounded bg-secondary px-3 py-2 text-white"
+            @click="nextStep"
+          >
             下一步
           </button>
+          <NuxtLink to="/signup"
+            ><button
+              v-if="currentStep === 4"
+              class="rounded bg-secondary px-2 py-2 text-white"
+              @click="nextStep"
+            >
+              開始註冊
+            </button>
+          </NuxtLink>
         </div>
       </div>
-      <div class="w-[45%] border-l-[0.5px] border-sand-300 px-6 py-12">
+      <div class="hidden w-[45%] border-l-[0.5px] border-sand-300 px-6 py-12 md:block">
         <h2 class="mb-8 text-center text-2xl font-bold text-primary">申請作家身份流程</h2>
         <ul>
           <li v-for="(stepKey, index) in steps" :key="index" :class="['flex', 'gap-4']">
