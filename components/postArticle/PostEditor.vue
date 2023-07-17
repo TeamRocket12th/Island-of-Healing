@@ -15,6 +15,10 @@ import { Editor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
 import { Node } from '@tiptap/core'
 import { useArticle } from '~/stores/article'
 
+const userToken = useCookie('token')
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+
 const editor = ref(null)
 const articleUse = useArticle()
 
@@ -35,12 +39,10 @@ const CustomParagraphNode = Node.create({
   }
 })
 
-const emits = defineEmits(['post-upload', 'article-content', 'post-rules'])
+const emits = defineEmits(['post-upload', 'post-rules'])
 const postSent = (value) => {
   emits('post-upload', value)
-
-  const html = editor.value.getHTML()
-  emits('article-content', html)
+  convertImagesToFormData()
 }
 const rulesShow = (value) => {
   emits('post-rules', value)
@@ -59,7 +61,6 @@ const props = defineProps({
 
 // 輸出
 const newJson = ref('')
-// const newHtml = ref('')
 const htmlOutput = ref('')
 watchEffect(() => {
   if (editor.value !== null) {
@@ -67,7 +68,7 @@ watchEffect(() => {
     const html = editor.value.getHTML()
     newJson.value = json
     htmlOutput.value = html
-    // console.log(html)
+    articleUse.article.Content = html
   }
 })
 
@@ -75,11 +76,6 @@ const selectedStatus = ref(false)
 onMounted(() => {
   editor.value = new Editor({
     onSelectionUpdate({ editor }) {
-      // console.log(editor)
-      // console.log(editor.state.selection)
-      // const { from, to } = editor.state.selection
-      // const selectedText = editor.state.doc.textBetween(from, to)
-      // console.log(selectedText)
       const isTextSelected = !editor.state.selection.empty
       selectedStatus.value = isTextSelected
     },
@@ -98,7 +94,6 @@ onMounted(() => {
         }
       }),
       Text,
-
       Image.configure({
         allowBase64: true
       }),
@@ -165,66 +160,127 @@ const swapOff = () => {
 }
 
 // 拖曳圖片進入
-// const formData = new FormData()
-// const previewImage = ref(null)
-// const blobUrl = ref(null)
-// const handleDragOver = (event) => {
-//   event.preventDefault()
-// }
+const previewImage = ref(null)
+const blobUrl = ref(null)
+const handleDragOver = (event) => {
+  event.preventDefault()
+}
 
-// const handleDrop = (event) => {
-//   event.preventDefault()
-//   const file = event.dataTransfer.files[0]
-//   const reader = new FileReader()
-//   reader.onload = () => {
-//     previewImage.value = reader.result
-//   }
-//   reader.readAsDataURL(file)
-//   console.log(file)
-//   const combinedFile = new File([file], file.name, { type: file.type })
-//   formData.append('articleCover', combinedFile)
-//   console.log(combinedFile)
-//   // formData.append('articleCover', file)
-// }
-// onUnmounted(() => {
-//   if (previewImage.value) {
-//     URL.revokeObjectURL(previewImage.value)
-//   }
-// })
+const handleDrop = (event) => {
+  event.preventDefault()
+  const file = event.dataTransfer.files[0]
+  const reader = new FileReader()
+  reader.onload = () => {
+    previewImage.value = reader.result
+  }
+  reader.readAsDataURL(file)
+  console.log(file)
+}
 
-// watch(previewImage, (newValue) => {
-//   if (newValue) {
-//     console.log(newValue)
-//     blobUrl.value = newValue
-//     insertImage()
-//     //  console.log(formData.getAll('articleCover'))
-//   }
-// })
-// watch(formData.getAll('articleCover'), (newValue) => {
-//   console.log(newValue)
-// })
+watch(previewImage, (newValue) => {
+  if (newValue) {
+    console.log(newValue)
+    blobUrl.value = newValue
+    insertImage()
+  }
+})
 
-// const insertImage = () => {
-//   const imageSrc = blobUrl.value
+// 偵測內容裡有圖片的
+const imgTagArr = ref([])
+watch(htmlOutput, (newValue) => {
+  // console.log(articleUse.article.Content)
+  const imgTags = newValue.match(/<img[^>]+>/g)
+  console.log(imgTags)
+  imgTagArr.value = imgTags
+})
+// 輸出file 存到formdata
+const formData = new FormData()
+const convertImagesToFormData = () => {
+  if (imgTagArr.value !== null) {
+    imgTagArr.value.forEach((imgTag, index) => {
+      const srcMatch = imgTag.match(/src=['"](.*?)['"]/)
+      if (srcMatch) {
+        console.log(srcMatch)
+        const src = srcMatch[1]
+        const dataUrlPrefix = 'data:image'
+        if (src.startsWith(dataUrlPrefix)) {
+          const dataUrlParts = src.split(',')
+          const mimeType = dataUrlParts[0].match(/:(.*?);/)[1]
+          const base64Data = atob(dataUrlParts[1])
+          const uintArray = new Uint8Array(base64Data.length)
+          for (let i = 0; i < base64Data.length; i++) {
+            uintArray[i] = base64Data.charCodeAt(i)
+          }
+          const blob = new Blob([uintArray], { type: mimeType })
+          formData.append(`image_${index}`, blob, `image_${index}.png`)
+          // console.log(formData.get(`image_${index}`))
+          addArticleImgurl()
+        }
+      }
+    })
+  }
+}
 
-//   if (imageSrc) {
-//     editor.value.commands.insertContent({
-//       type: 'image',
-//       attrs: {
-//         src: imageSrc
-//       }
-//     })
-//   }
-// }
-// const sentHtml = () => {
-//   const html = editor.value.getHTML()
-//   newHtml.value = html
-// }
+// 新增文章圖片
+const addArticleImgurl = async () => {
+  if (!userToken.value) {
+    return
+  }
+  try {
+    const res = await $fetch(`${apiBase}/articlecontentimgurl/create`, {
+      headers: {
+        Authorization: `Bearer ${userToken.value}`
+      },
+      method: 'POST',
+      body: formData
+    })
 
-// onBeforeUpdate(() => {
-//   console.log(`${props.htmlContent}`)
-//   editor.value.commands.setContent(`${props.htmlContent}`)
-// })
+    if (res.StatusCode === 200) {
+      // console.log(res)
+      // console.log(res.ArticleContentImgData)
+      const imgTags = articleUse.article.Content.match(/<img[^>]+>/g)
+      if (imgTags) {
+        let base64Index = 0
+        for (let i = 0; i < imgTags.length; i++) {
+          const imgTag = imgTags[i]
+          const srcMatch = imgTag.match(/src=['"](.*?)['"]/)
+          // console.log(srcMatch)
+          // console.log(imgTags)
+          if (srcMatch) {
+            const src = srcMatch[1]
+            const dataUrlPrefix = 'data:image'
+            if (src.startsWith(dataUrlPrefix)) {
+              if (base64Index < res.ArticleContentImgData.length) {
+                const updatedImgTag = imgTag.replace(src, res.ArticleContentImgData[base64Index])
+                // console.log(updatedImgTag)
+                articleUse.article.Content = articleUse.article.Content.replace(
+                  imgTag,
+                  updatedImgTag
+                )
+                base64Index++
+              }
+            }
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const insertImage = () => {
+  const imageSrc = blobUrl.value
+
+  if (imageSrc) {
+    editor.value.commands.insertContent({
+      type: 'image',
+      attrs: {
+        src: imageSrc
+      }
+    })
+  }
+}
 </script>
 
 <template>
@@ -488,7 +544,6 @@ blockquote {
 .ProseMirror {
   outline: none;
   overflow-y: scroll;
-  padding: 8px;
 }
 
 .custom-bullet-list {
@@ -572,5 +627,8 @@ hr {
   border-color: #4e2a09;
   margin-bottom: 20px;
   margin-top: 5px;
+}
+img {
+  margin-bottom: 10px;
 }
 </style>

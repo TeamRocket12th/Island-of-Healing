@@ -43,12 +43,15 @@ declare global {
 
   // 文章
   interface Article {
-    id: string
-    role: string
-    coverUrl: string
-    articleTitle: string
-    articleSummary: string
-    articleDate: string
+    ArticleId: number
+    ArticleImgUrl: string
+    Summary: string
+    Initdate: string
+    Title: string
+    WriterNickName: string
+    WriterId: number
+    WriterImgUrl: string
+    IsCollected: boolean
   }
 
   // 文章詳細內容
@@ -86,6 +89,16 @@ declare global {
     CommentNum: number
     LikeNum?: number
     ClickNum?: number
+  }
+
+  // 文章數據
+  interface ArticleData {
+    Id: number
+    Title: string
+    Initdate: string
+    Likes: number
+    Clicks: number
+    Comments: number
   }
 
   // 文章卡片
@@ -144,15 +157,33 @@ declare global {
     Bio?: string
   }
 
-  // 作家統計資訊
-  interface WriterStats {
-    totalFollowers: number
-    totalArticles: number
-    totalCollection: number
-    totalLikes: number
-    totalComments: number
-    totalInteractions: number
-    totalClicks: number
+  // 作家後台
+
+  // 追蹤人數
+  interface FollowerOverview {
+    Jan: number
+    Feb: number
+    Mar: number
+    Apr: number
+    May: number
+    Jun: number
+    Jul: number
+    Aug: number
+    Sep: number
+    Oct: number
+    Nov: number
+    Dec: number
+    Total: number
+  }
+
+  // 文章數據總覽
+  interface WriterOverview {
+    TotalArticles: number
+    TotalClicks: number
+    TotalCollects: number
+    TotalComments: number
+    TotalLikes: number
+    TotalInteractions: number
   }
 
   interface CustomerData {

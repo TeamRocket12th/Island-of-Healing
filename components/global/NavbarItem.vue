@@ -15,8 +15,10 @@ const showMobileMenu = ref(false)
 const toggleMobileMenu = () => {
   showMobileMenu.value = !showMobileMenu.value
   if (showMobileMenu.value) {
+    console.log('nav add no-scroll')
     document.body.classList.add('no-scroll')
   } else {
+    console.log('nav remove no-scroll')
     document.body.classList.remove('no-scroll')
   }
   if (showMobileCategory.value) {
@@ -260,7 +262,7 @@ const isUserPage = computed(() => {
           </li>
           <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
           <li class="whitespace-nowrap pb-5">
-            <NuxtLink to="/" class="text-xl font-semibold text-primary" leading-normal
+            <NuxtLink to="/forum" class="text-xl font-semibold text-primary" leading-normal
               >論壇</NuxtLink
             >
           </li>
@@ -368,7 +370,7 @@ const isUserPage = computed(() => {
           </li>
           <li class="border-b-[0.5px] border-primary">
             <NuxtLink
-              to="/chatroom"
+              to="/forum"
               class="block py-5 font-serif-tc font-semibold text-primary"
               @click="toggleMobileMenu"
               >論壇</NuxtLink

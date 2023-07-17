@@ -3,14 +3,23 @@ import { storeToRefs } from 'pinia'
 import { myWorkStore } from '~/stores/mywork'
 const useMyworkStore = myWorkStore()
 
-const { selectedCategory, selectedYear, progressTab } = storeToRefs(useMyworkStore)
-const { getCategory, getYear } = useMyworkStore
+const { selectedCategory, postSelectedYear, selectedYear, selectedMonth, progressTab } =
+  storeToRefs(useMyworkStore)
+const { getCategory, getPostSelectedYear, getYear, getMonth } = useMyworkStore
 
-defineProps<{ nowPage: string }>()
+defineProps({
+  nowPage: {
+    type: String,
+    default: ''
+  }
+})
+
 const categories = ['個人成長', '情緒察覺', '親密關係', '日常練習']
-const years = ['2020年', '2021年', '2022年', '2023年']
+const years = ['2020', '2021', '2022', '2023']
+const months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
 const isCategoriesOpen = ref(false)
 const isYearsOpen = ref(false)
+const isMonthsOpen = ref(false)
 
 const toggleCategories = () => {
   isCategoriesOpen.value = !isCategoriesOpen.value
@@ -20,25 +29,30 @@ const toggleYears = () => {
   isYearsOpen.value = !isYearsOpen.value
 }
 
+const toggleMonths = () => {
+  isMonthsOpen.value = !isMonthsOpen.value
+}
+
 const reset = () => {
   getCategory('選擇分類')
-  getYear('選擇年份')
+  getPostSelectedYear('選擇年份')
 }
 </script>
 <template>
   <div class="flex w-full justify-between">
     <div v-if="nowPage === 'articleList'" class="mb-2 flex items-center">
       <span
-        class="mr-11 cursor-pointer px-2 pb-2 text-primary"
-        :class="{
-          'border-b-2 border-primary':
-            selectedCategory === '選擇分類' && selectedYear === '選擇年份'
-        }"
+        class="mr-11 cursor-pointer border-b-2 px-2 pb-2 text-primary hover:border-primary"
+        :class="
+          selectedCategory === '選擇分類' && postSelectedYear === '選擇年份'
+            ? 'border-primary'
+            : 'border-transparent'
+        "
         @click="reset"
         >全部</span
       >
       <div
-        class="relative mr-4 flex cursor-pointer items-center justify-center rounded border border-primary bg-white px-2 py-1 text-primary"
+        class="relative mr-4 flex w-24 cursor-pointer items-center justify-center rounded border border-primary bg-white px-2 py-1 text-primary"
         @click="toggleCategories"
       >
         <span class="text-sm leading-normal">{{ selectedCategory }}</span>
@@ -62,7 +76,7 @@ const reset = () => {
         class="relative flex cursor-pointer items-center justify-center rounded border border-primary bg-white px-2 py-1 text-primary"
         @click="toggleYears"
       >
-        <span class="text-sm leading-normal">{{ selectedYear }}</span>
+        <span class="text-sm leading-normal">{{ postSelectedYear }}</span>
         <Icon name="material-symbols:arrow-drop-down" size="20" />
         <ul
           v-if="isYearsOpen"
@@ -73,7 +87,7 @@ const reset = () => {
             :key="index"
             class="px-4 py-1 hover:bg-secondary hover:text-sand-100"
             :class="{ 'border-b border-[edeae6]': index !== years.length - 1 }"
-            @click="getYear(year)"
+            @click="getPostSelectedYear(year)"
           >
             {{ year }}
           </li>
@@ -118,20 +132,15 @@ const reset = () => {
     <div v-if="nowPage === 'dashboard'" class="mb-[18px] flex w-full items-center justify-between">
       <p class="text-xl font-medium text-primary">貼文分析</p>
       <div class="flex items-center gap-3">
-        <!-- <div
-          class="flex cursor-pointer items-center rounded border border-primary px-2 py-1 text-sm text-primary"
-        >
-          選擇年份<Icon name="ic:round-arrow-drop-down" size="24" />
-        </div> -->
         <div
-          class="relative flex cursor-pointer items-center justify-center rounded border border-primary bg-white px-2 py-1 text-primary"
+          class="relative flex h-8 cursor-pointer items-center justify-center rounded border border-primary bg-white px-2 text-primary"
           @click="toggleYears"
         >
-          <span class="text-sm leading-normal">{{ selectedYear }}</span>
+          <span class="w-14 text-center text-sm leading-normal">{{ selectedYear }} 年</span>
           <Icon name="material-symbols:arrow-drop-down" size="20" />
           <ul
             v-if="isYearsOpen"
-            class="absolute top-[105%] rounded border border-primary bg-white text-sm"
+            class="absolute top-[103%] w-20 rounded border border-primary bg-white text-center text-sm"
           >
             <li
               v-for="(year, index) in years"
@@ -145,9 +154,25 @@ const reset = () => {
           </ul>
         </div>
         <div
-          class="flex cursor-pointer items-center rounded border border-primary px-2 py-1 text-sm text-primary"
+          class="relative flex h-8 cursor-pointer items-center rounded border border-primary px-2 text-sm text-primary"
+          @click="toggleMonths"
         >
-          選擇月份<Icon name="ic:round-arrow-drop-down" size="24" />
+          <span class="w-10 text-center text-sm leading-normal">{{ selectedMonth }} 月</span>
+          <Icon name="ic:round-arrow-drop-down" size="24" />
+          <ul
+            v-if="isMonthsOpen"
+            class="absolute top-[103%] h-36 w-16 overflow-y-scroll rounded border border-primary bg-white text-sm"
+          >
+            <li
+              v-for="(month, index) in months"
+              :key="index"
+              class="px-4 py-1 hover:bg-secondary hover:text-sand-100"
+              :class="{ 'border-b border-[edeae6]': index !== months.length - 1 }"
+              @click="getMonth(month)"
+            >
+              {{ month }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>

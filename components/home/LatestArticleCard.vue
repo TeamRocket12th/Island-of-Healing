@@ -61,43 +61,40 @@ if (data.value!.StatusCode === 200) {
         <h2 class="font-serif-tc text-4xl font-bold text-primary">最新文章</h2>
         <div class="h-[0.5px] w-[150px] bg-primary"></div>
       </div>
-      <ClientOnly>
-        <SearchInput class="hidden sm:block" />
-      </ClientOnly>
+      <SearchInput class="hidden sm:block" />
     </div>
-    <ClientOnly>
-      <ul class="mb-3 grid-cols-12 gap-4 md:grid">
-        <li
-          v-for="article in articles"
-          :key="article.Id"
-          class="mb-3 flex h-auto grow flex-col p-4 md:col-span-6 lg:col-span-4"
-        >
-          <div class="flex w-full justify-between">
-            <div class="flex flex-col">
-              <div class="mb-1 flex">
-                <h3 class="font-serif-tc font-semibold text-primary">{{ article.Category }}</h3>
-              </div>
-              <p class="mb-3 font-serif-tc text-sm font-light text-[#828282] sm:text-primary-dark">
-                {{ formatDate(article.Initdate) }}
-              </p>
+
+    <ul class="mb-3 grid-cols-12 gap-4 md:grid">
+      <li
+        v-for="article in articles"
+        :key="article.Id"
+        class="mb-3 flex h-auto grow flex-col p-4 md:col-span-6 lg:col-span-4"
+      >
+        <div class="flex w-full justify-between">
+          <div class="flex flex-col">
+            <div class="mb-1 flex">
+              <h3 class="font-serif-tc font-semibold text-primary">{{ article.Category }}</h3>
             </div>
+            <p class="mb-3 font-serif-tc text-sm font-light text-[#828282] sm:text-primary-dark">
+              {{ formatDate(article.Initdate) }}
+            </p>
           </div>
-          <NuxtLink :to="`article/${article.Id}`">
-            <div class="flex flex-col">
-              <div class="mb-3 h-[267px] max-w-full">
-                <img
-                  :src="article.ArticleImgUrl"
-                  alt="article-cover"
-                  class="h-full w-full object-cover"
-                />
-              </div>
-              <h4 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ article.Title }}</h4>
-              <p class="flex-grow font-light text-primary-dark">{{ article.Summary }}</p>
+        </div>
+        <NuxtLink :to="`/article/${article.Id}`">
+          <div class="flex flex-col">
+            <div class="mb-3 h-[267px] max-w-full">
+              <img
+                :src="article.ArticleImgUrl"
+                alt="article-cover"
+                class="h-full w-full object-cover"
+              />
             </div>
-          </NuxtLink>
-        </li>
-      </ul>
-    </ClientOnly>
+            <h4 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ article.Title }}</h4>
+            <p class="flex-grow font-light text-primary-dark">{{ article.Summary }}</p>
+          </div>
+        </NuxtLink>
+      </li>
+    </ul>
 
     <div class="flex justify-center">
       <NuxtLink to="/article" class="font-serif-tc text-xl font-semibold text-primary">
