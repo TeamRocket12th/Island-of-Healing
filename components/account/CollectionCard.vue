@@ -15,7 +15,8 @@ const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 const { isLoading } = storeToRefs(useLoading())
 
-const isCollected = async (articleId: number, collectedArticles: Article[]) => {
+// 收藏文章
+const isCollected = async (articleId: number, article: Article) => {
   if (userToken.value) {
     try {
       const res: ApiResponse = await $fetch(`${apiBase}/article/collect/${articleId}`, {
@@ -25,18 +26,9 @@ const isCollected = async (articleId: number, collectedArticles: Article[]) => {
         },
         method: 'POST'
       })
-
       if (res.StatusCode === 200) {
-        console.log(res)
-
-        const article = collectedArticles.find(
-          (article: Article) => article.ArticleId === articleId
-        )
-        if (article) {
-          alert(res.Message)
-          article.IsCollected = true
-          console.log(article.IsCollected)
-        }
+        alert(res.Message)
+        article.IsCollected = !article.IsCollected
       }
     } catch (error: any) {
       console.log(error.response)
@@ -44,7 +36,8 @@ const isCollected = async (articleId: number, collectedArticles: Article[]) => {
   }
 }
 
-const cancelCollect = async (articleId: number, collectedArticles: Article[]) => {
+// 取消收藏文章
+const cancelCollect = async (articleId: number, article: Article) => {
   if (userToken.value) {
     try {
       const res: ApiResponse = await $fetch(`${apiBase}/article/cancelcollect/${articleId}`, {
@@ -56,16 +49,8 @@ const cancelCollect = async (articleId: number, collectedArticles: Article[]) =>
       })
 
       if (res.StatusCode === 200) {
-        console.log(res)
-        const article = collectedArticles.find(
-          (article: Article) => article.ArticleId === articleId
-        )
-        console.log(article)
-        if (article) {
-          alert(res.Message)
-          article.IsCollected = false
-          console.log(article.IsCollected)
-        }
+        alert(res.Message)
+        article.IsCollected = !article.IsCollected
       }
     } catch (error: any) {
       console.log(error.response)
@@ -108,30 +93,30 @@ const cancelCollect = async (articleId: number, collectedArticles: Article[]) =>
               </div>
               <div class="hidden sm:flex sm:justify-between">
                 <p class="font-light">{{ formatDate(article.Initdate) }}</p>
-                <div class="flex items-center gap-1">
+                <div class="flex cursor-pointer items-center gap-1">
                   <span
                     v-if="article.IsCollected"
-                    class="cursor-pointer text-secondary"
-                    @click="cancelCollect(article.ArticleId, collectedArticles)"
+                    class="text-secondary"
+                    @click="cancelCollect(article.ArticleId, article)"
                   >
                     <Icon name="material-symbols:bookmark" size="24" />
                   </span>
                   <span
                     v-else
-                    class="cursor-pointer text-sand-300"
-                    @click="isCollected(article.ArticleId, collectedArticles)"
+                    class="text-sand-300"
+                    @click="isCollected(article.ArticleId, article)"
                     ><Icon name="material-symbols:bookmark-outline-rounded" size="24"
                   /></span>
                   <span
                     v-if="article.IsCollected"
                     class="font-light text-secondary"
-                    @click="cancelCollect(article.ArticleId, collectedArticles)"
+                    @click="cancelCollect(article.ArticleId, article)"
                     >已收藏</span
                   >
                   <span
                     v-else
                     class="font-light text-secondary"
-                    @click="isCollected(article.ArticleId, collectedArticles)"
+                    @click="isCollected(article.ArticleId, article)"
                     >收藏</span
                   >
                 </div>
@@ -150,30 +135,30 @@ const cancelCollect = async (articleId: number, collectedArticles: Article[]) =>
                   </div>
                   <p class="font-light">·{{ formatDate(article.Initdate) }}</p>
                 </div>
-                <div class="flex items-center gap-1">
+                <div class="flex cursor-pointer items-center gap-1">
                   <span
                     v-if="article.IsCollected"
-                    class="cursor-pointer text-secondary"
-                    @click="cancelCollect(article.ArticleId, collectedArticles)"
+                    class="text-secondary"
+                    @click="cancelCollect(article.ArticleId, article)"
                   >
                     <Icon name="material-symbols:bookmark" size="24" />
                   </span>
                   <span
                     v-else
-                    class="cursor-pointer text-sand-300"
-                    @click="isCollected(article.ArticleId, collectedArticles)"
+                    class="text-sand-300"
+                    @click="isCollected(article.ArticleId, article)"
                     ><Icon name="material-symbols:bookmark-outline-rounded" size="24"
                   /></span>
                   <span
                     v-if="article.IsCollected"
                     class="font-light text-secondary"
-                    @click="cancelCollect(article.ArticleId, collectedArticles)"
+                    @click="cancelCollect(article.ArticleId, article)"
                     >已收藏</span
                   >
                   <span
                     v-else
                     class="font-light text-secondary"
-                    @click="isCollected(article.ArticleId, collectedArticles)"
+                    @click="isCollected(article.ArticleId, article)"
                     >收藏</span
                   >
                 </div>
