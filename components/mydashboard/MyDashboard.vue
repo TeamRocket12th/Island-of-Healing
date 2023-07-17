@@ -7,16 +7,22 @@ import VChart from 'vue-echarts'
 import { storeToRefs } from 'pinia'
 import { myWorkStore } from '~/stores/mywork'
 
-const { overviewYear, overviewMonth } = storeToRefs(myWorkStore())
-const { getOverViewYear, getOverViewMonth } = myWorkStore()
+const { overviewYear, overviewMonth, yearsArr, monthsArr, currentYearIndex, currentMonthIndex } =
+  storeToRefs(myWorkStore())
+const {
+  getOverViewYear,
+  getOverViewMonth,
+  getPrevIncomeY,
+  getNextIncomeY,
+  getPrevIncomeM,
+  getNextIncomeM
+} = myWorkStore()
 
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 
 use([CanvasRenderer, LineChart, TitleComponent, TooltipComponent, LegendComponent])
-
-const incomeView = ref('month')
 
 // 追蹤人數
 const followMonths = [
@@ -53,6 +59,7 @@ const goPrevYear = () => {
   }
 }
 
+// Echarts設定
 const option = ref({
   xAxis: {
     data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
@@ -85,18 +92,11 @@ const option = ref({
   }
 })
 
+const chartRef: any = ref(null)
+
 const handleClick = (params: any) => {
-  console.log(params)
   if (params.componentType === 'xAxis') {
     chartMonthIndex.value = params.dataIndex // 更新當前選擇的月份
-    // if (chartRef.value) {
-    //   chartRef.value.dispatchAction({
-    //     type: 'markLine',
-    //     seriesIndex: 0, // 對應到series中的索引
-    //     dataIndex: params.dataIndex, // 點擊的月份對應的索引
-    //     name: params.name // 點擊的月份
-    //   })
-    // }
   }
 }
 
@@ -122,166 +122,39 @@ watchEffect(async () => {
 })
 
 // 收益數據
-const income = [
-  {
-    year: '2022',
-    monthly: [
-      {
-        month: '1月',
-        flowIncome: 200,
-        paperIncome: 400
-      },
-      {
-        month: '2月',
-        flowIncome: 400,
-        paperIncome: 500
-      },
-      {
-        month: '3月',
-        flowIncome: 300,
-        paperIncome: 500
-      },
-      {
-        month: '4月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '5月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '6月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '7月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '8月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '9月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '10月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '11月',
-        flowIncome: 200,
-        paperIncome: 500
-      },
-      {
-        month: '12月',
-        flowIncome: 200,
-        paperIncome: 500
-      }
-    ]
-  },
-  {
-    year: '2023',
-    monthly: [
-      {
-        month: '1月',
-        flowIncome: 200,
-        paperIncome: 400
-      },
-      {
-        month: '2月',
-        flowIncome: 400,
-        paperIncome: 500
-      },
-      {
-        month: '3月',
-        flowIncome: 300,
-        paperIncome: 500
-      },
-      {
-        month: '4月',
-        flowIncome: 200,
-        paperIncome: 500
-      }
-    ]
-  }
-]
-
-const selectedYearIndex = ref(income.length - 1)
-const selectedMonthIndex = ref(income[selectedYearIndex.value].monthly.length - 1)
-const selectedIncome = computed(
-  () => income[selectedYearIndex.value].monthly[selectedMonthIndex.value]
-)
-const selectedYear = computed(() => income[selectedYearIndex.value].year)
-const selectedMonth = computed(() => selectedIncome.value.month)
-
-const hasPrevDate = computed(() => {
-  if (showYearlyIncome.value) {
-    return selectedYearIndex.value > 0
-  } else {
-    return selectedMonthIndex.value > 0
-  }
-})
-
-const hasNextDate = computed(() => {
-  if (showYearlyIncome.value) {
-    return selectedYearIndex.value < income.length - 1
-  } else {
-    return selectedMonthIndex.value < income[selectedYearIndex.value].monthly.length - 1
-  }
-})
+const trafficIncome = ref(0)
+const royaltyIncome = ref(0)
 
 const showYearlyIncome = ref(false)
-const yearlyIncome = ref({ flowIncome: 0, paperIncome: 0 })
 
-const prevDate = () => {
-  if (!showYearlyIncome.value && selectedMonthIndex.value > 0) {
-    selectedMonthIndex.value--
-  } else if (showYearlyIncome.value && selectedYearIndex.value > 0) {
-    selectedYearIndex.value--
-    selectedMonthIndex.value = income[selectedYearIndex.value].monthly.length - 1
-    sumYearlyIncome()
+const toggleShowIncome = () => {
+  showYearlyIncome.value = !showYearlyIncome.value
+}
+
+const getWriterIncome = async (year: string, month: string) => {
+  try {
+    const res: ApiResponse = await $fetch(
+      `${apiBase}/writer/trafficandroyalty?year=${year}&month=${month}`,
+      {
+        headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }
+      }
+    )
+    console.log(res)
+    if (res.StatusCode === 200) {
+      trafficIncome.value = Math.round(res.Royalty)
+      royaltyIncome.value = Math.round(res.Traffic)
+    }
+  } catch (error: any) {
+    console.log(error.response)
   }
 }
 
-const nextDate = () => {
-  if (
-    !showYearlyIncome.value &&
-    selectedMonthIndex.value < income[selectedYearIndex.value].monthly.length - 1
-  ) {
-    selectedMonthIndex.value++
-  } else if (showYearlyIncome.value && selectedYearIndex.value < income.length - 1) {
-    selectedYearIndex.value++
-    selectedMonthIndex.value = 0
-    sumYearlyIncome()
-  }
-}
-
-const sumYearlyIncome = () => {
-  showYearlyIncome.value = true
-  incomeView.value = 'year'
-  yearlyIncome.value = income[selectedYearIndex.value].monthly.reduce(
-    (acc, cur) => {
-      acc.flowIncome += cur.flowIncome
-      acc.paperIncome += cur.paperIncome
-      return acc
-    },
-    { flowIncome: 0, paperIncome: 0 }
+watchEffect(async () => {
+  await getWriterIncome(
+    yearsArr.value[currentYearIndex.value],
+    monthsArr.value[currentMonthIndex.value]
   )
-}
-
-const showMonthlyIncome = () => {
-  showYearlyIncome.value = false
-  incomeView.value = 'month'
-}
+})
 
 // 文章數據總覽
 const isYearsOpen = ref(false)
@@ -373,36 +246,56 @@ watchEffect(async () => {
     <div class="col-span-5 flex flex-col justify-between">
       <div class="mb-2 flex items-center justify-between">
         <h2 v-if="showYearlyIncome" class="text-3xl-plus text-primary">
-          {{ selectedYear }}年 回顧
+          {{ yearsArr[currentYearIndex] }}年 回顧
         </h2>
         <h2 v-else class="text-3xl-plus text-primary">
-          {{ selectedMonth }} {{ selectedYear }}年 回顧
+          {{ monthsArr[currentMonthIndex] }}月{{ yearsArr[currentYearIndex] }}年 回顧
         </h2>
-        <div>
-          <button
-            type="button"
-            class="mr-3 text-primary disabled:text-sand-300"
-            :disabled="!hasPrevDate"
-            @click="prevDate"
-          >
-            <Icon name="ic:outline-arrow-back" size="24" />
-          </button>
-          <button
-            type="button"
-            class="mr-3 text-primary disabled:text-sand-300"
-            :disabled="!hasNextDate"
-            @click="nextDate"
-          >
-            <Icon name="ic:outline-arrow-forward" size="24" />
-          </button>
+        <div class="flex items-center">
+          <div v-if="showYearlyIncome">
+            <button
+              type="button"
+              class="mr-3 text-primary disabled:text-sand-300"
+              :disabled="currentYearIndex === 0"
+              @click="getPrevIncomeY"
+            >
+              <Icon name="ic:outline-arrow-back" size="24" />
+            </button>
+            <button
+              type="button"
+              class="mr-3 text-primary disabled:text-sand-300"
+              :disabled="currentYearIndex === yearsArr.length - 1"
+              @click="getNextIncomeY"
+            >
+              <Icon name="ic:outline-arrow-forward" size="24" />
+            </button>
+          </div>
+          <div v-else>
+            <button
+              type="button"
+              class="mr-3 text-primary disabled:text-sand-300"
+              :disabled="currentMonthIndex === 0"
+              @click="getPrevIncomeM"
+            >
+              <Icon name="ic:outline-arrow-back" size="24" />
+            </button>
+            <button
+              type="button"
+              class="mr-3 text-primary disabled:text-sand-300"
+              :disabled="currentMonthIndex === monthsArr.length - 1"
+              @click="getNextIncomeM"
+            >
+              <Icon name="ic:outline-arrow-forward" size="24" />
+            </button>
+          </div>
           <button
             type="button"
             class="mr-3 w-16 rounded border border-secondary py-1 text-sm font-medium text-secondary hover:bg-secondary hover:text-white"
             :class="{
               'bg-secondary text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white':
-                incomeView === 'year'
+                showYearlyIncome
             }"
-            @click="sumYearlyIncome"
+            @click="toggleShowIncome"
           >
             年
           </button>
@@ -411,9 +304,9 @@ watchEffect(async () => {
             class="w-16 rounded border border-secondary py-1 text-sm font-medium text-secondary hover:bg-secondary hover:text-white"
             :class="{
               'bg-secondary text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white':
-                incomeView === 'month'
+                !showYearlyIncome
             }"
-            @click="showMonthlyIncome"
+            @click="toggleShowIncome"
           >
             月
           </button>
@@ -427,10 +320,10 @@ watchEffect(async () => {
             /></span>
             <p class="text-xl font-medium text-primary">流量收益</p>
             <span v-if="showYearlyIncome" class="text-4xl-plus leading-normal text-primary-dark">
-              {{ yearlyIncome.flowIncome }}
+              {{ royaltyIncome }}
             </span>
             <span v-else class="text-4xl-plus leading-normal text-primary-dark">
-              {{ selectedIncome.flowIncome }}
+              {{ royaltyIncome }}
             </span>
           </li>
           <li class="col-span-1 border border-sand-200 px-6 pb-6 pt-14">
@@ -439,10 +332,10 @@ watchEffect(async () => {
             /></span>
             <p class="text-xl font-medium text-primary">我的稿費</p>
             <span v-if="showYearlyIncome" class="text-4xl-plus leading-normal text-primary-dark">
-              {{ yearlyIncome.paperIncome }}
+              {{ trafficIncome }}
             </span>
             <span v-else class="text-4xl-plus leading-normal text-primary-dark">
-              {{ selectedIncome.paperIncome }}
+              {{ trafficIncome }}
             </span>
           </li>
         </ul>

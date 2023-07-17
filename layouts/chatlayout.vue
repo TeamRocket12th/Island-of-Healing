@@ -13,5 +13,6 @@
   background-image: url('~/assets/images/chatroom/AI-chatroom-desktop-bg.jpg');
   background-position: center;
   background-size: cover;
+  background-color: #fef3ed;
 }
 </style>
