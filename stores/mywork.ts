@@ -4,8 +4,12 @@ export const myWorkStore = defineStore('mywork', () => {
   const monthsArr = ref(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'])
 
   const selectedCategory = ref('選擇分類')
+  const postSelectedYear = ref('選擇年份')
   const getCategory = (category: string) => {
     selectedCategory.value = category
+  }
+  const getPostSelectedYear = (year: string) => {
+    postSelectedYear.value = year
   }
   // 作家後台 - 審核進度
   const progressTab = ref('全部')
@@ -53,25 +57,26 @@ export const myWorkStore = defineStore('mywork', () => {
   }
 
   const getNextIncomeY = () => {
-    if (currentYearIndex.value !== currentYear.length - 1) {
+    if (currentYearIndex.value !== yearsArr.value.length - 1) {
       currentYearIndex.value += 1
     }
   }
 
   const getPrevIncomeM = () => {
-    if (currentMonthIndex.value !== 0) {
+    if (currentMonthIndex.value > 0) {
       currentMonthIndex.value -= 1
     }
   }
 
   const getNextIncomeM = () => {
-    if (currentMonthIndex.value !== currentMonth.length - 1) {
+    if (currentMonthIndex.value < monthsArr.value.length - 1) {
       currentMonthIndex.value += 1
     }
   }
 
   return {
     selectedCategory,
+    postSelectedYear,
     selectedYear,
     progressTab,
     selectedMonth,
@@ -88,6 +93,7 @@ export const myWorkStore = defineStore('mywork', () => {
     getNextIncomeY,
     getPrevIncomeM,
     getNextIncomeM,
+    getPostSelectedYear,
     yearsArr,
     monthsArr,
     currentYearIndex,

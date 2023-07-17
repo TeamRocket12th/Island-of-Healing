@@ -124,7 +124,6 @@ watchEffect(async () => {
 // 收益數據
 const trafficIncome = ref(0)
 const royaltyIncome = ref(0)
-
 const showYearlyIncome = ref(false)
 
 const toggleShowIncome = () => {
@@ -132,6 +131,9 @@ const toggleShowIncome = () => {
 }
 
 const getWriterIncome = async (year: string, month: string) => {
+  if (showYearlyIncome.value) {
+    month = '0'
+  }
   try {
     const res: ApiResponse = await $fetch(
       `${apiBase}/writer/trafficandroyalty?year=${year}&month=${month}`,
@@ -141,11 +143,30 @@ const getWriterIncome = async (year: string, month: string) => {
     )
     console.log(res)
     if (res.StatusCode === 200) {
-      trafficIncome.value = Math.round(res.Royalty)
-      royaltyIncome.value = Math.round(res.Traffic)
+      if (showYearlyIncome.value) {
+        trafficIncome.value = Math.round(res.YearRoyalty)
+        royaltyIncome.value = Math.round(res.YearTraffic)
+      } else {
+        trafficIncome.value = Math.round(res.Royalty)
+        royaltyIncome.value = Math.round(res.Traffic)
+      }
     }
   } catch (error: any) {
     console.log(error.response)
+  }
+}
+
+const date = new Date()
+const currentMonth = (date.getMonth() + 1).toString()
+
+const checkMonth = () => {
+  if (
+    currentYearIndex.value === yearsArr.value.length - 1 &&
+    currentMonthIndex.value + 1 === Number(currentMonth)
+  ) {
+    return true
+  } else {
+    return false
   }
 }
 
@@ -198,6 +219,7 @@ watchEffect(async () => {
         <p class="text-xl font-medium text-primary">追蹤人數</p>
         <div>
           <button
+            type="button"
             class="mr-3 disabled:text-sand-300"
             :disabled="followYearIndex === 0"
             @click="goPrevYear"
@@ -205,6 +227,7 @@ watchEffect(async () => {
             <Icon name="ic:outline-arrow-back" size="24" />
           </button>
           <button
+            type="button"
             class="mr-6 disabled:text-sand-300"
             :disabled="followYearIndex === followYears.length - 1"
             @click="goNextYear"
@@ -282,7 +305,7 @@ watchEffect(async () => {
             <button
               type="button"
               class="mr-3 text-primary disabled:text-sand-300"
-              :disabled="currentMonthIndex === monthsArr.length - 1"
+              :disabled="currentMonthIndex === monthsArr.length - 1 || checkMonth()"
               @click="getNextIncomeM"
             >
               <Icon name="ic:outline-arrow-forward" size="24" />
@@ -349,19 +372,19 @@ watchEffect(async () => {
         <div class="flex items-center gap-3">
           <div class="flex items-center gap-3">
             <div
-              class="relative flex cursor-pointer items-center justify-center rounded border border-primary bg-white px-2 py-1 text-primary"
+              class="relative flex h-8 cursor-pointer items-center justify-center rounded border border-primary bg-white px-2 py-1 text-primary"
               @click="toggleYears"
             >
               <span class="w-14 text-center text-sm leading-normal">{{ overviewYear }} 年</span>
               <Icon name="material-symbols:arrow-drop-down" size="20" />
               <ul
                 v-if="isYearsOpen"
-                class="absolute top-[105%] rounded border border-primary bg-white text-sm"
+                class="absolute top-[103%] w-20 rounded border border-primary bg-white text-sm"
               >
                 <li
                   v-for="(year, index) in years"
                   :key="index"
-                  class="px-4 py-1 hover:bg-secondary hover:text-sand-100"
+                  class="px-4 py-1 text-center hover:bg-secondary hover:text-sand-100"
                   :class="{ 'border-b border-[edeae6]': index !== years.length - 1 }"
                   @click="getOverViewYear(year)"
                 >
@@ -370,14 +393,14 @@ watchEffect(async () => {
               </ul>
             </div>
             <div
-              class="relative flex cursor-pointer items-center rounded border border-primary px-2 py-1 text-sm text-primary"
+              class="relative flex h-8 cursor-pointer items-center rounded border border-primary px-2 text-sm text-primary"
               @click="toggleMonths"
             >
               <span class="w-10 text-center text-sm leading-normal">{{ overviewMonth }} 月</span>
               <Icon name="ic:round-arrow-drop-down" size="24" />
               <ul
                 v-if="isMonthsOpen"
-                class="absolute top-[105%] h-36 overflow-y-scroll rounded border border-primary bg-white text-sm"
+                class="absolute top-[103%] h-36 w-16 overflow-y-scroll rounded border border-primary bg-white text-sm"
               >
                 <li
                   v-for="(month, index) in months"

@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { myWorkStore } from '~/stores/mywork'
 
 const { selectedCategory, selectedYear, selectedMonth, progressTab } = storeToRefs(myWorkStore())
+const router = useRouter()
 
 interface TableData {
   [property: string]: any
@@ -17,10 +18,12 @@ const props = defineProps({
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
+const postedArticles = ref<ArticleSummary[]>([])
 const articles = ref<ArticleSummary[]>([])
 const articleAnalysis = ref<ArticleData[]>([])
 
 const dataLoaded = ref(false)
+const { formatDate } = useDateFormat()
 
 // 取得作家後台文章列表
 const getMyArticles = async () => {
@@ -28,10 +31,12 @@ const getMyArticles = async () => {
     const res: ApiResponse = await $fetch(`${apiBase}/writer/articles`, {
       headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }
     })
-    console.log(res)
+    console.log(res.Data)
     if (res.StatusCode === 200) {
+      postedArticles.value = res.Data.filter(
+        (article: ArticleSummary) => article.Progress !== '草稿'
+      )
       articles.value = res.Data
-      console.log(articles.value)
     }
   } catch (error: any) {
     console.log(error.response)
@@ -56,14 +61,6 @@ const getAnalysis = async (year: string, month: string) => {
   }
 }
 
-const formatDate = (dateStr: string) => {
-  const formatteddate = new Date(dateStr)
-  const year = formatteddate.getFullYear()
-  const month = (formatteddate.getMonth() + 1).toString().padStart(2, '0')
-  const day = formatteddate.getDate().toString().padStart(2, '0')
-  return `${year}-${month}-${day}`
-}
-
 watchEffect(async () => {
   await getAnalysis(selectedYear.value, selectedMonth.value)
 })
@@ -73,7 +70,6 @@ const delArticle = async (item: TableData) => {
   if (!userToken.value || item.Progress === '審核中') {
     return
   }
-
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/article/delete/${item.Id}`, {
       headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` },
@@ -124,7 +120,7 @@ const setArticleByYear = (articles: ArticleSummary[]) => {
 }
 
 const filteredArticles = computed(() => {
-  let result = setArticleByCategory(articles.value)
+  let result = setArticleByCategory(postedArticles.value)
   result = setArticleByYear(result)
   return result
 })
@@ -148,7 +144,6 @@ const setArticleByProgress = (articles: ArticleSummary[]) => {
 
 const progressList = computed(() => {
   if (props.nowPage === 'drafts') {
-    console.log(articles.value.filter((article) => article.Progress === '草稿'))
     return articles.value.filter((article) => article.Progress === '草稿')
   } else {
     return setArticleByProgress(articles.value)
@@ -162,6 +157,14 @@ watchEffect(() => {
   dataWithCheckbox.value = filteredArticles.value.map((item) => ({ ...item, isChecked: false }))
   progressWithCheckbox.value = progressList.value.map((item) => ({ ...item, isChecked: false }))
 })
+
+// 確認是否可編輯
+const checkEdit = (progress: string, id: number) => {
+  if (progress === '審核中' || progress === '審核成功') {
+    return
+  }
+  router.push(`/editor/${id}`)
+}
 </script>
 <template>
   <div class="overflow-x-auto">
@@ -225,13 +228,13 @@ watchEffect(() => {
             <td class="py-[10px] text-primary-dark md:w-[14%]">{{ formatDate(item.Initdate) }}</td>
             <td class="py-[10px] text-primary-dark md:w-[14%]">{{ item.CommentNum }}</td>
             <td class="py-[10px] text-primary-dark md:w-[17%]">
-              <button type="button">
-                <NuxtLink :to="`/editor/${item.Id}`">
-                  <Icon name="material-symbols:edit-outline" size="24" class="mr-3"
-                /></NuxtLink>
-              </button>
-              <button type="button" class="mr-3">
-                <Icon name="ic:outline-visibility" size="24" />
+              <button
+                type="button"
+                class="text-scondary disabled:text-btn-disabled"
+                :disabled="item.Progress === '審核成功'"
+                @click="checkEdit(item.Progress, item.Id)"
+              >
+                <Icon name="material-symbols:edit-outline" size="24" class="mr-3" />
               </button>
               <button type="button" @click="delArticle(item.Id)">
                 <Icon name="material-symbols:delete-outline" size="24" />
@@ -302,18 +305,14 @@ watchEffect(() => {
                 type="button"
                 class="mr-3 disabled:text-btn-disabled"
                 :disabled="item.Progress === '審核中'"
+                @click="checkEdit(item.Progress, item.Id)"
               >
-                <NuxtLink :to="`/editor/${item.Id}`">
-                  <Icon name="material-symbols:edit-outline" size="24"
-                /></NuxtLink>
-              </button>
-              <button v-if="nowPage !== 'progress'" type="button" class="mr-3">
-                <Icon name="ic:outline-visibility" size="24" />
+                <Icon name="material-symbols:edit-outline" size="24" />
               </button>
               <button
                 type="button"
                 class="disabled:text-btn-disabled"
-                :disabled="item.Progress === '審核中'"
+                :disabled="item.Progress === '審核中' || item.Progress === '審核成功'"
               >
                 <Icon name="material-symbols:delete-outline" size="24" @click="delArticle(item)" />
               </button>
