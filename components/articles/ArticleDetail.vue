@@ -65,6 +65,7 @@ const markArticleAsRead = async (id: number) => {
     console.log(res)
     if (res.StatusCode === 200) {
       alert(res.Message)
+      isRead.value = true
     }
   } catch (error: any) {
     console.log(error.response)
@@ -163,7 +164,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
       <div v-if="isLock">
         <p class="mb-10 text-xl font-medium text-primary">關於本文： {{ articleDetail.Summary }}</p>
       </div>
-      <div v-if="isLock && !isRead" class="flex justify-center">
+      <div v-if="isLock && !isRead && writerInfo?.Id !== userData.id" class="flex justify-center">
         <button
           v-if="userData.myPlan === 'free' && isLock"
           class="font-sm flex transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
@@ -173,7 +174,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
           <span>付費解鎖</span>
         </button>
         <button
-          v-if="!isRead && isLock"
+          v-if="!isRead && isLock && userData.myPlan !== 'free'"
           class="font-sm flex transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
           @click="keepReading(articleDetail.Id)"
         >
