@@ -90,9 +90,22 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
           >
             返回
           </button>
-          <button class="rounded bg-secondary px-3 py-2 text-white" @click="nextStep">
+          <button
+            v-if="currentStep !== 4"
+            class="rounded bg-secondary px-3 py-2 text-white"
+            @click="nextStep"
+          >
             下一步
           </button>
+          <NuxtLink to="/signup"
+            ><button
+              v-if="currentStep === 4"
+              class="rounded bg-secondary px-2 py-2 text-white"
+              @click="nextStep"
+            >
+              開始註冊
+            </button>
+          </NuxtLink>
         </div>
       </div>
       <div class="hidden w-[45%] border-l-[0.5px] border-sand-300 px-6 py-12 md:block">
