@@ -188,9 +188,9 @@ watch(previewImage, (newValue) => {
 // 偵測內容裡有圖片的
 const tagArr = ref([])
 watch(htmlOutput, (newValue) => {
-  console.log(articleUse.article.Content)
+  // console.log(articleUse.article.Content)
   const imgTags = newValue.match(/<img[^>]+>/g)
-  console.log(imgTags)
+  // console.log(imgTags)
   tagArr.value = imgTags
 })
 // 輸出file 存到formdata
@@ -212,7 +212,7 @@ const convertImagesToFormData = () => {
           }
           const blob = new Blob([uintArray], { type: mimeType })
           formData.append(`image_${index}`, blob, `image_${index}.png`)
-          console.log(formData.get(`image_${index}`))
+          // console.log(formData.get(`image_${index}`))
           articlecontentimgurl()
         }
       }
@@ -222,10 +222,9 @@ const convertImagesToFormData = () => {
 
 // 新增文章圖片
 const articlecontentimgurl = async () => {
-  // console.log('1')
-  // if (!userToken.value) {
-  //   return
-  // }
+  if (!userToken.value) {
+    return
+  }
   try {
     const res = await $fetch(`${apiBase}/articlecontentimgurl/create`, {
       headers: {
@@ -236,28 +235,28 @@ const articlecontentimgurl = async () => {
     })
 
     if (res.StatusCode === 200) {
-      console.log(res)
-      console.log(res.ArticleContentImgData)
+      // console.log(res)
+      // console.log(res.ArticleContentImgData)
       const imgTags = articleUse.article.Content.match(/<img[^>]+>/g)
       if (imgTags) {
         let base64Index = 0
         for (let i = 0; i < imgTags.length; i++) {
           const imgTag = imgTags[i]
           const srcMatch = imgTag.match(/src=['"](.*?)['"]/)
-          console.log(srcMatch)
-          console.log(imgTags)
+          // console.log(srcMatch)
+          // console.log(imgTags)
           if (srcMatch) {
             const src = srcMatch[1]
             const dataUrlPrefix = 'data:image'
             if (src.startsWith(dataUrlPrefix)) {
               if (base64Index < res.ArticleContentImgData.length) {
                 const updatedImgTag = imgTag.replace(src, res.ArticleContentImgData[base64Index])
-                console.log(updatedImgTag)
+                // console.log(updatedImgTag)
                 articleUse.article.Content = articleUse.article.Content.replace(
                   imgTag,
                   updatedImgTag
                 )
-                base64Index++ // 更新索引以处理下一个base64图片链接
+                base64Index++
               }
             }
           }
