@@ -544,7 +544,6 @@ blockquote {
 .ProseMirror {
   outline: none;
   overflow-y: scroll;
-  padding: 8px;
 }
 
 .custom-bullet-list {

@@ -43,12 +43,15 @@ declare global {
 
   // 文章
   interface Article {
-    id: string
-    role: string
-    coverUrl: string
-    articleTitle: string
-    articleSummary: string
-    articleDate: string
+    ArticleId: number
+    ArticleImgUrl: string
+    Summary: string
+    Initdate: string
+    Title: string
+    WriterNickName: string
+    WriterId: number
+    WriterImgUrl: string
+    IsCollected: boolean
   }
 
   // 文章詳細內容
