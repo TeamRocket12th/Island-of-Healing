@@ -7,86 +7,16 @@ definePageMeta({
   requiredAuth: true
 })
 
-const runtimeConfig = useRuntimeConfig()
-const mockApiBase = runtimeConfig.public.mockApiBase
-const route = useRoute()
-const writerStats = ref<WriterStats | null>(null)
-
-const getWriterStats = async () => {
-  try {
-    const res: ApiResponse = await $fetch(`${mockApiBase}/account/${route.params.id}/writerstats`)
-    writerStats.value = res.data as WriterStats
-    console.log(writerStats.value)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-onMounted(() => {
-  getWriterStats()
-})
-
-const articles = [
-  {
-    id: 1,
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    publishDate: '2023-05-27',
-    likeNum: 230,
-    clickNum: 200,
-    commentNum: 89
-  },
-  {
-    id: 2,
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    publishDate: '2023-05-27',
-    likeNum: 230,
-    clickNum: 200,
-    commentNum: 89
-  },
-  {
-    id: 3,
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    publishDate: '2023-05-27',
-    likeNum: 230,
-    clickNum: 200,
-    commentNum: 89
-  },
-  {
-    id: 4,
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    publishDate: '2023-05-27',
-    likeNum: 230,
-    clickNum: 200,
-    commentNum: 89
-  },
-  {
-    id: 5,
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    publishDate: '2023-05-27',
-    likeNum: 230,
-    clickNum: 200,
-    commentNum: 89
-  },
-  {
-    id: 6,
-    title: '打破 3 種常見的「認知偏見」，從自我覺察開始',
-    publishDate: '2023-05-27',
-    likeNum: 230,
-    clickNum: 200,
-    commentNum: 89
-  }
-]
-
 const { nowPage } = usePageName()
 </script>
 <template>
   <div class="mb-40 border border-primary bg-white px-10 pt-10">
     <h2 class="mb-10 font-serif-tc text-2xl font-bold leading-normal">後台數據</h2>
     <div>
-      <MyDashboard v-if="writerStats" :writer-stats="writerStats" />
+      <MyDashboard />
       <div class="mb-28 pb-14">
         <MyArticleTableTab :now-page="nowPage" />
-        <MyArticleTable :table-data="articles" />
+        <MyArticleTable :now-page="nowPage" />
       </div>
     </div>
   </div>

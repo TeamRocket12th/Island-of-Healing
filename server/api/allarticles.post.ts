@@ -17,7 +17,6 @@ export default defineEventHandler(async (event) => {
           UserId
         }
       })
-      console.log(res)
       if (res.StatusCode === 200) {
         return res
       }

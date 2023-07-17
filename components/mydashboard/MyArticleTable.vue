@@ -2,7 +2,8 @@
 import { storeToRefs } from 'pinia'
 import { myWorkStore } from '~/stores/mywork'
 
-const { selectedCategory, selectedYear, progressTab } = storeToRefs(myWorkStore())
+const { selectedCategory, selectedYear, selectedMonth, progressTab } = storeToRefs(myWorkStore())
+const router = useRouter()
 
 interface TableData {
   [property: string]: any
@@ -17,12 +18,12 @@ const props = defineProps({
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
+const postedArticles = ref<ArticleSummary[]>([])
 const articles = ref<ArticleSummary[]>([])
+const articleAnalysis = ref<ArticleData[]>([])
 
-// const { data: articles, error } = getMockData<ArticleSummary>('account', 'mywork')
-// if (error.value) {
-//   console.error('Error fetching data: ', error.value)
-// }
+const dataLoaded = ref(false)
+const { formatDate } = useDateFormat()
 
 // 取得作家後台文章列表
 const getMyArticles = async () => {
@@ -30,34 +31,47 @@ const getMyArticles = async () => {
     const res: ApiResponse = await $fetch(`${apiBase}/writer/articles`, {
       headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }
     })
-    console.log(res)
+    console.log(res.Data)
     if (res.StatusCode === 200) {
+      postedArticles.value = res.Data.filter(
+        (article: ArticleSummary) => article.Progress !== '草稿'
+      )
       articles.value = res.Data
-      console.log(articles.value)
     }
   } catch (error: any) {
     console.log(error.response)
   }
 }
 
-const formatDate = (dateStr: string) => {
-  const formatteddate = new Date(dateStr)
-  const year = formatteddate.getFullYear()
-  const month = (formatteddate.getMonth() + 1).toString().padStart(2, '0')
-  const day = formatteddate.getDate().toString().padStart(2, '0')
-  return `${year}-${month}-${day}`
-}
-
 onMounted(getMyArticles)
 
+// 取得作家後台文章數據
+const getAnalysis = async (year: string, month: string) => {
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/writer/articleanalysis/${year}/${month}`, {
+      headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      articleAnalysis.value = res.ArticleAnalysisData
+      dataLoaded.value = true
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  }
+}
+
+watchEffect(async () => {
+  await getAnalysis(selectedYear.value, selectedMonth.value)
+})
+
 // 刪除單篇文章
-const delArticle = async (id: number) => {
-  if (!userToken.value) {
+const delArticle = async (item: TableData) => {
+  if (!userToken.value || item.Progress === '審核中') {
     return
   }
-
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/article/delete/${id}`, {
+    const res: ApiResponse = await $fetch(`${apiBase}/article/delete/${item.Id}`, {
       headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` },
       method: 'DELETE'
     })
@@ -106,7 +120,7 @@ const setArticleByYear = (articles: ArticleSummary[]) => {
 }
 
 const filteredArticles = computed(() => {
-  let result = setArticleByCategory(articles.value)
+  let result = setArticleByCategory(postedArticles.value)
   result = setArticleByYear(result)
   return result
 })
@@ -130,7 +144,6 @@ const setArticleByProgress = (articles: ArticleSummary[]) => {
 
 const progressList = computed(() => {
   if (props.nowPage === 'drafts') {
-    console.log(articles.value.filter((article) => article.Progress === '草稿'))
     return articles.value.filter((article) => article.Progress === '草稿')
   } else {
     return setArticleByProgress(articles.value)
@@ -144,6 +157,14 @@ watchEffect(() => {
   dataWithCheckbox.value = filteredArticles.value.map((item) => ({ ...item, isChecked: false }))
   progressWithCheckbox.value = progressList.value.map((item) => ({ ...item, isChecked: false }))
 })
+
+// 確認是否可編輯
+const checkEdit = (progress: string, id: number) => {
+  if (progress === '審核中' || progress === '審核成功') {
+    return
+  }
+  router.push(`/editor/${id}`)
+}
 </script>
 <template>
   <div class="overflow-x-auto">
@@ -207,13 +228,13 @@ watchEffect(() => {
             <td class="py-[10px] text-primary-dark md:w-[14%]">{{ formatDate(item.Initdate) }}</td>
             <td class="py-[10px] text-primary-dark md:w-[14%]">{{ item.CommentNum }}</td>
             <td class="py-[10px] text-primary-dark md:w-[17%]">
-              <button type="button">
-                <NuxtLink :to="`/editor/${item.Id}`">
-                  <Icon name="material-symbols:edit-outline" size="24" class="mr-3"
-                /></NuxtLink>
-              </button>
-              <button type="button" class="mr-3">
-                <Icon name="ic:outline-visibility" size="24" />
+              <button
+                type="button"
+                class="text-scondary disabled:text-btn-disabled"
+                :disabled="item.Progress === '審核成功'"
+                @click="checkEdit(item.Progress, item.Id)"
+              >
+                <Icon name="material-symbols:edit-outline" size="24" class="mr-3" />
               </button>
               <button type="button" @click="delArticle(item.Id)">
                 <Icon name="material-symbols:delete-outline" size="24" />
@@ -280,31 +301,38 @@ watchEffect(() => {
               {{ item.Pay ? '付費會員' : '所有人' }}
             </td>
             <td class="w-[17%] py-[10px] text-primary-dark">
-              <button type="button" class="mr-3">
-                <NuxtLink :to="`/editor/${item.Id}`">
-                  <Icon name="material-symbols:edit-outline" size="24"
-                /></NuxtLink>
+              <button
+                type="button"
+                class="mr-3 disabled:text-btn-disabled"
+                :disabled="item.Progress === '審核中'"
+                @click="checkEdit(item.Progress, item.Id)"
+              >
+                <Icon name="material-symbols:edit-outline" size="24" />
               </button>
-              <button v-if="nowPage !== 'progress'" type="button" class="mr-3">
-                <Icon name="ic:outline-visibility" size="24" />
-              </button>
-              <button type="button">
-                <Icon
-                  name="material-symbols:delete-outline"
-                  size="24"
-                  @click="delArticle(item.Id)"
-                />
+              <button
+                type="button"
+                class="disabled:text-btn-disabled"
+                :disabled="item.Progress === '審核中' || item.Progress === '審核成功'"
+              >
+                <Icon name="material-symbols:delete-outline" size="24" @click="delArticle(item)" />
               </button>
             </td>
           </tr>
         </tbody>
-        <tbody v-else>
-          <tr v-for="item in articles" :key="item.Id" class="text-center">
-            <td class="w-[31%] py-[10px] text-primary-dark">{{ item.Title }}</td>
-            <td class="w-[14%] py-[10px] text-primary-dark">{{ formatDate(item.Initdate) }}</td>
-            <td class="w-[14%] py-[10px] text-primary-dark"></td>
-            <td class="w-[14%] py-[10px] text-primary-dark"></td>
-            <td class="w-[17%] py-[10px] text-primary-dark">{{ item.CommentNum }}</td>
+        <tbody v-if="articleAnalysis.length > 0 && nowPage === 'dashboard'">
+          <tr v-for="article in articleAnalysis" :key="article.Id" class="text-center">
+            <td class="w-[31%] py-[10px] text-primary-dark">{{ article.Title }}</td>
+            <td class="w-[14%] py-[10px] text-primary-dark">{{ formatDate(article.Initdate) }}</td>
+            <td class="w-[14%] py-[10px] text-primary-dark">{{ article.Likes }}</td>
+            <td class="w-[14%] py-[10px] text-primary-dark">{{ article.Clicks }}</td>
+            <td class="w-[17%] py-[10px] text-primary-dark">{{ article.Comments }}</td>
+          </tr>
+        </tbody>
+        <tbody v-else-if="articleAnalysis.length === 0 && dataLoaded">
+          <tr>
+            <td colspan="6" class="pt-10 text-center text-2xl font-medium text-primary">
+              找不到文章
+            </td>
           </tr>
         </tbody>
       </table>

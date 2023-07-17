@@ -15,7 +15,7 @@
       <img
         src="/landingpage/pen.png"
         alt=""
-        class="absolute bottom-[170px] z-0 hidden w-[248px] lg:right-[2%] lg:block 2xl:xl:right-[10%]"
+        class="absolute bottom-[170px] z-10 hidden w-[248px] lg:right-[2%] lg:block 2xl:xl:right-[10%]"
         data-aos="fade-left"
       />
       <img
