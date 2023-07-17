@@ -186,20 +186,21 @@ watch(previewImage, (newValue) => {
 })
 
 // 偵測內容裡有圖片的
-const tagArr = ref([])
+const imgTagArr = ref([])
 watch(htmlOutput, (newValue) => {
   // console.log(articleUse.article.Content)
   const imgTags = newValue.match(/<img[^>]+>/g)
-  // console.log(imgTags)
-  tagArr.value = imgTags
+  console.log(imgTags)
+  imgTagArr.value = imgTags
 })
 // 輸出file 存到formdata
 const formData = new FormData()
 const convertImagesToFormData = () => {
-  if (tagArr.value !== null) {
-    tagArr.value.forEach((imgTag, index) => {
+  if (imgTagArr.value !== null) {
+    imgTagArr.value.forEach((imgTag, index) => {
       const srcMatch = imgTag.match(/src=['"](.*?)['"]/)
       if (srcMatch) {
+        console.log(srcMatch)
         const src = srcMatch[1]
         const dataUrlPrefix = 'data:image'
         if (src.startsWith(dataUrlPrefix)) {
@@ -213,7 +214,7 @@ const convertImagesToFormData = () => {
           const blob = new Blob([uintArray], { type: mimeType })
           formData.append(`image_${index}`, blob, `image_${index}.png`)
           // console.log(formData.get(`image_${index}`))
-          articlecontentimgurl()
+          addArticleImgurl()
         }
       }
     })
@@ -221,7 +222,7 @@ const convertImagesToFormData = () => {
 }
 
 // 新增文章圖片
-const articlecontentimgurl = async () => {
+const addArticleImgurl = async () => {
   if (!userToken.value) {
     return
   }
