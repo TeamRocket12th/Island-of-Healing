@@ -18,9 +18,6 @@ const rulesShow = ref(false)
 const settingUse = (value: boolean) => {
   settingShow.value = value
 }
-const contentUse = (content: string) => {
-  articleUse.article.Content = content
-}
 
 const ruleUse = (value: boolean) => {
   rulesShow.value = value
@@ -55,7 +52,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="bg-sand-100 sm:h-[1100px] md:h-fit">
-    <PostEditor @post-upload="settingUse" @post-rules="ruleUse" @article-content="contentUse" />
+    <PostEditor @post-upload="settingUse" @post-rules="ruleUse" />
     <PostSetting v-if="settingShow" @post-upload="settingUse" />
     <Transition>
       <PostRules v-if="rulesShow" @post-rules="ruleUse" />
