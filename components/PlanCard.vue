@@ -13,6 +13,31 @@ useHead({
     }
   ]
 })
+
+const faqItems = ref([
+  {
+    id: 1,
+    question: '要如何觀看解鎖文章？',
+    answer: '請先註冊成為會員，登入後在閱讀方案中，選擇適合您的閱讀方案，進行訂閱付款流程。',
+    isActive: false
+  },
+  {
+    id: 2,
+    question: '我可以使用哪些支付工具訂閱？',
+    answer: '我們只提供信用卡付款服務。',
+    isActive: false
+  },
+  {
+    id: 3,
+    question: '海外讀者也可以訂閱嗎？',
+    answer: '可以，我們歡迎所有地區的使用者。',
+    isActive: false
+  }
+])
+
+const toggleClass = (item: any) => {
+  item.isActive = !item.isActive
+}
 </script>
 
 <template>
@@ -29,10 +54,11 @@ useHead({
       >
         讓我們一起啟程，發現內在的力量和自由，愛上生活的潛力。
       </p>
+
       <button
         class="animate__animated animate__slideInUp btn-active btn z-10 mx-auto mb-10 block h-[60px] w-[180px] rounded bg-secondary px-4 py-3 text-2xl font-medium text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white xl:mb-[84px] 3xl:mb-[84px]"
       >
-        立即註冊
+        <NuxtLink to="/signup">立即註冊</NuxtLink>
       </button>
       <img
         src="~/assets/images/plancard/work-work-from-home-01.svg"
@@ -185,22 +211,31 @@ useHead({
       </h3>
       <ul class="mx-auto flex w-[402px] flex-col lg:w-[872px]">
         <li
-          class="border-[rgb(78 42 9 0.2)] flex items-center justify-between border-b text-primary"
+          v-for="item in faqItems"
+          :key="item.id"
+          :class="{
+            'border-[rgb(78 42 9 0.2)] flex flex-col justify-between border-b text-primary': true,
+            active: item.isActive
+          }"
+          class="cursor-pointer"
+          @click="toggleClass(item)"
         >
-          <p class="py-4 leading-8">要如何觀看解鎖文章？</p>
-          <Icon name="ic:baseline-plus" size="25" class="" />
-        </li>
-        <li
-          class="border-[rgb(78 42 9 0.2)] flex items-center justify-between border-b text-primary"
-        >
-          <p class="py-4 leading-8">我可以使用哪些支付工具訂閱？</p>
-          <Icon name="ic:baseline-plus" size="25" class="" />
-        </li>
-        <li
-          class="border-[rgb(78 42 9 0.2)] flex items-center justify-between border-b text-primary"
-        >
-          <p class="py-4 leading-8">海外讀者也可以訂閱嗎？</p>
-          <Icon name="ic:baseline-plus" size="25" class="" />
+          <div class="flex items-center justify-between">
+            <p class="py-4 leading-8">{{ item.question }}</p>
+            <Icon
+              :name="item.isActive ? 'ic:baseline-minus' : 'ic:baseline-plus'"
+              size="25"
+              class="ease-in"
+            />
+          </div>
+          <div class="pb-3">
+            <p
+              class="show flex items-center pl-3"
+              :class="item.isActive ? 'h-10 bg-sand-100  opacity-100' : 'h-0 opacity-0'"
+            >
+              {{ item.answer }}
+            </p>
+          </div>
         </li>
       </ul>
     </section>
@@ -210,5 +245,8 @@ useHead({
 <style scoped>
 .shadow-top {
   box-shadow: inset 0px 8px 0px 0px rgba(121, 105, 89, 1);
+}
+.show {
+  transition: all 0.5s;
 }
 </style>
