@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+
+const { formatDate } = useDateFormat()
+
 const emits = defineEmits(['plan-cancel'])
 const cancelPlan = (value: boolean) => {
   emits('plan-cancel', value)
 }
 const userStore = useUserStore()
 const { userData } = storeToRefs(userStore)
-console.log(userData.value)
 
 const allPlans = ref([
   {
@@ -19,15 +21,12 @@ const allPlans = ref([
     id: 2,
     sub: 'yearly',
     name: '年付讀到飽專案'
-  },
-  {
-    id: 3,
-    sub: 'free',
-    name: '免費專案'
   }
 ])
 
-const otherPlans = allPlans.value.filter((plan) => plan.sub !== userData.value.myPlan)
+const otherPlans = computed(() => {
+  return allPlans.value.filter((plan) => plan.sub !== userData.value.myPlan)
+})
 
 const renderPlan = (plan: string) => {
   switch (plan) {
@@ -42,59 +41,100 @@ const renderPlan = (plan: string) => {
   }
 }
 
+const selectedName = ref('')
 const myPlan = computed(() => {
+  selectedName.value = renderPlan(userData.value.myPlan)
   return renderPlan(userData.value.myPlan)
 })
+
+const props = defineProps({
+  renewMembership: {
+    type: Boolean,
+    default: true
+  },
+  endDate: {
+    type: String,
+    default: ''
+  }
+})
+
+const selected = () => {
+  userStore.selectedOrder.planName = selectedName.value
+  console.log(userStore.selectedOrder.planName)
+  if (userStore.selectedOrder.planName === '月付讀到飽專案') {
+    userStore.selectedOrder.price = 120
+  } else {
+    userStore.selectedOrder.price = 1200
+  }
+}
+const selectedOtherPlans = (otherplan: string) => {
+  userStore.selectedOrder.planName = otherplan
+  console.log(userStore.selectedOrder.planName)
+  if (userStore.selectedOrder.planName === '月付讀到飽專案') {
+    userStore.selectedOrder.price = 120
+  } else {
+    userStore.selectedOrder.price = 1200
+  }
+}
 </script>
 <template>
   <div class="mb-[147px] grid grid-cols-12 border border-primary bg-sand-100">
     <h2 class="col-span-2 pl-10 pt-10 font-serif-tc text-2xl font-bold text-primary">變更訂閱</h2>
     <div class="grid-start-3 col-span-8 px-3 py-32">
-      <div class="mb-7 border border-secondary bg-white p-4">
+      <div class="mb-7 min-h-[192px] border border-secondary bg-white p-4">
         <h3 class="mb-5 text-xl font-medium text-primary">目前方案</h3>
         <div class="flex justify-between text-primary-dark">
           <p>{{ myPlan }}</p>
           <ul v-if="userData.myPlan !== 'free'" class="list-disc">
-            <li class="mb-2">下次扣款日：2023/07/04</li>
-            <li class="mb-[14px]">閱讀權限至：2023/07/04</li>
+            <li v-if="props.renewMembership" class="mb-2">
+              下次扣款日：{{ formatDate(props.endDate) }}
+            </li>
+            <li class="mb-[14px]">閱讀權限至：{{ formatDate(props.endDate) }}</li>
           </ul>
         </div>
-        <div
-          class="border-[0.5px] border-secondary"
-          :class="userData.myPlan === 'free' ? 'my-10' : 'mb-4'"
-        ></div>
-        <div v-if="userData.myPlan !== 'free'" class="flex justify-end">
-          <button class="border-b border-primary text-primary" @click="cancelPlan(true)">
-            取消訂閱
-          </button>
-        </div>
-        <div v-if="false" class="flex justify-between">
-          <p class="text-sand-300">已退訂</p>
-          <button class="border-primary text-primary">重新訂閱</button>
-        </div>
-      </div>
-      <div
-        v-for="plan in otherPlans"
-        :key="plan.id"
-        class="mb-7 border border-secondary bg-white p-4"
-      >
-        <h3 class="mb-5 text-xl font-medium text-primary">可用方案</h3>
-        <p class="mb-3 text-primary-dark">{{ plan.name }}</p>
-        <div v-if="plan.sub !== userData.myPlan" class="mb-[10px]">
-          <NuxtLink to="/plans" class="border-b border-primary text-primary">瞭解更多</NuxtLink>
-        </div>
-        <div v-if="plan.sub !== userData.myPlan" class="flex justify-end">
+        <div class="mb-4 h-[0.5px] w-full bg-secondary"></div>
+        <div v-if="!props.renewMembership" class="flex justify-end" @click="selected">
           <NuxtLink
             to="/neworder"
             class="rounded bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
             >選擇方案</NuxtLink
           >
         </div>
+      </div>
+      <div
+        v-for="plan in otherPlans"
+        :key="plan.id"
+        class="min-h-48 mb-7 border border-secondary bg-white p-4"
+      >
+        <h3 class="mb-5 text-xl font-medium text-primary">可用方案</h3>
+        <p class="mb-3 text-primary-dark">{{ plan.name }}</p>
+        <div v-if="plan.sub !== userData.myPlan" class="mb-[10px]">
+          <NuxtLink to="/plans" class="border-b border-primary text-primary">瞭解更多</NuxtLink>
+        </div>
         <div
-          v-if="plan.sub === userData.myPlan && userData.myPlan !== 'free'"
+          v-if="plan.sub !== userData.myPlan"
           class="flex justify-end"
+          @click="selectedOtherPlans(plan.name)"
         >
-          <button class="border-b border-primary text-primary" @click="cancelPlan(true)">
+          <NuxtLink
+            to="/neworder"
+            class="rounded bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+            >選擇方案</NuxtLink
+          >
+        </div>
+      </div>
+      <div
+        v-if="userData.myPlan !== 'free'"
+        class="mb-7 min-h-[192px] border border-secondary bg-white p-4"
+      >
+        <h3 class="mb-5 text-xl font-medium text-primary">可用方案</h3>
+        <p class="mb-3 text-primary-dark">免費方案</p>
+        <div class="flex justify-end">
+          <button
+            v-if="props.renewMembership"
+            class="border-b border-primary text-primary"
+            @click="cancelPlan(true)"
+          >
             取消訂閱
           </button>
         </div>

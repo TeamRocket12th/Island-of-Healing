@@ -190,7 +190,7 @@ const imgTagArr = ref([])
 watch(htmlOutput, (newValue) => {
   // console.log(articleUse.article.Content)
   const imgTags = newValue.match(/<img[^>]+>/g)
-  console.log(imgTags)
+  // console.log(imgTags)
   imgTagArr.value = imgTags
 })
 // 輸出file 存到formdata
@@ -200,7 +200,7 @@ const convertImagesToFormData = () => {
     imgTagArr.value.forEach((imgTag, index) => {
       const srcMatch = imgTag.match(/src=['"](.*?)['"]/)
       if (srcMatch) {
-        console.log(srcMatch)
+        // console.log(srcMatch)
         const src = srcMatch[1]
         const dataUrlPrefix = 'data:image'
         if (src.startsWith(dataUrlPrefix)) {
@@ -236,8 +236,7 @@ const addArticleImgurl = async () => {
     })
 
     if (res.StatusCode === 200) {
-      // console.log(res)
-      // console.log(res.ArticleContentImgData)
+      console.log(res)
       const imgTags = articleUse.article.Content.match(/<img[^>]+>/g)
       if (imgTags) {
         let base64Index = 0

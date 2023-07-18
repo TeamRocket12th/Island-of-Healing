@@ -18,7 +18,6 @@ const {
   isCollecting,
   isLiking,
   comments,
-  haveCover,
   isLock,
   isRead,
   getArticleDetail
@@ -161,7 +160,11 @@ const { followWriter, unFollowWriter } = useWriterActions()
     <!-- 文章內文 -->
     <div class="relative">
       <h2 class="mb-6 text-[32px] font-bold">{{ articleDetail?.Title }}</h2>
-      <img v-if="haveCover" :src="articleDetail.ImgUrl" alt="cover" class="mb-6 block" />
+      <img
+        :src="articleDetail.ImgUrl ? articleDetail.ImgUrl : '/default-article-cover.jpg'"
+        alt="cover"
+        class="mb-6 block"
+      />
       <div v-if="isLock">
         <p class="mb-10 text-xl font-medium text-primary">關於本文： {{ articleDetail.Summary }}</p>
       </div>
