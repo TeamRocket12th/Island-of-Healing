@@ -26,6 +26,7 @@ const hideCancelCheck = (value: boolean) => {
 watchEffect(() => {
   if (typeof document !== 'undefined') {
     document.body.style.overflow = modalUse.value ? 'hidden' : 'auto'
+    document.body.style.paddingRight = modalUse.value ? '15px' : '0'
   }
 })
 

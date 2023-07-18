@@ -195,7 +195,6 @@ const saveDraft = () => {
   }
   postSent(false)
   setTimeout(() => {
-    t
     router.push(`/account/${userData.value.id}/drafts`)
   }, 1000)
 }

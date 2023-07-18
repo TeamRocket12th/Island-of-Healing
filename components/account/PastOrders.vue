@@ -2,7 +2,7 @@
 const { formatDate } = useDateFormat()
 defineProps({
   orderData: {
-    type: Array as () => Article[],
+    type: Array as () => PastOrder[],
     required: true,
     default: () => []
   }
@@ -25,7 +25,7 @@ defineProps({
           <span class="text-primary">訂單類別 : </span> {{ order.PlanName }}
         </li>
         <li class="mb-4 text-primary-dark">
-          <span class="text-primary">付款方式 : </span> {{ order.payment }}
+          <span class="text-primary">付款方式 : </span> {{ order.PaymentMethod }}
         </li>
         <li class="mb-3 h-[1px] border-b border-secondary"></li>
         <li class="flex justify-end text-primary-dark">
