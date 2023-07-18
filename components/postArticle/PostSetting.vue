@@ -178,18 +178,14 @@ const updateArticle = async () => {
       if (formData.get('articleCover')) {
         const id = Number(route.params.id)
         updateArticleCover(id)
+      } else {
+        articleUse.selectedImage = '/default-article-cover.jpg'
       }
     }
   } catch (error: any) {
     console.log(error.response)
   }
 }
-
-// onUnmounted(() => {
-//   if (previewImage.value) {
-//     URL.revokeObjectURL(previewImage.value)
-//   }
-// })
 
 // 新增草稿按鈕
 const saveDraft = () => {
@@ -200,6 +196,7 @@ const saveDraft = () => {
   } else {
     postArticle()
   }
+  postSent(false)
   setTimeout(() => {
     router.push(`/account/${userData.value.id}/drafts`)
   }, 1000)
@@ -213,6 +210,7 @@ const createPost = () => {
   } else {
     postArticle()
   }
+  postSent(false)
   setTimeout(() => {
     router.push(`/account/${userData.value.id}/mywork`)
   }, 1000)
@@ -276,10 +274,10 @@ onMounted(() => {
 
 const photoAlert = ref(true)
 watchEffect(() => {
-  if (articleUse.selectedImage !== '' || articleUse.previewImage !== null) {
-    photoAlert.value = false
-  } else {
+  if (articleUse.selectedImage === '' && articleUse.previewImage === '') {
     photoAlert.value = true
+  } else {
+    photoAlert.value = false
   }
 })
 </script>
