@@ -1,7 +1,7 @@
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 export default defineNuxtPlugin((nuxtApp) => {
-  AOS.init()
+  nuxtApp.AOS = AOS.init()
 
   // You can also pass an optional settings object
   // below listed default settings
