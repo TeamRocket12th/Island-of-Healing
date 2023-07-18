@@ -84,7 +84,7 @@ if (data.value!.StatusCode === 200) {
           <div class="flex flex-col">
             <div class="mb-3 h-[267px] max-w-full">
               <img
-                :src="article.ArticleImgUrl"
+                :src="article.ArticleImgUrl ? article.ArticleImgUrl : '/default-article-cover.jpg'"
                 alt="article-cover"
                 class="h-full w-full object-cover"
               />
