@@ -178,8 +178,6 @@ const updateArticle = async () => {
       if (formData.get('articleCover')) {
         const id = Number(route.params.id)
         updateArticleCover(id)
-      } else {
-        articleUse.selectedImage = '/default-article-cover.jpg'
       }
     }
   } catch (error: any) {
@@ -198,6 +196,7 @@ const saveDraft = () => {
   }
   postSent(false)
   setTimeout(() => {
+    t
     router.push(`/account/${userData.value.id}/drafts`)
   }, 1000)
 }
