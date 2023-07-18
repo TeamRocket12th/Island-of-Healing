@@ -312,7 +312,7 @@ const checkEdit = (progress: string, id: number) => {
               <button
                 type="button"
                 class="disabled:text-btn-disabled"
-                :disabled="item.Progress === '審核中' || item.Progress === '審核成功'"
+                :disabled="item.Progress === '審核中'"
               >
                 <Icon name="material-symbols:delete-outline" size="24" @click="delArticle(item)" />
               </button>
