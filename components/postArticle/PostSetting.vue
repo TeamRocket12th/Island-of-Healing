@@ -174,7 +174,6 @@ const updateArticle = async () => {
       selectedOption.value = '免費'
       articleUse.selectedImage = ''
       articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
-
       if (formData.get('articleCover')) {
         const id = Number(route.params.id)
         updateArticleCover(id)
@@ -200,6 +199,7 @@ const saveDraft = () => {
   } else {
     postArticle()
   }
+  postSent(false)
   setTimeout(() => {
     router.push(`/account/${userData.value.id}/drafts`)
   }, 1000)
@@ -213,6 +213,7 @@ const createPost = () => {
   } else {
     postArticle()
   }
+  postSent(false)
   setTimeout(() => {
     router.push(`/account/${userData.value.id}/mywork`)
   }, 1000)
