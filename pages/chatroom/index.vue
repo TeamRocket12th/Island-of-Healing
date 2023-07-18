@@ -1,12 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
-
 definePageMeta({
   layout: 'chatlayout'
 })
-const userStore = useUserStore()
-const { userData } = storeToRefs(userStore)
+
+const { userData } = storeToRefs(useUserStore())
 </script>
 
 <template>

@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useLoading } from '~/stores/loading'
-const { isLoading } = storeToRefs(useLoading())
-
 defineProps({
   writerInfo: {
     type: Array as () => Writer[],
@@ -87,10 +83,7 @@ watchEffect(() => {
 
 <template>
   <div>
-    <ul
-      v-if="!isLoading && writerInfo.length > 0"
-      class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:px-28"
-    >
+    <ul v-if="writerInfo.length > 0" class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:px-28">
       <li
         v-for="writer in writerInfo"
         :key="writer.WriterId"
@@ -124,10 +117,9 @@ watchEffect(() => {
         </button>
       </li>
     </ul>
-    <p v-else-if="!isLoading && writerInfo.length === 0" class="text-center text-2xl text-primary">
+    <p v-else-if="writerInfo.length === 0" class="text-center text-2xl text-primary">
       目前還沒有追蹤作家
     </p>
-    <span v-if="isLoading">Loading...</span>
     <template v-if="showConfirmModal">
       <ConfirmModal @close-confirm="closeConfirm">
         <template #header>

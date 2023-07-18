@@ -1,6 +1,52 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useChatCharacters } from '~/stores/characters'
+import { useUserStore } from '~/stores/user'
+
+const { userData } = storeToRefs(useUserStore())
+const userToken = useCookie('token')
+const runtimeConfig = useRuntimeConfig()
+const apiBase = runtimeConfig.public.apiBase
+
+const props = defineProps({
+  chatCount: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  isLimited: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  getChatCount: {
+    type: Function,
+    required: true
+  }
+})
+
+// 記錄AI聊天次數+1
+const saveChatCount = async () => {
+  if (!userToken.value || userData.value.myPlan !== 'free') {
+    return
+  }
+  try {
+    const res = await $fetch(`${apiBase}/useaitimes/add`, {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userToken.value}`
+      },
+      method: 'PUT'
+    })
+    console.log(res)
+    if (res.StatusCode === 200) {
+      console.log(res)
+      props.getChatCount()
+    }
+  } catch (error) {
+    console.log(error.response)
+  }
+}
 
 const { selectedCharacter } = storeToRefs(useChatCharacters())
 
@@ -13,10 +59,16 @@ const chatMessages = {
 }
 
 const askQuestion = async () => {
+  if (props.isLimited) {
+    alert('已達免費帳號上限')
+    return
+  }
+
   if (!question.value) {
     alert('請先輸入問題')
     return
   }
+  saveChatCount()
   chatMessages.clientMsgs.push({
     role: 'user',
     content: question.value
@@ -77,12 +129,14 @@ onUpdated(() => {
               <input
                 v-model.trim="question"
                 type="text"
-                class="w-full rounded-md border border-secondary px-4 py-2 placeholder:text-sand-300 focus:outline-secondary"
+                class="w-full rounded-md border border-secondary px-4 py-2 placeholder:text-sand-300 focus:outline-secondary disabled:opacity-50"
                 placeholder="說點什麼吧？"
+                :disabled="isLimited"
                 @keydown.enter="handleEnterKey"
               />
               <button
-                class="absolute right-0 h-full w-[50px] rounded-r-md py-1 text-secondary hover:bg-secondary hover:text-white"
+                class="absolute right-0 h-full w-[50px] rounded-r-md py-1 text-secondary hover:bg-secondary hover:text-white disabled:hover:bg-transparent disabled:hover:text-secondary"
+                :disabled="isLimited"
                 @click="askQuestion"
               >
                 <Icon name="material-symbols:send-outline" size="20" />

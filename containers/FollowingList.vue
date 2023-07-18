@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useLoading } from '~/stores/loading'
 
+const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
 
 const runtimeConfig = useRuntimeConfig()
@@ -8,7 +10,6 @@ const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 const followingWriters = ref([])
 
-setLoading(true)
 // 取得個人追蹤作家列表
 const getFollowingList = async () => {
   if (!userToken.value) {
@@ -31,6 +32,7 @@ const getFollowingList = async () => {
     console.log(error.response)
   }
 }
+setLoading(true)
 onMounted(getFollowingList)
 </script>
 <template>
@@ -40,7 +42,8 @@ onMounted(getFollowingList)
     >
       我的追蹤
     </h2>
-    <WriterCardWide :writer-info="followingWriters" />
+    <div v-if="isLoading">Loading...</div>
+    <WriterCardWide v-else :writer-info="followingWriters" />
   </div>
 </template>
 
