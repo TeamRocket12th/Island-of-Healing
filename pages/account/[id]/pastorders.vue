@@ -7,7 +7,7 @@ const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 
-const ordersData = ref([])
+const orderData = ref<PastOrder[]>([])
 
 const getPastorders = async () => {
   if (!userToken.value) {
@@ -21,7 +21,7 @@ const getPastorders = async () => {
       }
     })
     if (res.StatusCode === 200) {
-      ordersData.value = res.OrdersData
+      orderData.value = res.OrdersData
       console.log(res)
     }
   } catch (error: any) {
@@ -32,7 +32,7 @@ onMounted(getPastorders)
 </script>
 <template>
   <div>
-    <PastOrders :order-data="ordersData" />
+    <PastOrders :order-data="orderData" />
   </div>
 </template>
 
