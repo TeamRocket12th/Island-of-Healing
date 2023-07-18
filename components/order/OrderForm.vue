@@ -2,9 +2,6 @@
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { usePaymentStore } from '~/stores/payment'
-// const runtimeConfig = useRuntimeConfig()
-// const apiBase = runtimeConfig.public.apiBase
-// const userToken = useCookie('token')
 
 const userStore = useUserStore()
 const { userData } = storeToRefs(userStore)
