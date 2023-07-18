@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { myWorkStore } from '~/stores/mywork'
+import { useWriterBoard } from '~/stores/writerboard'
+
 const useMyworkStore = myWorkStore()
+const { selectedArticleIds } = storeToRefs(useWriterBoard())
+const { getMyArticles, delArticle } = useWriterBoard()
 
 const { selectedCategory, postSelectedYear, selectedYear, selectedMonth, progressTab } =
   storeToRefs(useMyworkStore)
@@ -36,6 +40,40 @@ const toggleMonths = () => {
 const reset = () => {
   getCategory('選擇分類')
   getPostSelectedYear('選擇年份')
+}
+
+interface TableData {
+  [property: string]: any
+}
+
+// 刪除選取文章確認Modal
+const showConfirmModal = ref(false)
+const selectedArticle = ref<TableData>({})
+
+const confrimDel = (item: TableData) => {
+  showConfirmModal.value = true
+  selectedArticle.value = item
+}
+
+const closeConfirm = (value: boolean) => {
+  showConfirmModal.value = value
+}
+
+watchEffect(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = showConfirmModal.value ? 'hidden' : 'auto'
+    document.body.style.paddingRight = showConfirmModal.value ? '15px' : '0'
+  }
+})
+
+const handleDelAll = async () => {
+  showConfirmModal.value = false
+  try {
+    await Promise.all(selectedArticleIds.value.map((id: number) => delArticle(id)))
+    await getMyArticles()
+  } catch (error: any) {
+    console.error(error)
+  }
 }
 </script>
 <template>
@@ -180,9 +218,38 @@ const reset = () => {
       v-if="nowPage !== 'dashboard'"
       type="button"
       class="mb-3 rounded bg-secondary px-2 py-1 text-sm text-sand-100 hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white md:h-8"
+      @click="confrimDel"
     >
       全部刪除
     </button>
+    <template v-if="showConfirmModal">
+      <ConfirmModal @close-confirm="closeConfirm">
+        <template #header>
+          <h2 class="text-xl text-primary">刪除文章?</h2>
+        </template>
+        <template #content>
+          <p class="border-b border-t border-sand-200 pb-8 pl-4 pr-4 pt-4 text-primary-dark">
+            確定要刪除這{{ selectedArticleIds.length }}篇文章嗎？
+          </p>
+        </template>
+        <template #footer>
+          <div class="flex justify-end gap-2 p-3">
+            <button
+              class="rounded p-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+              @click="showConfirmModal = false"
+            >
+              取消
+            </button>
+            <button
+              class="rounded p-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+              @click="handleDelAll"
+            >
+              確定
+            </button>
+          </div>
+        </template>
+      </ConfirmModal>
+    </template>
   </div>
 </template>
 

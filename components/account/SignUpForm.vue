@@ -104,7 +104,6 @@ const handleSignUp = async () => {
                 class="absolute right-3 top-1/2 translate-y-[-50%] cursor-pointer text-secondary"
                 @click="passwordField.togglePasswordType"
               />
-
               <Icon
                 v-else
                 name="material-symbols:visibility-off-outline"

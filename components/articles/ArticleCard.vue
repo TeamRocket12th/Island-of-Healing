@@ -16,7 +16,11 @@ const { formatDate } = useDateFormat()
         <li v-for="item in articles" :key="item.Id" class="col-span-1 mb-6 border sm:mb-0">
           <NuxtLink :to="`/article/${item.Id}`">
             <div class="h-[157px] overflow-hidden">
-              <img :src="item.ArticleImgUrl" alt="cover-photo" class="h-full w-full object-cover" />
+              <img
+                :src="item.ArticleImgUrl ? item.ArticleImgUrl : '/default-article-cover.jpg'"
+                alt="cover-photo"
+                class="h-full w-full object-cover"
+              />
             </div>
             <div class="flex h-[126px] flex-col justify-between bg-white pb-3 pl-3 pr-[14px] pt-2">
               <div class="mb-3">

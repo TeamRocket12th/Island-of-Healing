@@ -18,7 +18,6 @@ const {
   isCollecting,
   isLiking,
   comments,
-  haveCover,
   isLock,
   isRead,
   getArticleDetail
@@ -94,6 +93,7 @@ const closeModal = (value: boolean) => {
 watchEffect(() => {
   if (typeof document !== 'undefined') {
     document.body.style.overflow = isShareLinkOpen.value ? 'hidden' : 'auto'
+    document.body.style.paddingRight = isShareLinkOpen.value ? '15px' : '0'
   }
 })
 
@@ -160,7 +160,11 @@ const { followWriter, unFollowWriter } = useWriterActions()
     <!-- 文章內文 -->
     <div class="relative">
       <h2 class="mb-6 text-[32px] font-bold">{{ articleDetail?.Title }}</h2>
-      <img v-if="haveCover" :src="articleDetail.ImgUrl" alt="cover" class="mb-6 block" />
+      <img
+        :src="articleDetail.ImgUrl ? articleDetail.ImgUrl : '/default-article-cover.jpg'"
+        alt="cover"
+        class="mb-6 block"
+      />
       <div v-if="isLock">
         <p class="mb-10 text-xl font-medium text-primary">關於本文： {{ articleDetail.Summary }}</p>
       </div>
@@ -271,7 +275,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
     </div>
   </div>
   <!--留言-->
-  <div v-if="!isLock">
+  <div v-if="!isLock || writerInfo?.Id === userData.id">
     <div class="mb-6">
       <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
     </div>
@@ -289,7 +293,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
         <span class="font-medium text-primary">{{ userData.nickName }}</span>
       </div>
       <div class="grid-cols-7 gap-6 text-right md:grid md:text-left">
-        <div class="relative col-span-6 mb-4 md:mb-0">
+        <div class="relative col-span-5 mb-4 md:mb-0">
           <textarea
             ref="textarea"
             v-model="userComment"
@@ -315,13 +319,15 @@ const { followWriter, unFollowWriter } = useWriterActions()
             />
           </ClientOnly>
         </div>
-        <button
-          class="h-10 rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-          :disabled="!userComment"
-          @click="addComment(articleDetail?.Id as number, articleId, userId)"
-        >
-          發表留言
-        </button>
+        <div class="col-span-2">
+          <button
+            class="h-10 rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+            :disabled="!userComment"
+            @click="addComment(articleDetail?.Id as number, articleId, userId)"
+          >
+            發表留言
+          </button>
+        </div>
       </div>
     </div>
     <div v-else class="my-20 flex items-center justify-center text-primary-dark">

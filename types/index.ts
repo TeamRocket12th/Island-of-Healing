@@ -79,7 +79,7 @@ declare global {
 
   // 文章摘要
   interface ArticleSummary {
-    Id: string
+    Id: number
     Title: string
     Category: string
     Initdate: string
@@ -137,11 +137,12 @@ declare global {
 
   // 歷史訂單
   interface PastOrder {
-    orderDate: string
-    orderId: string
-    orderPlan: string
-    price: number
-    payment: string
+    EndDate: string
+    MerchantOrderNo: string
+    PaidDate: string
+    PaymentMethod: string
+    PlanName: string
+    PlanPrice: number
   }
 
   // 使用者資訊

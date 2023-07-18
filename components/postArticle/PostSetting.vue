@@ -174,7 +174,6 @@ const updateArticle = async () => {
       selectedOption.value = '免費'
       articleUse.selectedImage = ''
       articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
-
       if (formData.get('articleCover')) {
         const id = Number(route.params.id)
         updateArticleCover(id)
@@ -185,12 +184,6 @@ const updateArticle = async () => {
   }
 }
 
-// onUnmounted(() => {
-//   if (previewImage.value) {
-//     URL.revokeObjectURL(previewImage.value)
-//   }
-// })
-
 // 新增草稿按鈕
 const saveDraft = () => {
   articleUse.article.Progress = 0
@@ -200,6 +193,7 @@ const saveDraft = () => {
   } else {
     postArticle()
   }
+  postSent(false)
   setTimeout(() => {
     router.push(`/account/${userData.value.id}/drafts`)
   }, 1000)
@@ -213,6 +207,7 @@ const createPost = () => {
   } else {
     postArticle()
   }
+  postSent(false)
   setTimeout(() => {
     router.push(`/account/${userData.value.id}/mywork`)
   }, 1000)
@@ -276,10 +271,10 @@ onMounted(() => {
 
 const photoAlert = ref(true)
 watchEffect(() => {
-  if (articleUse.selectedImage !== '' || articleUse.previewImage !== null) {
-    photoAlert.value = false
-  } else {
+  if (articleUse.selectedImage === '' && articleUse.previewImage === '') {
     photoAlert.value = true
+  } else {
+    photoAlert.value = false
   }
 })
 </script>

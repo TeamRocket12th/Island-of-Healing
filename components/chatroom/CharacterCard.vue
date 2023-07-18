@@ -24,22 +24,16 @@ const checkIsLogin = (roleId: string) => {
 
 <template>
   <div
-    class="card-bg flex h-[468px] w-full flex-col items-center rounded-2xl px-11 pt-20 shadow-xl transition-all duration-1000 hover:scale-105"
+    class="card-bg flex h-[468px] w-full flex-col items-center rounded-2xl px-11 pt-20 shadow-xl transition-all duration-700 hover:scale-105"
     @mouseenter="showDesc = true"
     @mouseleave="showDesc = false"
   >
     <div class="mb-3 flex items-center justify-center">
       <img :src="c.imgUrl" alt="chat-role" class="h-[100px] w-[100px] rounded-full" />
     </div>
-    <div
-      class="flex flex-col items-center transition-all duration-1000"
-      :class="showDesc ? 'h-56' : 'h-20'"
-    >
+    <div class="flex flex-col items-center transition-all duration-700">
       <h2 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ c.name }}</h2>
-      <p
-        class="desc items-center text-center font-light text-primary"
-        :class="showDesc ? 'visible' : 'hidden'"
-      >
+      <p class="desc items-center text-center font-light text-primary">
         {{ c.desc }}
       </p>
       <div class="pt-6">
@@ -74,13 +68,5 @@ const checkIsLogin = (roleId: string) => {
   );
   box-shadow: 3px 5px 4px 1px #fff inset, -4px -4px 34px 0px #fcf2ec inset,
     0px 20px 25px -5px rgba(0, 0, 0, 0.1), 0px 8px 10px -6px rgba(0, 0, 0, 0.1);
-}
-.desc {
-  max-height: 0;
-  transition: max-height 2s ease-in-out;
-  overflow: hidden;
-}
-.desc.visible {
-  max-height: 100px; /* Adjust this value as needed */
 }
 </style>

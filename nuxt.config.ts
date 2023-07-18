@@ -1,6 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', '@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    'nuxt-icon',
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
+    'nuxt-gtag'
+  ],
   // typescript: {
   //   typeCheck: true
   // },
@@ -28,6 +34,12 @@ export default defineNuxtConfig({
     public: {
       apiBase: 'https://islandofhealing.rocket-coding.com/api',
       mockApiBase: 'http://localhost:4000'
+    }
+  },
+  gtag: {
+    id: 'G-96SY6NF307',
+    config: {
+      page_title: '小島療癒所'
     }
   }
 })

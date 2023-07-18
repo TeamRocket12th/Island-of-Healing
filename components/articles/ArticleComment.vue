@@ -87,10 +87,11 @@ const updateComment = async (id: number) => {
 
 // 刪除文章內的留言
 const delComment = async (id: number) => {
-  toggleEditBtns(id)
+  openCommentId.value = null
   if (!userToken.value) {
     return
   }
+  showConfirmModal.value = false
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/articlecomment/delete/${id}`, {
       headers: {
@@ -108,6 +109,26 @@ const delComment = async (id: number) => {
     console.log(error.response)
   }
 }
+
+// 刪除留言確認Modal
+const selectedId = ref(0)
+const showConfirmModal = ref(false)
+const closeConfirm = (value: boolean) => {
+  showConfirmModal.value = value
+}
+
+const confrimDel = (id: number) => {
+  showConfirmModal.value = true
+  selectedId.value = id
+  openCommentId.value = null
+}
+
+watchEffect(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = showConfirmModal.value ? 'hidden' : 'auto'
+    document.body.style.paddingRight = showConfirmModal.value ? '15px' : '0'
+  }
+})
 </script>
 <template>
   <ul class="mb-4">
@@ -140,7 +161,7 @@ const delComment = async (id: number) => {
                 </button>
                 <button
                   class="py-1 text-primary hover:bg-btn-hover hover:text-white active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-                  @click="delComment(comment.CommentId)"
+                  @click="confrimDel(comment.CommentId)"
                 >
                   刪除
                 </button>
@@ -206,6 +227,36 @@ const delComment = async (id: number) => {
       </div>
     </li>
   </ul>
+  <div>
+    <template v-if="showConfirmModal">
+      <ConfirmModal @close-confirm="closeConfirm">
+        <template #header>
+          <h2 class="text-xl text-primary">刪除留言?</h2>
+        </template>
+        <template #content>
+          <p class="border-b border-t border-sand-200 pb-8 pl-4 pr-4 pt-4 text-primary-dark">
+            確定要刪除這則留言嗎？
+          </p>
+        </template>
+        <template #footer>
+          <div class="flex justify-end gap-2 p-3">
+            <button
+              class="rounded p-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+              @click="showConfirmModal = false"
+            >
+              取消
+            </button>
+            <button
+              class="rounded p-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+              @click="delComment(selectedId)"
+            >
+              確定
+            </button>
+          </div>
+        </template>
+      </ConfirmModal>
+    </template>
+  </div>
 </template>
 
 <style scoped></style>
