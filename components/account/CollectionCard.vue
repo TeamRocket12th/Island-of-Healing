@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useLoading } from '~/stores/loading'
 defineProps({
   collectedArticles: {
     type: Array as () => Article[],
@@ -13,26 +11,29 @@ const { formatDate } = useDateFormat()
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
-const { isLoading } = storeToRefs(useLoading())
+
+const dataLoaded = ref(false)
 
 // 收藏文章
 const isCollected = async (articleId: number, article: Article) => {
-  if (userToken.value) {
-    try {
-      const res: ApiResponse = await $fetch(`${apiBase}/article/collect/${articleId}`, {
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${userToken.value}`
-        },
-        method: 'POST'
-      })
-      if (res.StatusCode === 200) {
-        alert(res.Message)
-        article.IsCollected = !article.IsCollected
-      }
-    } catch (error: any) {
-      console.log(error.response)
+  if (!userToken.value) {
+    return
+  }
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/article/collect/${articleId}`, {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userToken.value}`
+      },
+      method: 'POST'
+    })
+    if (res.StatusCode === 200) {
+      alert(res.Message)
+      article.IsCollected = !article.IsCollected
+      dataLoaded.value = true
     }
+  } catch (error: any) {
+    console.log(error.response)
   }
 }
 
@@ -62,7 +63,7 @@ const cancelCollect = async (articleId: number, article: Article) => {
 <template>
   <div class="grid grid-cols-12">
     <div class="col-span-10 col-start-2 grid sm:pb-[106px]">
-      <ul v-if="collectedArticles.length > 0" class="">
+      <ul v-if="collectedArticles.length > 0">
         <li v-for="article in collectedArticles" :key="article.ArticleId">
           <div class="block w-full gap-4 sm:flex sm:p-6">
             <div class="w-full sm:w-1/2 lg:w-1/4">
@@ -170,13 +171,9 @@ const cancelCollect = async (articleId: number, article: Article) => {
           ></div>
         </li>
       </ul>
-      <p
-        v-else-if="!isLoading && collectedArticles.length === 0"
-        class="text-center text-2xl text-primary"
-      >
+      <p v-else-if="collectedArticles.length === 0" class="text-center text-2xl text-primary">
         目前沒有收藏文章
       </p>
-      <span v-else>Loading...</span>
     </div>
   </div>
 </template>

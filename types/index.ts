@@ -79,7 +79,7 @@ declare global {
 
   // 文章摘要
   interface ArticleSummary {
-    Id: string
+    Id: number
     Title: string
     Category: string
     Initdate: string

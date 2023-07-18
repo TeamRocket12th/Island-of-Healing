@@ -12,10 +12,8 @@ setLoading(true)
 // 取得個人追蹤作家列表
 const getFollowingList = async () => {
   if (!userToken.value) {
-    alert('請先登入')
     return
   }
-
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/followedwriter/get`, {
       headers: {
