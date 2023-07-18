@@ -236,8 +236,8 @@ const addArticleImgurl = async () => {
     })
 
     if (res.StatusCode === 200) {
-      // console.log(res)
-      // console.log(res.ArticleContentImgData)
+      console.log(res)
+      console.log(res.ArticleContentImgData)
       const imgTags = articleUse.article.Content.match(/<img[^>]+>/g)
       if (imgTags) {
         let base64Index = 0
@@ -252,7 +252,7 @@ const addArticleImgurl = async () => {
             if (src.startsWith(dataUrlPrefix)) {
               if (base64Index < res.ArticleContentImgData.length) {
                 const updatedImgTag = imgTag.replace(src, res.ArticleContentImgData[base64Index])
-                // console.log(updatedImgTag)
+                console.log(updatedImgTag)
                 articleUse.article.Content = articleUse.article.Content.replace(
                   imgTag,
                   updatedImgTag
