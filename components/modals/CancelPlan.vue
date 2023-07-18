@@ -39,7 +39,7 @@ const cancelCheck = (value: boolean) => {
 const props = defineProps({
   userOrder: {
     type: Function,
-    default: () => {}
+    required: true
   }
 })
 </script>
