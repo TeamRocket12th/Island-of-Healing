@@ -16,21 +16,32 @@ const unsubscribe = async () => {
       },
       method: 'PUT'
     })
-    console.log(res)
+
     if (res.StatusCode === 200) {
       alert(res.Message)
+      props.userOrder()
+      cancelCheck(false)
     }
   } catch (error: any) {
-    console.log(error.response)
+    console.log(error)
   }
 }
 
 const emits = defineEmits(['plan-cancel', 'cancel-check'])
 
 const cancelPlan = (value: boolean) => {
-  unsubscribe()
   emits('plan-cancel', value)
 }
+const cancelCheck = (value: boolean) => {
+  emits('cancel-check', value)
+}
+
+const props = defineProps({
+  userOrder: {
+    type: Function,
+    default: () => {}
+  }
+})
 </script>
 
 <template>
@@ -59,7 +70,7 @@ const cancelPlan = (value: boolean) => {
         </button>
         <button
           class="rounded p-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
-          @click="cancelPlan(false)"
+          @click="unsubscribe()"
         >
           取消方案
         </button>

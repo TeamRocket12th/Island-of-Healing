@@ -58,7 +58,6 @@ export const useUserStore = defineStore(
         location.reload()
       }
     }
-
     const checkAuth = () => {
       if (authToken.value) {
         return
@@ -70,6 +69,10 @@ export const useUserStore = defineStore(
       router.replace('/login')
     }
 
+    const selectedOrder = ref({
+      planName: '',
+      price: null as number | null
+    })
     return {
       isLogin,
       userData,
@@ -77,7 +80,8 @@ export const useUserStore = defineStore(
       getUserInfo,
       getUserToken,
       userLogout,
-      checkAuth
+      checkAuth,
+      selectedOrder
     }
   },
   {

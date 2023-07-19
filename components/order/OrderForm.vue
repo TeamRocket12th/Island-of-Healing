@@ -8,11 +8,6 @@ const { userData } = storeToRefs(userStore)
 
 const { getCustomerInfo } = usePaymentStore()
 
-const plan = {
-  name: '月付讀到飽專案',
-  price: 120
-}
-
 const customerData = ref<CustomerData>({
   nickName: userData.value.nickName,
   email: userData.value.email,
@@ -75,14 +70,16 @@ const sendOrder = (value: boolean, data: CustomerData) => {
         >
           訂單明細
         </p>
-        <p class="mb-6 text-xl font-medium text-primary-dark">{{ plan.name }}</p>
+        <p class="mb-6 text-xl font-medium text-primary-dark">
+          {{ userStore.selectedOrder.planName }}
+        </p>
         <div class="mb-16 flex items-center justify-between">
-          <span class="font-medium text-primary-dark">TW ${{ plan.price }}</span>
+          <span class="font-medium text-primary-dark">TW ${{ userStore.selectedOrder.price }}</span>
           <span class="font-light text-primary-dark">售價</span>
         </div>
         <span
           class="block border-b-[0.5px] border-primary pb-6 text-right text-xl font-bold text-primary-dark"
-          >TW ${{ plan.price }}</span
+          >TW ${{ userStore.selectedOrder.price }}</span
         >
       </div>
       <div class="px-16">

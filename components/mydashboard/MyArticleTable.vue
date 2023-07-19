@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { myWorkStore } from '~/stores/mywork'
+import { useWriterBoard } from '~/stores/writerboard'
 
 const { selectedCategory, selectedYear, selectedMonth, progressTab } = storeToRefs(myWorkStore())
+const { selectedArticleIds, postedArticles, allMyArticles } = storeToRefs(useWriterBoard())
+const { getMyArticles, delArticle } = useWriterBoard()
 const router = useRouter()
+
+// 取得作家後台文章列表
+onMounted(getMyArticles)
 
 interface TableData {
   [property: string]: any
@@ -18,32 +24,31 @@ const props = defineProps({
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
-const postedArticles = ref<ArticleSummary[]>([])
-const articles = ref<ArticleSummary[]>([])
 const articleAnalysis = ref<ArticleData[]>([])
+
+// 刪除文章確認Modal
+const showConfirmModal = ref(false)
+const selectedArticle = ref<TableData>({})
+
+const confrimDel = (item: TableData) => {
+  console.log('open')
+  showConfirmModal.value = true
+  selectedArticle.value = item
+}
+
+const closeConfirm = (value: boolean) => {
+  showConfirmModal.value = value
+}
+
+watchEffect(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = showConfirmModal.value ? 'hidden' : 'auto'
+    document.body.style.paddingRight = showConfirmModal.value ? '15px' : '0'
+  }
+})
 
 const dataLoaded = ref(false)
 const { formatDate } = useDateFormat()
-
-// 取得作家後台文章列表
-const getMyArticles = async () => {
-  try {
-    const res: ApiResponse = await $fetch(`${apiBase}/writer/articles`, {
-      headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }
-    })
-    console.log(res.Data)
-    if (res.StatusCode === 200) {
-      postedArticles.value = res.Data.filter(
-        (article: ArticleSummary) => article.Progress !== '草稿'
-      )
-      articles.value = res.Data
-    }
-  } catch (error: any) {
-    console.log(error.response)
-  }
-}
-
-onMounted(getMyArticles)
 
 // 取得作家後台文章數據
 const getAnalysis = async (year: string, month: string) => {
@@ -64,26 +69,6 @@ const getAnalysis = async (year: string, month: string) => {
 watchEffect(async () => {
   await getAnalysis(selectedYear.value, selectedMonth.value)
 })
-
-// 刪除單篇文章
-const delArticle = async (item: TableData) => {
-  if (!userToken.value || item.Progress === '審核中') {
-    return
-  }
-  try {
-    const res: ApiResponse = await $fetch(`${apiBase}/article/delete/${item.Id}`, {
-      headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` },
-      method: 'DELETE'
-    })
-    console.log(res)
-    if (res.StatusCode === 200) {
-      alert(res.Message)
-      getMyArticles()
-    }
-  } catch (error: any) {
-    console.log(error.response)
-  }
-}
 
 // 依照文章類別篩選
 const setArticleByCategory = (articles: ArticleSummary[]) => {
@@ -144,9 +129,9 @@ const setArticleByProgress = (articles: ArticleSummary[]) => {
 
 const progressList = computed(() => {
   if (props.nowPage === 'drafts') {
-    return articles.value.filter((article) => article.Progress === '草稿')
+    return allMyArticles.value.filter((article) => article.Progress === '草稿')
   } else {
-    return setArticleByProgress(articles.value)
+    return setArticleByProgress(allMyArticles.value)
   }
 })
 
@@ -164,6 +149,28 @@ const checkEdit = (progress: string, id: number) => {
     return
   }
   router.push(`/editor/${id}`)
+}
+
+// 收集選取文章
+const collectArticle = (id: number) => {
+  selectedArticleIds.value.push(id)
+  console.log(selectedArticleIds.value)
+}
+
+// 頁面改變時，重置選取的文章
+watchEffect(() => {
+  if (props.nowPage) {
+    selectedArticleIds.value = []
+  }
+})
+
+// 刪除單篇文章
+const handleRemove = (article: TableData) => {
+  showConfirmModal.value = false
+  if (article.Progress === '審核中') {
+    return
+  }
+  delArticle(article.Id)
 }
 </script>
 <template>
@@ -205,12 +212,19 @@ const checkEdit = (progress: string, id: number) => {
                 <input
                   :id="`checkbox${item.Id}`"
                   v-model="item.isChecked"
+                  :disabled="item.Progress === '審核中'"
                   type="checkbox"
                   class="hidden"
+                  @change="collectArticle(item.Id)"
                 />
                 <label
                   :for="`checkbox${item.Id}`"
-                  class="inline-block h-6 w-6 cursor-pointer rounded border border-secondary bg-white"
+                  class="inline-block h-6 w-6 rounded border border-secondary"
+                  :class="
+                    item.Progress === '審核中'
+                      ? 'cursor-not-allowed bg-gray-200 '
+                      : 'cursor-pointer bg-white'
+                  "
                 >
                   <Icon
                     v-if="item.isChecked"
@@ -236,7 +250,12 @@ const checkEdit = (progress: string, id: number) => {
               >
                 <Icon name="material-symbols:edit-outline" size="24" class="mr-3" />
               </button>
-              <button type="button" @click="delArticle(item.Id)">
+              <button
+                type="button"
+                class="disabled:text-btn-disabled"
+                :disabled="item.Progress === '審核中'"
+                @click="confrimDel(item)"
+              >
                 <Icon name="material-symbols:delete-outline" size="24" />
               </button>
             </td>
@@ -251,10 +270,17 @@ const checkEdit = (progress: string, id: number) => {
                   v-model="item.isChecked"
                   type="checkbox"
                   class="hidden"
+                  :disabled="item.Progress === '審核中'"
+                  @change="collectArticle(item.Id)"
                 />
                 <label
                   :for="`checkbox${item.Id}`"
-                  class="inline-block h-6 w-6 cursor-pointer rounded border border-secondary bg-white"
+                  class="inline-block h-6 w-6 rounded border border-secondary"
+                  :class="
+                    item.Progress === '審核中'
+                      ? 'cursor-not-allowed bg-gray-200 '
+                      : 'cursor-pointer bg-white'
+                  "
                 >
                   <Icon
                     v-if="item.isChecked"
@@ -304,7 +330,7 @@ const checkEdit = (progress: string, id: number) => {
               <button
                 type="button"
                 class="mr-3 disabled:text-btn-disabled"
-                :disabled="item.Progress === '審核中'"
+                :disabled="item.Progress === '審核中' || item.Progress === '審核成功'"
                 @click="checkEdit(item.Progress, item.Id)"
               >
                 <Icon name="material-symbols:edit-outline" size="24" />
@@ -312,9 +338,10 @@ const checkEdit = (progress: string, id: number) => {
               <button
                 type="button"
                 class="disabled:text-btn-disabled"
-                :disabled="item.Progress === '審核中' || item.Progress === '審核成功'"
+                :disabled="item.Progress === '審核中'"
+                @click="confrimDel(item)"
               >
-                <Icon name="material-symbols:delete-outline" size="24" @click="delArticle(item)" />
+                <Icon name="material-symbols:delete-outline" size="24" />
               </button>
             </td>
           </tr>
@@ -336,6 +363,34 @@ const checkEdit = (progress: string, id: number) => {
           </tr>
         </tbody>
       </table>
+      <template v-if="showConfirmModal">
+        <ConfirmModal @close-confirm="closeConfirm">
+          <template #header>
+            <h2 class="text-xl text-primary">刪除文章?</h2>
+          </template>
+          <template #content>
+            <p class="border-b border-t border-sand-200 pb-8 pl-4 pr-4 pt-4 text-primary-dark">
+              確定要刪除這篇文章嗎？
+            </p>
+          </template>
+          <template #footer>
+            <div class="flex justify-end gap-2 p-3">
+              <button
+                class="rounded p-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+                @click="showConfirmModal = false"
+              >
+                取消
+              </button>
+              <button
+                class="rounded p-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+                @click="handleRemove(selectedArticle)"
+              >
+                確定
+              </button>
+            </div>
+          </template>
+        </ConfirmModal>
+      </template>
     </div>
   </div>
 </template>
