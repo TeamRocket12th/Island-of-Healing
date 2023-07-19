@@ -1,15 +1,8 @@
 <script setup>
 import { StarterKit } from '@tiptap/starter-kit'
-import { Heading } from '@tiptap/extension-heading'
-import { Document } from '@tiptap/extension-document'
-import { Paragraph } from '@tiptap/extension-paragraph'
-import { Text } from '@tiptap/extension-text'
 import { Image } from '@tiptap/extension-image'
-import { BulletList } from '@tiptap/extension-bullet-list'
-import { OrderedList } from '@tiptap/extension-ordered-list'
 import { Link } from '@tiptap/extension-link'
 import { Underline } from '@tiptap/extension-underline'
-import { HardBreak } from '@tiptap/extension-hard-break'
 import { Placeholder } from '@tiptap/extension-placeholder'
 import { Editor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
 import { Node } from '@tiptap/core'
@@ -81,36 +74,33 @@ onMounted(() => {
     },
     extensions: [
       CustomParagraphNode,
-      HardBreak,
-      Paragraph.configure({
-        addKeyboardShortcuts: false
-      }),
-      StarterKit,
-      Document,
-      Underline,
-      Paragraph.configure({
-        HTMLAttributes: {
-          class: 'text-p'
+      StarterKit.configure({
+        heading: {
+          levels: [2, 3],
+          HTMLAttributes: {
+            class: 'custom-heading'
+          }
+        },
+        paragraph: {
+          addKeyboardShortcuts: false,
+          HTMLAttributes: {
+            class: 'text-p'
+          }
+        },
+        bulletList: {
+          HTMLAttributes: {
+            class: 'custom-bullet-list'
+          }
+        },
+        orderedList: {
+          HTMLAttributes: {
+            class: 'custom-ordered-list'
+          }
         }
       }),
-      Text,
+      Underline,
       Image.configure({
         allowBase64: true
-      }),
-      Heading.configure({
-        HTMLAttributes: {
-          class: 'custom-heading'
-        }
-      }),
-      BulletList.configure({
-        HTMLAttributes: {
-          class: 'custom-bullet-list'
-        }
-      }),
-      OrderedList.configure({
-        HTMLAttributes: {
-          class: 'custom-ordered-list'
-        }
       }),
       Link.configure({
         openOnClick: true,
@@ -575,14 +565,14 @@ h2.custom-heading {
   color: #4e2a09;
   font-family: 'Noto Sans TC';
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 h3.custom-heading {
   font-size: 20px;
   color: #4e2a09;
   font-family: 'Noto Sans TC';
   font-weight: 500;
-  margin-bottom: 16px;
+  margin-bottom: 5px;
 }
 
 .text-p {
