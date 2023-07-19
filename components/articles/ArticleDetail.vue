@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useToast } from '~/stores/toast'
 
 const { isLogin, userData } = storeToRefs(useUserStore())
+const { isCollect, cancelCollect } = storeToRefs(useToast())
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
@@ -125,10 +127,12 @@ const addComment = async (id: number, articleId: string, userId: string) => {
   }
 }
 
+// 收藏文章訊息
+
 const { followWriter, unFollowWriter } = useWriterActions()
 </script>
 <template>
-  <div v-if="articleDetail" class="mb-10">
+  <div v-if="articleDetail" class="relative mb-10">
     <span v-if="articleDetail.Pay && !isRead" class="mb-3 flex items-center gap-1 text-primary-dark"
       ><Icon name="material-symbols:lock-outline" size="16" /> 付費限定文章</span
     >
@@ -137,6 +141,20 @@ const { followWriter, unFollowWriter } = useWriterActions()
       class="mb-3 flex items-center gap-1 text-primary-dark"
       ><Icon name="material-symbols:lock-open-outline" size="16" /> 文章已解鎖</span
     >
+    <p
+      v-if="isCollect"
+      data-aos="fade-left"
+      class="fade-element absolute right-0 top-0 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-[-450px] lg:top-0 lg:h-[44px] lg:w-[348px]"
+    >
+      收藏成功！
+    </p>
+    <p
+      v-if="cancelCollect"
+      data-aos="fade-left"
+      class="fade-element absolute right-0 top-0 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-[-450px] lg:top-0 lg:h-[44px] lg:w-[348px]"
+    >
+      取消收藏成功！
+    </p>
     <div class="mb-5 flex items-center justify-between">
       <div class="flex items-center gap-2">
         <div class="h-9 w-9">

@@ -1,8 +1,10 @@
+import { useToast } from '~/stores/toast'
+
 export const useArticleActions = () => {
   const runtimeConfig = useRuntimeConfig()
   const apiBase = runtimeConfig.public.apiBase
   const userToken = useCookie('token')
-
+  const { setCollect, setcancelCollect } = useToast()
   // 收藏文章
   const AddToCollection = async (
     id: number,
@@ -21,8 +23,12 @@ export const useArticleActions = () => {
         })
         console.log(res)
         if (res.StatusCode === 200) {
-          alert(res.Message)
           getArticleDetail(articleId, userId)
+          setcancelCollect(false)
+          setCollect(true)
+          setTimeout(() => {
+            setCollect(false)
+          }, 2000)
         }
       } catch (error: any) {
         console.log(error.response)
@@ -48,8 +54,12 @@ export const useArticleActions = () => {
         })
         console.log(res)
         if (res.StatusCode === 200) {
-          alert(res.Message)
           await getArticleDetail(articleId, userId)
+          setCollect(false)
+          setcancelCollect(true)
+          setTimeout(() => {
+            setcancelCollect(false)
+          }, 2000)
         }
       } catch (error: any) {
         console.log(error.response)

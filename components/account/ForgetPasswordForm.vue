@@ -12,35 +12,40 @@ const alreadySend = ref<boolean>(false)
 
 const sendResetPwd = async () => {
   try {
+    alreadySend.value = true
     const res = await $fetch(`${apiBase}/forgetpwd/?email=${user.account}`, {
       headers: { 'Content-type': 'application/json' },
       method: 'POST'
     })
     console.log(res)
-    alreadySend.value = true
   } catch (error: any) {
     console.log(error.response)
+  }
+}
+const handleEnterKey = (event: any) => {
+  if (event.key === 'Enter') {
+    sendResetPwd()
   }
 }
 </script>
 <template>
   <section class="container flex items-center justify-center pb-40 font-serif-tc">
-    <div class="flex h-[605px] w-full">
+    <div class="relative flex h-[605px] w-full">
       <div
         class="flex w-full flex-col items-center justify-center px-[74px] py-[124px] md:border md:border-primary 3xl:relative 3xl:px-[516px] 3xl:py-[132px]"
       >
-        <div class="relative w-[322px] 3xl:static">
-          <transition name="fade" mode="out-in">
-            <p
-              v-if="alreadySend"
-              class="fade-element absolute top-[-75px] w-full rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-0 3xl:top-20 3xl:h-[44px] 3xl:w-[348px]"
-            >
-              已傳送重設密碼連結至您的信箱！
-            </p>
-          </transition>
+        <div class="w-[322px] 3xl:static">
+          <p
+            v-if="alreadySend"
+            data-aos="fade-left"
+            class="fade-element absolute top-28 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-0 lg:top-20 lg:h-[44px] lg:w-[348px]"
+          >
+            已傳送重設密碼連結至您的信箱！
+          </p>
+
           <h2 class="mb-6 py-2 text-2xl font-bold text-primary">重設密碼</h2>
           <label for="email" class="mb-2 text-secondary">請輸入您常用的電子信箱</label>
-          <VForm v-slot="{ meta }" action="" class="w-full">
+          <VForm v-slot="{ meta }" class="w-full">
             <div class="relative mb-4 mt-2">
               <VField
                 id="email"
@@ -51,6 +56,7 @@ const sendResetPwd = async () => {
                 label="電子信箱"
                 placeholder="name@example.com"
                 class="input-bordered input mb-1 w-full rounded border-[#BDBDBD] focus:outline-none"
+                @keydown.enter.prevent="handleEnterKey"
               />
               <div class="block text-[14px] text-red-500">
                 <VErrorMessage name="email" />

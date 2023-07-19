@@ -6,11 +6,12 @@ const router = useRouter()
 const account = ref('')
 const password = ref('')
 const confirmPwd = ref('')
+const reSignUp = ref(false)
 
 const passwordField = useTogglePassword()
 const passwordCheckField = useTogglePassword()
 const { emailRequired, emailRule, passwordRequired, passwordRule, confirmPwdSame } = useValidate()
-
+const signUpSuccess = ref(false)
 const confirmPwdRule = () => confirmPwdSame(password, confirmPwd)
 
 const handleSignUp = async () => {
@@ -26,20 +27,50 @@ const handleSignUp = async () => {
     console.log(res)
 
     if (res.StatusCode === 200) {
-      alert(res.Message)
-      router.push('/login')
+      signUpSuccess.value = true
+      setTimeout(() => {
+        router.push('/login')
+      }, 1500)
     }
   } catch (error: any) {
-    alert(error.response._data.Message)
+    // alert(error.response._data.Message)
+    if (error.response._data.Message === '帳號已被使用，註冊失敗') {
+      reSignUp.value = true
+      watch(account, (newValue, oldValue) => {
+        if (newValue !== oldValue) {
+          reSignUp.value = false
+        }
+      })
+    }
+  }
+}
+
+const handleEnterKey = (event: any) => {
+  if (event.key === 'Enter') {
+    if (
+      account.value !== '' &&
+      password.value !== '' &&
+      confirmPwd.value !== ''
+      // reSignUp.value === false
+    ) {
+      handleSignUp()
+    }
   }
 }
 </script>
 <template>
   <div class="container flex items-center justify-center pb-[55px] font-serif-tc">
-    <div class="flex h-[700px] w-full">
+    <div class="relative flex h-[700px] w-full">
       <div
         class="flex w-full flex-col items-center justify-center px-[74px] py-[124px] md:border md:border-primary 3xl:px-[516px] 3xl:py-[132px]"
       >
+        <p
+          v-if="signUpSuccess"
+          data-aos="fade-left"
+          class="fade-element absolute top-10 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-0 lg:top-20 lg:h-[44px] lg:w-[348px]"
+        >
+          註冊成功！
+        </p>
         <div class="w-[322px]">
           <div class="tabs mb-8 hidden w-full items-center justify-center font-bold lg:flex">
             <NuxtLink
@@ -76,9 +107,11 @@ const handleSignUp = async () => {
                 placeholder="信箱"
                 class="input-bordered input w-full rounded border pl-12 focus:outline-none"
                 :class="errors['email'] ? 'border-[#EF4444]' : 'border-secondary '"
+                @click="handleEnterKey"
               />
             </div>
             <VErrorMessage name="email" class="block text-sm text-red-500" />
+            <p v-if="reSignUp" class="block text-sm text-red-500">帳號已被使用，註冊失敗</p>
             <label for="password" class="mt-4 block">密碼</label>
             <div class="relative mt-1">
               <Icon
@@ -96,6 +129,7 @@ const handleSignUp = async () => {
                 placeholder="密碼"
                 class="input-bordered input mb-1 w-full rounded border pl-12 focus:outline-none"
                 :class="errors['password'] ? 'border-[#EF4444]' : 'border-secondary '"
+                @click="handleEnterKey"
               />
               <Icon
                 v-if="passwordField.pwdEyeOpen.value"
@@ -113,6 +147,7 @@ const handleSignUp = async () => {
               />
             </div>
             <VErrorMessage name="password" class="block text-sm text-red-500" />
+
             <label for="checkpassword" class="mt-4 block">再次輸入密碼</label>
             <div class="relative mt-1">
               <Icon
@@ -130,6 +165,7 @@ const handleSignUp = async () => {
                 placeholder="再次輸入密碼"
                 class="input-bordered input mb-1 w-full rounded pl-12 focus:outline-none"
                 :class="errors['passwordCheck'] ? 'border-[#EF4444]' : 'border-secondary '"
+                @click="handleEnterKey"
               />
               <Icon
                 v-if="passwordCheckField.pwdEyeOpen.value"
