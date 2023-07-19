@@ -193,9 +193,10 @@ const saveDraft = () => {
   } else {
     postArticle()
   }
-  postSent(false)
+
   setTimeout(() => {
     router.push(`/account/${userData.value.id}/drafts`)
+    postSent(false)
   }, 1000)
 }
 
@@ -207,9 +208,10 @@ const createPost = () => {
   } else {
     postArticle()
   }
-  postSent(false)
+
   setTimeout(() => {
     router.push(`/account/${userData.value.id}/mywork`)
+    postSent(false)
   }, 1000)
 }
 
