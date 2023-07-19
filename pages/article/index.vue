@@ -83,9 +83,9 @@ const scrollTop = () => {
 }
 
 // 分頁
-const nowPage = ref('1')
-const pages = ['1', '2', '3', '4', '5']
-const changeNowPage = (p: string) => {
+const nowPage = ref(1)
+const allPages = ref<number[]>([])
+const changeNowPage = (p: number) => {
   nowPage.value = p
 }
 
@@ -116,7 +116,7 @@ const changeNowPage = (p: string) => {
 // }
 
 // 取得所有文章 useFetch
-const getAllArticles = async (page = '1') => {
+const getAllArticles = async (page = 1) => {
   changeNowPage(page)
   scrollTop()
   const { data, error } = await useFetch<ApiResponse>(`${apiBase}/readallarticles`, {
@@ -135,6 +135,7 @@ const getAllArticles = async (page = '1') => {
   if (data.value!.StatusCode === 200) {
     articles.value = data.value!.LatestArticleData
     selectedArticles.value = data.value!.SelectedArticleData
+    allPages.value = data.value!.TotalLatestPages
   }
   if (error.value) {
     console.log(error.value)
@@ -142,7 +143,7 @@ const getAllArticles = async (page = '1') => {
 }
 
 // 取得特定分類文章
-const getSpArticles = async (nowPage: string, category: string) => {
+const getSpArticles = async (nowPage: number, category: string) => {
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/readcategoryarticles`, {
       headers: {
@@ -157,8 +158,8 @@ const getSpArticles = async (nowPage: string, category: string) => {
     })
     console.log(res)
     if (res.StatusCode === 200) {
-      console.log(res.Message)
       articles.value = res.ArticleData
+      allPages.value = res.TotalPages
       scrollTop()
     }
   } catch (error: any) {
@@ -166,7 +167,7 @@ const getSpArticles = async (nowPage: string, category: string) => {
   }
 }
 
-const handleReading = (page: string) => {
+const handleReading = (page: number) => {
   changeNowPage(page)
   if (category.value === 'all') {
     getAllArticles(nowPage.value)
@@ -196,8 +197,8 @@ watchEffect(() => {
 
 watch(category, (newVal, oldVal) => {
   if (newVal !== oldVal && newVal !== 'all') {
-    getSpArticles('1', newVal)
-    nowPage.value = '1'
+    getSpArticles(1, newVal)
+    nowPage.value = 1
   } else {
     getAllArticles(nowPage.value)
   }
@@ -223,7 +224,7 @@ watch(category, (newVal, oldVal) => {
         <div class="col-span-9 text-center">
           <span class="rounded border-b border-l border-t border-sand-200 py-3">
             <button
-              v-for="(p, index) in pages"
+              v-for="(p, index) in allPages"
               :key="index"
               class="btn-page border-r border-sand-200 px-4 py-3 hover:bg-secondary hover:text-white"
               :class="nowPage === p ? 'bg-secondary text-white' : 'bg-white text-secondary'"

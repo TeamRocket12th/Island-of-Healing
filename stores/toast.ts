@@ -8,7 +8,7 @@ export const useToast = defineStore('toast', () => {
     cancelCollect.value = cancelcollect
   }
 
-  const followWriterPoint = ref(true)
+  const followWriterPoint = ref(false)
   const setfollowWriter = (followwriter: boolean) => {
     followWriterPoint.value = followwriter
   }

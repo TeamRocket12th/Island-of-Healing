@@ -86,10 +86,14 @@ const unFollowWriter = async (id: number, writer: TrendingCreater) => {
         :key="creater.WriterId"
         class="w-[151px] px-6 pb-3 pt-4 sm:col-span-2 sm:w-auto sm:p-0"
       >
-        <div class="m-auto mb-4 h-[95px] w-[95px]">
-          <img :src="creater.Imgurl" alt="avatar" class="rounded-full" />
-        </div>
-        <p class="mb-1 text-center font-serif-tc font-bold text-primary">{{ creater.Name }}</p>
+        <NuxtLink :to="`/writer/${creater.WriterId}`">
+          <div class="m-auto mb-4 h-[95px] w-[95px]">
+            <img :src="creater.Imgurl" alt="avatar" class="rounded-full" />
+          </div>
+        </NuxtLink>
+        <p class="mb-1 text-center font-serif-tc font-bold text-primary">
+          <NuxtLink :to="`/writer/${creater.WriterId}`">{{ creater.Name }} </NuxtLink>
+        </p>
         <p class="mb-4 text-center text-sm font-light text-primary">{{ creater.JobTitle }}</p>
         <button
           v-if="creater.IsFollowed"
