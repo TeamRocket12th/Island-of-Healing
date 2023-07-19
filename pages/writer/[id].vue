@@ -32,20 +32,22 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="bg-sand-100 pb-40">
-    <section v-if="writerInfo" class="container grid-cols-12 gap-6 pb-[188px] pt-[60px] lg:grid">
-      <div class="lg:col-span-4">
-        <WriterCard
-          :writer-info="writerInfo"
-          :get-writer-info="getWriterInfo"
-          :user-id="userId"
-          :writer-id="writerId"
-        />
-      </div>
-      <div class="lg:col-span-8">
-        <WriterWorkCard :writer-works="writerWorks" />
-      </div>
-    </section>
+  <main class="overflow-hidden bg-sand-100 pb-40">
+    <div id="point" class="relative">
+      <section v-if="writerInfo" class="container grid-cols-12 gap-6 pb-[188px] pt-[60px] lg:grid">
+        <div class="lg:col-span-4">
+          <WriterCard
+            :writer-info="writerInfo"
+            :get-writer-info="getWriterInfo"
+            :user-id="userId"
+            :writer-id="writerId"
+          />
+        </div>
+        <div class="lg:col-span-8">
+          <WriterWorkCard :writer-works="writerWorks" />
+        </div>
+      </section>
+    </div>
   </main>
 </template>
 

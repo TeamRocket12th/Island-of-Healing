@@ -29,6 +29,7 @@ const hideCancelCheck = (value: boolean) => {
 watchEffect(() => {
   if (typeof document !== 'undefined') {
     document.body.style.overflow = modalUse.value ? 'hidden' : 'auto'
+    document.body.style.paddingRight = modalUse.value ? '15px' : '0'
   }
 })
 
@@ -47,6 +48,7 @@ const getUserOrder = async () => {
         Authorization: `Bearer ${userToken.value}`
       }
     })
+    console.log(res)
     if (res.StatusCode === 200) {
       endDate.value = res.EndDate
       renewMembership.value = res.RenewMembership

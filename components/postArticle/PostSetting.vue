@@ -5,8 +5,8 @@ import { useUserStore } from '~/stores/user'
 const articleUse = useArticle()
 const route = useRoute()
 const router = useRouter()
-const userStore = useUserStore()
-const { userData } = storeToRefs(userStore)
+
+const { userData } = storeToRefs(useUserStore())
 
 const selectedCategory = ref('個人成長')
 const toggleshowCategory = ref(false)

@@ -3,7 +3,6 @@ export const useWriterActions = () => {
   const runtimeConfig = useRuntimeConfig()
   const apiBase = runtimeConfig.public.apiBase
   const userToken = useCookie('token')
-
   // SecondId 在重新取得文章時，帶入文章ID
   // SecondId 在重新取得作家資訊時，帶入作家ID
 
@@ -27,7 +26,6 @@ export const useWriterActions = () => {
       })
       console.log(res)
       if (res.StatusCode === 200) {
-        alert(res.Message)
         refresh(secondId, userId)
       }
     } catch (error: any) {
@@ -55,7 +53,6 @@ export const useWriterActions = () => {
       })
       console.log(res)
       if (res.StatusCode === 200) {
-        alert(res.Message)
         refresh(secondId, userId)
       }
     } catch (error: any) {

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useToast } from '~/stores/toast'
 
 const { isLogin, userData } = storeToRefs(useUserStore())
+const { isCollect, cancelCollect } = storeToRefs(useToast())
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
@@ -93,6 +95,7 @@ const closeModal = (value: boolean) => {
 watchEffect(() => {
   if (typeof document !== 'undefined') {
     document.body.style.overflow = isShareLinkOpen.value ? 'hidden' : 'auto'
+    document.body.style.paddingRight = isShareLinkOpen.value ? '15px' : '0'
   }
 })
 
@@ -124,10 +127,12 @@ const addComment = async (id: number, articleId: string, userId: string) => {
   }
 }
 
+// 收藏文章訊息
+
 const { followWriter, unFollowWriter } = useWriterActions()
 </script>
 <template>
-  <div v-if="articleDetail" class="mb-10">
+  <div v-if="articleDetail" class="relative mb-10">
     <span v-if="articleDetail.Pay && !isRead" class="mb-3 flex items-center gap-1 text-primary-dark"
       ><Icon name="material-symbols:lock-outline" size="16" /> 付費限定文章</span
     >
@@ -136,6 +141,20 @@ const { followWriter, unFollowWriter } = useWriterActions()
       class="mb-3 flex items-center gap-1 text-primary-dark"
       ><Icon name="material-symbols:lock-open-outline" size="16" /> 文章已解鎖</span
     >
+    <p
+      v-if="isCollect"
+      data-aos="fade-left"
+      class="fade-element absolute right-0 top-0 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-[-450px] lg:top-0 lg:h-[44px] lg:w-[348px]"
+    >
+      收藏成功！
+    </p>
+    <p
+      v-if="cancelCollect"
+      data-aos="fade-left"
+      class="fade-element absolute right-0 top-0 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-[-450px] lg:top-0 lg:h-[44px] lg:w-[348px]"
+    >
+      取消收藏成功！
+    </p>
     <div class="mb-5 flex items-center justify-between">
       <div class="flex items-center gap-2">
         <div class="h-9 w-9">
@@ -274,7 +293,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
     </div>
   </div>
   <!--留言-->
-  <div v-if="!isLock">
+  <div v-if="!isLock || writerInfo?.Id === userData.id">
     <div class="mb-6">
       <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
     </div>
@@ -292,7 +311,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
         <span class="font-medium text-primary">{{ userData.nickName }}</span>
       </div>
       <div class="grid-cols-7 gap-6 text-right md:grid md:text-left">
-        <div class="relative col-span-6 mb-4 md:mb-0">
+        <div class="relative col-span-5 mb-4 md:mb-0">
           <textarea
             ref="textarea"
             v-model="userComment"
@@ -318,13 +337,15 @@ const { followWriter, unFollowWriter } = useWriterActions()
             />
           </ClientOnly>
         </div>
-        <button
-          class="h-10 rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-          :disabled="!userComment"
-          @click="addComment(articleDetail?.Id as number, articleId, userId)"
-        >
-          發表留言
-        </button>
+        <div class="col-span-2">
+          <button
+            class="h-10 rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+            :disabled="!userComment"
+            @click="addComment(articleDetail?.Id as number, articleId, userId)"
+          >
+            發表留言
+          </button>
+        </div>
       </div>
     </div>
     <div v-else class="my-20 flex items-center justify-center text-primary-dark">

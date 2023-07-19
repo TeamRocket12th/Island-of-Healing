@@ -22,6 +22,7 @@ const closeResult = (value: boolean) => {
 watchEffect(() => {
   if (typeof document !== 'undefined') {
     document.body.style.overflow = orderStatus.value || orderResult.value ? 'hidden' : 'auto'
+    document.body.style.paddingRight = orderStatus.value || orderResult.value ? '15px' : '0'
   }
 })
 </script>

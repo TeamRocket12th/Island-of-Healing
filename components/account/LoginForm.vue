@@ -8,7 +8,7 @@ const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const router = useRouter()
 const passwordField = useTogglePassword()
-
+const loginInSuccess = ref(false)
 const user = reactive({
   account: '',
   password: ''
@@ -23,23 +23,40 @@ const handleLogin = async () => {
     })
     console.log(res)
     if (res.StatusCode === 200) {
-      alert(res.Message)
+      loginInSuccess.value = true
       userLogin()
       getUserInfo(res.Data.User)
       getUserToken(res.Token)
-      router.replace('/')
+      setTimeout(() => {
+        router.replace('/')
+      }, 500)
     }
   } catch (error: any) {
     console.log(error.response)
   }
 }
+
+const handleEnterKey = (event: any) => {
+  if (event.key === 'Enter') {
+    if (user.account !== '' && user.password !== '') {
+      handleLogin()
+    }
+  }
+}
 </script>
 <template>
   <div class="container flex items-center justify-center pb-[55px] font-serif-tc">
-    <div class="flex h-[605px] w-full">
+    <div class="relative flex h-[605px] w-full overflow-hidden">
       <div
         class="flex w-full flex-col items-center justify-center px-[74px] py-[124px] md:border md:border-primary 3xl:px-[516px] 3xl:py-[132px]"
       >
+        <p
+          v-if="loginInSuccess"
+          data-aos="fade-left"
+          class="fade-element absolute top-10 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-0 lg:top-20 lg:h-[44px] lg:w-[348px]"
+        >
+          登入成功！
+        </p>
         <div class="w-[322px]">
           <div class="tabs mb-8 hidden w-full items-center justify-center font-bold lg:flex">
             <NuxtLink
@@ -50,8 +67,8 @@ const handleLogin = async () => {
             <NuxtLink
               to="/signup"
               class="tab-bordered tab h-[52px] w-1/2 flex-nowrap py-2 text-2xl text-[#C1B6A4] hover:text-[#978e7e]"
-              >註冊</NuxtLink
-            >
+              >註冊
+            </NuxtLink>
           </div>
           <div class="mb-6 flex items-center justify-between text-primary lg:mb-8 lg:hidden">
             <h2 class="text-2xl font-bold">登入</h2>
@@ -79,6 +96,7 @@ const handleLogin = async () => {
                 label="電子信箱"
                 class="input-bordered input w-full rounded border pl-12 focus:outline-none"
                 :class="errors['email'] ? 'border-[#EF4444]' : 'border-secondary '"
+                @click="handleEnterKey"
               />
             </div>
             <VErrorMessage name="email" class="block text-sm text-red-500" />
@@ -99,6 +117,7 @@ const handleLogin = async () => {
                 maxlength="13"
                 class="input-bordered input w-full rounded border pl-12 focus:outline-none"
                 :class="errors['password'] ? 'border-[#EF4444]' : 'border-secondary '"
+                @click="handleEnterKey"
               />
               <Icon
                 v-if="passwordField.pwdEyeOpen.value"

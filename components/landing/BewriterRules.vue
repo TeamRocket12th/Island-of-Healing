@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
+
+const { isLogin, userData } = storeToRefs(useUserStore())
+const router = useRouter()
+
 const steps = {
   step1: {
     id: 1,
@@ -59,6 +65,14 @@ watch(step, (newStep) => {
   step.value = newStep
 })
 
+const getStarted = () => {
+  if (isLogin.value) {
+    router.push(`/account/${userData.value.id}/application`)
+  } else {
+    router.push('/signup')
+  }
+}
+
 const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
 </script>
 <template>
@@ -97,15 +111,14 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
           >
             下一步
           </button>
-          <NuxtLink to="/signup"
-            ><button
-              v-if="currentStep === 4"
-              class="ml-4 rounded bg-secondary px-2 py-2 text-white"
-              @click="nextStep"
-            >
-              開始註冊
-            </button>
-          </NuxtLink>
+          <button
+            v-if="currentStep === 4"
+            type="button"
+            class="rounded bg-secondary px-2 py-2 text-white"
+            @click="getStarted"
+          >
+            開始註冊
+          </button>
         </div>
       </div>
       <div class="hidden w-[45%] border-l-[0.5px] border-sand-300 px-6 py-12 md:block">

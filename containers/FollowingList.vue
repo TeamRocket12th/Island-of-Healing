@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useLoading } from '~/stores/loading'
 
+const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
 
 const runtimeConfig = useRuntimeConfig()
@@ -8,14 +10,11 @@ const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 const followingWriters = ref([])
 
-setLoading(true)
 // 取得個人追蹤作家列表
 const getFollowingList = async () => {
   if (!userToken.value) {
-    alert('請先登入')
     return
   }
-
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/followedwriter/get`, {
       headers: {
@@ -33,16 +32,22 @@ const getFollowingList = async () => {
     console.log(error.response)
   }
 }
+setLoading(true)
 onMounted(getFollowingList)
 </script>
 <template>
-  <div class="mb-52 border-primary bg-sand-100 pb-24 pt-10 md:border md:px-10">
-    <h2
-      class="mb-14 text-center font-serif-tc text-2xl font-bold leading-normal text-primary md:text-left"
-    >
-      我的追蹤
-    </h2>
-    <WriterCardWide :writer-info="followingWriters" />
+  <div
+    class="relative mb-52 overflow-hidden border-primary bg-sand-100 pb-24 pt-10 md:border md:px-10"
+  >
+    <div id="point">
+      <h2
+        class="mb-14 text-center font-serif-tc text-2xl font-bold leading-normal text-primary md:text-left"
+      >
+        我的追蹤
+      </h2>
+      <div v-if="isLoading">Loading...</div>
+      <WriterCardWide v-else :writer-info="followingWriters" />
+    </div>
   </div>
 </template>
 

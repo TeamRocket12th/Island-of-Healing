@@ -10,10 +10,6 @@ definePageMeta({
 })
 
 const { nowPage } = usePageName()
-const { data: articles, error } = getMockData<ArticleSummary>('account', 'mywork')
-if (error.value) {
-  console.error('Error fetching data: ', error.value)
-}
 </script>
 <template>
   <div class="mb-40 border-primary bg-sand-100 px-10 pb-20 pt-10 lg:border">
@@ -25,7 +21,7 @@ if (error.value) {
     </div>
     <div>
       <MyArticleTableTab :now-page="nowPage" />
-      <MyArticleTable :table-data="articles" :now-page="nowPage" />
+      <MyArticleTable :now-page="nowPage" />
     </div>
   </div>
 </template>
