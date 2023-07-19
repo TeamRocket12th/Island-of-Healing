@@ -2,6 +2,9 @@
 import { storeToRefs } from 'pinia'
 import { useChatCharacters } from '~/stores/characters'
 import { useUserStore } from '~/stores/user'
+import { useLoading } from '~/stores/loading'
+
+const { setLoading } = useLoading()
 
 const { userData } = storeToRefs(useUserStore())
 const userToken = useCookie('token')
@@ -68,6 +71,7 @@ const askQuestion = async () => {
     alert('請先輸入問題')
     return
   }
+  setLoading(true)
   saveChatCount()
   chatMessages.clientMsgs.push({
     role: 'user',
@@ -87,6 +91,7 @@ const askQuestion = async () => {
     onReady: () => {
       chatMessages.clientMsgs.push(answer.value)
       answer.value = null
+      setLoading(false)
     }
   })
 }
@@ -129,7 +134,7 @@ onUpdated(() => {
               <input
                 v-model.trim="question"
                 type="text"
-                class="w-full rounded-md border border-secondary px-4 py-2 placeholder:text-sand-300 focus:outline-secondary disabled:opacity-50"
+                class="w-full rounded-md px-4 py-2 placeholder:text-sand-300 focus:outline-secondary disabled:opacity-90"
                 placeholder="說點什麼吧？"
                 :disabled="isLimited"
                 @keydown.enter="handleEnterKey"

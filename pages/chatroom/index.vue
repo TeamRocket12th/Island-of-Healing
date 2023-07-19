@@ -95,7 +95,7 @@ const { userData } = storeToRefs(useUserStore())
           </div>
         </div>
         <div
-          class="animate-fadein rectangle-bg absolute bottom-0 left-0 right-0 top-0 z-30 mx-auto h-[420px] w-full rounded-lg border-2 border-white pb-11 shadow-sm md:h-full"
+          class="animate-fadein rectangle-bg absolute bottom-0 left-0 right-0 top-0 z-30 mx-auto h-[420px] w-full rounded-lg pb-11 shadow-sm md:h-full"
         >
           <div class="mb-4 ml-4 mt-4 flex items-center gap-2">
             <div class="h-10 w-10 overflow-hidden rounded-full bg-slate-200">

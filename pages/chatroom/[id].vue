@@ -12,8 +12,6 @@ const { userData } = storeToRefs(useUserStore())
 const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
 
-setLoading(true)
-
 const chatCount = ref(0)
 const isLimited = ref(false)
 
@@ -30,6 +28,7 @@ const getChatCount = async () => {
   if (!userToken.value || userData.value.myPlan !== 'free') {
     return
   }
+  setLoading(true)
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/useaitimes/get`, {
       headers: {
@@ -61,7 +60,7 @@ selectCharacterId(id as string)
 
 <template>
   <main class="pb-20">
-    <div v-if="!isLoading">
+    <div v-if="userData.myPlan === 'free' && !isLoading">
       <p v-if="isLimited" class="mt-10 text-center text-xl">已達免費帳號上限</p>
       <p v-else class="mt-10 text-center text-xl">免費試用中</p>
       <p class="mt-2 text-center">目前已經問了 {{ chatCount }} / 5 題</p>

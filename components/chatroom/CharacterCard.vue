@@ -31,12 +31,12 @@ const checkIsLogin = (roleId: string) => {
     <div class="mb-3 flex items-center justify-center">
       <img :src="c.imgUrl" alt="chat-role" class="h-[100px] w-[100px] rounded-full" />
     </div>
-    <div class="flex flex-col items-center transition-all duration-700">
+    <div class="flex h-[230px] flex-col items-center transition-all duration-700">
       <h2 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ c.name }}</h2>
-      <p class="desc items-center text-center font-light text-primary">
+      <p class="desc flex-grow items-center pt-2 text-center font-light text-primary">
         {{ c.desc }}
       </p>
-      <div class="pt-6">
+      <div>
         <button
           type="button"
           class="btn-orange px-4 py-3 text-xl font-medium text-white hover:scale-110"
