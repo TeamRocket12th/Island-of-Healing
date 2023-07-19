@@ -2,27 +2,27 @@
 import { storeToRefs } from 'pinia'
 import { usePaymentStore } from '~/stores/payment'
 
-const { paymentData, customerData } = storeToRefs(usePaymentStore())
+const { selectedOrder, paymentData, customerData } = storeToRefs(usePaymentStore())
 const { createOrder } = usePaymentStore()
-console.log(paymentData.value)
+
 console.log(customerData.value)
 
-const userData = {
-  userName: '林小明',
-  userMail: 'abc0000@gmail.com',
-  plan: {
-    project: '月付讀到飽專案',
-    paymentMethod: '信用卡',
-    price: '	TW $120'
-  }
-}
+// const userData = {
+//   userName: '林小明',
+//   userMail: 'abc0000@gmail.com',
+//   plan: {
+//     project: '月付讀到飽專案',
+//     paymentMethod: '信用卡',
+//     price: '	TW $120'
+//   }
+// }
 const emits = defineEmits(['custom-order', 'get-result'])
 const sendOrder = (value: Boolean) => {
   emits('custom-order', value)
 }
-const getResult = (value: Boolean) => {
-  emits('get-result', value)
-}
+// const getResult = (value: Boolean) => {
+//   emits('get-result', value)
+// }
 
 const form = ref<HTMLFormElement | null>(null)
 
@@ -60,10 +60,10 @@ const handleSubmit = async () => {
             </div>
           </div>
           <div class="mb-[15px] flex justify-between border-b-[0.5px] border-secondary py-2">
-            <p class="text-secondary">{{ userData.plan.project }}</p>
+            <p class="text-secondary">{{ selectedOrder.planName }}</p>
             <div class="flex gap-[126px] text-secondary">
-              <span>{{ userData.plan.price }}</span>
-              <span>{{ userData.plan.price }}</span>
+              <span>{{ selectedOrder.price }}</span>
+              <span>{{ selectedOrder.price }}</span>
             </div>
           </div>
         </div>

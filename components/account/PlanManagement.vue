@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { usePaymentStore } from '~/stores/payment'
+
+const { selectedOrder, customerData } = storeToRefs(usePaymentStore())
 
 const { formatDate } = useDateFormat()
 
@@ -59,21 +62,32 @@ const props = defineProps({
 })
 
 const selected = () => {
-  userStore.selectedOrder.planName = selectedName.value
-  console.log(userStore.selectedOrder.planName)
-  if (userStore.selectedOrder.planName === '月付讀到飽專案') {
-    userStore.selectedOrder.price = 120
+  selectedOrder.value.planName = selectedName.value
+  // console.log(selectedOrder.value.planName)
+  if (selectedOrder.value.planName === '月付讀到飽專案') {
+    selectedOrder.value.price = 120
+    customerData.value.planId = 1
+    console.log('selected month')
   } else {
-    userStore.selectedOrder.price = 1200
+    selectedOrder.value.price = 1200
+    customerData.value.planId = 2
+    console.log('selected year')
+    console.log(customerData.value.planId)
   }
 }
 const selectedOtherPlans = (otherplan: string) => {
-  userStore.selectedOrder.planName = otherplan
-  console.log(userStore.selectedOrder.planName)
-  if (userStore.selectedOrder.planName === '月付讀到飽專案') {
-    userStore.selectedOrder.price = 120
+  selectedOrder.value.planName = otherplan
+
+  if (selectedOrder.value.planName === '月付讀到飽專案') {
+    selectedOrder.value.price = 120
+    customerData.value.planId = 1
+
+    console.log('selectedother month')
+    console.log(customerData.value.planId)
   } else {
-    userStore.selectedOrder.price = 1200
+    selectedOrder.value.price = 1200
+    customerData.value.planId = 2
+    console.log('selectedother year')
   }
 }
 </script>

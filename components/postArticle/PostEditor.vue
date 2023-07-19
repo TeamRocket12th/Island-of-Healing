@@ -43,6 +43,7 @@ const emits = defineEmits(['post-upload', 'post-rules'])
 const postSent = (value) => {
   emits('post-upload', value)
   convertImagesToFormData()
+  addArticleImgurl()
 }
 const rulesShow = (value) => {
   emits('post-rules', value)
@@ -214,7 +215,6 @@ const convertImagesToFormData = () => {
           const blob = new Blob([uintArray], { type: mimeType })
           formData.append(`image_${index}`, blob, `image_${index}.png`)
           // console.log(formData.get(`image_${index}`))
-          addArticleImgurl()
         }
       }
     })
@@ -243,12 +243,13 @@ const addArticleImgurl = async () => {
         for (let i = 0; i < imgTags.length; i++) {
           const imgTag = imgTags[i]
           const srcMatch = imgTag.match(/src=['"](.*?)['"]/)
-          // console.log(srcMatch)
+          console.log(srcMatch)
           // console.log(imgTags)
           if (srcMatch) {
             const src = srcMatch[1]
             const dataUrlPrefix = 'data:image'
             if (src.startsWith(dataUrlPrefix)) {
+              console.log(base64Index)
               if (base64Index < res.ArticleContentImgData.length) {
                 const updatedImgTag = imgTag.replace(src, res.ArticleContentImgData[base64Index])
                 // console.log(updatedImgTag)
