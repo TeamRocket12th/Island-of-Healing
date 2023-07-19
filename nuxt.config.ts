@@ -39,7 +39,7 @@ export default defineNuxtConfig({
   gtag: {
     id: 'G-96SY6NF307',
     config: {
-      page_title: '小島療癒所'
+      page_title: '小島聊癒所'
     }
   }
 })
