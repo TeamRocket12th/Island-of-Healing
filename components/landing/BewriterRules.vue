@@ -94,8 +94,10 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
             </li>
           </ul>
         </div>
-        <div class="mb-5 overflow-y-hidden md:h-[250px] lg:h-[350px] xl:h-[430px] 2xl:h-[460px]">
-          <img :src="imageUrl" alt="成為作家" class="w-full 2xl:h-[460px]" />
+        <div
+          class="mb-5 overflow-y-hidden md:h-[250px] lg:h-[350px] xl:h-[430px] 2xl:h-[530px] 3xl:h-[460px]"
+        >
+          <img :src="imageUrl" alt="成為作家" />
         </div>
         <div class="flex justify-end">
           <button
