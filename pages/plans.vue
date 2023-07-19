@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <section class="overflow-hidden"><PlanCard /></section>
+  <div class="overflow-hidden"><PlanCard /></div>
 </template>
 
 <style scoped></style>

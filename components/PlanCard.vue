@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
+
+const { isLogin, userData } = storeToRefs(useUserStore())
+const userId = userData.value.id
+
 useHead({
   link: [
     {
@@ -41,7 +47,7 @@ const toggleClass = (item: any) => {
 </script>
 
 <template>
-  <div class="bg-gradient-to-b from-[#FAF9F3] to-[#FFFFFF]">
+  <section class="bg-gradient-to-b from-[#FAF9F3] to-[#FFFFFF]">
     <section class="container py-10 lg:py-[100px] xl:py-[124px]">
       <h3
         class="animate__animated animate__slideInLeft mb-4 text-center text-4xl font-bold leading-[54px] text-primary 3xl:mb-8 3xl:text-[64px]"
@@ -54,11 +60,10 @@ const toggleClass = (item: any) => {
       >
         讓我們一起啟程，發現內在的力量和自由，愛上生活的潛力。
       </p>
-
       <button
         class="animate__animated animate__slideInUp btn-active btn z-10 mx-auto mb-10 block h-[60px] w-[180px] rounded bg-secondary px-4 py-3 text-2xl font-medium text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white xl:mb-[84px] 3xl:mb-[84px]"
       >
-        <NuxtLink to="/signup">立即註冊</NuxtLink>
+        <NuxtLink to="#section_plan">開始使用</NuxtLink>
       </button>
       <img
         src="~/assets/images/plancard/work-work-from-home-01.svg"
@@ -66,8 +71,8 @@ const toggleClass = (item: any) => {
         alt=""
       />
     </section>
-  </div>
-  <div class="bg-white">
+  </section>
+  <section class="bg-white">
     <section class="container py-10 pb-[100px] lg:py-[100px] xl:py-[124px]">
       <h3
         data-aos="fade-right"
@@ -113,8 +118,8 @@ const toggleClass = (item: any) => {
         </li>
       </ul>
     </section>
-  </div>
-  <div class="container py-10 lg:py-[100px] xl:py-[124px]">
+  </section>
+  <section id="section_plan" class="container py-10 lg:py-[100px] xl:py-[124px]">
     <div class="mb-10 text-center lg:mb-20" data-aos="fade-up">
       <h2 class="mb-4 text-4xl font-bold text-primary 3xl:text-5xl">選擇適合你的閱讀方案</h2>
       <h3 class="text-secondary">
@@ -131,7 +136,6 @@ const toggleClass = (item: any) => {
           <p class="text-5xl font-bold leading-normal">$120</p>
           <p class="ml-1">/月</p>
         </div>
-
         <div class="grid grid-cols-4 3xl:gap-4">
           <ul class="col-span-2 col-start-2 mb-3 flex flex-col self-start text-secondary">
             <li class="mb-3 flex">
@@ -156,11 +160,12 @@ const toggleClass = (item: any) => {
             </li>
           </ul>
         </div>
-        <button
+        <NuxtLink
+          :to="isLogin ? `/account/${userId}/myplan` : '/signup'"
           class="btn h-[38px] w-[68%] bg-secondary text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white 3xl:w-[286px]"
         >
           立即訂閱
-        </button>
+        </NuxtLink>
       </div>
       <div
         data-aos="fade-left"
@@ -194,15 +199,16 @@ const toggleClass = (item: any) => {
             </li>
           </ul>
         </div>
-        <button
+        <NuxtLink
+          :to="isLogin ? `/account/${userId}/myplan` : '/signup'"
           class="btn h-[38px] w-[68%] bg-secondary text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white 3xl:w-[286px]"
         >
           立即訂閱
-        </button>
+        </NuxtLink>
       </div>
     </div>
-  </div>
-  <div class="bg-white">
+  </section>
+  <section class="bg-white">
     <section class="container py-10 pb-[100px] lg:py-[100px] xl:py-[124px]" data-aos="fade-up">
       <h3
         class="mb-10 text-center text-4xl font-bold leading-[54px] text-primary 3xl:mb-8 3xl:text-5xl"
@@ -239,7 +245,7 @@ const toggleClass = (item: any) => {
         </li>
       </ul>
     </section>
-  </div>
+  </section>
 </template>
 
 <style scoped>
