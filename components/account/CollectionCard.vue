@@ -171,9 +171,7 @@ const cancelCollect = async (articleId: number, article: Article) => {
           ></div>
         </li>
       </ul>
-      <p v-else-if="collectedArticles.length === 0" class="text-center text-2xl text-primary">
-        目前沒有收藏文章
-      </p>
+      <p v-else class="text-center text-2xl text-primary">目前沒有收藏文章</p>
     </div>
   </div>
 </template>
