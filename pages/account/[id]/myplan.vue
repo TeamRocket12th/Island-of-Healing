@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useLoading } from '~/stores/loading'
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 const userStore = useUserStore()
 const { userData } = storeToRefs(userStore)
+const { isLoading } = storeToRefs(useLoading())
+const { setLoading } = useLoading()
 
 definePageMeta({
   layout: 'userlayout',
@@ -36,6 +39,7 @@ const getUserOrder = async () => {
   if (!userToken.value) {
     return
   }
+  setLoading(true)
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/userorderdetail/get`, {
       headers: {
@@ -47,6 +51,7 @@ const getUserOrder = async () => {
       endDate.value = res.EndDate
       renewMembership.value = res.RenewMembership
       userData.value.myPlan = res.Plan
+      setLoading(false)
     }
   } catch (error: any) {
     console.log(error)
@@ -56,7 +61,9 @@ onMounted(getUserOrder)
 </script>
 <template>
   <div>
+    <div v-if="isLoading">Loading...</div>
     <PlanManagement
+      v-else
       class="relative"
       :renew-membership="renewMembership"
       :end-date="endDate"

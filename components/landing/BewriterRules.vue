@@ -80,10 +80,10 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
             </li>
           </ul>
         </div>
-        <div class="mb-5 h-[430px] overflow-y-hidden">
-          <img :src="imageUrl" alt="成為作家" />
+        <div class="mb-5 overflow-y-hidden md:h-[250px] lg:h-[350px] xl:h-[430px] 2xl:h-[460px]">
+          <img :src="imageUrl" alt="成為作家" class="w-full 2xl:h-[460px]" />
         </div>
-        <div class="flex justify-end gap-4">
+        <div class="flex justify-end">
           <button
             class="rounded px-5 py-2 text-secondary hover:bg-secondary hover:text-white"
             @click="backStep"
@@ -92,7 +92,7 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
           </button>
           <button
             v-if="currentStep !== 4"
-            class="rounded bg-secondary px-3 py-2 text-white"
+            class="ml-4 rounded bg-secondary px-3 py-2 text-white"
             @click="nextStep"
           >
             下一步
@@ -100,7 +100,7 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
           <NuxtLink to="/signup"
             ><button
               v-if="currentStep === 4"
-              class="rounded bg-secondary px-2 py-2 text-white"
+              class="ml-4 rounded bg-secondary px-2 py-2 text-white"
               @click="nextStep"
             >
               開始註冊
