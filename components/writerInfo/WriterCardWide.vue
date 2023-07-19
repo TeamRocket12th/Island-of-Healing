@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useToast } from '~/stores/toast'
-import { useLoading } from '~/stores/loading'
 const { followWriterPoint, unFollowWriterPoint } = storeToRefs(useToast())
-const { isLoading } = storeToRefs(useLoading())
+
 const { setfollowWriter, setunFollowWriter } = useToast()
 defineProps({
   writerInfo: {
