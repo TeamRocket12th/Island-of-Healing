@@ -2,9 +2,6 @@
 import { storeToRefs } from 'pinia'
 import { useLoading } from '~/stores/loading'
 
-const { isLoading } = storeToRefs(useLoading())
-const { setLoading } = useLoading()
-
 definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
@@ -12,6 +9,8 @@ definePageMeta({
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
+const { isLoading } = storeToRefs(useLoading())
+const { setLoading } = useLoading()
 
 const orderData = ref<PastOrder[]>([])
 
@@ -28,8 +27,8 @@ const getPastorders = async () => {
     })
     if (res.StatusCode === 200) {
       orderData.value = res.OrdersData
+      // console.log(res)
       setLoading(false)
-      console.log(res)
     }
   } catch (error: any) {
     console.log(error)

@@ -157,6 +157,14 @@ declare global {
     JobTitle?: string
     Bio?: string
   }
+  interface TrendingCreater {
+    FollowCount: number
+    Imgurl: string
+    IsFollowed: boolean
+    JobTitle: string
+    Name: string
+    WriterId: number
+  }
 
   // 作家後台
 
