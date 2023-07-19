@@ -19,7 +19,7 @@ const { formatDate } = useDateFormat()
               <img
                 :src="item.ArticleImgUrl ? item.ArticleImgUrl : '/default-article-cover.jpg'"
                 alt="cover-photo"
-                class="h-full w-full object-cover"
+                class="h-full w-full object-cover duration-500 hover:scale-110"
               />
             </div>
             <div class="flex h-[126px] flex-col justify-between bg-white pb-3 pl-3 pr-[14px] pt-2">

@@ -37,8 +37,12 @@ const articles = [
         <li v-for="article in articles" :key="article.id" class="col-span-4 h-[460px] p-4">
           <NuxtLink :to="`/article/${article.id}`">
             <div class="relative">
-              <div class="mb-2">
-                <img :src="article.imgUrl" alt="article-cover" class="w-full" />
+              <div class="mb-2 overflow-hidden">
+                <img
+                  :src="article.imgUrl"
+                  alt="article-cover"
+                  class="w-ful duration-500 hover:scale-110"
+                />
               </div>
               <span
                 class="absolute top-0 h-8 w-[74px] bg-assistant p-1 font-serif-tc font-semibold text-sand-100"
