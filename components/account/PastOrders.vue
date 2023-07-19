@@ -60,7 +60,9 @@ defineProps({
         </tr>
       </tbody>
     </table>
-    <span v-else> Loading... </span>
+    <p v-else-if="orderData.length === 0" class="mt-4 text-center text-2xl text-primary">
+      目前沒有歷史訂單
+    </p>
   </div>
 </template>
 

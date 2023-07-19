@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useLoading } from '~/stores/loading'
 definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
@@ -6,6 +8,8 @@ definePageMeta({
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
+const { isLoading } = storeToRefs(useLoading())
+const { setLoading } = useLoading()
 
 const orderData = ref<PastOrder[]>([])
 
@@ -22,7 +26,8 @@ const getPastorders = async () => {
     })
     if (res.StatusCode === 200) {
       orderData.value = res.OrdersData
-      console.log(res)
+      // console.log(res)
+      setLoading(false)
     }
   } catch (error: any) {
     console.log(error)
@@ -32,7 +37,8 @@ onMounted(getPastorders)
 </script>
 <template>
   <div>
-    <PastOrders :order-data="orderData" />
+    <div v-if="isLoading">Loading...</div>
+    <PastOrders v-else :order-data="orderData" />
   </div>
 </template>
 
