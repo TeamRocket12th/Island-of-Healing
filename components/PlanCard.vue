@@ -48,7 +48,7 @@ const toggleClass = (item: any) => {
 
 <template>
   <section class="bg-gradient-to-b from-[#FAF9F3] to-[#FFFFFF]">
-    <section class="container py-10 lg:py-[100px] xl:py-[124px]">
+    <div class="container py-10 lg:py-[100px] xl:py-[124px]">
       <h3
         class="animate__animated animate__slideInLeft mb-4 text-center text-4xl font-bold leading-[54px] text-primary 3xl:mb-8 3xl:text-[64px]"
       >
@@ -70,7 +70,7 @@ const toggleClass = (item: any) => {
         class="animate__animated animate__fadeInDown mx-auto w-[402px] xl:w-[600px]"
         alt=""
       />
-    </section>
+    </div>
   </section>
   <section class="bg-white">
     <section class="container py-10 pb-[100px] lg:py-[100px] xl:py-[124px]">
