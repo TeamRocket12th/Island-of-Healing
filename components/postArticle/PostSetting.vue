@@ -138,6 +138,7 @@ const postArticle = async () => {
       selectedCategory.value = '個人成長'
       selectedOption.value = '免費'
       articleUse.selectedImage = ''
+      articleUse.previewImage = ''
       articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
 
       if (formData.get('articleCover')) {
@@ -170,6 +171,7 @@ const updateArticle = async () => {
       articleUse.article.ArticlesClassId = 1
       selectedOption.value = '免費'
       articleUse.selectedImage = ''
+      articleUse.previewImage = ''
       articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
       if (formData.get('articleCover')) {
         const id = Number(route.params.id)
