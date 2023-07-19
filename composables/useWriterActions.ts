@@ -1,9 +1,11 @@
+import { useToast } from '~/stores/toast'
+
 // 追蹤/取消追蹤作家
 export const useWriterActions = () => {
   const runtimeConfig = useRuntimeConfig()
   const apiBase = runtimeConfig.public.apiBase
   const userToken = useCookie('token')
-
+  const { setfollowWriter, setunFollowWriter } = useToast()
   // SecondId 在重新取得文章時，帶入文章ID
   // SecondId 在重新取得作家資訊時，帶入作家ID
 
@@ -27,7 +29,11 @@ export const useWriterActions = () => {
       })
       console.log(res)
       if (res.StatusCode === 200) {
-        alert(res.Message)
+        setunFollowWriter(false)
+        setfollowWriter(true)
+        setTimeout(() => {
+          setfollowWriter(false)
+        }, 2000)
         refresh(secondId, userId)
       }
     } catch (error: any) {
@@ -55,7 +61,11 @@ export const useWriterActions = () => {
       })
       console.log(res)
       if (res.StatusCode === 200) {
-        alert(res.Message)
+        setfollowWriter(false)
+        setunFollowWriter(true)
+        setTimeout(() => {
+          setunFollowWriter(false)
+        }, 2000)
         refresh(secondId, userId)
       }
     } catch (error: any) {
