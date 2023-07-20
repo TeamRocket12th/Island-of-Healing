@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useToast } from '~/stores/toast'
+import '~/assets/css/article.css'
 
 const { isLogin, userData } = storeToRefs(useUserStore())
 const { isCollect, cancelCollect } = storeToRefs(useToast())

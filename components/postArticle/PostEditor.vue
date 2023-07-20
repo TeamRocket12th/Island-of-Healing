@@ -7,6 +7,7 @@ import { Placeholder } from '@tiptap/extension-placeholder'
 import { Editor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
 import { Node } from '@tiptap/core'
 import { useArticle } from '~/stores/article'
+import '~/assets/css/article.css'
 
 const userToken = useCookie('token')
 const runtimeConfig = useRuntimeConfig()
@@ -104,7 +105,10 @@ onMounted(() => {
       }),
       Underline,
       Image.configure({
-        allowBase64: true
+        allowBase64: true,
+        HTMLAttributes: {
+          class: 'custom-img'
+        }
       }),
       Link.configure({
         openOnClick: true,
@@ -518,108 +522,3 @@ const insertImage = () => {
     </div>
   </div>
 </template>
-
-<style>
-code {
-  color: inherit;
-  padding: 0;
-  background: none;
-  font-size: 0.8rem;
-}
-blockquote {
-  padding-left: 10px;
-  border-left: 3px solid #3d1f03;
-  margin-bottom: 16px;
-}
-
-.ProseMirror {
-  outline: none;
-  overflow-y: hidden;
-}
-
-.custom-bullet-list {
-  list-style-type: disc;
-  margin: auto;
-  padding: 20px;
-}
-.custom-bullet-list li {
-  margin-bottom: 10px;
-}
-
-.custom-ordered-list {
-  list-style-type: numbered;
-  margin: auto;
-  padding: 20px;
-}
-
-.custom-ordered-list li {
-  margin-bottom: 10px;
-}
-
-.custom-link {
-  text-decoration: underline;
-  color: #1e40af;
-  cursor: pointer;
-}
-
-h2.custom-heading {
-  font-size: 24px;
-  color: #4e2a09;
-  font-family: 'Noto Sans TC';
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-h3.custom-heading {
-  font-size: 20px;
-  color: #4e2a09;
-  font-family: 'Noto Sans TC';
-  font-weight: 500;
-  margin-bottom: 5px;
-}
-
-.text-p {
-  font-size: 16px;
-  color: #3d1f03;
-  font-family: 'Noto Sans TC';
-  font-weight: 300;
-  min-height: 24px;
-  letter-spacing: 2px;
-  line-height: 150%;
-}
-
-.myButton {
-  border: solid 1px black;
-  font-size: 20px;
-}
-
-.bold-active,
-.italic-active,
-.link-active {
-  color: white;
-  background-color: #796959;
-  border-radius: 10%;
-  width: 50px;
-}
-
-.ProseMirror p.is-editor-empty:first-child::before {
-  content: attr(data-placeholder);
-  float: left;
-  color: #c1b6a4;
-  pointer-events: none;
-  height: 0;
-}
-
-.text-p.is-empty.is-editor-empty {
-  font-size: 20px;
-}
-
-hr {
-  border-top-width: 0.5px;
-  border-color: #4e2a09;
-  margin-bottom: 20px;
-  margin-top: 5px;
-}
-img {
-  margin-bottom: 10px;
-}
-</style>
