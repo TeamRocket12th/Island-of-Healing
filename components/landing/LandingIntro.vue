@@ -31,35 +31,43 @@ const showRules = (value: boolean) => {
       </button>
     </div>
     <div class="flex flex-wrap justify-center pb-20 lg:pb-[200px] xl:flex-nowrap">
-      <div class="relative w-full lg:w-2/3" data-aos-delay="2200" data-aos="fade-right">
-        <img src="/landingpage/bg-desktop.png" alt="" />
-        <img src="/landingpage/bg-iphone.png" alt="" class="absolute bottom-0 w-1/5" />
+      <div
+        class="relative w-full lg:w-2/3 2xl:w-[60%] 3xl:w-2/3"
+        data-aos-delay="2200"
+        data-aos="fade-right"
+      >
+        <img src="/landingpage/bg-desktop.png" alt="desktop" class="lg:h-[420px] xl:h-[520px]" />
+        <img
+          src="/landingpage/bg-iphone.png"
+          alt="phone"
+          class="absolute bottom-0 w-1/5 xl:h-[340px]"
+        />
       </div>
       <div
-        class="w-full text-center lg:w-1/3 lg:text-left"
+        class="w-full text-center lg:w-1/3 lg:text-left lg:first-letter:w-1/3 2xl:w-[30%]"
         data-aos-delay="2600"
         data-aos="fade-left"
       >
-        <div class="mb-9 md:mb-6">
-          <h4 class="mb-1 text-2xl text-primary">AI 推薦導流</h4>
+        <div class="mb-9 md:mb-5 xl:mb-11">
+          <h4 class="mb-1 text-2xl font-medium text-primary">AI 推薦導流</h4>
           <p class="font-light text-primary-dark">
             AI 聊天室向用戶推薦個人化文章內容，有效地提升使用者的黏著性。
           </p>
         </div>
-        <div class="mb-9 md:mb-6">
-          <h4 class="mb-1 text-2xl text-primary">SEO 曝光推廣</h4>
+        <div class="mb-9 md:mb-5 xl:mb-11">
+          <h4 class="mb-1 text-2xl font-medium text-primary">SEO 曝光推廣</h4>
           <p class="font-light text-primary-dark">
             針對平台的網站進行優化，關鍵字研究、優化網站結構和內容、提高在搜尋引擎中的排名。
           </p>
         </div>
-        <div class="mb-9 md:mb-6">
-          <h4 class="mb-1 text-2xl text-primary">數據分析和個性化推薦</h4>
+        <div class="mb-9 md:mb-5 xl:mb-11">
+          <h4 class="mb-1 text-2xl font-medium text-primary">數據分析和個性化推薦</h4>
           <p class="font-light text-primary-dark">
             利用數據分析技術，了解用戶的喜好和行為模式，向用戶提供相關和感興趣的內容。
           </p>
         </div>
         <div>
-          <h4 class="text-2xl text-primary">多平台同步</h4>
+          <h4 class="text-2xl font-medium text-primary">多平台同步</h4>
           <p class="font-light text-primary-dark">
             支持多平台同步，方便你在不同設備上無縫切換，讓你可以隨時隨地進行寫作。
           </p>

@@ -314,14 +314,14 @@ const insertImage = () => {
                 <input type="checkbox" />
                 <div class="swap-on" @click="swapOn">
                   <Icon
-                    name="mdi:close-thick"
+                    name="material-symbols:close"
                     size="24"
                     class="rounded bg-[#E9E4D9] text-secondary"
                   />
                 </div>
                 <div class="swap-off" @click="swapOff">
                   <Icon
-                    name="ic:round-plus"
+                    name="material-symbols:add"
                     size="24"
                     class="rounded bg-[#E9E4D9] text-secondary"
                   />
@@ -339,11 +339,7 @@ const insertImage = () => {
                   />
                 </button>
                 <button :class="{ 'is-active': editor.isActive('link') }" @click="setLink">
-                  <Icon
-                    name="ic:twotone-insert-link"
-                    size="24"
-                    class="rounded hover:bg-[#E9E4D9]"
-                  />
+                  <Icon name="material-symbols:link" size="24" class="rounded hover:bg-[#E9E4D9]" />
                 </button>
                 <button
                   :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
@@ -369,7 +365,7 @@ const insertImage = () => {
                   @click="editor.chain().focus().undo().run()"
                 >
                   <Icon
-                    name="material-symbols:reply"
+                    name="lucide:reply"
                     size="24"
                     class="cursor-pointer rounded hover:bg-[#E9E4D9]"
                   />
@@ -379,7 +375,7 @@ const insertImage = () => {
                   @click="editor.chain().focus().redo().run()"
                 >
                   <Icon
-                    name="material-symbols:forward-rounded"
+                    name="lucide:forward"
                     size="24"
                     class="cursor-pointer rounded hover:bg-[#E9E4D9]"
                   />
@@ -396,7 +392,7 @@ const insertImage = () => {
                   class="block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleBold().run()"
                 >
-                  <Icon name="ic:baseline-format-bold" size="24" />
+                  <Icon name="material-symbols:format-bold" size="24" />
                 </button>
                 <button
                   :disabled="!editor.can().chain().focus().toggleItalic().run()"
@@ -404,7 +400,7 @@ const insertImage = () => {
                   class="block rounded hover:bg-secondary hover:text-white"
                   @click="editor.chain().focus().toggleItalic().run()"
                 >
-                  <Icon name="ic:sharp-format-italic" size="24" />
+                  <Icon name="material-symbols:format-italic" size="24" />
                 </button>
                 <button
                   :class="{ 'is-active': editor.isActive('blockquote') }"
@@ -500,14 +496,14 @@ const insertImage = () => {
           class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
           @click="editor.chain().focus().toggleBlockquote().run()"
         >
-          <Icon name="ic:outline-format-quote" size="24" />
+          <Icon name="material-symbols:format-quote-outline" size="24" />
         </button>
         <button
           :class="{ 'is-active': editor.isActive('bulletList') }"
           class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
           @click="editor.chain().focus().toggleBulletList().run()"
         >
-          <Icon name="ic:twotone-format-list-bulleted" size="24" />
+          <Icon name="material-symbols:format-list-bulleted" size="24" />
         </button>
         <button
           class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
@@ -538,7 +534,7 @@ blockquote {
 
 .ProseMirror {
   outline: none;
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 .custom-bullet-list {

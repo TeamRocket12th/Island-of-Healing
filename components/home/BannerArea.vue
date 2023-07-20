@@ -6,7 +6,7 @@
       <div
         class="col-span-4 border-b-[0.5px] border-primary p-4 sm:border-b-0 sm:border-r-[0.5px] sm:pb-0"
       >
-        <NuxtLink :to="`/article/id`">
+        <NuxtLink to="/article/56">
           <div>
             <div class="relative mb-3 max-w-full sm:h-auto">
               <span class="categoryTag absolute left-0 top-0 mb-1">情緒察覺</span>
@@ -27,7 +27,7 @@
       <div
         class="col-span-4 border-b-[0.5px] border-primary p-4 sm:row-span-2 sm:border-b-0 sm:border-r-[0.5px] sm:pb-0"
       >
-        <NuxtLink :to="`/article/id`">
+        <NuxtLink to="/article/59">
           <div>
             <div class="relative mb-3 max-w-full sm:h-auto sm:w-auto">
               <span class="categoryTag absolute left-0 top-0 mb-1">個人成長</span>
@@ -48,7 +48,7 @@
         </NuxtLink>
       </div>
       <div class="col-span-4 border-b border-primary p-4 sm:border-b-0 sm:pb-0">
-        <NuxtLink :to="`/article/id`">
+        <NuxtLink to="/article/60">
           <div>
             <div class="relative mb-3 h-[267px] max-w-full sm:h-auto sm:w-auto">
               <span class="categoryTag absolute left-0 top-0 mb-1">個人成長</span>
@@ -71,7 +71,7 @@
       <div
         class="col-span-4 border-b-[0.5px] border-primary p-4 sm:border-b-0 sm:border-r sm:border-t-[0.5px] sm:pb-0"
       >
-        <NuxtLink :to="`/article/id`">
+        <NuxtLink to="/article/57">
           <div>
             <div class="relative mb-3 max-w-full sm:h-auto sm:w-auto">
               <span class="categoryTag absolute left-0 top-0 mb-1">個人成長</span>
@@ -92,7 +92,7 @@
       <div
         class="col-span-4 border-b-[0.5px] border-t-0 border-primary p-4 sm:border-b-0 sm:border-t-[0.5px] sm:pb-0"
       >
-        <NuxtLink :to="`/article/id`">
+        <NuxtLink :to="`/article/61`">
           <div>
             <div class="relative mb-3 max-w-full sm:h-auto sm:w-auto">
               <span class="categoryTag absolute left-0 top-0 mb-1">個人成長</span>

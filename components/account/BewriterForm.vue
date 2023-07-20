@@ -3,6 +3,13 @@ const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')
 
+defineProps({
+  getStatus: {
+    type: String,
+    default: ''
+  }
+})
+
 const data = reactive({
   intro: '',
   reason: '',
@@ -49,6 +56,7 @@ const required = (value: string) => {
   return true
 }
 
+// 送出申請成為作家
 const applyForWriter = async () => {
   if (!userToken.value) {
     return
@@ -62,22 +70,38 @@ const applyForWriter = async () => {
       method: 'PUT'
     })
     if (res.StatusCode === 200) {
-      console.log(res)
+      // console.log(res)
+      showSendModal.value = false
+      alert(res.Message)
+      data.intro = ''
+      data.reason = ''
+      data.work = ''
+      data.socialMedia = ''
     }
   } catch (error: any) {
     console.log(error.response)
   }
 }
+
+const showSendModal = ref(false)
+const sendModal = () => {
+  showSendModal.value = true
+}
+
+const closeConfirm = (value: boolean) => {
+  showSendModal.value = value
+}
+
+watchEffect(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = showSendModal.value ? 'hidden' : 'auto'
+  }
+})
 </script>
 
 <template>
-  <div class="mb-40 border-secondary bg-sand-100 p-10 sm:border">
-    <div class="">
-      <h2
-        class="col-span-2 mb-10 text-center font-serif-tc text-2xl font-bold text-primary md:text-left"
-      >
-        申請成為作家
-      </h2>
+  <div class="mb-40 bg-sand-100">
+    <div v-if="getStatus === '申請失敗' || getStatus === '未申請'">
       <VForm v-slot="{ meta }" class="px-6 py-3 xl:mx-40 3xl:mx-52">
         <div class="mb-10">
           <label for="userIntro" class="mb-2 block font-medium text-primary">自我介紹</label>
@@ -153,17 +177,47 @@ const applyForWriter = async () => {
           />
           <VErrorMessage name="userSocialMedia" class="text-primary" />
         </div>
-
         <div class="flex justify-end">
           <button
             class="rounded bg-secondary px-5 py-1 text-white disabled:bg-btn-disabled disabled:text-white"
             :disabled="!meta.valid"
-            @click.prevent="applyForWriter"
+            @click.prevent="sendModal"
           >
             送出
           </button>
         </div>
       </VForm>
+      <template v-if="showSendModal">
+        <ConfirmModal @close-confirm="closeConfirm">
+          <template #header>
+            <h2 class="text-xl text-primary">確定要提交嗎？</h2>
+          </template>
+          <template #content>
+            <p class="border-b border-t border-sand-200 pb-8 pl-4 pr-4 pt-4 text-primary-dark">
+              提交後就無法再編輯囉！審核流程可能需要 3-5 個工作天，請耐心等待通知。
+            </p>
+          </template>
+          <template #footer>
+            <div class="flex justify-end gap-2">
+              <button
+                class="rounded p-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+                @click="showSendModal = false"
+              >
+                返回
+              </button>
+              <button
+                class="rounded p-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
+                @click="applyForWriter"
+              >
+                確定
+              </button>
+            </div>
+          </template>
+        </ConfirmModal>
+      </template>
+    </div>
+    <div v-if="getStatus === '已申請'">
+      <p class="text-center text-2xl text-primary">已提交申請，請耐心等候！</p>
     </div>
   </div>
 </template>
