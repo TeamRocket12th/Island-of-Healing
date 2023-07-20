@@ -2,15 +2,14 @@
 import { storeToRefs } from 'pinia'
 import { useChatCharacters } from '~/stores/characters'
 import { useUserStore } from '~/stores/user'
-import { useLoading } from '~/stores/loading'
 
 const userToken = useCookie('token')
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 
 const { userData } = storeToRefs(useUserStore())
-const { isLoading } = storeToRefs(useLoading())
-const { setLoading } = useLoading()
+
+const isChatCountLoading = ref(false)
 
 const chatCount = ref(0)
 const isLimited = ref(false)
@@ -28,7 +27,7 @@ const getChatCount = async () => {
   if (!userToken.value || userData.value.myPlan !== 'free') {
     return
   }
-  setLoading(true)
+  isChatCountLoading.value = true
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/useaitimes/get`, {
       headers: {
@@ -39,10 +38,20 @@ const getChatCount = async () => {
     console.log(res)
     if (res.StatusCode === 200) {
       chatCount.value = res.UserAITimes
-      setLoading(false)
     }
   } catch (error: any) {
     console.log(error.response)
+  } finally {
+    isChatCountLoading.value = false
+  }
+}
+
+// 在次數小於5時，不用重新get
+const increaseChatCount = () => {
+  if (chatCount.value < 5) {
+    chatCount.value++
+  } else {
+    getChatCount()
   }
 }
 
@@ -60,12 +69,23 @@ selectCharacterId(id as string)
 
 <template>
   <main class="pb-20">
-    <div v-if="userData.myPlan === 'free' && !isLoading">
-      <p v-if="isLimited" class="mt-10 text-center text-xl">已達免費帳號上限</p>
-      <p v-else class="mt-10 text-center text-xl">免費試用中</p>
-      <p class="mt-2 text-center">目前已經問了 {{ chatCount }} / 5 題</p>
-    </div>
+    <section>
+      <div class="min-h-16 mt-4">
+        <div v-if="userData.myPlan === 'free' && !isChatCountLoading">
+          <p v-if="isLimited" class="text-center text-xl text-primary">已達免費帳號上限</p>
+          <p v-else class="text-center text-xl text-primary">免費試用中</p>
+          <p class="mt-2 text-center text-primary">目前已經問了 {{ chatCount }} / 5 題</p>
+        </div>
+      </div>
 
-    <ChatWindow :chat-count="chatCount" :is-limited="isLimited" :get-chat-count="getChatCount" />
+      <ChatWindow
+        :chat-count="chatCount"
+        :is-limited="isLimited"
+        :get-chat-count="getChatCount"
+        :increase-chat-count="increaseChatCount"
+      />
+    </section>
   </main>
 </template>
+
+<style scoped></style>
