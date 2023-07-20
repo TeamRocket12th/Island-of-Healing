@@ -13,6 +13,8 @@ const { useFormattedTime } = useDateFormat()
 const userId = isLogin.value ? String(userData.value.id) : '0'
 const articleId = route.params.id as string
 
+const isPreview = ref(false)
+
 // 取得單篇文章資訊
 const {
   articleDetail,
@@ -27,6 +29,9 @@ const {
 
 onMounted(() => {
   nextTick(() => {
+    if (route.query.status === 'preview') {
+      isPreview.value = true
+    }
     getArticleDetail(articleId, userId)
   })
 })
@@ -128,7 +133,6 @@ const addComment = async (id: number, articleId: string, userId: string) => {
 }
 
 // 收藏文章訊息
-
 const { followWriter, unFollowWriter } = useWriterActions()
 </script>
 <template>
@@ -155,6 +159,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
     >
       取消收藏成功！
     </p>
+    <p v-if="isPreview" class="mb-2 text-right text-primary">目前為預覽模式</p>
     <div class="mb-5 flex items-center justify-between">
       <div class="flex items-center gap-2">
         <div class="h-9 w-9">
@@ -183,7 +188,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
         alt="cover"
         class="mb-6 block"
       />
-      <div v-if="isLock">
+      <div v-if="isLock && !isRead">
         <p class="mb-10 text-xl font-medium text-primary">關於本文： {{ articleDetail.Summary }}</p>
       </div>
       <div v-if="isLock && !isRead && writerInfo?.Id !== userData.id" class="flex justify-center">
