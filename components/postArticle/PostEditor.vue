@@ -36,7 +36,11 @@ const emits = defineEmits(['post-upload', 'post-rules'])
 const postSent = (value) => {
   emits('post-upload', value)
   convertImagesToFormData()
+  if (checkformData.value) {
+    addArticleImgurl()
+  }
 }
+
 const rulesShow = (value) => {
   emits('post-rules', value)
 }
@@ -177,6 +181,7 @@ watch(previewImage, (newValue) => {
 
 // 偵測內容裡有圖片的
 const imgTagArr = ref([])
+const checkformData = ref(false)
 watch(htmlOutput, (newValue) => {
   // console.log(articleUse.article.Content)
   const imgTags = newValue.match(/<img[^>]+>/g)
@@ -203,8 +208,9 @@ const convertImagesToFormData = () => {
           }
           const blob = new Blob([uintArray], { type: mimeType })
           formData.append(`image_${index}`, blob, `image_${index}.png`)
-          // console.log(formData.get(`image_${index}`))
-          addArticleImgurl()
+          if (formData.get(`image_${index}`)) {
+            checkformData.value = true
+          }
         }
       }
     })
