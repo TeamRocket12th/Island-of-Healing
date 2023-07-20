@@ -188,7 +188,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
         alt="cover"
         class="mb-6 block"
       />
-      <div v-if="isLock && !isRead">
+      <div v-if="isLock && !isPreview">
         <p class="mb-10 text-xl font-medium text-primary">關於本文： {{ articleDetail.Summary }}</p>
       </div>
       <div v-if="isLock && !isRead && writerInfo?.Id !== userData.id" class="flex justify-center">
