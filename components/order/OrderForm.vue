@@ -5,16 +5,16 @@ import { usePaymentStore } from '~/stores/payment'
 
 const userStore = useUserStore()
 const { userData } = storeToRefs(userStore)
+const route = useRoute()
 
-const { selectedOrder, customerData } = storeToRefs(usePaymentStore())
+const { selectedOrder } = storeToRefs(usePaymentStore())
 const { getCustomerInfo } = usePaymentStore()
-console.log(customerData.value.planId)
 
-const customerInput = ref<CustomerData>({
+const customerInputs = ref<CustomerData>({
   nickName: userData.value.nickName,
   email: userData.value.email,
-  phone: '0989123456',
-  planId: customerData.value.planId
+  phone: '',
+  planId: Number(route.query.id)
 })
 
 const emits = defineEmits(['custom-order', 'get-customer-data', 'get-payment-data'])
@@ -33,7 +33,7 @@ const sendOrder = (value: boolean, data: CustomerData) => {
           <label for="name" class="mb-2 block text-primary-dark">顧客名稱:</label>
           <input
             id="name"
-            v-model="customerInput.nickName"
+            v-model="customerInputs.nickName"
             type="text"
             name="name"
             required
@@ -44,7 +44,7 @@ const sendOrder = (value: boolean, data: CustomerData) => {
           <label for="email" class="mb-2 block text-primary-dark">電子郵件:</label>
           <input
             id="email"
-            v-model="customerInput.email"
+            v-model="customerInputs.email"
             type="email"
             name="email"
             required
@@ -55,7 +55,7 @@ const sendOrder = (value: boolean, data: CustomerData) => {
           <label for="phone" class="mb-2 block text-primary-dark">電話號碼:</label>
           <input
             id="phone"
-            v-model="customerInput.phone"
+            v-model="customerInputs.phone"
             type="tel"
             name="phone"
             maxlength="10"
@@ -88,7 +88,7 @@ const sendOrder = (value: boolean, data: CustomerData) => {
         <button
           type="button"
           class="block w-full rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-          @click="sendOrder(true, customerInput)"
+          @click="sendOrder(true, customerInputs)"
         >
           同意並送出
         </button>

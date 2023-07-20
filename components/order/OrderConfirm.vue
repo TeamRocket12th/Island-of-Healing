@@ -7,15 +7,6 @@ const { createOrder } = usePaymentStore()
 
 console.log(customerData.value)
 
-// const userData = {
-//   userName: '林小明',
-//   userMail: 'abc0000@gmail.com',
-//   plan: {
-//     project: '月付讀到飽專案',
-//     paymentMethod: '信用卡',
-//     price: '	TW $120'
-//   }
-// }
 const emits = defineEmits(['custom-order', 'get-result'])
 const sendOrder = (value: Boolean) => {
   emits('custom-order', value)

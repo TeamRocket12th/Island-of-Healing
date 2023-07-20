@@ -2,7 +2,6 @@
 defineProps({
   writerWorks: {
     type: Array as () => WriterWork[],
-    default: () => [],
     required: true
   }
 })
@@ -12,7 +11,10 @@ const { formatDate } = useDateFormat()
 
 <template>
   <div>
-    <ul>
+    <p v-if="writerWorks.length === 0" class="mt-10 text-center text-2xl text-primary">
+      目前還沒有文章
+    </p>
+    <ul v-else>
       <li
         v-for="work in writerWorks"
         :key="work.Id"

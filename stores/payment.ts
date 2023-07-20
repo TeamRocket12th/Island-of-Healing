@@ -4,7 +4,6 @@ export const usePaymentStore = defineStore('payment', () => {
   const userToken = useCookie('token')
 
   // 顧客資料
-
   const customerData = ref<CustomerData>({
     nickName: '',
     email: '',
