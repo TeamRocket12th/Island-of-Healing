@@ -82,11 +82,11 @@ if (data.value!.StatusCode === 200) {
         </div>
         <NuxtLink :to="`/article/${article.Id}`">
           <div class="flex flex-col">
-            <div class="mb-3 h-[267px] max-w-full">
+            <div class="mb-3 h-[267px] max-w-full overflow-hidden">
               <img
                 :src="article.ArticleImgUrl ? article.ArticleImgUrl : '/default-article-cover.jpg'"
                 alt="article-cover"
-                class="h-full w-full object-cover"
+                class="h-full w-full object-cover duration-500 hover:scale-110"
               />
             </div>
             <h4 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ article.Title }}</h4>

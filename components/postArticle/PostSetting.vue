@@ -92,7 +92,6 @@ const selectFile = (event: Event) => {
   } else {
     formData.append('articleCover', file)
   }
-  // console.log(formData.get('articleCover'))
 }
 
 const handleDragOver = (event: DragEvent) => {
@@ -114,7 +113,6 @@ const handleDrop = (event: DragEvent) => {
   } else {
     formData.append('articleCover', file)
   }
-  // console.log(formData.get('articleCover'))
 }
 
 //  新增文章
@@ -130,17 +128,17 @@ const postArticle = async () => {
       body: articleUse.article
     })
     if (res.StatusCode === 200) {
-      console.log(res)
-      console.log(res.ArticleId)
+      // console.log(res)
+      // console.log(res.ArticleId)
       alert('新增成功')
       const articleId = res.ArticleId
-
       articleUse.article.Title = ''
       articleUse.article.Content = ''
       articleUse.article.Summary = ''
       selectedCategory.value = '個人成長'
       selectedOption.value = '免費'
       articleUse.selectedImage = ''
+      articleUse.previewImage = ''
       articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
 
       if (formData.get('articleCover')) {
@@ -173,6 +171,7 @@ const updateArticle = async () => {
       articleUse.article.ArticlesClassId = 1
       selectedOption.value = '免費'
       articleUse.selectedImage = ''
+      articleUse.previewImage = ''
       articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
       if (formData.get('articleCover')) {
         const id = Number(route.params.id)
