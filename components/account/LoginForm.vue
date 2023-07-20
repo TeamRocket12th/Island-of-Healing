@@ -162,7 +162,7 @@ const handleEnterKey = (event: any) => {
     </div>
   </div>
 </template>
-<style scope>
+<style scoped>
 .tab-bordered.border-primary {
   border-color: #4e2a09 !important;
 }
