@@ -179,7 +179,7 @@ onUpdated(() => {
               <input
                 v-model.trim="question"
                 type="text"
-                class="w-full rounded-md px-4 py-2 placeholder:text-sand-300 focus:outline-secondary disabled:opacity-90"
+                class="w-full rounded-md border-none px-4 py-2 placeholder:text-sand-300 focus:outline-secondary disabled:opacity-90"
                 placeholder="說點什麼吧？"
                 @keydown.enter="handleEnterKey"
               />

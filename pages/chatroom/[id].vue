@@ -74,7 +74,7 @@ selectCharacterId(id as string)
         <div v-if="userData.myPlan === 'free' && !isChatCountLoading">
           <p v-if="isLimited" class="text-center text-xl text-primary">已達免費帳號上限</p>
           <p v-else class="text-center text-xl text-primary">免費試用中</p>
-          <p class="mt-2 text-center text-primary">目前已經問了 {{ chatCount }} / 5 題</p>
+          <p class="mt-2 text-center text-primary">目前已使用 {{ chatCount }} / 5 次</p>
         </div>
       </div>
 
