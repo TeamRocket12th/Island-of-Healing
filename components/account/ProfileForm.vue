@@ -158,7 +158,7 @@ const updateUserPhoto = async (data: FormData) => {
         <div class="flex flex-wrap pt-6 md:flex-nowrap lg:gap-4 lg:pt-10">
           <div class="mx-auto my-0">
             <div class="relative h-[100px] w-[100px] rounded-full bg-[#E9E4D9]">
-              <img :src="userData.avatar" class="h-full w-full rounded-full" />
+              <img :src="userData.avatar" class="h-full w-full rounded-full object-contain" />
               <button
                 class="absolute bottom-0 right-0 flex h-9 w-9 items-center justify-center rounded-full bg-secondary hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
                 @click="openFilePicker"
