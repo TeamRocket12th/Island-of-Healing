@@ -72,7 +72,9 @@ const getAnalysis = async (year: string, month: string) => {
 }
 
 watchEffect(async () => {
-  await getAnalysis(selectedYear.value, selectedMonth.value)
+  if (props.nowPage === 'dashboard') {
+    await getAnalysis(selectedYear.value, selectedMonth.value)
+  }
 })
 
 // 依照文章類別篩選
@@ -177,6 +179,14 @@ const handleRemove = (article: TableData) => {
   }
   delArticle(article.Id)
 }
+
+const checkPreview = (progress: string, id: number) => {
+  if (progress === '審核成功') {
+    router.push(`/article/${id}`)
+  } else {
+    router.push(`/article/${id}?status=preview`)
+  }
+}
 </script>
 <template>
   <div class="overflow-x-auto">
@@ -241,7 +251,9 @@ const handleRemove = (article: TableData) => {
               </div>
             </td>
             <td class="py-[10px] text-primary-dark md:w-[31%]">
-              <NuxtLink :to="`/article/${item.Id}`">{{ item.Title }}</NuxtLink>
+              <span class="cursor-pointer" @click="checkPreview(item.Progress, item.Id)">{{
+                item.Title
+              }}</span>
             </td>
             <td class="py-[10px] text-primary-dark md:w-[14%]">{{ item.CollectNum }}</td>
             <td class="py-[10px] text-primary-dark md:w-[14%]">{{ formatDate(item.Initdate) }}</td>
@@ -297,7 +309,9 @@ const handleRemove = (article: TableData) => {
               </div>
             </td>
             <td class="w-[31%] py-[10px] text-primary-dark">
-              <NuxtLink :to="`/article/${item.Id}`">{{ item.Title }}</NuxtLink>
+              <span class="cursor-pointer" @click="checkPreview(item.Progress, item.Id)">
+                {{ item.Title }}
+              </span>
             </td>
             <td
               v-if="nowPage === 'progress'"
