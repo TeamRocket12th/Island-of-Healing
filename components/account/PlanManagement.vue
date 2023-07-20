@@ -1,6 +1,20 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { usePaymentStore } from '~/stores/payment'
+
+const { selectedOrder, customerData } = storeToRefs(usePaymentStore())
+
+const props = defineProps({
+  renewMembership: {
+    type: Boolean,
+    default: true
+  },
+  endDate: {
+    type: String,
+    default: ''
+  }
+})
 
 const { formatDate } = useDateFormat()
 
@@ -15,12 +29,14 @@ const allPlans = ref([
   {
     id: 1,
     sub: 'monthly',
-    name: '月付讀到飽專案'
+    name: '月付讀到飽專案',
+    url: '/neworder?id=1'
   },
   {
     id: 2,
     sub: 'yearly',
-    name: '年付讀到飽專案'
+    name: '年付讀到飽專案',
+    url: '/neworder?id=2'
   }
 ])
 
@@ -28,17 +44,34 @@ const otherPlans = computed(() => {
   return allPlans.value.filter((plan) => plan.sub !== userData.value.myPlan)
 })
 
+const planMap = {
+  free: '免費專案',
+  monthly: '月付讀到飽專案',
+  yearly: '年付讀到飽專案'
+}
+
 const renderPlan = (plan: string) => {
-  switch (plan) {
-    case 'free':
-      return '免費專案'
-    case 'monthly':
-      return '月付讀到飽專案'
-    case 'yearly':
-      return '年付讀到飽專案'
-    default:
-      return '免費專案'
+  return planMap[plan as 'free' | 'monthly' | 'yearly'] || '免費專案'
+}
+
+const selectPlan = (planName: string) => {
+  selectedOrder.value.planName = planName
+
+  if (planName === '月付讀到飽專案') {
+    selectedOrder.value.price = 120
+    customerData.value.planId = 1
+  } else {
+    selectedOrder.value.price = 1200
+    customerData.value.planId = 2
   }
+}
+
+const selected = () => {
+  selectPlan(selectedName.value)
+}
+
+const selectedOtherPlans = (otherplan: string) => {
+  selectPlan(otherplan)
 }
 
 const selectedName = ref('')
@@ -46,36 +79,6 @@ const myPlan = computed(() => {
   selectedName.value = renderPlan(userData.value.myPlan)
   return renderPlan(userData.value.myPlan)
 })
-
-const props = defineProps({
-  renewMembership: {
-    type: Boolean,
-    default: true
-  },
-  endDate: {
-    type: String,
-    default: ''
-  }
-})
-
-const selected = () => {
-  userStore.selectedOrder.planName = selectedName.value
-  console.log(userStore.selectedOrder.planName)
-  if (userStore.selectedOrder.planName === '月付讀到飽專案') {
-    userStore.selectedOrder.price = 120
-  } else {
-    userStore.selectedOrder.price = 1200
-  }
-}
-const selectedOtherPlans = (otherplan: string) => {
-  userStore.selectedOrder.planName = otherplan
-  console.log(userStore.selectedOrder.planName)
-  if (userStore.selectedOrder.planName === '月付讀到飽專案') {
-    userStore.selectedOrder.price = 120
-  } else {
-    userStore.selectedOrder.price = 1200
-  }
-}
 </script>
 <template>
   <div class="mb-[147px] grid grid-cols-12 border border-primary bg-sand-100">
@@ -117,7 +120,7 @@ const selectedOtherPlans = (otherplan: string) => {
           @click="selectedOtherPlans(plan.name)"
         >
           <NuxtLink
-            to="/neworder"
+            :to="plan.url"
             class="rounded bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
             >選擇方案</NuxtLink
           >

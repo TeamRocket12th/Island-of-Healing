@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useLoading } from '~/stores/loading'
 
-const userStore = useUserStore()
-const { isLogin, userData } = storeToRefs(userStore)
+const { isLoading } = storeToRefs(useLoading())
+const { setLoading } = useLoading()
+const { isLogin, userData } = storeToRefs(useUserStore())
 
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
@@ -20,6 +22,7 @@ const getWriterInfo = async (writerId: string, userId: string) => {
     if (res.StatusCode === 200) {
       writerInfo.value = res.WriterData
       writerWorks.value = res.ArticlesData
+      setLoading(false)
     }
   } catch (error) {
     console.log(error)
@@ -27,6 +30,7 @@ const getWriterInfo = async (writerId: string, userId: string) => {
 }
 
 onMounted(() => {
+  setLoading(true)
   getWriterInfo(writerId, userId)
 })
 </script>
@@ -34,7 +38,11 @@ onMounted(() => {
 <template>
   <main class="overflow-hidden bg-sand-100 pb-40">
     <div id="point" class="relative">
-      <section v-if="writerInfo" class="container grid-cols-12 gap-6 pb-[188px] pt-[60px] lg:grid">
+      <p v-if="isLoading" class="mt-10 text-center text-2xl">Loading...</p>
+      <section
+        v-if="!isLoading && writerInfo"
+        class="container grid-cols-12 gap-6 pb-[188px] pt-[60px] lg:grid"
+      >
         <div class="lg:col-span-4">
           <WriterCard
             :writer-info="writerInfo"

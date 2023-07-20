@@ -25,10 +25,8 @@ const { nowPage } = usePageName()
         <SearchInput />
       </div>
     </div>
-    <div>
-      <MyArticleTableTab :now-page="nowPage" />
-      <MyArticleTable :now-page="nowPage" />
-    </div>
+    <MyArticleTableTab :now-page="nowPage" />
+    <MyArticleTable :now-page="nowPage" />
   </div>
 </template>
 

@@ -15,11 +15,9 @@ const showMobileMenu = ref(false)
 const toggleMobileMenu = () => {
   showMobileMenu.value = !showMobileMenu.value
   if (showMobileMenu.value) {
-    console.log('nav add no-scroll')
-    document.body.classList.add('no-scroll')
+    document.body.style.overflow = 'hidden'
   } else {
-    console.log('nav remove no-scroll')
-    document.body.classList.remove('no-scroll')
+    document.body.style.overflow = 'auto'
   }
   if (showMobileCategory.value) {
     showMobileCategory.value = !showMobileCategory.value
@@ -30,6 +28,22 @@ const showMobileCategory = ref(false)
 const toggleMobileCategory = () => {
   showMobileCategory.value = !showMobileCategory.value
 }
+
+const checkWindowSize = () => {
+  if (window.matchMedia('(min-width: 640px)').matches && showMobileMenu.value) {
+    document.body.style.overflow = 'auto'
+    showMobileMenu.value = false
+    showMobileCategory.value = false
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('resize', checkWindowSize)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkWindowSize)
+})
 
 const route = useRoute()
 
@@ -186,7 +200,7 @@ const isUserPage = computed(() => {
             >
           </h1>
           <span
-            class="absolute right-0 top-1/4 z-10 cursor-pointer sm:hidden"
+            class="absolute right-0 top-1/4 z-10 cursor-pointer text-primary sm:hidden"
             @click="toggleMobileMenu"
             ><Icon name="ic:outline-menu" size="32"
           /></span>
@@ -293,7 +307,7 @@ const isUserPage = computed(() => {
         </span>
         <SearchInput class="mb-3" />
         <ul>
-          <li v-if="userData.role === 'writer'" class="border-b border-primary">
+          <li v-if="userData.role === 'writer'" class="border-b-[0.5px] border-primary">
             <NuxtLink
               to="/newstory"
               class="block py-5 font-serif-tc font-semibold text-primary"
@@ -307,12 +321,9 @@ const isUserPage = computed(() => {
               @click="toggleMobileCategory"
             >
               <p class="font-serif-tc font-semibold text-primary">精選文章</p>
-              <Icon
-                name="ic:outline-expand-more"
-                size="24"
-                class="duration-200"
-                :class="{ 'rotate-180': showMobileCategory }"
-              />
+              <span class="text-primary duration-200" :class="{ 'rotate-180': showMobileCategory }">
+                <Icon name="ic:outline-expand-more" size="24" />
+              </span>
             </div>
             <ul
               class="overflow-hidden transition-all duration-500"
