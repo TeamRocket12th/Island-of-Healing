@@ -5,22 +5,16 @@ import { usePaymentStore } from '~/stores/payment'
 const { selectedOrder, paymentData, customerData } = storeToRefs(usePaymentStore())
 const { createOrder } = usePaymentStore()
 
-console.log(customerData.value)
-
 const emits = defineEmits(['custom-order', 'get-result'])
 const sendOrder = (value: Boolean) => {
   emits('custom-order', value)
 }
-// const getResult = (value: Boolean) => {
-//   emits('get-result', value)
-// }
 
 const form = ref<HTMLFormElement | null>(null)
 
 const handleSubmit = async () => {
   await createOrder(customerData.value)
   if (paymentData.value && form.value) {
-    // Submit the form manually if paymentData is set
     form.value.submit()
   }
 }
