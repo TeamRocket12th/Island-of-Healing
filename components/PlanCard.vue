@@ -50,24 +50,33 @@ const toggleClass = (item: any) => {
   <section class="bg-gradient-to-b from-[#FAF9F3] to-[#FFFFFF]">
     <div class="container py-10 lg:py-[100px] xl:py-[124px]">
       <h3
-        class="animate__animated animate__slideInLeft mb-4 text-center text-4xl font-bold leading-[54px] text-primary 3xl:mb-8 3xl:text-[64px]"
+        data-aos-delay="600"
+        data-aos="zoom-in"
+        class="mb-4 text-center text-4xl font-bold leading-[54px] text-primary 3xl:mb-8 3xl:text-[64px]"
       >
         <div class="lg:inline">享⁠受⁠零⁠廣⁠告⁠干⁠擾⁠的</div>
         <div class="lg:inline">⁠閱讀⁠體⁠驗</div>
       </h3>
       <p
-        class="animate__animated animate__slideInRight mb-8 px-12 text-center text-primary lg:text-2xl"
+        data-aos-delay="1000"
+        data-aos="zoom-in"
+        class="a mb-8 px-12 text-center text-primary lg:text-2xl"
       >
         讓我們一起啟程，發現內在的力量和自由，愛上生活的潛力。
       </p>
       <button
-        class="animate__animated animate__slideInUp btn-active btn z-10 mx-auto mb-10 block h-[60px] w-[180px] rounded bg-secondary px-4 py-3 text-2xl font-medium text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white xl:mb-[84px] 3xl:mb-[84px]"
+        data-aos-delay="1400"
+        data-aos="zoom-in"
+        class="btn-active btn z-10 mx-auto mb-10 block h-[60px] w-[130px] rounded bg-secondary text-2xl font-normal text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white xl:mb-[84px] 3xl:mb-[84px]"
       >
         <NuxtLink to="#section_plan">開始使用</NuxtLink>
       </button>
       <img
+        data-aos-delay="1800"
+        data-aos="zoom-in"
+        data-aos-anchor-placement="top-bottom"
         src="~/assets/images/plancard/work-work-from-home-01.svg"
-        class="animate__animated animate__fadeInDown mx-auto w-[402px] xl:w-[600px]"
+        class="mx-auto w-[402px] xl:w-[600px]"
         alt=""
       />
     </div>
@@ -130,7 +139,7 @@ const toggleClass = (item: any) => {
     <div class="flex flex-col-reverse gap-6 md:grid md:grid-cols-12">
       <div
         data-aos="fade-right"
-        class="col-span-full flex h-[560px] flex-col items-center justify-center rounded-lg bg-white text-primary shadow-[0_2px_20px_2px_rgba(0,0,0,0.05)] md:col-span-6 lg:col-span-5 lg:col-start-2 xl:col-span-4 xl:col-start-3"
+        class="col-span-full flex h-[560px] flex-col items-center justify-center rounded-lg bg-white text-primary shadow md:col-span-6 lg:col-span-5 lg:col-start-2 xl:col-span-4 xl:col-start-3"
       >
         <div class="mb-6 flex items-baseline">
           <p class="text-5xl font-bold leading-normal">$120</p>
@@ -162,14 +171,14 @@ const toggleClass = (item: any) => {
         </div>
         <NuxtLink
           :to="isLogin ? `/account/${userId}/myplan` : '/signup'"
-          class="btn h-[38px] w-[68%] bg-secondary text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white 3xl:w-[286px]"
+          class="btn h-[38px] w-[68%] border-secondary bg-white text-secondary hover:bg-btn-hover hover:text-white active:bg-btn-active disabled:bg-btn-disabled disabled:text-white 3xl:w-[286px]"
         >
           立即訂閱
         </NuxtLink>
       </div>
       <div
         data-aos="fade-left"
-        class="shadow-top col-span-full flex h-[560px] flex-col items-center justify-center rounded-lg bg-white text-primary shadow-[0_2px_20px_2px_rgba(0,0,0,0.05)] md:col-span-6 lg:col-span-5 lg:col-start-7 xl:col-span-4"
+        class="shadow-top col-span-full flex h-[560px] flex-col items-center justify-center rounded-lg bg-white text-primary md:col-span-6 lg:col-span-5 lg:col-start-7 xl:col-span-4"
       >
         <div class="mb-6 flex items-baseline">
           <p class="text-5xl font-bold leading-normal">$1200</p>
@@ -236,8 +245,8 @@ const toggleClass = (item: any) => {
           </div>
           <div class="pb-3">
             <p
-              class="show flex items-center pl-3"
-              :class="item.isActive ? 'h-10 bg-sand-100  opacity-100' : 'h-0 opacity-0'"
+              class="show flex items-center pl-4"
+              :class="item.isActive ? 'h-10 opacity-100' : 'h-0 opacity-0'"
             >
               {{ item.answer }}
             </p>
@@ -249,8 +258,12 @@ const toggleClass = (item: any) => {
 </template>
 
 <style scoped>
+.shadow {
+  box-shadow: 0px 2px 20px 2px rgba(0, 0, 0, 0.05), 0px 1px 20px 0px rgba(0, 0, 0, 0.05);
+}
 .shadow-top {
-  box-shadow: inset 0px 8px 0px 0px rgba(121, 105, 89, 1);
+  box-shadow: 0px 2px 20px 2px rgba(0, 0, 0, 0.05), 0px 1px 20px 0px rgba(0, 0, 0, 0.05),
+    0px 8px 0px 0px #796959 inset;
 }
 .show {
   transition: all 0.5s;

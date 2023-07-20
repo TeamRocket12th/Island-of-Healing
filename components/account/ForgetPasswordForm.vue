@@ -45,7 +45,7 @@ const handleEnterKey = (event: any) => {
 
           <h2 class="mb-6 py-2 text-2xl font-bold text-primary">重設密碼</h2>
           <label for="email" class="mb-2 text-secondary">請輸入您常用的電子信箱</label>
-          <VForm v-slot="{ meta }" class="w-full">
+          <VForm v-slot="{ errors, meta }" class="w-full">
             <div class="relative mb-4 mt-2">
               <VField
                 id="email"
@@ -55,7 +55,8 @@ const handleEnterKey = (event: any) => {
                 type="email"
                 label="電子信箱"
                 placeholder="name@example.com"
-                class="input-bordered input mb-1 w-full rounded border-[#BDBDBD] focus:outline-none"
+                class="input-bordered input mb-1 w-full rounded border-[#BDBDBD] bg-sand-100 text-secondary focus:outline-none"
+                :class="errors['email'] ? 'border-[#EF4444]' : 'border-secondary '"
                 @keydown.enter.prevent="handleEnterKey"
               />
               <div class="block text-[14px] text-red-500">
@@ -99,5 +100,8 @@ const handleEnterKey = (event: any) => {
 
 .fade-element {
   transition: opacity 2s;
+}
+input::placeholder {
+  color: #c1b6a4;
 }
 </style>
