@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useChatCharacters } from '~/stores/characters'
 import { useLoading } from '~/stores/loading'
 
-const { isLoading } = storeToRefs(useLoading())
+const { chatLoading } = storeToRefs(useLoading())
 
 const { selectedCharacter } = storeToRefs(useChatCharacters())
 
@@ -42,7 +42,7 @@ defineProps({
           <span class="chatbubble-bg chat-bubble text-primary-dark">{{ answer.content }}</span>
         </p>
       </li>
-      <li v-if="isLoading">
+      <li v-if="chatLoading">
         <span class="loading loading-dots loading-sm text-secondary"></span>
       </li>
     </ul>

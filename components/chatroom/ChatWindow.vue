@@ -4,7 +4,7 @@ import { useChatCharacters } from '~/stores/characters'
 import { useUserStore } from '~/stores/user'
 import { useLoading } from '~/stores/loading'
 
-const { setLoading } = useLoading()
+const { setChatLoading } = useLoading()
 
 const { userData } = storeToRefs(useUserStore())
 const userToken = useCookie('token')
@@ -23,6 +23,10 @@ const props = defineProps({
     default: false
   },
   getChatCount: {
+    type: Function,
+    required: true
+  },
+  increaseChatCount: {
     type: Function,
     required: true
   }
@@ -44,7 +48,7 @@ const saveChatCount = async () => {
     console.log(res)
     if (res.StatusCode === 200) {
       console.log(res)
-      props.getChatCount()
+      props.increaseChatCount()
     }
   } catch (error) {
     console.log(error.response)
@@ -61,7 +65,62 @@ const chatMessages = {
   serverMsgs: selectedCharacter.value.serverMsgs
 }
 
-const askQuestion = async () => {
+// ChatGpt Stream模式(逐字回覆)，部署到vercel不支援
+// const askQuestion = async () => {
+//   if (props.isLimited) {
+//     alert('已達免費帳號上限')
+//     return
+//   }
+
+//   if (!question.value) {
+//     alert('請先輸入問題')
+//     return
+//   }
+//   setLoading(true)
+//   saveChatCount()
+//   chatMessages.clientMsgs.push({
+//     role: 'user',
+//     content: question.value
+//   })
+//   question.value = ''
+//   const stream = await getAnswer({ messages: chatMessages })
+//   answer.value = {
+//     role: 'assistant',
+//     content: ''
+//   }
+//   useChatStream({
+//     stream,
+//     onChunk: ({ data }) => {
+//       answer.value.content += data
+//     },
+//     onReady: () => {
+//       chatMessages.clientMsgs.push(answer.value)
+//       answer.value = null
+//       setLoading(false)
+//     }
+//   })
+// }
+
+const getResponse = async (chatmsgs) => {
+  setChatLoading(true)
+  try {
+    const res = await $fetch('/api/sendmsg', {
+      method: 'POST',
+      body: JSON.stringify({ messages: chatmsgs })
+    })
+    if (res.ok) {
+      answer.value = res.message
+      chatMessages.clientMsgs.push(answer.value)
+      answer.value = null
+    }
+  } catch (error) {
+    console.log(error.response)
+  } finally {
+    setChatLoading(false)
+  }
+}
+
+const sendQuestion = () => {
   if (props.isLimited) {
     alert('已達免費帳號上限')
     return
@@ -71,29 +130,15 @@ const askQuestion = async () => {
     alert('請先輸入問題')
     return
   }
-  setLoading(true)
+
   saveChatCount()
   chatMessages.clientMsgs.push({
     role: 'user',
     content: question.value
   })
   question.value = ''
-  const stream = await getAnswer({ messages: chatMessages })
-  answer.value = {
-    role: 'assistant',
-    content: ''
-  }
-  useChatStream({
-    stream,
-    onChunk: ({ data }) => {
-      answer.value.content += data
-    },
-    onReady: () => {
-      chatMessages.clientMsgs.push(answer.value)
-      answer.value = null
-      setLoading(false)
-    }
-  })
+  console.log(chatMessages)
+  getResponse(chatMessages)
 }
 
 const handleEnterKey = (event) => {
@@ -101,7 +146,7 @@ const handleEnterKey = (event) => {
     return
   }
   if (event.key === 'Enter') {
-    askQuestion()
+    sendQuestion()
   }
 }
 
@@ -116,7 +161,7 @@ onUpdated(() => {
 </script>
 
 <template>
-  <section class="animate-fadein container py-10">
+  <div class="animate-fadein container">
     <div class="grid-cols-12 sm:grid">
       <div class="col-span-8 col-start-3">
         <div class="relative rounded-md">
@@ -124,7 +169,7 @@ onUpdated(() => {
           <div
             id="message-container"
             ref="scrollContainer"
-            class="h-[500px] overflow-y-scroll sm:p-4"
+            class="h-[400px] overflow-y-scroll sm:p-4"
           >
             <ChatBubbles :chat-messages="chatMessages" :answer="answer" />
           </div>
@@ -134,15 +179,14 @@ onUpdated(() => {
               <input
                 v-model.trim="question"
                 type="text"
-                class="w-full rounded-md px-4 py-2 placeholder:text-sand-300 focus:outline-secondary disabled:opacity-90"
+                class="w-full rounded-md border-none px-4 py-2 placeholder:text-sand-300 focus:outline-secondary disabled:opacity-90"
                 placeholder="說點什麼吧？"
-                :disabled="isLimited"
                 @keydown.enter="handleEnterKey"
               />
               <button
                 class="absolute right-0 h-full w-[50px] rounded-r-md py-1 text-secondary hover:bg-secondary hover:text-white disabled:hover:bg-transparent disabled:hover:text-secondary"
                 :disabled="isLimited"
-                @click="askQuestion"
+                @click="getResponse"
               >
                 <Icon name="material-symbols:send-outline" size="20" />
               </button>
@@ -151,7 +195,7 @@ onUpdated(() => {
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <style scoped>

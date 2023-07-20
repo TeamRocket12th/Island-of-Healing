@@ -4,5 +4,10 @@ export const useLoading = defineStore('loading', () => {
     isLoading.value = loading
   }
 
-  return { isLoading, setLoading }
+  const chatLoading = ref(false)
+  const setChatLoading = (loading: boolean) => {
+    chatLoading.value = loading
+  }
+
+  return { isLoading, setLoading, chatLoading, setChatLoading }
 })
