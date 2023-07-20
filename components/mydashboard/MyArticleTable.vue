@@ -2,10 +2,16 @@
 import { storeToRefs } from 'pinia'
 import { myWorkStore } from '~/stores/mywork'
 import { useWriterBoard } from '~/stores/writerboard'
+import { useLoading } from '~/stores/loading'
+
+const { isLoading } = storeToRefs(useLoading())
+const { setLoading } = useLoading()
+setLoading(true)
 
 const { selectedCategory, selectedYear, selectedMonth, progressTab } = storeToRefs(myWorkStore())
 const { selectedArticleIds, postedArticles, allMyArticles } = storeToRefs(useWriterBoard())
 const { getMyArticles, delArticle } = useWriterBoard()
+
 const router = useRouter()
 
 // 取得作家後台文章列表
@@ -31,7 +37,6 @@ const showConfirmModal = ref(false)
 const selectedArticle = ref<TableData>({})
 
 const confrimDel = (item: TableData) => {
-  console.log('open')
   showConfirmModal.value = true
   selectedArticle.value = item
 }
@@ -67,7 +72,9 @@ const getAnalysis = async (year: string, month: string) => {
 }
 
 watchEffect(async () => {
-  await getAnalysis(selectedYear.value, selectedMonth.value)
+  if (props.nowPage === 'dashboard') {
+    await getAnalysis(selectedYear.value, selectedMonth.value)
+  }
 })
 
 // 依照文章類別篩選
@@ -172,6 +179,14 @@ const handleRemove = (article: TableData) => {
   }
   delArticle(article.Id)
 }
+
+const checkPreview = (progress: string, id: number) => {
+  if (progress === '審核成功') {
+    router.push(`/article/${id}`)
+  } else {
+    router.push(`/article/${id}?status=preview`)
+  }
+}
 </script>
 <template>
   <div class="overflow-x-auto">
@@ -236,7 +251,9 @@ const handleRemove = (article: TableData) => {
               </div>
             </td>
             <td class="py-[10px] text-primary-dark md:w-[31%]">
-              <NuxtLink :to="`/article/${item.Id}`">{{ item.Title }}</NuxtLink>
+              <span class="cursor-pointer" @click="checkPreview(item.Progress, item.Id)">{{
+                item.Title
+              }}</span>
             </td>
             <td class="py-[10px] text-primary-dark md:w-[14%]">{{ item.CollectNum }}</td>
             <td class="py-[10px] text-primary-dark md:w-[14%]">{{ formatDate(item.Initdate) }}</td>
@@ -292,7 +309,9 @@ const handleRemove = (article: TableData) => {
               </div>
             </td>
             <td class="w-[31%] py-[10px] text-primary-dark">
-              <NuxtLink :to="`/article/${item.Id}`">{{ item.Title }}</NuxtLink>
+              <span class="cursor-pointer" @click="checkPreview(item.Progress, item.Id)">
+                {{ item.Title }}
+              </span>
             </td>
             <td
               v-if="nowPage === 'progress'"
@@ -346,23 +365,31 @@ const handleRemove = (article: TableData) => {
             </td>
           </tr>
         </tbody>
-        <tbody v-if="articleAnalysis.length > 0 && nowPage === 'dashboard'">
-          <tr v-for="article in articleAnalysis" :key="article.Id" class="text-center">
-            <td class="w-[31%] py-[10px] text-primary-dark">{{ article.Title }}</td>
-            <td class="w-[14%] py-[10px] text-primary-dark">{{ formatDate(article.Initdate) }}</td>
-            <td class="w-[14%] py-[10px] text-primary-dark">{{ article.Likes }}</td>
-            <td class="w-[14%] py-[10px] text-primary-dark">{{ article.Clicks }}</td>
-            <td class="w-[17%] py-[10px] text-primary-dark">{{ article.Comments }}</td>
-          </tr>
-        </tbody>
-        <tbody v-else-if="articleAnalysis.length === 0 && dataLoaded">
+        <tbody v-if="dataWithCheckbox.length === 0 && !isLoading">
           <tr>
             <td colspan="6" class="pt-10 text-center text-2xl font-medium text-primary">
               找不到文章
             </td>
           </tr>
         </tbody>
+        <tbody v-if="articleAnalysis.length > 0 && nowPage === 'dashboard'">
+          <tr v-for="article in articleAnalysis" :key="article.Id" class="text-center">
+            <td class="w-[31%] py-[10px] text-primary-dark">
+              <NuxtLink :to="`/article/${article.Id}`"> {{ article.Title }}</NuxtLink>
+            </td>
+            <td class="w-[14%] py-[10px] text-primary-dark">{{ formatDate(article.Initdate) }}</td>
+            <td class="w-[14%] py-[10px] text-primary-dark">{{ article.Likes }}</td>
+            <td class="w-[14%] py-[10px] text-primary-dark">{{ article.Clicks }}</td>
+            <td class="w-[17%] py-[10px] text-primary-dark">{{ article.Comments }}</td>
+          </tr>
+          <tr v-if="articleAnalysis.length === 0 && !isLoading">
+            <td colspan="6" class="pt-10 text-center text-2xl font-medium text-primary">
+              找不到文章
+            </td>
+          </tr>
+        </tbody>
       </table>
+      <!--刪除確認Modal-->
       <template v-if="showConfirmModal">
         <ConfirmModal @close-confirm="closeConfirm">
           <template #header>

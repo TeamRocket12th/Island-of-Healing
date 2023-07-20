@@ -11,7 +11,7 @@ export const useChatCharacters = defineStore('characterStore', () => {
       type: 'personal-growth',
       name: '尋航者',
       imgUrl: 'https://i.pinimg.com/564x/ba/8e/e8/ba8ee8516d9b1ec0b0db3535514b9436.jpg',
-      desc: '尋航者提供建設性的職涯建議，更將自己化身為一位良師益友， 陪伴使用者走過艱難的求職之路。',
+      desc: '提供職涯建議，是良師也是益友， 陪伴你走過艱難的求職之路。',
       clientMsgs: [
         {
           role: 'assistant',
@@ -81,7 +81,7 @@ export const useChatCharacters = defineStore('characterStore', () => {
       type: 'intimate-relationships',
       name: '引路人',
       imgUrl: 'https://i.pinimg.com/564x/0d/ce/c3/0dcec3105e668483438e6e48ef31cc87.jpg',
-      desc: '善於處理人際衝突和情感糾紛，並能夠提供有效的解決方案，促進雙方的溝通和理解。',
+      desc: '善於處理人際衝突和情感糾紛，提供有效的解決方案，促進雙方的溝通和理解。',
       clientMsgs: [
         {
           role: 'assistant',
@@ -117,7 +117,7 @@ export const useChatCharacters = defineStore('characterStore', () => {
       name: '外星狗',
       imgUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfBtV17tLSU0cSxgHS4-lEpsHhz79sOiF7H5mfG-3A6h2rhQFlMoGaYAwSIndnqQN39aQ&usqp=CAU',
-      desc: '從外星來的星際寶貝，擁有心電感應的能力，以一種理解和陪伴的角色出現，讓使用者感到被接納和支持。',
+      desc: '擁有心電感應的能力，以一種理解和陪伴的角色出現，讓你感到被接納和支持。',
       clientMsgs: [
         {
           role: 'assistant',

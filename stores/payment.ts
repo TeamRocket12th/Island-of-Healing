@@ -4,12 +4,11 @@ export const usePaymentStore = defineStore('payment', () => {
   const userToken = useCookie('token')
 
   // 顧客資料
-
   const customerData = ref<CustomerData>({
     nickName: '',
     email: '',
     phone: '',
-    planId: 1
+    planId: 0
   })
 
   const getCustomerInfo = (data: CustomerData) => {
@@ -17,6 +16,11 @@ export const usePaymentStore = defineStore('payment', () => {
   }
 
   // 付款資料
+  const selectedOrder = ref({
+    planName: '',
+    price: null as number | null
+  })
+
   interface PaymentData {
     MerchantID: string
     TradeInfo: string
@@ -36,6 +40,7 @@ export const usePaymentStore = defineStore('payment', () => {
     if (!userToken.value) {
       return
     }
+    console.log(customerData.planId)
     try {
       const res: ApiResponse = await $fetch(`${apiBase}/NewebPay/setchargedata`, {
         headers: {
@@ -53,11 +58,12 @@ export const usePaymentStore = defineStore('payment', () => {
       console.log(res)
       if (res.Status) {
         paymentData.value = res.PaymentData
+        console.log(paymentData.value)
       }
     } catch (error: any) {
       console.log(error.response)
     }
   }
 
-  return { paymentData, customerData, createOrder, getCustomerInfo }
+  return { paymentData, customerData, selectedOrder, createOrder, getCustomerInfo }
 })

@@ -5,14 +5,16 @@ import { usePaymentStore } from '~/stores/payment'
 
 const userStore = useUserStore()
 const { userData } = storeToRefs(userStore)
+const route = useRoute()
 
+const { selectedOrder } = storeToRefs(usePaymentStore())
 const { getCustomerInfo } = usePaymentStore()
 
-const customerData = ref<CustomerData>({
+const customerInputs = ref<CustomerData>({
   nickName: userData.value.nickName,
   email: userData.value.email,
-  phone: '0989123456',
-  planId: 1
+  phone: '',
+  planId: Number(route.query.id)
 })
 
 const emits = defineEmits(['custom-order', 'get-customer-data', 'get-payment-data'])
@@ -31,7 +33,7 @@ const sendOrder = (value: boolean, data: CustomerData) => {
           <label for="name" class="mb-2 block text-primary-dark">顧客名稱:</label>
           <input
             id="name"
-            v-model="customerData.nickName"
+            v-model="customerInputs.nickName"
             type="text"
             name="name"
             required
@@ -42,7 +44,7 @@ const sendOrder = (value: boolean, data: CustomerData) => {
           <label for="email" class="mb-2 block text-primary-dark">電子郵件:</label>
           <input
             id="email"
-            v-model="customerData.email"
+            v-model="customerInputs.email"
             type="email"
             name="email"
             required
@@ -53,7 +55,7 @@ const sendOrder = (value: boolean, data: CustomerData) => {
           <label for="phone" class="mb-2 block text-primary-dark">電話號碼:</label>
           <input
             id="phone"
-            v-model="customerData.phone"
+            v-model="customerInputs.phone"
             type="tel"
             name="phone"
             maxlength="10"
@@ -71,22 +73,22 @@ const sendOrder = (value: boolean, data: CustomerData) => {
           訂單明細
         </p>
         <p class="mb-6 text-xl font-medium text-primary-dark">
-          {{ userStore.selectedOrder.planName }}
+          {{ selectedOrder.planName }}
         </p>
         <div class="mb-16 flex items-center justify-between">
-          <span class="font-medium text-primary-dark">TW ${{ userStore.selectedOrder.price }}</span>
+          <span class="font-medium text-primary-dark">TW ${{ selectedOrder.price }}</span>
           <span class="font-light text-primary-dark">售價</span>
         </div>
         <span
           class="block border-b-[0.5px] border-primary pb-6 text-right text-xl font-bold text-primary-dark"
-          >TW ${{ userStore.selectedOrder.price }}</span
+          >TW ${{ selectedOrder.price }}</span
         >
       </div>
       <div class="px-16">
         <button
           type="button"
           class="block w-full rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-          @click="sendOrder(true, customerData)"
+          @click="sendOrder(true, customerInputs)"
         >
           同意並送出
         </button>

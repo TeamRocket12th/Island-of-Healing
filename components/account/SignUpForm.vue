@@ -75,12 +75,12 @@ const handleEnterKey = (event: any) => {
           <div class="tabs mb-8 hidden w-full items-center justify-center font-bold lg:flex">
             <NuxtLink
               to="/login"
-              class="tab-bordered tab h-[52px] w-1/2 flex-nowrap py-2 text-2xl text-[#C1B6A4] hover:text-[#978e7e]"
+              class="tab-bordered tab h-[52px] w-1/2 flex-nowrap border-sand-300 py-2 text-2xl text-[#C1B6A4] hover:text-[#978e7e]"
               >登入
             </NuxtLink>
             <NuxtLink
               to="/signup"
-              class="tab-bordered tab tab-active h-[52px] w-1/2 flex-nowrap py-2 text-2xl text-primary"
+              class="tab-bordered tab tab-active h-[52px] w-1/2 flex-nowrap border-primary py-2 text-2xl text-primary"
               >註冊
             </NuxtLink>
           </div>
@@ -105,7 +105,7 @@ const handleEnterKey = (event: any) => {
                 type="email"
                 name="email"
                 placeholder="信箱"
-                class="input-bordered input w-full rounded border pl-12 focus:outline-none"
+                class="input-bordered input w-full rounded border bg-sand-100 pl-12 text-secondary focus:outline-none"
                 :class="errors['email'] ? 'border-[#EF4444]' : 'border-secondary '"
                 @click="handleEnterKey"
               />
@@ -127,7 +127,7 @@ const handleEnterKey = (event: any) => {
                 :type="passwordField.passwordType.value"
                 maxlength="13"
                 placeholder="密碼"
-                class="input-bordered input mb-1 w-full rounded border pl-12 focus:outline-none"
+                class="input-bordered input mb-1 w-full rounded border bg-sand-100 pl-12 text-secondary focus:outline-none"
                 :class="errors['password'] ? 'border-[#EF4444]' : 'border-secondary '"
                 @click="handleEnterKey"
               />
@@ -163,7 +163,7 @@ const handleEnterKey = (event: any) => {
                 :type="passwordCheckField.passwordType.value"
                 maxlength="13"
                 placeholder="再次輸入密碼"
-                class="input-bordered input mb-1 w-full rounded pl-12 focus:outline-none"
+                class="input-bordered input mb-1 w-full rounded bg-sand-100 pl-12 text-secondary focus:outline-none"
                 :class="errors['passwordCheck'] ? 'border-[#EF4444]' : 'border-secondary '"
                 @click="handleEnterKey"
               />
@@ -203,3 +203,15 @@ const handleEnterKey = (event: any) => {
     </div>
   </div>
 </template>
+<style scoped>
+.tab-bordered.border-primary {
+  border-color: #4e2a09 !important;
+}
+
+.tab-bordered.border-sand-300 {
+  border-color: #c1b6a4 !important;
+}
+input::placeholder {
+  color: #c1b6a4;
+}
+</style>

@@ -69,19 +69,15 @@ export const useUserStore = defineStore(
       router.replace('/login')
     }
 
-    const selectedOrder = ref({
-      planName: '',
-      price: null as number | null
-    })
     return {
       isLogin,
       userData,
+      authToken,
       userLogin,
       getUserInfo,
       getUserToken,
       userLogout,
-      checkAuth,
-      selectedOrder
+      checkAuth
     }
   },
   {
