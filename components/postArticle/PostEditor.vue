@@ -519,7 +519,7 @@ const insertImage = () => {
   </div>
 </template>
 
-<style scope>
+<style>
 code {
   color: inherit;
   padding: 0;
