@@ -7,9 +7,9 @@ export default defineNuxtConfig({
     '@pinia-plugin-persistedstate/nuxt',
     'nuxt-gtag'
   ],
-  // typescript: {
-  //   typeCheck: true
-  // },
+  typescript: {
+    typeCheck: true
+  },
   css: ['@/assets/css/main.css'],
   pinia: {
     autoImports: ['defineStore', ['defineStore', 'definePiniaStore']]
