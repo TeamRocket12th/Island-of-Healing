@@ -2,7 +2,9 @@
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { usePaymentStore } from '~/stores/payment'
+import { useLoading } from '~/stores/loading'
 
+const { isLoading } = storeToRefs(useLoading())
 const { selectedOrder, customerData } = storeToRefs(usePaymentStore())
 
 const props = defineProps({
@@ -81,9 +83,9 @@ const myPlan = computed(() => {
 })
 </script>
 <template>
-  <div class="mb-[147px] grid grid-cols-12 border border-primary bg-sand-100">
-    <h2 class="col-span-2 pl-10 pt-10 font-serif-tc text-2xl font-bold text-primary">變更訂閱</h2>
-    <div class="grid-start-3 col-span-8 px-3 py-32">
+  <div class="grid-start-3 col-span-8 px-3 py-32">
+    <LoadingItem v-if="isLoading" />
+    <div v-else>
       <div class="mb-7 min-h-[192px] border border-secondary bg-white p-4">
         <h3 class="mb-5 text-xl font-medium text-primary">目前方案</h3>
         <div class="flex justify-between text-primary-dark">
