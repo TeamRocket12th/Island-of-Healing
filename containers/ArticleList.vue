@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useLoading } from '~/stores/loading'
+const { isLoading } = storeToRefs(useLoading())
 defineProps({
   title: {
     type: String,
@@ -9,6 +12,10 @@ defineProps({
     type: Array as () => ArticleCard[],
     required: true,
     default: () => []
+  },
+  skeletonNum: {
+    type: Number,
+    required: true
   }
 })
 </script>
@@ -16,7 +23,18 @@ defineProps({
 <template>
   <div class="mb-16">
     <h2 class="mb-6 font-serif-tc text-4xl font-bold leading-normal text-primary">{{ title }}</h2>
-    <ArticleCard :articles="articles" />
+    <div>
+      <ul v-if="isLoading" class="grid-cols-2 gap-6 sm:grid md:grid-cols-3">
+        <li v-for="num in skeletonNum" :key="num" class="col-span-1 mb-6 border sm:mb-0">
+          <ArticleCardSkeleton />
+        </li>
+      </ul>
+      <ul v-else class="grid-cols-2 gap-6 sm:grid md:grid-cols-3">
+        <li v-for="article in articles" :key="article.Id" class="col-span-1 mb-6 border sm:mb-0">
+          <ArticleCard :article="article" />
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 

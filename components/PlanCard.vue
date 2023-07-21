@@ -64,20 +64,21 @@ const toggleClass = (item: any) => {
       >
         讓我們一起啟程，發現內在的力量和自由，愛上生活的潛力。
       </p>
-      <button
-        data-aos-delay="1400"
+      <NuxtLink
+        to="#section_plan"
+        data-aos-delay="1200"
         data-aos="zoom-in"
-        class="btn-active btn z-10 mx-auto mb-10 block h-[60px] w-[130px] rounded bg-secondary text-2xl font-normal text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white xl:mb-[84px] 3xl:mb-[84px]"
+        class="mx-auto mb-10 flex h-[60px] w-[130px] items-center justify-center rounded bg-secondary text-2xl font-normal text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white xl:mb-[84px] 3xl:mb-[84px]"
       >
-        <NuxtLink to="#section_plan">開始使用</NuxtLink>
-      </button>
+        開始使用
+      </NuxtLink>
       <img
         data-aos-delay="1800"
         data-aos="zoom-in"
         data-aos-anchor-placement="top-bottom"
         src="~/assets/images/plancard/work-work-from-home-01.svg"
         class="mx-auto w-[402px] xl:w-[600px]"
-        alt=""
+        alt="subplan-pic"
       />
     </div>
   </section>

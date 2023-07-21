@@ -33,11 +33,11 @@ const toggleMobileMenu = () => {
           /></span>
         </div>
         <div class="hidden items-center gap-6 sm:flex">
-          <button
+          <NuxtLink
+            to="/become_creater/steps"
             class="rounded bg-secondary px-2 py-1 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+            >開始使用</NuxtLink
           >
-            <NuxtLink to="/become_creater/steps">開始使用</NuxtLink>
-          </button>
         </div>
       </div>
     </nav>

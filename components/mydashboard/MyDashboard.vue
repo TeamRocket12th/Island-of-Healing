@@ -434,7 +434,7 @@ watchEffect(async () => {
               <td class="py-3">{{ writerOverview!.TotalCollects }}</td>
               <td class="py-3">{{ writerOverview!.TotalLikes }}</td>
               <td class="py-3">{{ writerOverview!.TotalComments }}</td>
-              <td class="py-3">{{ writerOverview!.TotalInteractions }}</td>
+              <td class="py-3">{{ Math.round(writerOverview!.TotalInteractions) }}</td>
               <td class="py-3">{{ writerOverview!.TotalClicks }}</td>
             </tr>
           </tbody>

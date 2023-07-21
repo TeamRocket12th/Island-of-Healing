@@ -1,9 +1,4 @@
-<script setup lang="ts">
-const emits = defineEmits(['writer-rules'])
-const showRules = (value: boolean) => {
-  emits('writer-rules', value)
-}
-</script>
+<script setup lang="ts"></script>
 <template>
   <section class="container pt-10 sm:pt-[120px]">
     <h2
@@ -21,14 +16,13 @@ const showRules = (value: boolean) => {
       我們致力於提供一個讓你發揮創作潛能的 寫作文章平台。
     </p>
     <div class="text-center">
-      <button
-        class="mb-9 rounded bg-secondary px-4 py-3 text-2xl text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+      <NuxtLink
+        to="/become_creater/steps"
+        class="mx-auto mb-9 flex h-[60px] w-[137px] items-center justify-center rounded bg-secondary px-4 py-3 text-2xl text-white hover:bg-btn-hover active:bg-btn-active"
         data-aos-delay="1400"
         data-aos="zoom-in"
-        @click="showRules(true)"
+        >開始使用</NuxtLink
       >
-        <NuxtLink to="/become_creater/steps">開始使用</NuxtLink>
-      </button>
     </div>
     <div class="flex flex-wrap justify-center pb-20 lg:pb-[200px] xl:flex-nowrap">
       <div
