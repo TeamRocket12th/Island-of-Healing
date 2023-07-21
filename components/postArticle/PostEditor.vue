@@ -453,7 +453,7 @@ const insertImage = () => {
                 </button>
               </bubble-menu>
             </div>
-            <div class="max-h-[400px] overflow-y-auto sm:max-h-none">
+            <div class="text-container max-h-[400px] overflow-y-auto sm:max-h-none">
               <editor-content ref="content" :editor="editor" />
             </div>
             <!-- <div v-dompurify-html="newHtml"></div> -->
@@ -461,7 +461,7 @@ const insertImage = () => {
         </div>
       </div>
     </div>
-    <div class="block">
+    <div>
       <div
         v-if="editor && selectedStatus"
         class="absolute bottom-0 -mx-6 flex w-full flex-wrap justify-around bg-[#E9E4D9] py-3 text-secondary sm:hidden"
@@ -485,41 +485,50 @@ const insertImage = () => {
           <span class="underline">Link</span>
         </button>
       </div>
-      <div
-        v-if="editor && !selectedStatus"
-        class="absolute bottom-0 -mx-6 flex w-full justify-start gap-2 bg-[#E9E4D9] px-4 py-3 text-secondary sm:hidden"
+    </div>
+    <div
+      v-if="editor && !selectedStatus"
+      class="absolute bottom-0 -mx-3 flex w-full justify-start gap-2 bg-[#E9E4D9] px-4 py-3 text-secondary sm:hidden"
+    >
+      <button
+        :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+        class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
+        @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
       >
-        <button
-          :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-          class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
-          @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-        >
-          <Icon name="material-symbols:text-fields" size="24" />
-        </button>
-        <button
-          :class="{ 'is-active': editor.isActive('blockquote') }"
-          class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
-          @click="editor.chain().focus().toggleBlockquote().run()"
-        >
-          <Icon name="material-symbols:format-quote-outline" size="24" />
-        </button>
-        <button
-          :class="{ 'is-active': editor.isActive('bulletList') }"
-          class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
-          @click="editor.chain().focus().toggleBulletList().run()"
-        >
-          <Icon name="material-symbols:format-list-bulleted" size="24" />
-        </button>
-        <button
-          class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
-          @click="editor.chain().focus().setHorizontalRule().run()"
-        >
-          <Icon name="material-symbols:align-center" size="24" />
-        </button>
-        <button class="block h-8 w-8 rounded hover:bg-secondary hover:text-white" @click="addImage">
-          <Icon name="material-symbols:add-photo-alternate-outline" size="24" />
-        </button>
-      </div>
+        <Icon name="material-symbols:text-fields" size="24" />
+      </button>
+      <button
+        :class="{ 'is-active': editor.isActive('blockquote') }"
+        class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
+        @click="editor.chain().focus().toggleBlockquote().run()"
+      >
+        <Icon name="material-symbols:format-quote-outline" size="24" />
+      </button>
+      <button
+        :class="{ 'is-active': editor.isActive('bulletList') }"
+        class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
+        @click="editor.chain().focus().toggleBulletList().run()"
+      >
+        <Icon name="material-symbols:format-list-bulleted" size="24" />
+      </button>
+      <button
+        class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
+        @click="editor.chain().focus().setHorizontalRule().run()"
+      >
+        <Icon name="material-symbols:align-center" size="24" />
+      </button>
+      <button class="block h-8 w-8 rounded hover:bg-secondary hover:text-white" @click="addImage">
+        <Icon name="material-symbols:add-photo-alternate-outline" size="24" />
+      </button>
     </div>
   </div>
 </template>
+
+<style scoped>
+.text-container::-webkit-scrollbar {
+  width: 8px;
+}
+.text-container::-webkit-scrollbar-thumb {
+  background-color: #e9e4d9;
+}
+</style>

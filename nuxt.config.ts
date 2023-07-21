@@ -41,5 +41,17 @@ export default defineNuxtConfig({
     config: {
       page_title: '小島聊癒所'
     }
+  },
+  app: {
+    head: {
+      title: '小島聊癒所',
+      meta: [
+        {
+          name: 'description',
+          content: '歡迎來到小島聊癒所'
+        }
+      ],
+      link: [{ rel: 'icon', type: 'image/svg+xml', href: 'logo.svg' }]
+    }
   }
 })
