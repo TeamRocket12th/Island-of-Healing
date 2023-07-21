@@ -29,8 +29,8 @@ const getWriterInfo = async (writerId: string, userId: string) => {
   }
 }
 
+setLoading(true)
 onMounted(() => {
-  setLoading(true)
   getWriterInfo(writerId, userId)
 })
 </script>
@@ -38,13 +38,11 @@ onMounted(() => {
 <template>
   <main class="overflow-hidden bg-sand-100 pb-40">
     <div id="point" class="relative">
-      <p v-if="isLoading" class="mt-10 text-center text-2xl">Loading...</p>
-      <section
-        v-if="!isLoading && writerInfo"
-        class="container grid-cols-12 gap-6 pb-[188px] pt-[60px] lg:grid"
-      >
+      <section class="container grid-cols-12 gap-6 pb-[188px] pt-[60px] lg:grid">
         <div class="lg:col-span-4">
+          <WriterCardSkeleton v-if="isLoading" />
           <WriterCard
+            v-if="!isLoading && writerInfo"
             :writer-info="writerInfo"
             :get-writer-info="getWriterInfo"
             :user-id="userId"
@@ -52,7 +50,8 @@ onMounted(() => {
           />
         </div>
         <div class="lg:col-span-8">
-          <WriterWorkCard :writer-works="writerWorks" />
+          <p v-if="isLoading" class="mt-10"><LoadingItem /></p>
+          <WriterWorkCard v-else :writer-works="writerWorks" />
         </div>
       </section>
     </div>

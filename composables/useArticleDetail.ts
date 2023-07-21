@@ -1,5 +1,8 @@
 // 取得單篇文章資訊
+import { useLoading } from '~/stores/loading'
+
 export const useArticleDetail = () => {
+  const { setLoading } = useLoading()
   const runtimeConfig = useRuntimeConfig()
   const apiBase = runtimeConfig.public.apiBase
   const articleDetail = ref<ArticleDetail | null>(null)
@@ -24,6 +27,7 @@ export const useArticleDetail = () => {
       comments.value = data.value.Comment
       isLock.value = data.value.ArticleData.Pay
       isRead.value = data.value.ArticleData.IsRead
+      setLoading(false)
       if (data.value.ArticleData.IsRead) {
         isLock.value = false
       }
@@ -34,6 +38,7 @@ export const useArticleDetail = () => {
 
     if (error.value) {
       console.log(error.value)
+      setLoading(false)
     }
   }
   return {

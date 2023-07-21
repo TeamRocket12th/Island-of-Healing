@@ -2,7 +2,14 @@
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useToast } from '~/stores/toast'
+import { useLoading } from '~/stores/loading'
+
 import '~/assets/css/article.css'
+
+const { isLoading } = storeToRefs(useLoading())
+const { setLoading } = useLoading()
+
+setLoading(true)
 
 const { isLogin, userData } = storeToRefs(useUserStore())
 const { isCollect, cancelCollect } = storeToRefs(useToast())
@@ -137,227 +144,245 @@ const addComment = async (id: number, articleId: string, userId: string) => {
 const { followWriter, unFollowWriter } = useWriterActions()
 </script>
 <template>
-  <div v-if="articleDetail" class="relative mb-10">
-    <span v-if="articleDetail.Pay && !isRead" class="mb-3 flex items-center gap-1 text-primary-dark"
-      ><Icon name="material-symbols:lock-outline" size="16" /> 付費限定文章</span
-    >
-    <span
-      v-else-if="articleDetail.Pay && isRead"
-      class="mb-3 flex items-center gap-1 text-primary-dark"
-      ><Icon name="material-symbols:lock-open-outline" size="16" /> 文章已解鎖</span
-    >
-    <p
-      v-if="isCollect"
-      data-aos="fade-left"
-      class="fade-element absolute right-0 top-0 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-[-450px] lg:top-0 lg:h-[44px] lg:w-[348px]"
-    >
-      收藏成功！
-    </p>
-    <p
-      v-if="cancelCollect"
-      data-aos="fade-left"
-      class="fade-element absolute right-0 top-0 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-[-450px] lg:top-0 lg:h-[44px] lg:w-[348px]"
-    >
-      取消收藏成功！
-    </p>
-    <p v-if="isPreview" class="mb-2 text-right text-primary">目前為預覽模式</p>
-    <div class="mb-5 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <div class="h-9 w-9">
-          <img :src="writerInfo?.ImgUrl" alt="writer" class="h-full w-full rounded-full" />
+  <ArticleDetailSkeleton v-if="isLoading" />
+  <section v-if="articleDetail && !isLoading">
+    <div class="relative mb-10">
+      <span
+        v-if="articleDetail.Pay && !isRead"
+        class="mb-3 flex items-center gap-1 text-primary-dark"
+        ><Icon name="material-symbols:lock-outline" size="16" /> 付費限定文章</span
+      >
+      <span
+        v-else-if="articleDetail.Pay && isRead"
+        class="mb-3 flex items-center gap-1 text-primary-dark"
+        ><Icon name="material-symbols:lock-open-outline" size="16" /> 文章已解鎖</span
+      >
+      <p
+        v-if="isCollect"
+        data-aos="fade-left"
+        class="fade-element absolute right-0 top-0 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-[-450px] lg:top-0 lg:h-[44px] lg:w-[348px]"
+      >
+        收藏成功！
+      </p>
+      <p
+        v-if="cancelCollect"
+        data-aos="fade-left"
+        class="fade-element absolute right-0 top-0 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-[-450px] lg:top-0 lg:h-[44px] lg:w-[348px]"
+      >
+        取消收藏成功！
+      </p>
+      <p v-if="isPreview" class="mb-2 text-right text-primary">目前為預覽模式</p>
+      <div class="mb-5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="h-9 w-9">
+            <img :src="writerInfo?.ImgUrl" alt="writer" class="h-full w-full rounded-full" />
+          </div>
+          <div>
+            <p class="text-sm font-light text-primary-dark">作家</p>
+            <p class="text-sm text-primary-dark">
+              <NuxtLink :to="`/writer/${writerInfo?.Id}`">
+                {{ writerInfo?.NickName }}
+              </NuxtLink>
+            </p>
+          </div>
         </div>
         <div>
-          <p class="text-xs">作家</p>
-          <p class="text-sm font-medium">
-            <NuxtLink :to="`/writer/${writerInfo?.Id}`">
-              {{ writerInfo?.NickName }}
-            </NuxtLink>
+          <p class="font-light text-primary-dark">
+            {{ useFormattedTime(articleDetail.Initdate) }} 發表於 {{ articleDetail?.Category }}
           </p>
         </div>
       </div>
-      <div>
-        <p class="font-light text-[#3D1F03]">
-          {{ useFormattedTime(articleDetail.Initdate) }} 發表於 {{ articleDetail?.Category }}
-        </p>
-      </div>
-    </div>
-    <!-- 文章內文 -->
-    <div class="relative">
-      <h2 class="mb-6 text-[32px] font-bold">{{ articleDetail?.Title }}</h2>
-      <img
-        :src="articleDetail.ImgUrl ? articleDetail.ImgUrl : '/default-article-cover.jpg'"
-        alt="cover"
-        class="mb-6 block"
-      />
-      <div v-if="isLock && !isPreview">
-        <p class="mb-10 text-xl font-medium text-primary">關於本文： {{ articleDetail.Summary }}</p>
-      </div>
-      <div v-if="isLock && !isRead && writerInfo?.Id !== userData.id" class="flex justify-center">
-        <button
-          v-if="userData.myPlan === 'free' && isLock"
-          class="font-sm flex transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
-          @click="keepReading(articleDetail.Id)"
-        >
-          <span class="pb-1"><Icon name="ic:outline-paid" size="18" /></span>
-          <span>付費解鎖</span>
-        </button>
-        <button
-          v-if="!isRead && isLock && userData.myPlan !== 'free'"
-          class="font-sm flex transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
-          @click="keepReading(articleDetail.Id)"
-        >
-          <span class="pb-1"
-            ><Icon name="material-symbols:arrow-circle-down-outline" size="18"
-          /></span>
-          <span>繼續閱讀</span>
-        </button>
-      </div>
-      <!--文章本體-->
-      <div v-else>
-        <div class="border-b-[0.5px] border-primary pb-16">
-          <div v-dompurify-html="articleDetail?.Content" class="mb-9"></div>
-          <div class="flex items-center justify-between">
-            <CategoryTag :tags="articleDetail.Tags" />
-            <ul class="flex gap-3">
-              <li
-                v-if="!isLiking"
-                class="cursor-pointer"
-                @click="likeArticle(articleDetail.Id, articleId, userId, getArticleDetail)"
-              >
-                <Icon name="material-symbols:favorite-outline-rounded" size="20" />
-              </li>
-              <li
-                v-else
-                class="cursor-pointer text-secondary"
-                @click="unlikeArticle(articleDetail.Id, articleId, userId, getArticleDetail)"
-              >
-                <Icon name="material-symbols:favorite-rounded" size="20" />
-              </li>
-              <li
-                v-if="!isCollecting"
-                class="cursor-pointer"
-                @click="AddToCollection(articleDetail.Id, articleId, userId, getArticleDetail)"
-              >
-                <Icon name="material-symbols:bookmark-outline-rounded" size="20" />
-              </li>
-              <li
-                v-else
-                class="cursor-pointer text-secondary"
-                @click="cancelCollection(articleDetail.Id, articleId, userId, getArticleDetail)"
-              >
-                <Icon name="material-symbols:bookmark" size="20" />
-              </li>
-              <li class="cursor-pointer" @click="toggleShareLink">
-                <Icon name="mdi:share-variant-outline" size="20" />
-              </li>
-            </ul>
+      <!-- 文章內文 -->
+      <div class="relative">
+        <h2 class="mb-6 font-serif-tc text-3xl-plus font-bold text-primary">
+          {{ articleDetail?.Title }}
+        </h2>
+        <img
+          :src="articleDetail.ImgUrl ? articleDetail.ImgUrl : '/default-article-cover.jpg'"
+          alt="cover"
+          class="mb-6 block"
+        />
+        <div v-if="isLock && !isPreview">
+          <p class="mb-10 text-xl font-medium text-primary">
+            關於本文： {{ articleDetail.Summary }}
+          </p>
+        </div>
+        <div v-if="isLock && !isRead && writerInfo?.Id !== userData.id" class="flex justify-center">
+          <button
+            v-if="userData.myPlan === 'free' && isLock"
+            class="font-sm flex transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
+            @click="keepReading(articleDetail.Id)"
+          >
+            <span class="pb-1"><Icon name="ic:outline-paid" size="18" /></span>
+            <span>付費解鎖</span>
+          </button>
+          <button
+            v-if="!isRead && isLock && userData.myPlan !== 'free'"
+            class="font-sm flex transform items-center gap-1 rounded bg-secondary px-2 py-1 text-white hover:opacity-80"
+            @click="keepReading(articleDetail.Id)"
+          >
+            <span class="pb-1"
+              ><Icon name="material-symbols:arrow-circle-down-outline" size="18"
+            /></span>
+            <span>繼續閱讀</span>
+          </button>
+        </div>
+        <!--文章本體-->
+        <div v-else>
+          <div class="border-b-[0.5px] border-primary pb-16">
+            <div v-dompurify-html="articleDetail?.Content" class="mb-9"></div>
+            <div class="flex items-center justify-between">
+              <CategoryTag :tags="articleDetail.Tags" />
+              <ul class="flex gap-3">
+                <li
+                  v-if="!isLiking"
+                  class="cursor-pointer"
+                  @click="likeArticle(articleDetail.Id, articleId, userId, getArticleDetail)"
+                >
+                  <Icon
+                    name="material-symbols:favorite-outline-rounded"
+                    size="20"
+                    class="text-secondary"
+                  />
+                </li>
+                <li
+                  v-else
+                  class="cursor-pointer text-secondary"
+                  @click="unlikeArticle(articleDetail.Id, articleId, userId, getArticleDetail)"
+                >
+                  <Icon name="material-symbols:favorite-rounded" size="20" class="text-secondary" />
+                </li>
+                <li
+                  v-if="!isCollecting"
+                  class="cursor-pointer"
+                  @click="AddToCollection(articleDetail.Id, articleId, userId, getArticleDetail)"
+                >
+                  <Icon
+                    name="material-symbols:bookmark-outline-rounded"
+                    size="20"
+                    class="text-secondary"
+                  />
+                </li>
+                <li
+                  v-else
+                  class="cursor-pointer text-secondary"
+                  @click="cancelCollection(articleDetail.Id, articleId, userId, getArticleDetail)"
+                >
+                  <Icon name="material-symbols:bookmark" size="20" class="text-secondary" />
+                </li>
+                <li class="cursor-pointer" @click="toggleShareLink">
+                  <Icon name="mdi:share-variant-outline" size="20" class="text-secondary" />
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div v-if="articleDetail" class="mb-9 flex items-center justify-between py-6">
-    <div class="items-center md:flex">
-      <div class="flex justify-between sm:mr-2">
-        <img :src="writerInfo?.ImgUrl" alt="avatar" class="h-[60px] w-[60px] rounded-full" />
-        <button
-          v-if="!writerInfo?.Follow"
-          class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
-        >
-          <Icon name="ic:baseline-plus" size="16" />追蹤
-        </button>
-        <button
-          v-else
-          class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
-        >
-          <Icon name="material-symbols:fitbit-check-small" size="20" />
-          追蹤中
-        </button>
-      </div>
-      <div>
-        <NuxtLink :to="`/writer/${writerInfo?.Id}`">
-          <p class="font-medium text-primary">作家·{{ writerInfo?.NickName }}</p>
-          <p class="font-light text-primary-dark">{{ writerInfo?.Bio }}</p>
-        </NuxtLink>
-      </div>
-    </div>
-    <div>
-      <button
-        v-if="!writerInfo?.Follow && writerInfo?.Id !== userData.id"
-        class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
-        @click="followWriter(writerInfo?.Id!, articleId, userId, getArticleDetail)"
-      >
-        <Icon name="ic:baseline-plus" size="20" />追蹤
-      </button>
-      <button
-        v-else-if="writerInfo?.Follow && writerInfo?.Id !== userData.id"
-        class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
-        @click="unFollowWriter(writerInfo?.Id!, articleId, userId, getArticleDetail)"
-      >
-        <Icon name="material-symbols:fitbit-check-small" size="20" />追蹤中
-      </button>
-    </div>
-  </div>
-  <!--留言-->
-  <div v-if="!isLock || writerInfo?.Id === userData.id">
-    <div class="mb-6">
-      <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
-    </div>
-    <ArticleComment
-      :comments="comments"
-      :article-id="articleId"
-      :user-id="userId"
-      :get-article-detail="getArticleDetail"
-    />
-    <div v-if="isLogin" class="mb-28">
-      <div class="mb-2 flex items-center">
-        <div class="mr-2 h-9 w-9">
-          <img :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />
-        </div>
-        <span class="font-medium text-primary">{{ userData.nickName }}</span>
-      </div>
-      <div class="grid-cols-7 gap-6 text-right md:grid md:text-left">
-        <div class="relative col-span-5 mb-4 md:mb-0">
-          <textarea
-            ref="textarea"
-            v-model="userComment"
-            cols="60"
-            rows="2"
-            max="50"
-            placeholder="留言分享你的想法吧！"
-            class="focus: h-10 w-full resize-none overflow-hidden rounded border border-secondary py-2 pl-2 pr-10 text-primary-dark outline-primary placeholder:text-sand-300"
-            @input="autoResize"
-          ></textarea>
-          <span class="cursor-pointer" @click="showEmojiPicker = !showEmojiPicker"
-            ><Icon
-              name="ic:outline-sentiment-satisfied-alt"
-              size="20"
-              class="absolute right-[10px] top-[10px] z-50 text-secondary hover:text-primary"
-          /></span>
-          <ClientOnly>
-            <EmojiPicker
-              v-if="showEmojiPicker"
-              ref="emojiPicker"
-              class="absolute right-[10px] top-8"
-              @select="insertEmoji"
-            />
-          </ClientOnly>
-        </div>
-        <div class="col-span-2">
+    <div v-if="articleDetail" class="mb-9 flex items-center justify-between py-6">
+      <div class="items-center md:flex">
+        <div class="flex justify-between sm:mr-2">
+          <img :src="writerInfo?.ImgUrl" alt="avatar" class="h-[60px] w-[60px] rounded-full" />
           <button
-            class="h-10 rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-            :disabled="!userComment"
-            @click="addComment(articleDetail?.Id as number, articleId, userId)"
+            v-if="!writerInfo?.Follow"
+            class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
           >
-            發表留言
+            <Icon name="ic:baseline-plus" size="16" />追蹤
+          </button>
+          <button
+            v-else
+            class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
+          >
+            <Icon name="material-symbols:fitbit-check-small" size="20" />
+            追蹤中
           </button>
         </div>
+        <div>
+          <NuxtLink :to="`/writer/${writerInfo?.Id}`">
+            <p class="font-medium text-primary">作家·{{ writerInfo?.NickName }}</p>
+            <p class="font-light text-primary-dark">{{ writerInfo?.Bio }}</p>
+          </NuxtLink>
+        </div>
+      </div>
+      <div>
+        <button
+          v-if="!writerInfo?.Follow && writerInfo?.Id !== userData.id"
+          class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
+          @click="followWriter(writerInfo?.Id!, articleId, userId, getArticleDetail)"
+        >
+          <Icon name="ic:baseline-plus" size="20" />追蹤
+        </button>
+        <button
+          v-else-if="writerInfo?.Follow && writerInfo?.Id !== userData.id"
+          class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
+          @click="unFollowWriter(writerInfo?.Id!, articleId, userId, getArticleDetail)"
+        >
+          <Icon name="material-symbols:fitbit-check-small" size="20" />追蹤中
+        </button>
       </div>
     </div>
-    <div v-else class="my-20 flex items-center justify-center text-primary-dark">
-      <p class="text-xl">要先登入才能留言喔</p>
+    <!--留言-->
+    <div v-if="!isLock || writerInfo?.Id === userData.id">
+      <div class="mb-6">
+        <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
+      </div>
+      <ArticleComment
+        :comments="comments"
+        :article-id="articleId"
+        :user-id="userId"
+        :get-article-detail="getArticleDetail"
+      />
+      <div v-if="isLogin" class="mb-28">
+        <div class="mb-2 flex items-center">
+          <div class="mr-2 h-9 w-9">
+            <img :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />
+          </div>
+          <span class="font-medium text-primary">{{ userData.nickName }}</span>
+        </div>
+        <div class="grid-cols-7 gap-6 text-right md:grid md:text-left">
+          <div class="relative col-span-5 mb-4 md:mb-0">
+            <textarea
+              ref="textarea"
+              v-model="userComment"
+              cols="60"
+              rows="2"
+              max="50"
+              placeholder="留言分享你的想法吧！"
+              class="focus: h-10 w-full resize-none overflow-hidden rounded border border-secondary py-2 pl-2 pr-10 text-primary-dark outline-primary placeholder:text-sand-300"
+              @input="autoResize"
+            ></textarea>
+            <span class="cursor-pointer" @click="showEmojiPicker = !showEmojiPicker"
+              ><Icon
+                name="ic:outline-sentiment-satisfied-alt"
+                size="20"
+                class="absolute right-[10px] top-[10px] z-50 text-secondary hover:text-primary"
+            /></span>
+            <ClientOnly>
+              <EmojiPicker
+                v-if="showEmojiPicker"
+                ref="emojiPicker"
+                class="absolute right-[10px] top-8"
+                @select="insertEmoji"
+              />
+            </ClientOnly>
+          </div>
+          <div class="col-span-2">
+            <button
+              class="h-10 rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+              :disabled="!userComment"
+              @click="addComment(articleDetail?.Id as number, articleId, userId)"
+            >
+              發表留言
+            </button>
+          </div>
+        </div>
+      </div>
+      <div v-else class="my-20 flex items-center justify-center text-primary-dark">
+        <p class="text-xl text-primary">要先登入才能留言喔</p>
+      </div>
     </div>
-  </div>
+  </section>
+
   <section>
     <h2 class="mb-6 font-serif-tc text-4xl font-bold text-primary md:text-2xl">你可能會喜歡</h2>
     <RecArticleCard />
