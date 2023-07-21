@@ -4,6 +4,7 @@ export const useUserStore = defineStore(
     const router = useRouter()
     const userInfo = useCookie('userInfo')
     const authToken = useCookie('token')
+    const authStore = useCookie('auth')
     const userData = ref({
       email: '',
       id: null as number | null,
@@ -40,6 +41,7 @@ export const useUserStore = defineStore(
       isLogin.value = false
       userInfo.value = null
       authToken.value = null
+      authStore.value = null
       userData.value = {
         email: '',
         id: null,
