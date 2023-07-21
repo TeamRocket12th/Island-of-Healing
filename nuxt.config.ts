@@ -51,7 +51,7 @@ export default defineNuxtConfig({
           content: '歡迎來到小島聊癒所'
         }
       ],
-      link: [{ rel: 'icon', type: 'image/svg+xml', href: 'logo.svg' }]
+      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]
     }
   }
 })
