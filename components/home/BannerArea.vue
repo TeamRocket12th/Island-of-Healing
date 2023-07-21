@@ -11,7 +11,7 @@
             <div class="relative mb-3 max-w-full sm:h-auto">
               <span class="categoryTag absolute left-0 top-0 mb-1">情緒察覺</span>
               <img
-                src="~/assets/images/articlecover/cover1.jpeg"
+                src="/articlecover/cover1.jpeg"
                 alt="article-cover"
                 class="h-[267px] w-full object-cover sm:h-[175px]"
               />
@@ -32,7 +32,7 @@
             <div class="relative mb-3 max-w-full sm:h-auto sm:w-auto">
               <span class="categoryTag absolute left-0 top-0 mb-1">個人成長</span>
               <img
-                src="~/assets/images/articlecover/cover2.jpeg"
+                src="/articlecover/cover2.jpeg"
                 alt="article-cover"
                 class="h-[267px] w-full object-cover sm:h-[400px]"
               />
@@ -53,7 +53,7 @@
             <div class="relative mb-3 h-[267px] max-w-full sm:h-auto sm:w-auto">
               <span class="categoryTag absolute left-0 top-0 mb-1">個人成長</span>
               <img
-                src="~/assets/images/articlecover/cover3.jpeg"
+                src="/articlecover/cover3.jpeg"
                 alt="article-cover"
                 class="h-[267px] w-full object-cover sm:h-[175px]"
               />
@@ -76,7 +76,7 @@
             <div class="relative mb-3 max-w-full sm:h-auto sm:w-auto">
               <span class="categoryTag absolute left-0 top-0 mb-1">個人成長</span>
               <img
-                src="~/assets/images/articlecover/cover4.jpeg"
+                src="/articlecover/cover4.jpeg"
                 alt="article-cover"
                 class="h-[267px] w-full object-cover sm:h-[175px]"
               />
@@ -97,7 +97,7 @@
             <div class="relative mb-3 max-w-full sm:h-auto sm:w-auto">
               <span class="categoryTag absolute left-0 top-0 mb-1">個人成長</span>
               <img
-                src="~/assets/images/articlecover/cover5.jpeg"
+                src="/articlecover/cover5.jpeg"
                 alt="article-cover"
                 class="h-[267px] w-full object-cover sm:h-[175px]"
               />

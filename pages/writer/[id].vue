@@ -29,8 +29,8 @@ const getWriterInfo = async (writerId: string, userId: string) => {
   }
 }
 
+setLoading(true)
 onMounted(() => {
-  setLoading(true)
   getWriterInfo(writerId, userId)
 })
 </script>
@@ -50,7 +50,7 @@ onMounted(() => {
           />
         </div>
         <div class="lg:col-span-8">
-          <p v-if="isLoading" class="mt-10 text-center text-2xl">Loading...</p>
+          <p v-if="isLoading" class="mt-10"><LoadingItem /></p>
           <WriterWorkCard v-else :writer-works="writerWorks" />
         </div>
       </section>

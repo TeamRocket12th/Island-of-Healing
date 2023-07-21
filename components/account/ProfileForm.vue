@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useLoading } from '~/stores/loading'
+
+const { isLoading } = storeToRefs(useLoading())
+const { setLoading } = useLoading()
 
 const userStore = useUserStore()
 const { userData } = storeToRefs(userStore)
@@ -38,6 +42,7 @@ const getUserInfo = async () => {
         userInfo.JobTitle = res.Data.User.Jobtitle || ''
         userInfo.Bio = res.Data.User.Bio || ''
         userData.value.avatar = res.Data.User.ImgUrl
+        setLoading(false)
       }
     } catch (error: any) {
       console.log(error.response)
@@ -45,6 +50,7 @@ const getUserInfo = async () => {
   }
 }
 
+setLoading(true)
 onMounted(getUserInfo)
 
 const handleDateClick = (togglePopover: () => void) => {
@@ -154,8 +160,10 @@ const updateUserPhoto = async (data: FormData) => {
       <h2 class="col-span-2 text-center font-serif-tc text-2xl font-bold text-primary md:text-left">
         會員設定
       </h2>
+
       <div class="col-span-9">
-        <div class="flex flex-wrap pt-6 md:flex-nowrap lg:gap-4 lg:pt-10">
+        <div v-if="isLoading" class="py-16"><LoadingItem /></div>
+        <div v-else class="flex flex-wrap pt-6 md:flex-nowrap lg:gap-4 lg:pt-10">
           <div class="mx-auto my-0">
             <div class="relative h-[100px] w-[100px] rounded-full bg-[#E9E4D9]">
               <img :src="userData.avatar" class="h-full w-full rounded-full object-contain" />

@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useLoading } from '~/stores/loading'
+
+const { isLoading } = storeToRefs(useLoading())
+
 defineProps({
   writerWorks: {
     type: Array as () => WriterWork[],
@@ -11,7 +16,10 @@ const { formatDate } = useDateFormat()
 
 <template>
   <div>
-    <p v-if="writerWorks.length === 0" class="mt-10 text-center text-2xl text-primary">
+    <p
+      v-if="writerWorks.length === 0 && !isLoading"
+      class="mt-10 text-center text-2xl text-primary"
+    >
       目前還沒有文章
     </p>
     <ul v-else>

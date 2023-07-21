@@ -45,7 +45,7 @@ onMounted(getFollowingList)
       >
         我的追蹤
       </h2>
-      <div v-if="isLoading">Loading...</div>
+      <div v-if="isLoading"><LoadingItem /></div>
       <WriterCardWide v-else :writer-info="followingWriters" />
     </div>
   </div>
