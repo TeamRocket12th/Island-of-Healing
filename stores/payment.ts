@@ -59,6 +59,8 @@ export const usePaymentStore = defineStore('payment', () => {
       if (res.Status) {
         paymentData.value = res.PaymentData
         console.log(paymentData.value)
+        selectedOrder.value.planName = ''
+        selectedOrder.value.price = null
       }
     } catch (error: any) {
       console.log(error.response)

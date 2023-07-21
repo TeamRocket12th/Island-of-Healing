@@ -4,13 +4,11 @@ import { useUserStore } from '~/stores/user'
 
 const { userData } = storeToRefs(useUserStore())
 const router = useRouter()
-console.log(userData.value.email)
 
 const data = {
   success: {
     alert: '謝謝您！您的訂單已經成立！',
-    content: '訂單確認電郵已經發送到您的電子郵箱：',
-    userEmail: userData.value.email
+    content: '訂單確認電郵已經發送到您的電子郵箱：'
   },
   failed: {
     alert: '很抱歉！您的訂單付款失敗！',
