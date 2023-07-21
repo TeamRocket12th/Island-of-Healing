@@ -52,7 +52,7 @@ const handleSubmit = async () => {
           </div>
           <div class="mb-[15px] flex justify-between border-b-[0.5px] border-secondary py-2">
             <p class="text-secondary">{{ selectedOrder.planName }}</p>
-            <div class="flex gap-[126px] text-secondary">
+            <div class="mr-2 flex gap-44 text-secondary sm:gap-[160px]">
               <span>{{ selectedOrder.price }}</span>
               <span>{{ selectedOrder.price }}</span>
             </div>

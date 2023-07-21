@@ -69,7 +69,7 @@
         </NuxtLink>
       </div>
       <div
-        class="col-span-4 border-b-[0.5px] border-primary p-4 sm:border-b-0 sm:border-r sm:border-t-[0.5px] sm:pb-0"
+        class="col-span-4 border-b-[0.5px] border-primary p-4 sm:border-b-0 sm:border-r-[0.5px] sm:border-t-[0.5px] sm:pb-0"
       >
         <NuxtLink to="/article/57">
           <div>

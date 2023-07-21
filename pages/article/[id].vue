@@ -5,7 +5,7 @@ import ArticleSideBar from '~/containers/ArticleSideBar.vue'
 <template>
   <section class="bg-sand-100 pb-6">
     <div class="container">
-      <div class="grid-cols-12 gap-6 border-t border-primary pt-10 md:grid">
+      <div class="grid-cols-12 gap-6 border-primary pt-10 sm:border-t-[0.5px] md:grid">
         <div class="col-span-full lg:col-span-7 lg:col-start-2">
           <ArticleDetail />
         </div>

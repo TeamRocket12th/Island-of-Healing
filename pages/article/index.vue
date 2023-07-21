@@ -229,7 +229,9 @@ const skeletonNum = ref({
 <template>
   <section>
     <div class="container">
-      <div class="grid-cols-12 gap-6 border-primary pb-40 pt-10 sm:border-t md:grid">
+      <div
+        class="grid-cols-12 gap-6 border-t-0 border-primary pb-40 pt-10 sm:border-t-[0.5px] md:grid"
+      >
         <div v-if="category !== 'all'" class="col-span-full lg:col-span-9">
           <ArticleList
             :title="categories[category]"
