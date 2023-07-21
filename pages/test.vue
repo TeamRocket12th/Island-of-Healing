@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form action="http://localhost:3000/api/paymentcheck" method="POST">
+    <form action="https://island-of-healing.vercel.app/api/paymentcheck" method="POST">
       <label for="Status">Form POST測試</label>
       <input id="Status" name="Status" value="SUCCESS" />
       <button>submit</button>
