@@ -1,6 +1,8 @@
+import { usePaymentStore } from './payment'
 export const useUserStore = defineStore(
   'auth',
   () => {
+    const { selectedOrder } = usePaymentStore()
     const router = useRouter()
     const userInfo = useCookie('userInfo')
     const authToken = useCookie('token')
@@ -51,6 +53,8 @@ export const useUserStore = defineStore(
         jobTitle: '',
         bio: ''
       }
+      selectedOrder.planName = ''
+      selectedOrder.price = null
       const router = useRouter()
       if (router.currentRoute.value.meta.requiredAuth) {
         router.replace('/login')
