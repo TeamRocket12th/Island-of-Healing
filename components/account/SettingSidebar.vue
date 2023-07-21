@@ -113,18 +113,19 @@ const { toggleWriterSettings } = uiStore
               </div>
             </NuxtLink>
           </li>
-          <li class="w-full">
-            <NuxtLink
-              :to="`/account/${userData.id}/dashboard`"
-              class="block px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-            >
-              <div class="flex items-center">
-                <Icon name="material-symbols:bar-chart" size="24" class="mr-2" />
-                <p>後台數據</p>
-              </div>
-            </NuxtLink>
-          </li>
         </ul>
+      </li>
+      <li class="px-4"></li>
+      <li v-if="userData.role === 'writer'" class="px-4">
+        <NuxtLink
+          :to="`/account/${userData.id}/dashboard`"
+          class="block px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+        >
+          <div class="flex items-center">
+            <Icon name="material-symbols:bar-chart" size="24" class="mr-2" />
+            <p>後台數據</p>
+          </div>
+        </NuxtLink>
       </li>
       <li class="px-4">
         <NuxtLink

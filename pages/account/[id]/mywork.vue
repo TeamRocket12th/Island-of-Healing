@@ -14,7 +14,7 @@ const { nowPage } = usePageName()
 <template>
   <div class="mb-40 border-primary bg-sand-100 pb-20 pt-10 lg:border lg:px-10">
     <div class="mb-6 items-center justify-between md:flex">
-      <h2 class="mb-16 font-serif-tc text-2xl font-bold">文章列表</h2>
+      <h2 class="mb-16 font-serif-tc text-2xl font-bold text-primary">文章列表</h2>
       <div class="flex items-center">
         <NuxtLink
           to="/newstory"

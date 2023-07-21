@@ -3,7 +3,9 @@ import { storeToRefs } from 'pinia'
 import ArticleList from '~/containers/ArticleList.vue'
 import ArticleSideBar from '~/containers/ArticleSideBar.vue'
 import { useUserStore } from '~/stores/user'
+import { useLoading } from '~/stores/loading'
 
+const { setLoading } = useLoading()
 const { userData } = storeToRefs(useUserStore())
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
@@ -117,33 +119,42 @@ const changeNowPage = (p: number) => {
 
 // 取得所有文章 useFetch
 const getAllArticles = async (page = 1) => {
+  setLoading(true)
   changeNowPage(page)
   scrollTop()
-  const { data, error } = await useFetch<ApiResponse>(`${apiBase}/readallarticles`, {
-    key: 'getAllArticles',
-    headers: {
-      'Content-type': 'application/json'
-    },
-    method: 'POST',
-    body: {
-      Page: page,
-      UserId: userData.value.id || '0'
-    }
-  })
-  console.log(data.value)
+  try {
+    const { data, error } = await useFetch<ApiResponse>(`${apiBase}/readallarticles`, {
+      key: 'getAllArticles',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      method: 'POST',
+      body: {
+        Page: page,
+        UserId: userData.value.id || '0'
+      }
+    })
+    console.log(data.value)
 
-  if (data.value!.StatusCode === 200) {
-    articles.value = data.value!.LatestArticleData
-    selectedArticles.value = data.value!.SelectedArticleData
-    allPages.value = data.value!.TotalLatestPages
-  }
-  if (error.value) {
-    console.log(error.value)
+    if (data.value && data.value.StatusCode === 200) {
+      articles.value = data.value!.LatestArticleData
+      selectedArticles.value = data.value!.SelectedArticleData
+      allPages.value = data.value!.TotalLatestPages
+
+      if (error.value) {
+        console.log(error.value)
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  } finally {
+    setLoading(false)
   }
 }
 
 // 取得特定分類文章
 const getSpArticles = async (nowPage: number, category: string) => {
+  setLoading(true)
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/readcategoryarticles`, {
       headers: {
@@ -164,8 +175,22 @@ const getSpArticles = async (nowPage: number, category: string) => {
     }
   } catch (error: any) {
     console.log(error.response)
+  } finally {
+    setLoading(false)
   }
 }
+
+setLoading(true)
+
+// onMounted(() => {
+//   nextTick(() => {
+//     if (category.value === 'all') {
+//       getAllArticles(nowPage.value)
+//     } else {
+//       getSpArticles(nowPage.value, category.value)
+//     }
+//   })
+// })
 
 const handleReading = (page: number) => {
   changeNowPage(page)
@@ -176,16 +201,6 @@ const handleReading = (page: number) => {
   }
 }
 
-onMounted(() => {
-  nextTick(() => {
-    if (category.value === 'all') {
-      getAllArticles(nowPage.value)
-    } else {
-      getSpArticles(nowPage.value, category.value)
-    }
-  })
-})
-
 watchEffect(() => {
   let categoryValue = router.currentRoute.value.query.category
 
@@ -195,13 +210,19 @@ watchEffect(() => {
   category.value = (categoryValue as string) || 'all'
 })
 
-watch(category, (newVal, oldVal) => {
-  if (newVal !== oldVal && newVal !== 'all') {
-    getSpArticles(1, newVal)
+watchEffect(() => {
+  if (category.value !== 'all') {
+    getSpArticles(1, category.value)
     nowPage.value = 1
   } else {
     getAllArticles(nowPage.value)
   }
+})
+
+const skeletonNum = ref({
+  latest: 6,
+  selected: 6,
+  rec: 3
 })
 </script>
 
@@ -210,13 +231,29 @@ watch(category, (newVal, oldVal) => {
     <div class="container">
       <div class="grid-cols-12 gap-6 border-primary pb-40 pt-10 sm:border-t md:grid">
         <div v-if="category !== 'all'" class="col-span-full lg:col-span-9">
-          <ArticleList :title="categories[category]" :articles="articles" />
-          <ArticleList title="你可能會喜歡" :articles="recArticles" />
+          <ArticleList
+            :title="categories[category]"
+            :articles="articles"
+            :skeleton-num="skeletonNum.latest"
+          />
+          <ArticleList
+            title="你可能會喜歡"
+            :articles="recArticles"
+            :skeleton-num="skeletonNum.rec"
+          />
         </div>
         <div v-else class="col-span-full lg:col-span-9">
-          <ArticleList title="最新文章" :articles="articles" />
-          <ArticleList title="精選文章" :articles="selectedArticles" />
-          <ArticleList title="你可能會喜歡" :articles="recArticles" />
+          <ArticleList title="最新文章" :articles="articles" :skeleton-num="skeletonNum.latest" />
+          <ArticleList
+            title="精選文章"
+            :articles="selectedArticles"
+            :skeleton-num="skeletonNum.selected"
+          />
+          <ArticleList
+            title="你可能會喜歡"
+            :articles="recArticles"
+            :skeleton-num="skeletonNum.rec"
+          />
         </div>
         <div class="col-span-3 hidden lg:block">
           <ArticleSideBar />

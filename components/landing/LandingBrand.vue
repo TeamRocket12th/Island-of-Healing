@@ -6,12 +6,13 @@
       <h3 class="z-10 mb-12 text-[40px] font-bold text-primary" data-aos="fade-down">
         打造個人品牌，發掘內容創作的無限可能
       </h3>
-      <button
+
+      <NuxtLink
+        to="/become_creater/steps"
+        class="mx-auto mb-9 flex h-[60px] w-[137px] items-center justify-center rounded bg-secondary px-4 py-3 text-2xl text-white hover:bg-btn-hover active:bg-btn-active"
         data-aos="fade-up"
-        class="btn z-10 flex h-[60px] w-[140px] items-center rounded bg-secondary text-2xl font-medium tracking-wide text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+        >開始使用</NuxtLink
       >
-        <NuxtLink to="/become_creater/steps"> 開始使用 </NuxtLink>
-      </button>
       <img
         src="/landingpage/pen.png"
         alt=""

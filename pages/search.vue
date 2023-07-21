@@ -14,7 +14,6 @@ const apiBase = runtimeConfig.public.apiBase
 const route = useRoute()
 const userId = userData.value.id ? String(userData.value.id) : '0'
 
-const dataLoaded = ref(false)
 const searchArticles = ref<ArticleCard[]>([])
 
 const recArticles = [
@@ -47,28 +46,41 @@ const recArticles = [
   }
 ]
 
-const getSearchResult = async (keyword: string, category = '0', uId: string) => {
-  dataLoaded.value = false
-  setLoading(true)
-  const { data, error } = await useFetch<ApiResponse>(
-    `${apiBase}/searcharticle/${keyword}/${category}/${uId}`,
-    {
-      key: 'getAllArticles',
-      headers: {
-        'Content-type': 'application/json'
-      }
-    }
-  )
-  console.log(data.value)
+// const getSearchResult = async (keyword: string, category = '0', uId: string) => {
+//   setLoading(true)
+//   const { data, error } = await useFetch<ApiResponse>(
+//     `${apiBase}/searcharticle/${keyword}/${category}/${uId}`,
+//     {
+//       key: 'getAllArticles',
+//       headers: {
+//         'Content-type': 'application/json'
+//       }
+//     }
+//   )
+//   console.log(data.value)
 
-  if (data.value!.StatusCode === 200) {
-    console.log(data.value!.Message)
-    searchArticles.value = data.value!.ArticlesData
-    dataLoaded.value = true
+//   if (data.value!.StatusCode === 200) {
+//     console.log(data.value!.Message)
+//     searchArticles.value = data.value!.ArticlesData
+//     setLoading(false)
+//   }
+//   if (error.value) {
+//     console.log(error.value)
+//   }
+// }
+
+const getSearchResult = async (keyword: string, category = '0', uId: string) => {
+  setLoading(true)
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/searcharticle/${keyword}/${category}/${uId}`)
+    console.log(res)
+    if (res.StatusCode === 200) {
+      searchArticles.value = res.ArticlesData
+    }
+  } catch (error: any) {
+    console.log(error.response)
+  } finally {
     setLoading(false)
-  }
-  if (error.value) {
-    console.log(error.value)
   }
 }
 
@@ -86,21 +98,24 @@ watchEffect(async () => {
   <section>
     <div class="container">
       <div class="grid grid-cols-12 gap-6 pb-40 pt-10">
-        <div class="col-span-9">
-          <div v-if="isLoading">Loading...</div>
-          <div v-if="searchArticles.length > 0 && !isLoading">
-            <ArticleList :title="`關於 「${route.query.q}」`" :articles="searchArticles" />
+        <div class="col-span-full md:col-span-9">
+          <div>
+            <ArticleList
+              :title="`關於 「${route.query.q}」`"
+              :articles="searchArticles"
+              :skeleton-num="3"
+            />
           </div>
-          <div v-if="searchArticles.length === 0 && dataLoaded" class="mb-40 mt-16">
+          <div v-if="searchArticles.length === 0 && !isLoading" class="mb-40 mt-16">
             <p class="text-center text-3xl font-medium text-primary">
               沒有找到 {{ route.query.q }} 的相關結果
             </p>
           </div>
           <div>
-            <ArticleList title="你可能會喜歡" :articles="recArticles" />
+            <ArticleList title="你可能會喜歡" :articles="recArticles" :skeleton-num="3" />
           </div>
         </div>
-        <div class="col-span-3">
+        <div class="hidden md:col-span-3 md:block">
           <ArticleSideBar />
         </div>
       </div>
