@@ -1,3 +1,11 @@
+<script setup>
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
+
+const { userData } = storeToRefs(useUserStore())
+console.log(userData.value)
+</script>
+
 <template>
   <div>
     <form action="https://island-of-healing.vercel.app/api/paymentcheck" method="POST">

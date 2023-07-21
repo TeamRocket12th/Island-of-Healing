@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
+
+const { userData } = storeToRefs(useUserStore())
+console.log(userData.value)
 const route = useRoute()
 
 onMounted(() => {

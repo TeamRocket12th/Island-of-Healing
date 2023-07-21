@@ -4,6 +4,7 @@ import { useUserStore } from '~/stores/user'
 
 const { userData } = storeToRefs(useUserStore())
 const router = useRouter()
+console.log(userData.value.email)
 
 const data = {
   success: {
@@ -47,7 +48,7 @@ const isOrderOK = ref(true)
           </div>
           <div class="border-b border-t border-sand-200 p-4">
             <p class="text-primary-dark">{{ data.success.content }}</p>
-            <p class="text-primary-dark">{{ data.success.userEmail }}</p>
+            <p class="text-primary-dark">{{ userData.email }}</p>
           </div>
         </div>
         <div v-else>
