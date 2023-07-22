@@ -9,6 +9,7 @@ const apiBase = runtimeConfig.public.apiBase
 const router = useRouter()
 const passwordField = useTogglePassword()
 const loginInSuccess = ref(false)
+const loginFailed = ref(false)
 const user = reactive({
   account: '',
   password: ''
@@ -32,6 +33,7 @@ const handleLogin = async () => {
       }, 500)
     }
   } catch (error: any) {
+    loginFailed.value = true
     console.log(error.response)
   }
 }
@@ -99,6 +101,7 @@ const handleEnterKey = (event: any) => {
                 @click="handleEnterKey"
               />
             </div>
+            <p v-if="loginFailed" class="block text-sm text-red-500">帳號或密碼錯誤，登入失敗</p>
             <VErrorMessage name="email" class="block text-sm text-red-500" />
             <label for="password" class="mt-4 block">密碼</label>
             <div class="relative my-1">
