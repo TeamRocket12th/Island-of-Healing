@@ -1,10 +1,8 @@
 <script setup lang="ts">
-defineProps({
-  message: {
-    type: Object as () => MyMsg,
-    required: true
-  }
-})
+import { storeToRefs } from 'pinia'
+import { useMsgs } from '~/stores/mymsgs'
+const { selectedMsg, selectedMsgId } = storeToRefs(useMsgs())
+const { delMyMsg } = useMsgs()
 
 const emits = defineEmits(['back-to-list'])
 const backToList = (value: boolean) => {
@@ -17,18 +15,18 @@ const backToList = (value: boolean) => {
       <span class="cursor-pointer" @click="backToList(false)">
         <Icon name="ic:outline-arrow-back" size="24" />
       </span>
-      <p class="font-medium text-primary">{{ message.name }}</p>
-      <span>
+      <p class="font-medium text-primary">{{ selectedMsg!.Name }}</p>
+      <span @click="delMyMsg(selectedMsgId)">
         <Icon name="material-symbols:delete-outline" size="24" />
       </span>
     </div>
     <div class="mb-8 flex items-center gap-2 px-4">
       <div class="h-[35px] w-[35px] overflow-hidden rounded-full">
-        <img :src="message.imgUrl" alt="avatar" />
+        <img src="/logo.svg" alt="logo" />
       </div>
-      <p class="text-sm font-medium text-primary">{{ message.name }}</p>
+      <p class="text-sm font-medium text-primary">{{ selectedMsg!.Name }}</p>
     </div>
-    <p class="px-4">{{ message.canMessage }}</p>
+    <p class="px-4">{{ selectedMsg!.NotificationContent }}</p>
   </div>
 </template>
 
