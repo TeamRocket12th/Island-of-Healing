@@ -10,17 +10,19 @@ const router = useRouter()
 const passwordField = useTogglePassword()
 const loginInSuccess = ref(false)
 const loginFailed = ref(false)
-const user = reactive({
-  account: '',
-  password: ''
-})
+
+const account = ref('')
+const password = ref('')
 
 const handleLogin = async () => {
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/login`, {
       headers: { 'Content-type': 'application/json' },
       method: 'POST',
-      body: user
+      body: {
+        account: account.value,
+        password: password.value
+      }
     })
     console.log(res)
     if (res.StatusCode === 200) {
@@ -40,11 +42,17 @@ const handleLogin = async () => {
 
 const handleEnterKey = (event: any) => {
   if (event.key === 'Enter') {
-    if (user.account !== '' && user.password !== '') {
+    if (account.value !== '' && password.value !== '') {
       handleLogin()
     }
   }
 }
+
+watch(account, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    loginFailed.value = false
+  }
+})
 </script>
 <template>
   <div class="container flex items-center justify-center pb-[55px] font-serif-tc">
@@ -90,7 +98,7 @@ const handleEnterKey = (event: any) => {
               />
               <VField
                 id="account"
-                v-model="user.account"
+                v-model="account"
                 :rules="[emailRequired, emailRule]"
                 name="email"
                 type="email"
@@ -112,7 +120,7 @@ const handleEnterKey = (event: any) => {
               />
               <VField
                 id="password"
-                v-model="user.password"
+                v-model="password"
                 name="password"
                 :rules="[passwordRequired, passwordRule]"
                 :type="passwordField.passwordType.value"

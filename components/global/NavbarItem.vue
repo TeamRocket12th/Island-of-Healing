@@ -2,12 +2,15 @@
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useUIStore } from '~/stores/ui'
+import { useMsgs } from '~/stores/mymsgs'
 
 const userStore = useUserStore()
 const uiStore = useUIStore()
 const { isLogin, userData } = storeToRefs(userStore)
 const { userLogout } = userStore
 const { isWriterExpanded } = storeToRefs(uiStore)
+const { unreadMsgs } = storeToRefs(useMsgs())
+const { getMyMsgs } = useMsgs()
 
 const showCategory = ref(false)
 
@@ -54,6 +57,13 @@ const isUserPage = computed(() => {
     return false
   }
 })
+
+// 站內信Polling
+const msgInterval = setInterval(getMyMsgs, 15000)
+
+onUnmounted(() => {
+  clearInterval(msgInterval)
+})
 </script>
 
 <template>
@@ -77,7 +87,11 @@ const isUserPage = computed(() => {
             </li>
             <li v-if="isLogin">
               <div class="dropdown-end dropdown">
-                <label tabindex="0" class="btn-ghost btn-circle avatar btn flex w-20 items-center">
+                <label
+                  tabindex="0"
+                  class="btn-ghost btn-circle avatar btn flex w-24 flex-nowrap items-center"
+                >
+                  <span v-if="unreadMsgs" class="badge badge-xs bg-orange-400"></span>
                   <div class="h-9 w-9 overflow-hidden rounded-full">
                     <img :src="userData.avatar" />
                   </div>
@@ -127,6 +141,7 @@ const isUserPage = computed(() => {
                     >
                       <Icon name="ic:baseline-mail-outline" size="24" class="mr-2" />
                       <span>我的訊息</span>
+                      <span v-if="unreadMsgs" class="badge badge-xs ml-2 bg-orange-400"></span>
                     </NuxtLink>
                   </li>
                   <li
