@@ -4,6 +4,10 @@ import { useUserStore } from '~/stores/user'
 import { usePaymentStore } from '~/stores/payment'
 import { useLoading } from '~/stores/loading'
 
+import { useToast } from '~/stores/toast'
+
+const { showToast } = storeToRefs(useToast())
+
 const { isLoading } = storeToRefs(useLoading())
 const { selectedOrder, customerData } = storeToRefs(usePaymentStore())
 
@@ -81,11 +85,21 @@ const myPlan = computed(() => {
   selectedName.value = renderPlan(userData.value.myPlan)
   return renderPlan(userData.value.myPlan)
 })
+
+const myPlanUrl = computed(() => {
+  if (myPlan.value === '月付讀到飽專案') {
+    return '/neworder?id=1'
+  }
+  return '/neworder?id=2'
+})
 </script>
 <template>
   <div class="grid-start-3 col-span-8 px-3 py-32">
     <LoadingItem v-if="isLoading" />
     <div v-else>
+      <div class="fixed right-10 top-52 z-20 3xl:right-80">
+        <ToastMsg v-if="showToast" />
+      </div>
       <div class="mb-7 min-h-[192px] border border-secondary bg-white p-4">
         <h3 class="mb-5 text-xl font-medium text-primary">目前方案</h3>
         <div class="flex justify-between text-primary-dark">
@@ -100,7 +114,7 @@ const myPlan = computed(() => {
         <div class="mb-4 h-[0.5px] w-full bg-secondary"></div>
         <div v-if="!props.renewMembership" class="flex justify-end" @click="selected">
           <NuxtLink
-            to="/neworder"
+            :to="myPlanUrl"
             class="rounded bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
             >選擇方案</NuxtLink
           >

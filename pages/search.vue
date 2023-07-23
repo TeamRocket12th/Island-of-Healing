@@ -9,8 +9,7 @@ const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
 
 const { userData } = storeToRefs(useUserStore())
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const { apiBase } = useApiConfig()
 const route = useRoute()
 const userId = userData.value.id ? String(userData.value.id) : '0'
 

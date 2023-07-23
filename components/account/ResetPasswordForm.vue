@@ -1,5 +1,11 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useToast } from '~/stores/toast'
+
+const { showToast } = storeToRefs(useToast())
+const { setToast } = useToast()
+
 const userStore = useUserStore()
 const { userLogout } = userStore
 
@@ -8,8 +14,7 @@ const passwordCheckField = useTogglePassword()
 const { passwordRequired, passwordRule, confirmPwdSame } = useValidate()
 const confirmPwdRule = () => confirmPwdSame(Password, ConfirmPassword)
 
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const { apiBase } = useApiConfig()
 const router = useRouter()
 
 const Password = ref('')
@@ -30,7 +35,7 @@ const resetPwd = async () => {
       }
     })
     if (res.StatusCode === 200) {
-      alert(res.Message)
+      setToast('變更成功！')
       Password.value = ''
       ConfirmPassword.value = ''
       userLogout()
@@ -43,6 +48,9 @@ const resetPwd = async () => {
 </script>
 <template>
   <div class="container flex items-center justify-center pb-[55px] font-serif-tc">
+    <div class="fixed right-10 top-52 z-20 3xl:right-80">
+      <ToastMsg v-if="showToast" />
+    </div>
     <div class="flex h-[605px] w-full">
       <div
         class="flex w-full flex-col items-center justify-center px-[74px] py-[124px] md:border md:border-primary 3xl:px-[516px] 3xl:py-[132px]"

@@ -6,9 +6,7 @@ definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
 })
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
+const { apiBase, userToken } = useApiConfig()
 const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
 

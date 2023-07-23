@@ -4,7 +4,6 @@ import { useMsgs } from '~/stores/mymsgs'
 const { userMsgs, msgIndex, msgsNum, selectedMsg, selectedMsgId } = storeToRefs(useMsgs())
 const { delMyMsg } = useMsgs()
 
-console.log(selectedMsg.value)
 const formattedMsg = computed(() => {
   return selectedMsg.value!.NotificationContent.replace(/&nbsp;/g, '\n')
 })

@@ -1,7 +1,5 @@
 export const usePaymentStore = defineStore('payment', () => {
-  const runtimeConfig = useRuntimeConfig()
-  const apiBase = runtimeConfig.public.apiBase
-  const userToken = useCookie('token')
+  const { apiBase, userToken } = useApiConfig()
 
   // 顧客資料
   const customerData = ref<CustomerData>({
@@ -12,7 +10,10 @@ export const usePaymentStore = defineStore('payment', () => {
   })
 
   const getCustomerInfo = (data: CustomerData) => {
-    customerData.value = data
+    customerData.value.nickName = data.nickName
+    customerData.value.email = data.email
+    customerData.value.phone = data.phone
+    customerData.value.planId = data.planId
   }
 
   // 付款資料

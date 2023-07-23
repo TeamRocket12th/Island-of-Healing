@@ -1,10 +1,9 @@
 import { useToast } from '~/stores/toast'
 
 export const useArticleActions = () => {
-  const runtimeConfig = useRuntimeConfig()
-  const apiBase = runtimeConfig.public.apiBase
-  const userToken = useCookie('token')
-  const { setCollect, setcancelCollect } = useToast()
+  const { apiBase, userToken } = useApiConfig()
+  const { setToast } = useToast()
+
   // 收藏文章
   const AddToCollection = async (
     id: number,
@@ -12,27 +11,25 @@ export const useArticleActions = () => {
     userId: string,
     getArticleDetail: (articleId: string, userId: string) => Promise<void>
   ) => {
-    if (userToken.value) {
-      try {
-        const res: ApiResponse = await $fetch(`${apiBase}/article/collect/${id}`, {
-          headers: {
-            'Content-type': 'application/json',
-            Authorization: `Bearer ${userToken.value}`
-          },
-          method: 'POST'
-        })
-        console.log(res)
-        if (res.StatusCode === 200) {
-          getArticleDetail(articleId, userId)
-          setcancelCollect(false)
-          setCollect(true)
-          setTimeout(() => {
-            setCollect(false)
-          }, 2000)
-        }
-      } catch (error: any) {
-        console.log(error.response)
+    if (!userToken.value) {
+      setToast('請先登入！')
+      return
+    }
+    try {
+      const res: ApiResponse = await $fetch(`${apiBase}/article/collect/${id}`, {
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userToken.value}`
+        },
+        method: 'POST'
+      })
+      console.log(res)
+      if (res.StatusCode === 200) {
+        setToast('收藏成功！')
+        getArticleDetail(articleId, userId)
       }
+    } catch (error: any) {
+      console.log(error.response)
     }
   }
 
@@ -43,27 +40,25 @@ export const useArticleActions = () => {
     userId: string,
     getArticleDetail: (articleId: string, userId: string) => Promise<void>
   ) => {
-    if (userToken.value) {
-      try {
-        const res: ApiResponse = await $fetch(`${apiBase}/article/cancelcollect/${id}`, {
-          headers: {
-            'Content-type': 'application/json',
-            Authorization: `Bearer ${userToken.value}`
-          },
-          method: 'PUT'
-        })
-        console.log(res)
-        if (res.StatusCode === 200) {
-          await getArticleDetail(articleId, userId)
-          setCollect(false)
-          setcancelCollect(true)
-          setTimeout(() => {
-            setcancelCollect(false)
-          }, 2000)
-        }
-      } catch (error: any) {
-        console.log(error.response)
+    if (!userToken.value) {
+      setToast('請先登入！')
+      return
+    }
+    try {
+      const res: ApiResponse = await $fetch(`${apiBase}/article/cancelcollect/${id}`, {
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userToken.value}`
+        },
+        method: 'PUT'
+      })
+      console.log(res)
+      if (res.StatusCode === 200) {
+        setToast('取消收藏成功！')
+        await getArticleDetail(articleId, userId)
       }
+    } catch (error: any) {
+      console.log(error.response)
     }
   }
 
@@ -74,23 +69,25 @@ export const useArticleActions = () => {
     userId: string,
     getArticleDetail: (articleId: string, userId: string) => Promise<void>
   ) => {
-    if (userToken.value) {
-      try {
-        const res: ApiResponse = await $fetch(`${apiBase}/article/like/${id}`, {
-          headers: {
-            'Content-type': 'application/json',
-            Authorization: `Bearer ${userToken.value}`
-          },
-          method: 'POST'
-        })
-        console.log(res)
-        if (res.StatusCode === 200) {
-          alert(res.Message)
-          getArticleDetail(articleId, userId)
-        }
-      } catch (error: any) {
-        console.log(error.response)
+    if (!userToken.value) {
+      setToast('請先登入！')
+      return
+    }
+    try {
+      const res: ApiResponse = await $fetch(`${apiBase}/article/like/${id}`, {
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userToken.value}`
+        },
+        method: 'POST'
+      })
+      console.log(res)
+      if (res.StatusCode === 200) {
+        setToast('已給予愛心！')
+        getArticleDetail(articleId, userId)
       }
+    } catch (error: any) {
+      console.log(error.response)
     }
   }
 
@@ -101,23 +98,25 @@ export const useArticleActions = () => {
     userId: string,
     getArticleDetail: (articleId: string, userId: string) => Promise<void>
   ) => {
-    if (userToken.value) {
-      try {
-        const res: ApiResponse = await $fetch(`${apiBase}/article/cancellike/${id}`, {
-          headers: {
-            'Content-type': 'application/json',
-            Authorization: `Bearer ${userToken.value}`
-          },
-          method: 'PUT'
-        })
-        console.log(res)
-        if (res.StatusCode === 200) {
-          alert(res.Message)
-          getArticleDetail(articleId, userId)
-        }
-      } catch (error: any) {
-        console.log(error.response)
+    if (!userToken.value) {
+      setToast('請先登入！')
+      return
+    }
+    try {
+      const res: ApiResponse = await $fetch(`${apiBase}/article/cancellike/${id}`, {
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userToken.value}`
+        },
+        method: 'PUT'
+      })
+      console.log(res)
+      if (res.StatusCode === 200) {
+        setToast('已收回愛心！')
+        getArticleDetail(articleId, userId)
       }
+    } catch (error: any) {
+      console.log(error.response)
     }
   }
 

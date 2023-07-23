@@ -1,29 +1,17 @@
 export const useToast = defineStore('toast', () => {
-  const isCollect = ref(false)
-  const setCollect = (collect: boolean) => {
-    isCollect.value = collect
-  }
-  const cancelCollect = ref(false)
-  const setcancelCollect = (cancelcollect: boolean) => {
-    cancelCollect.value = cancelcollect
+  const toastText = ref('')
+  const showToast = ref(false)
+  const setToast = (msg: string) => {
+    toastText.value = msg
+    showToast.value = true
+    setTimeout(() => {
+      showToast.value = false
+    }, 1500)
   }
 
-  const followWriterPoint = ref(false)
-  const setfollowWriter = (followwriter: boolean) => {
-    followWriterPoint.value = followwriter
-  }
-  const unFollowWriterPoint = ref(false)
-  const setunFollowWriter = (unfollowwriter: boolean) => {
-    unFollowWriterPoint.value = unfollowwriter
-  }
   return {
-    isCollect,
-    setCollect,
-    cancelCollect,
-    setcancelCollect,
-    followWriterPoint,
-    setfollowWriter,
-    unFollowWriterPoint,
-    setunFollowWriter
+    showToast,
+    toastText,
+    setToast
   }
 })

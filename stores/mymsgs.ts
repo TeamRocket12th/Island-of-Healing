@@ -3,9 +3,7 @@ import { useLoading } from '~/stores/loading'
 export const useMsgs = defineStore('mymsgs', () => {
   const { setMsgLoading } = useLoading()
 
-  const runtimeConfig = useRuntimeConfig()
-  const apiBase = runtimeConfig.public.apiBase
-  const userToken = useCookie('token')
+  const { apiBase, userToken } = useApiConfig()
 
   const userMsgs = ref<UserMsg[]>([])
   const msgsNum = ref(0)

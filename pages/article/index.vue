@@ -7,8 +7,7 @@ import { useLoading } from '~/stores/loading'
 
 const { setLoading } = useLoading()
 const { userData } = storeToRefs(useUserStore())
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const { apiBase } = useApiConfig()
 
 const router = useRouter()
 

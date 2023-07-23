@@ -1,6 +1,12 @@
 <script setup lang="ts">
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+import { storeToRefs } from 'pinia'
+import { useToast } from '~/stores/toast'
+
+const { showToast } = storeToRefs(useToast())
+const { setToast } = useToast()
+
+showToast.value = false
+const { apiBase } = useApiConfig()
 const router = useRouter()
 
 const account = ref('')
@@ -28,35 +34,31 @@ const handleSignUp = async () => {
 
     if (res.StatusCode === 200) {
       signUpSuccess.value = true
+      setToast('註冊成功')
       setTimeout(() => {
         router.push('/login')
       }, 1500)
     }
   } catch (error: any) {
-    // alert(error.response._data.Message)
     if (error.response._data.Message === '帳號已被使用，註冊失敗') {
       reSignUp.value = true
-      watch(account, (newValue, oldValue) => {
-        if (newValue !== oldValue) {
-          reSignUp.value = false
-        }
-      })
     }
   }
 }
 
 const handleEnterKey = (event: any) => {
   if (event.key === 'Enter') {
-    if (
-      account.value !== '' &&
-      password.value !== '' &&
-      confirmPwd.value !== ''
-      // reSignUp.value === false
-    ) {
+    if (account.value !== '' && password.value !== '' && confirmPwd.value !== '') {
       handleSignUp()
     }
   }
 }
+
+watch(account, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    reSignUp.value = false
+  }
+})
 </script>
 <template>
   <div class="container flex items-center justify-center pb-[55px] font-serif-tc">
@@ -64,13 +66,9 @@ const handleEnterKey = (event: any) => {
       <div
         class="flex w-full flex-col items-center justify-center px-[74px] py-[124px] md:border md:border-primary 3xl:px-[516px] 3xl:py-[132px]"
       >
-        <p
-          v-if="signUpSuccess"
-          data-aos="fade-left"
-          class="fade-element absolute top-10 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-0 lg:top-20 lg:h-[44px] lg:w-[348px]"
-        >
-          註冊成功！
-        </p>
+        <div class="fixed right-10 top-52 z-20 3xl:right-80">
+          <ToastMsg v-if="showToast" />
+        </div>
         <div class="w-[322px]">
           <div class="tabs mb-8 hidden w-full items-center justify-center font-bold lg:flex">
             <NuxtLink
