@@ -7,7 +7,7 @@ const userStore = useUserStore()
 const { userData } = storeToRefs(userStore)
 const route = useRoute()
 
-const { selectedOrder } = storeToRefs(usePaymentStore())
+const { selectedOrder, customerData } = storeToRefs(usePaymentStore())
 const { getCustomerInfo } = usePaymentStore()
 
 const customerInputs = ref<CustomerData>({
@@ -17,6 +17,7 @@ const customerInputs = ref<CustomerData>({
   planId: Number(route.query.id)
 })
 
+console.log(customerData.value)
 const emits = defineEmits(['custom-order', 'get-customer-data', 'get-payment-data'])
 const sendOrder = (value: boolean, data: CustomerData) => {
   emits('custom-order', value)

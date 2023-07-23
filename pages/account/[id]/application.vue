@@ -3,9 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useLoading } from '~/stores/loading'
 import userOnly from '~/middleware/userOnly'
 
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
+const { apiBase, userToken } = useApiConfig()
 const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
 

@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useToast } from '~/stores/toast'
+
+const { showToast } = storeToRefs(useToast())
+const { setToast } = useToast()
+
 defineProps({
   collectedArticles: {
     type: Array as () => Article[],
@@ -8,9 +14,7 @@ defineProps({
 })
 
 const { formatDate } = useDateFormat()
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
+const { apiBase, userToken } = useApiConfig()
 
 const dataLoaded = ref(false)
 
@@ -28,7 +32,7 @@ const isCollected = async (articleId: number, article: Article) => {
       method: 'POST'
     })
     if (res.StatusCode === 200) {
-      alert(res.Message)
+      setToast('收藏成功！')
       article.IsCollected = !article.IsCollected
       dataLoaded.value = true
     }
@@ -50,7 +54,7 @@ const cancelCollect = async (articleId: number, article: Article) => {
       })
 
       if (res.StatusCode === 200) {
-        alert(res.Message)
+        setToast('已取消收藏！')
         article.IsCollected = !article.IsCollected
       }
     } catch (error: any) {
@@ -62,13 +66,22 @@ const cancelCollect = async (articleId: number, article: Article) => {
 
 <template>
   <div class="grid grid-cols-12">
+    <div class="fixed right-10 top-52 z-20 3xl:right-80">
+      <ToastMsg v-if="showToast" />
+    </div>
     <div class="col-span-10 col-start-2 grid sm:pb-[106px]">
       <ul v-if="collectedArticles.length > 0">
         <li v-for="article in collectedArticles" :key="article.ArticleId">
           <div class="block w-full gap-4 sm:flex sm:p-6">
             <div class="w-full sm:w-1/2 lg:w-1/4">
               <NuxtLink :to="`/article/${article.ArticleId}`">
-                <img :src="article.ArticleImgUrl" alt="cover" class="h-full w-full object-cover" />
+                <img
+                  :src="
+                    article.ArticleImgUrl ? article.ArticleImgUrl : '/default-article-cover.jpg'
+                  "
+                  alt="cover"
+                  class="h-full w-full object-cover"
+                />
               </NuxtLink>
             </div>
             <div class="w-full sm:w-1/2 lg:w-3/4">

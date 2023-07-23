@@ -18,9 +18,7 @@ const {
   getNextIncomeM
 } = myWorkStore()
 
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
+const { apiBase, userToken } = useApiConfig()
 
 use([CanvasRenderer, LineChart, TitleComponent, TooltipComponent, LegendComponent])
 

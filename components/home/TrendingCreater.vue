@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
-const userToken = useCookie('token')
-const { userData } = storeToRefs(useUserStore())
+import { useToast } from '~/stores/toast'
 
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const { userData } = storeToRefs(useUserStore())
+const { showToast } = storeToRefs(useToast())
+const { setToast } = useToast()
+
+showToast.value = false
+
+const { apiBase, userToken } = useApiConfig()
 
 const trendingCreater = ref<TrendingCreater[]>([])
 
@@ -26,7 +30,7 @@ if (data.value) {
 // 追蹤作家
 const followWriter = async (id: number, writer: TrendingCreater) => {
   if (!userToken.value) {
-    alert('請先登入')
+    setToast('請先登入！')
     return
   }
   try {
@@ -39,7 +43,7 @@ const followWriter = async (id: number, writer: TrendingCreater) => {
     })
     console.log(res)
     if (res.StatusCode === 200) {
-      alert(res.Message)
+      setToast('追蹤成功！')
       writer.IsFollowed = !writer.IsFollowed
     }
   } catch (error: any) {
@@ -50,7 +54,7 @@ const followWriter = async (id: number, writer: TrendingCreater) => {
 // 取消追蹤作家
 const unFollowWriter = async (id: number, writer: TrendingCreater) => {
   if (!userToken.value) {
-    alert('請先登入')
+    setToast('請先登入！')
     return
   }
   try {
@@ -63,7 +67,7 @@ const unFollowWriter = async (id: number, writer: TrendingCreater) => {
     })
     console.log(res)
     if (res.StatusCode === 200) {
-      alert(res.Message)
+      setToast('已取消追蹤！')
       writer.IsFollowed = !writer.IsFollowed
     }
   } catch (error: any) {
@@ -113,6 +117,9 @@ const unFollowWriter = async (id: number, writer: TrendingCreater) => {
         </button>
       </li>
     </ul>
+    <div class="fixed right-10 top-44 z-20 3xl:right-80">
+      <ToastMsg v-if="showToast" />
+    </div>
   </section>
 </template>
 

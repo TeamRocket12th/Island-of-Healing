@@ -2,8 +2,7 @@
 const route = useRoute()
 const email = ref(route.query.email)
 const guid = ref(route.query.guid)
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const { apiBase } = useApiConfig()
 
 const activeTempPwd = async () => {
   try {

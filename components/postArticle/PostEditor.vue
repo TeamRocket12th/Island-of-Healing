@@ -9,9 +9,7 @@ import { Node } from '@tiptap/core'
 import { useArticle } from '~/stores/article'
 import '~/assets/css/article.css'
 
-const userToken = useCookie('token')
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const { apiBase, userToken } = useApiConfig()
 
 const editor = ref(null)
 const articleUse = useArticle()

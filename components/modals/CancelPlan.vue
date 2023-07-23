@@ -1,7 +1,9 @@
 <script setup lang="ts">
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
+import { useToast } from '~/stores/toast'
+
+const { setToast } = useToast()
+
+const { apiBase, userToken } = useApiConfig()
 
 // 取消續訂
 const unsubscribe = async () => {
@@ -18,7 +20,7 @@ const unsubscribe = async () => {
     })
 
     if (res.StatusCode === 200) {
-      alert(res.Message)
+      setToast('已取消續訂！')
       props.userOrder()
       cancelCheck(false)
     }

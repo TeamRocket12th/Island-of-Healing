@@ -1,7 +1,10 @@
 <script setup lang="ts">
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
+import { storeToRefs } from 'pinia'
+import { useToast } from '~/stores/toast'
+const { apiBase, userToken } = useApiConfig()
+
+const { showToast } = storeToRefs(useToast())
+const { setToast } = useToast()
 
 defineProps({
   getStatus: {
@@ -70,7 +73,7 @@ const applyForWriter = async () => {
       method: 'PUT'
     })
     if (res.StatusCode === 200) {
-      // console.log(res)
+      setToast('已提交申請！')
       showSendModal.value = false
       alert(res.Message)
       data.intro = ''
@@ -102,6 +105,9 @@ watchEffect(() => {
 <template>
   <div class="mb-40 bg-sand-100">
     <div v-if="getStatus === '申請失敗' || getStatus === '未申請'">
+      <div class="fixed right-10 top-52 z-20 3xl:right-80">
+        <ToastMsg v-if="showToast" />
+      </div>
       <VForm v-slot="{ meta }" class="px-6 py-3 xl:mx-40 3xl:mx-52">
         <div class="mb-10">
           <label for="userIntro" class="mb-2 block font-medium text-primary">自我介紹</label>
