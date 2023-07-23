@@ -7,9 +7,7 @@ import { useLoading } from '~/stores/loading'
 const { setChatLoading } = useLoading()
 
 const { userData } = storeToRefs(useUserStore())
-const userToken = useCookie('token')
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const { apiBase, userToken } = useApiConfig()
 
 const props = defineProps({
   chatCount: {

@@ -2,15 +2,17 @@
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useLoading } from '~/stores/loading'
+import { useToast } from '~/stores/toast'
 
 const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
 
+const { showToast } = storeToRefs(useToast())
+const { setToast } = useToast()
+
 const userStore = useUserStore()
 const { userData } = storeToRefs(userStore)
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
+const { apiBase, userToken } = useApiConfig()
 
 interface UserInfo {
   Birthday: null | string
@@ -123,7 +125,7 @@ const updateUserInfo = async () => {
     console.log(res)
     if (res.StatusCode === 200) {
       userData.value.nickName = NickName.value
-      alert(res.Message)
+      setToast('已成功更新資料！')
       location.reload()
     }
   } catch (error: any) {
@@ -156,6 +158,9 @@ const updateUserPhoto = async (data: FormData) => {
 
 <template>
   <div class="mb-40 border-secondary bg-sand-100 p-10 sm:border">
+    <div class="fixed right-10 top-44 z-20 3xl:right-80">
+      <ToastMsg v-if="showToast" />
+    </div>
     <div class="xl:grid xl:grid-cols-12">
       <h2 class="col-span-2 text-center font-serif-tc text-2xl font-bold text-primary md:text-left">
         會員設定

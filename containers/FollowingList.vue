@@ -5,9 +5,7 @@ import { useLoading } from '~/stores/loading'
 const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
 
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
+const { apiBase, userToken } = useApiConfig()
 const followingWriters = ref([])
 
 // 取得個人追蹤作家列表

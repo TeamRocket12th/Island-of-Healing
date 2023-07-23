@@ -16,14 +16,9 @@ const handleSubmit = async () => {
   await createOrder(customerData.value)
   if (paymentData.value && form.value) {
     form.value.submit()
-    customerData.value = {
-      nickName: '',
-      email: '',
-      phone: '',
-      planId: 0
-    }
   }
 }
+console.log(customerData.value)
 </script>
 
 <template>

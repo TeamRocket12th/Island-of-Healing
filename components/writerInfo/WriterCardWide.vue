@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useToast } from '~/stores/toast'
-const { followWriterPoint, unFollowWriterPoint } = storeToRefs(useToast())
+const { showToast } = storeToRefs(useToast())
+const { setToast } = useToast()
 
-const { setfollowWriter, setunFollowWriter } = useToast()
 defineProps({
   writerInfo: {
     type: Array as () => Writer[],
@@ -31,11 +31,7 @@ const followWriter = async (id: number, writer: Writer) => {
     })
     console.log(res)
     if (res.StatusCode === 200) {
-      setunFollowWriter(false)
-      setfollowWriter(true)
-      setTimeout(() => {
-        setfollowWriter(false)
-      }, 2000)
+      setToast('追蹤成功！')
       writer.IsFollowing = !writer.IsFollowing
     }
   } catch (error: any) {
@@ -60,11 +56,7 @@ const unFollowWriter = async (id: number, writer: Writer) => {
     })
     console.log(res)
     if (res.StatusCode === 200) {
-      setfollowWriter(false)
-      setunFollowWriter(true)
-      setTimeout(() => {
-        setunFollowWriter(false)
-      }, 2000)
+      setToast('取消追蹤成功！')
       writer.IsFollowing = !writer.IsFollowing
     }
   } catch (error: any) {
@@ -89,7 +81,7 @@ const confrimDel = (writer: Writer) => {
 watchEffect(() => {
   if (typeof document !== 'undefined') {
     document.body.style.overflow = showConfirmModal.value ? 'hidden' : 'auto'
-    document.body.style.paddingRight = showConfirmModal.value ? '15px' : '0'
+    // document.body.style.paddingRight = showConfirmModal.value ? '15px' : '0'
   }
 })
 </script>
@@ -97,23 +89,9 @@ watchEffect(() => {
 <template>
   <div>
     <ul v-if="writerInfo.length > 0" class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:px-28">
-      <Teleport to="#point">
-        <p
-          v-if="followWriterPoint"
-          data-aos="fade-left"
-          class="fade-element absolute right-0 top-2 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 md:right-0 lg:top-2 lg:h-[44px] lg:w-[348px]"
-        >
-          追蹤成功！
-        </p>
-        <p
-          v-else-if="unFollowWriterPoint"
-          data-aos="fade-left"
-          class="fade-element absolute right-0 top-2 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 md:right-0 lg:top-2 lg:h-[44px] lg:w-[348px]"
-        >
-          取消追蹤成功！
-        </p>
-      </Teleport>
-
+      <div class="fixed right-10 top-52 z-20 3xl:right-80">
+        <ToastMsg v-if="showToast" />
+      </div>
       <li
         v-for="writer in writerInfo"
         :key="writer.WriterId"
