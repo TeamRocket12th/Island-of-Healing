@@ -5,6 +5,8 @@ import ArticleSideBar from '~/containers/ArticleSideBar.vue'
 import { useUserStore } from '~/stores/user'
 import { useLoading } from '~/stores/loading'
 
+useSeoMeta({ title: '搜尋結果' })
+
 const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
 

@@ -5,6 +5,7 @@ definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
 })
+useSeoMeta({ title: '我的收藏' })
 </script>
 <template>
   <div>

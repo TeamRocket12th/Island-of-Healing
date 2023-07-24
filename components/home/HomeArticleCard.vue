@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const articles = [
   {
     id: 1,
@@ -25,6 +25,12 @@ const articles = [
       '在這個繁忙的現代生活中，我們往往被過度思考和內心的嘈雜聲所困擾。這些思緒無法停止地盤旋在我們的頭腦中，造成焦慮和壓力。'
   }
 ]
+const formatTitle = (title: string) => {
+  if (title.length > 18) {
+    return title.substring(0, 18) + '...'
+  }
+  return title
+}
 </script>
 <template>
   <section class="bg-sand-100 py-[84px] sm:bg-sand-200">
@@ -52,7 +58,7 @@ const articles = [
             <div>
               <div class="mb-2 flex">
                 <p class="mb-3 font-serif-tc text-xl font-bold text-primary">
-                  {{ article.title }}
+                  {{ formatTitle(article.title) }}
                 </p>
               </div>
               <p class="font-light text-primary-dark">

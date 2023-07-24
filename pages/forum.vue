@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+useSeoMeta({ title: '島民集會所｜論壇' })
+</script>
 
 <template>
   <div class="flex h-60 items-center justify-center">

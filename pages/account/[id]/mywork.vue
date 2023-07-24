@@ -8,6 +8,7 @@ definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
 })
+useSeoMeta({ title: '文章列表' })
 
 const { nowPage } = usePageName()
 </script>

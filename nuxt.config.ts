@@ -44,12 +44,16 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      viewport: 'width=500, initial-scale=1',
       title: '小島聊癒所',
       meta: [
         {
           name: 'description',
           content: '歡迎來到小島聊癒所'
-        }
+        },
+        { property: 'og:title', content: '小島聊癒所' },
+        { property: 'og:url', content: 'https://island-of-healing.vercel.app' },
+        { property: 'og:description', content: '' }
       ],
       link: [{ rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]
     }

@@ -9,7 +9,7 @@ definePageMeta({
   requiredAuth: true
 })
 
-useHead({ title: '新增文章' })
+useSeoMeta({ title: '發表文章' })
 const articleUse = useArticle()
 
 const settingShow = ref(false)

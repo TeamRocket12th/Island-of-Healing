@@ -6,7 +6,7 @@ definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
 })
-
+useSeoMeta({ title: '後台數據' })
 const { nowPage } = usePageName()
 </script>
 <template>

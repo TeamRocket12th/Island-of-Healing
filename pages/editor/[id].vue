@@ -9,6 +9,7 @@ definePageMeta({
   middleware: [isWriter],
   requiredAuth: true
 })
+useSeoMeta({ title: '編輯文章' })
 
 const articleUse = useArticle()
 

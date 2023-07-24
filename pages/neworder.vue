@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
-
+useSeoMeta({ title: '訂單明細' })
 onMounted(() => {
   if (route.query.status === 'success') {
     orderResult.value = true

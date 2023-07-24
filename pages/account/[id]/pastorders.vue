@@ -6,6 +6,8 @@ definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
 })
+useSeoMeta({ title: '歷史訂單' })
+
 const { apiBase, userToken } = useApiConfig()
 const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()

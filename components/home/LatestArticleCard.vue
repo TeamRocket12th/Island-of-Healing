@@ -53,6 +53,13 @@ if (data.value!.StatusCode === 200) {
 } else {
   console.error(data.value!._data.Message)
 }
+
+const formatTitle = (title: string) => {
+  if (title.length > 18) {
+    return title.substring(0, 18) + '...'
+  }
+  return title
+}
 </script>
 <template>
   <section class="container mb-6">
@@ -89,7 +96,9 @@ if (data.value!.StatusCode === 200) {
                 class="h-full w-full object-cover duration-500 hover:scale-110"
               />
             </div>
-            <h4 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ article.Title }}</h4>
+            <h4 class="mb-3 font-serif-tc text-xl font-bold text-primary">
+              {{ formatTitle(article.Title) }}
+            </h4>
             <p class="flex-grow font-light text-primary-dark">{{ article.Summary }}</p>
           </div>
         </NuxtLink>

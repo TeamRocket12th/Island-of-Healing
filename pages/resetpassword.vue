@@ -2,6 +2,7 @@
 definePageMeta({
   requiredAuth: true
 })
+useSeoMeta({ title: '重設密碼' })
 </script>
 
 <template>
