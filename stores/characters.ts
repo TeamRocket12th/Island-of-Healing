@@ -39,7 +39,25 @@ export const useChatCharacters = defineStore('characterStore', () => {
           content:
             '回答請盡量簡短精簡，字數保持在50字以內，保持同理心，不要說教。請以職涯顧問的身份、態度進行互動，請表現得像職涯顧問，保持聆聽、分析、建議。'
         }
-      ]
+      ],
+      recArticles: [
+        {
+          title: '別離與成長：好好道別的力量',
+          url: '/article/66',
+          id: 66
+        },
+        {
+          title: '認識自我與擁抱內在小孩的旅程',
+          url: '/article/67',
+          id: 67
+        },
+        {
+          title: '走出情緒低潮：五個簡單行動陪你重拾積極心態',
+          url: '/article/73',
+          id: 73
+        }
+      ],
+      recIntro: '閱讀幫助我們拓展視野，看清前方：'
     },
     {
       id: 2,
@@ -74,7 +92,25 @@ export const useChatCharacters = defineStore('characterStore', () => {
           content:
             '回答請盡量簡短精簡，字數保持在50字以內，保持同理心，不要說教。請以療癒師的身份、態度進行互動，請表現得像療癒師，保持同理心、聆聽、包容、溫暖。'
         }
-      ]
+      ],
+      recArticles: [
+        {
+          title: '探索情緒的四個迷思',
+          url: '/article/56',
+          id: 56
+        },
+        {
+          title: '重拾自我價值：探索內在的力量',
+          url: '/article/68',
+          id: 68
+        },
+        {
+          title: '探索往內習得安全感的力量和意義',
+          url: '/article/61',
+          id: 57
+        }
+      ],
+      recIntro: '以下文章可以幫助您更認識自己的情緒：'
     },
     {
       id: 3,
@@ -109,7 +145,25 @@ export const useChatCharacters = defineStore('characterStore', () => {
           content:
             '回答請盡量簡短精簡，字數保持在50字以內，保持同理心，不要說教。請以親密關係專家的身份、態度進行互動，請表現得像親密關係專家，保持聆聽、分析、建議。'
         }
-      ]
+      ],
+      recArticles: [
+        {
+          title: '探索情緒的四個迷思',
+          url: '/article/56',
+          id: 56
+        },
+        {
+          title: '行動力的關鍵：三個方法提升自我效能',
+          url: '/article/60',
+          id: 60
+        },
+        {
+          title: '獨處的力量：發現內在寧靜與成長的時刻',
+          url: '/article/65',
+          id: 65
+        }
+      ],
+      recIntro: '要想理解他人，或許我們必須先瞭解自己：'
     },
     {
       id: 4,
@@ -148,7 +202,25 @@ export const useChatCharacters = defineStore('characterStore', () => {
           role: 'system',
           content: '回答請盡量簡短精簡，字數保持在50字以內，保持自然平實，不要太肉麻，不要說教。'
         }
-      ]
+      ],
+      recArticles: [
+        {
+          title: '探索情緒的四個迷思',
+          url: '/article/56',
+          id: 56
+        },
+        {
+          title: '重拾自我價值：探索內在的力量',
+          url: '/article/68',
+          id: 68
+        },
+        {
+          title: '轉化焦慮為生活的優勢',
+          url: '/article/57',
+          id: 57
+        }
+      ],
+      recIntro: '以下是本汪最近推薦的文章！'
     }
   ])
 

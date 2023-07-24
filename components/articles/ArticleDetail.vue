@@ -367,7 +367,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
         </div>
       </div>
       <div v-else class="my-20 flex items-center justify-center text-primary-dark">
-        <p class="text-xl text-primary">要先登入才能留言喔</p>
+        <NuxtLink to="/login" class="text-xl text-primary underline">要先登入才能留言喔</NuxtLink>
       </div>
     </div>
   </section>
