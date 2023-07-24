@@ -158,7 +158,11 @@ const checkEdit = (progress: string, id: number) => {
 
 // 收集選取文章
 const collectArticle = (id: number) => {
-  selectedArticleIds.value.push(id)
+  if (selectedArticleIds.value.includes(id)) {
+    selectedArticleIds.value = selectedArticleIds.value.filter((articleId) => articleId !== id)
+  } else {
+    selectedArticleIds.value.push(id)
+  }
   console.log(selectedArticleIds.value)
 }
 
