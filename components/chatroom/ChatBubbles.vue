@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { storeToRefs } from 'pinia'
 import { useChatCharacters } from '~/stores/characters'
 import { useLoading } from '~/stores/loading'
@@ -15,6 +15,14 @@ defineProps({
   answer: {
     type: Object,
     default: () => {}
+  },
+  recArticles: {
+    type: Array,
+    default: () => []
+  },
+  recIntro: {
+    type: String,
+    required: true
   }
 })
 </script>
@@ -24,6 +32,16 @@ defineProps({
     <div class="mb-2 flex items-center gap-2">
       <img class="mb-1 h-10 w-10 rounded-full" :src="selectedCharacter.imgUrl" />
       <p class="text-xl text-primary">{{ selectedCharacter.name }}</p>
+    </div>
+    <div class="chatbubble-bg chat-bubble mb-6 text-primary-dark">
+      <p class="mb-1">{{ recIntro }}</p>
+      <ul>
+        <li v-for="article in recArticles" :key="article.id" class="mb-1">
+          <NuxtLink :to="article.url" class="underline">
+            {{ article.title }}
+          </NuxtLink>
+        </li>
+      </ul>
     </div>
 
     <ul>

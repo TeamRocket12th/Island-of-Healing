@@ -63,6 +63,9 @@ const chatMessages = {
   serverMsgs: selectedCharacter.value.serverMsgs
 }
 
+const recArticles = ref(selectedCharacter.value.recArticles)
+const recIntro = ref(selectedCharacter.value.recIntro)
+
 // ChatGpt Stream模式(逐字回覆)，部署到vercel不支援
 // const askQuestion = async () => {
 //   if (props.isLimited) {
@@ -169,7 +172,12 @@ onUpdated(() => {
             ref="scrollContainer"
             class="h-[400px] overflow-y-scroll sm:p-4"
           >
-            <ChatBubbles :chat-messages="chatMessages" :answer="answer" />
+            <ChatBubbles
+              :chat-messages="chatMessages"
+              :answer="answer"
+              :rec-articles="recArticles"
+              :rec-intro="recIntro"
+            />
           </div>
           <!-- Input form -->
           <div class="absolute -bottom-12 flex w-full items-center justify-center">
