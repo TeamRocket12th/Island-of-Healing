@@ -8,6 +8,12 @@ defineProps({
 })
 
 const { formatDate } = useDateFormat()
+const formatTitle = (title: string) => {
+  if (title.length > 18) {
+    return title.substring(0, 18) + '...'
+  }
+  return title
+}
 </script>
 
 <template>
@@ -23,7 +29,7 @@ const { formatDate } = useDateFormat()
       <div class="flex h-[126px] flex-col justify-between bg-white pb-3 pl-3 pr-[14px] pt-2">
         <div class="mb-3">
           <p class="font-serif-tc text-xl font-bold leading-normal text-primary">
-            {{ article.Title }}
+            {{ formatTitle(article.Title) }}
           </p>
         </div>
         <div class="flex justify-between">

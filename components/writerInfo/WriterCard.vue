@@ -2,7 +2,8 @@
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useToast } from '~/stores/toast'
-const { followWriterPoint, unFollowWriterPoint } = storeToRefs(useToast())
+
+const { showToast } = storeToRefs(useToast())
 const { userData } = storeToRefs(useUserStore())
 
 defineProps({
@@ -29,22 +30,9 @@ const { followWriter, unFollowWriter } = useWriterActions()
 </script>
 <template>
   <div class="relative mb-10 h-[511px] bg-white px-[68px] py-[58px] shadow-sm md:mb-0">
-    <Teleport to="#point">
-      <p
-        v-if="followWriterPoint"
-        data-aos="fade-left"
-        class="fade-element absolute right-0 top-2 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 md:right-0 lg:top-2 lg:h-[44px] lg:w-[348px]"
-      >
-        追蹤成功！
-      </p>
-      <p
-        v-else-if="unFollowWriterPoint"
-        data-aos="fade-left"
-        class="fade-element absolute right-0 top-2 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 md:right-0 lg:top-2 lg:h-[44px] lg:w-[348px]"
-      >
-        取消追蹤成功！
-      </p>
-    </Teleport>
+    <div class="fixed right-10 top-52 z-20 3xl:right-80">
+      <ToastMsg v-if="showToast" />
+    </div>
     <div class="mx-auto mb-6 h-[95px] w-[95px]">
       <img :src="writerInfo.ImgUrl" alt="writer-pic" class="h-full w-full rounded-full" />
     </div>

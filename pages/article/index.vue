@@ -7,8 +7,7 @@ import { useLoading } from '~/stores/loading'
 
 const { setLoading } = useLoading()
 const { userData } = storeToRefs(useUserStore())
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const { apiBase } = useApiConfig()
 
 useSeoMeta({ title: '探索文章' })
 
@@ -231,7 +230,9 @@ const skeletonNum = ref({
 <template>
   <section>
     <div class="container">
-      <div class="grid-cols-12 gap-6 border-primary pb-40 pt-10 sm:border-t md:grid">
+      <div
+        class="grid-cols-12 gap-6 border-t-0 border-primary pb-40 pt-10 sm:border-t-[0.5px] md:grid"
+      >
         <div v-if="category !== 'all'" class="col-span-full lg:col-span-9">
           <ArticleList
             :title="categories[category]"

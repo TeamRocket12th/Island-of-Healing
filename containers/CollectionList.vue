@@ -2,9 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { useLoading } from '~/stores/loading'
 
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
+const { apiBase, userToken } = useApiConfig()
 const collectedArticle = ref([])
 const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()

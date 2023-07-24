@@ -4,9 +4,7 @@ import { useUserStore } from '~/stores/user'
 
 const userStore = useUserStore()
 const { userData } = storeToRefs(userStore)
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
+const { apiBase, userToken } = useApiConfig()
 const { useFormattedTime } = useDateFormat()
 
 const props = defineProps({

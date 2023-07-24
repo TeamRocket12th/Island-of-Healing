@@ -3,9 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useChatCharacters } from '~/stores/characters'
 import { useUserStore } from '~/stores/user'
 
-const userToken = useCookie('token')
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const { apiBase, userToken } = useApiConfig()
 
 const { userData } = storeToRefs(useUserStore())
 

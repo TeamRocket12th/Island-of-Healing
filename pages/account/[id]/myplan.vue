@@ -2,12 +2,10 @@
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useLoading } from '~/stores/loading'
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
-const userStore = useUserStore()
-const { userData } = storeToRefs(userStore)
-const { isLoading } = storeToRefs(useLoading())
+
+const { apiBase, userToken } = useApiConfig()
+const { userData } = storeToRefs(useUserStore())
+
 const { setLoading } = useLoading()
 
 definePageMeta({
@@ -64,24 +62,25 @@ onMounted(getUserOrder)
 </script>
 <template>
   <div>
-    <div v-if="isLoading"><LoadingItem /></div>
-    <PlanManagement
-      v-else
-      class="relative"
-      :renew-membership="renewMembership"
-      :end-date="endDate"
-      @plan-cancel="showCancelModal"
-    />
-    <Teleport to="body">
-      <Transition>
-        <CancelPlan
-          v-if="modalUse"
-          :user-order="getUserOrder"
-          @plan-cancel="hideCancelModal"
-          @cancel-check="hideCancelCheck"
-        />
-      </Transition>
-    </Teleport>
+    <div class="mb-[147px] grid grid-cols-12 border border-primary bg-sand-100">
+      <h2 class="col-span-2 pl-10 pt-10 font-serif-tc text-2xl font-bold text-primary">變更訂閱</h2>
+      <PlanManagement
+        class="relative"
+        :renew-membership="renewMembership"
+        :end-date="endDate"
+        @plan-cancel="showCancelModal"
+      />
+      <Teleport to="body">
+        <Transition>
+          <CancelPlan
+            v-if="modalUse"
+            :user-order="getUserOrder"
+            @plan-cancel="hideCancelModal"
+            @cancel-check="hideCancelCheck"
+          />
+        </Transition>
+      </Teleport>
+    </div>
   </div>
 </template>
 

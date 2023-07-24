@@ -12,10 +12,10 @@ const { setLoading } = useLoading()
 setLoading(true)
 
 const { isLogin, userData } = storeToRefs(useUserStore())
-const { isCollect, cancelCollect } = storeToRefs(useToast())
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
+const { showToast } = storeToRefs(useToast())
+const { setToast } = useToast()
+
+const { apiBase, userToken } = useApiConfig()
 const route = useRoute()
 const { useFormattedTime } = useDateFormat()
 const userId = isLogin.value ? String(userData.value.id) : '0'
@@ -78,7 +78,7 @@ const markArticleAsRead = async (id: number) => {
     })
     console.log(res)
     if (res.StatusCode === 200) {
-      alert(res.Message)
+      setToast('解鎖成功！')
       isRead.value = true
     }
   } catch (error: any) {
@@ -88,9 +88,9 @@ const markArticleAsRead = async (id: number) => {
 
 const keepReading = (id: number) => {
   if (!isLogin.value) {
-    alert('需要先登入才能閱讀文章喔')
+    setToast('需要先登入才能閱讀文章喔！')
   } else if (userData.value.myPlan === 'free' && articleDetail.value!.Pay) {
-    alert('請先訂閱我們')
+    setToast('付費會員限定！')
   } else {
     markArticleAsRead(id)
   }
@@ -146,7 +146,10 @@ const { followWriter, unFollowWriter } = useWriterActions()
 <template>
   <ArticleDetailSkeleton v-if="isLoading" />
   <section v-if="articleDetail && !isLoading">
-    <div class="relative mb-10">
+    <div class="fixed right-10 top-52 z-20 3xl:right-80">
+      <ToastMsg v-if="showToast" />
+    </div>
+    <div class="mb-10">
       <span
         v-if="articleDetail.Pay && !isRead"
         class="mb-3 flex items-center gap-1 text-primary-dark"
@@ -157,20 +160,6 @@ const { followWriter, unFollowWriter } = useWriterActions()
         class="mb-3 flex items-center gap-1 text-primary-dark"
         ><Icon name="material-symbols:lock-open-outline" size="16" /> 文章已解鎖</span
       >
-      <p
-        v-if="isCollect"
-        data-aos="fade-left"
-        class="fade-element absolute right-0 top-0 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-[-450px] lg:top-0 lg:h-[44px] lg:w-[348px]"
-      >
-        收藏成功！
-      </p>
-      <p
-        v-if="cancelCollect"
-        data-aos="fade-left"
-        class="fade-element absolute right-0 top-0 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-[-450px] lg:top-0 lg:h-[44px] lg:w-[348px]"
-      >
-        取消收藏成功！
-      </p>
       <p v-if="isPreview" class="mb-2 text-right text-primary">目前為預覽模式</p>
       <div class="mb-5 flex items-center justify-between">
         <div class="flex items-center gap-2">

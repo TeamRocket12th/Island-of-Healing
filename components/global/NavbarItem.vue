@@ -2,12 +2,15 @@
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useUIStore } from '~/stores/ui'
+import { useMsgs } from '~/stores/mymsgs'
 
 const userStore = useUserStore()
 const uiStore = useUIStore()
 const { isLogin, userData } = storeToRefs(userStore)
 const { userLogout } = userStore
 const { isWriterExpanded } = storeToRefs(uiStore)
+const { unreadMsgs } = storeToRefs(useMsgs())
+const { getMyMsgs } = useMsgs()
 
 const showCategory = ref(false)
 
@@ -54,6 +57,13 @@ const isUserPage = computed(() => {
     return false
   }
 })
+
+// 站內信Polling
+const msgInterval = setInterval(getMyMsgs, 15000)
+
+onUnmounted(() => {
+  clearInterval(msgInterval)
+})
 </script>
 
 <template>
@@ -77,7 +87,11 @@ const isUserPage = computed(() => {
             </li>
             <li v-if="isLogin">
               <div class="dropdown-end dropdown">
-                <label tabindex="0" class="btn-ghost btn-circle avatar btn flex w-20 items-center">
+                <label
+                  tabindex="0"
+                  class="btn-ghost btn-circle avatar btn flex w-24 flex-nowrap items-center"
+                >
+                  <span v-if="unreadMsgs" class="badge badge-xs bg-orange-400"></span>
                   <div class="h-9 w-9 overflow-hidden rounded-full">
                     <img :src="userData.avatar" />
                   </div>
@@ -127,6 +141,7 @@ const isUserPage = computed(() => {
                     >
                       <Icon name="ic:baseline-mail-outline" size="24" class="mr-2" />
                       <span>我的訊息</span>
+                      <span v-if="unreadMsgs" class="badge badge-xs ml-2 bg-orange-400"></span>
                     </NuxtLink>
                   </li>
                   <li
@@ -195,7 +210,7 @@ const isUserPage = computed(() => {
           <h1 class="mb-3 text-left sm:text-center">
             <NuxtLink
               to="/"
-              class="font-serif-tc text-3xl-plus font-bold tracking-[3px] text-primary sm:text-4xl-plus"
+              class="font-serif-tc text-3xl-plus font-semibold tracking-[3px] text-primary sm:text-4xl-plus"
               >小島聊癒所</NuxtLink
             >
           </h1>
@@ -210,24 +225,24 @@ const isUserPage = computed(() => {
           :class="isUserPage ? 'border-none' : 'border-primary sm:border-b-[0.5px]'"
         >
           <li v-if="userData.role === 'writer'" class="whitespace-nowrap pb-5">
-            <NuxtLink to="/newstory" class="text-xl font-semibold leading-normal text-primary"
+            <NuxtLink to="/newstory" class="text-xl font-medium leading-normal text-primary"
               >發表文章</NuxtLink
             >
           </li>
           <span
             v-if="userData.role === 'writer'"
-            class="flex items-center pb-5 font-serif-tc text-xl font-semibold"
+            class="flex items-center pb-5 font-serif-tc text-xl font-medium"
             >·</span
           >
           <li
-            class="relative whitespace-nowrap pb-5 text-xl font-semibold leading-normal text-primary"
+            class="relative whitespace-nowrap pb-5 text-xl font-medium leading-normal text-primary"
             @mouseover="showCategory = true"
             @mouseleave="showCategory = false"
           >
             <button>精選文章</button>
             <ul
               v-show="showCategory"
-              class="absolute -left-20 top-full z-[100] w-[164px] whitespace-nowrap border border-primary bg-white font-normal"
+              class="category-shadow absolute -left-20 top-full z-[100] w-[164px] whitespace-nowrap border border-primary bg-white font-normal"
               @mouseover="showCategory = true"
               @mouseleave="showCategory = false"
             >
@@ -268,27 +283,27 @@ const isUserPage = computed(() => {
               </li>
             </ul>
           </li>
-          <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
+          <span class="flex items-center pb-5 font-serif-tc text-xl font-medium">·</span>
           <li class="whitespace-nowrap pb-5">
-            <NuxtLink to="/chatroom" class="text-xl font-semibold leading-normal text-primary"
+            <NuxtLink to="/chatroom" class="text-xl font-medium leading-normal text-primary"
               >AI 相談室</NuxtLink
             >
           </li>
-          <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
+          <span class="flex items-center pb-5 font-serif-tc text-xl font-medium">·</span>
           <li class="whitespace-nowrap pb-5">
-            <NuxtLink to="/forum" class="text-xl font-semibold text-primary" leading-normal
+            <NuxtLink to="/forum" class="text-xl font-medium text-primary" leading-normal
               >論壇</NuxtLink
             >
           </li>
-          <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
+          <span class="flex items-center pb-5 font-serif-tc text-xl font-medium">·</span>
           <li class="whitespace-nowrap pb-5">
-            <NuxtLink to="/plans" class="text-xl font-semibold leading-normal text-primary"
+            <NuxtLink to="/plans" class="text-xl font-medium leading-normal text-primary"
               >訂閱方案</NuxtLink
             >
           </li>
-          <span class="flex items-center pb-5 font-serif-tc text-xl font-semibold">·</span>
+          <span class="flex items-center pb-5 font-serif-tc text-xl font-medium">·</span>
           <li class="whitespace-nowrap pb-5">
-            <NuxtLink to="/become_creater" class="text-xl font-semibold leading-normal text-primary"
+            <NuxtLink to="/become_creater" class="text-xl font-medium leading-normal text-primary"
               >成為作家</NuxtLink
             >
           </li>
@@ -430,6 +445,10 @@ const isUserPage = computed(() => {
 </template>
 
 <style scoped>
+.category-shadow {
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+}
+
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.3s ease;

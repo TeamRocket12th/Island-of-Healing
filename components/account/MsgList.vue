@@ -1,66 +1,93 @@
 <script setup lang="ts">
-const props = defineProps({
-  messages: {
-    type: Array as () => MyMsg[],
-    default: () => [],
-    required: true
-  }
-})
+import { storeToRefs } from 'pinia'
+import { useMsgs } from '~/stores/mymsgs'
+
+const { userMsgs, selectedMsgId } = storeToRefs(useMsgs())
+const { setSelectedId, readMyMsg, delMyMsg } = useMsgs()
 
 const showSmWindow = ref(false)
-const selectedId = ref(props.messages[0].id)
 
 const emits = defineEmits(['get-msg', 'toggle-smwindow'])
-const selectMsg = (id: number) => {
-  selectedId.value = id
+const selectMsg = (id: number, read: boolean) => {
+  if (!read) {
+    readMyMsg(id)
+  }
+  setSelectedId(id)
   showSmWindow.value = true
-  emits('get-msg', id)
   emits('toggle-smwindow', showSmWindow.value)
 }
+
+const shortenMsg = (msg: string) => {
+  const newMsg = msg.replace(/&nbsp;/g, '\n')
+  return newMsg.substring(0, 20) + '...'
+}
+
+const openDelId = ref(null as number | null)
+const toggleDelBtn = (id: number) => {
+  openDelId.value = openDelId.value === id ? null : id
+}
+
+const handleDel = (id: number) => {
+  openDelId.value = null
+  delMyMsg(id)
+}
+
+const { formatDate } = useDateFormat()
 </script>
 <template>
-  <div class="text-primary lg:mr-6 lg:border-b lg:border-[#CDCDCD]">
-    <h2 class="mb-6 text-center font-serif-tc text-2xl font-bold lg:mb-14 lg:text-left">
-      我的訊息
-    </h2>
-    <ul>
-      <li
-        v-for="message in messages"
-        :key="message.id"
-        :class="{ active: message.id === selectedId }"
-        class="cursor-pointer px-6 active:bg-[#CDCDCD]"
-        @click="selectMsg(message.id)"
-      >
-        <div class="relative flex justify-center py-3">
-          <div
-            v-if="message.read"
-            class="absolute left-[-20px] top-1/2 h-4 w-4 translate-y-[-50%] rounded-lg bg-secondary"
-          ></div>
-          <div class="h-[48px] w-[48px] overflow-hidden rounded-full">
-            <img :src="message.imgUrl" alt="avatar" />
+  <ul v-if="userMsgs.length > 0">
+    <li
+      v-for="message in userMsgs"
+      :key="message.Id"
+      :class="{ active: message.Id === selectedMsgId }"
+      class="relative cursor-pointer px-6"
+      @click="selectMsg(message.Id, message.IsRead)"
+    >
+      <div class="relative flex justify-center py-3">
+        <div
+          v-if="!message.IsRead"
+          class="absolute left-[-20px] top-1/2 h-4 w-4 translate-y-[-50%] rounded-lg bg-secondary"
+        ></div>
+        <div class="h-[48px] w-[48px] overflow-hidden rounded-full">
+          <img
+            src="/logo.svg"
+            alt="logo"
+            :class="message.Id === selectedMsgId ? 'bg-sand-100' : ''"
+          />
+        </div>
+        <div class="ml-2 w-[85%]">
+          <div class="flex justify-between">
+            <p class="font-medium" :class="{ active: message.Id === selectedMsgId }">
+              {{ message.Name }}
+            </p>
+            <p class="text-sm" :class="{ active: message.Id === selectedMsgId }">
+              {{ formatDate(message.InitDate) }}
+            </p>
           </div>
-          <div class="ml-2 w-[85%]">
-            <div class="flex justify-between">
-              <p class="font-medium" :class="{ active: message.id === selectedId }">
-                {{ message.name }}
-              </p>
-              <p class="text-sm" :class="{ active: message.id === selectedId }">
-                {{ message.date }}
-              </p>
-            </div>
-            <div class="flex justify-between text-primary-dark">
-              <p class="font-light" :class="{ active: message.id === selectedId }">
-                {{ message.canMessage }}
-              </p>
-              <span class="text-[#1C1B1F]" :class="{ active: message.id === selectedId }">
-                <Icon name="mdi:dots-horizontal" size="25" />
-              </span>
-            </div>
+          <div class="flex justify-between text-primary-dark">
+            <p class="font-light" :class="{ active: message.Id === selectedMsgId }">
+              {{ shortenMsg(message.NotificationContent) }}
+            </p>
+            <span
+              class="text-[#1C1B1F]"
+              :class="{ active: message.Id === selectedMsgId }"
+              @click.stop="toggleDelBtn(message.Id)"
+            >
+              <Icon name="mdi:dots-horizontal" size="25" />
+            </span>
           </div>
         </div>
-      </li>
-    </ul>
-  </div>
+      </div>
+      <span
+        v-if="openDelId === message.Id"
+        class="absolute -bottom-[42px] right-0 z-10 flex w-32 items-center whitespace-nowrap border border-secondary bg-sand-100 p-2 text-secondary hover:bg-secondary hover:text-sand-100"
+        @click.stop="handleDel(message.Id)"
+      >
+        <Icon name="material-symbols:delete-outline" size="24" class="pt-[2px]" />
+        刪除訊息</span
+      >
+    </li>
+  </ul>
 </template>
 
 <style scoped>

@@ -1,43 +1,61 @@
 <script setup lang="ts">
-defineProps({
-  message: {
-    type: Object as () => MyMsg,
-    required: true
-  },
-  msgsNum: {
-    type: Number,
-    required: true
-  },
-  msgNo: {
-    type: Number,
-    required: true
-  }
+import { storeToRefs } from 'pinia'
+import { useMsgs } from '~/stores/mymsgs'
+const { userMsgs, msgIndex, msgsNum, selectedMsg, selectedMsgId } = storeToRefs(useMsgs())
+const { delMyMsg } = useMsgs()
+
+const formattedMsg = computed(() => {
+  return selectedMsg.value!.NotificationContent.replace(/&nbsp;/g, '\n')
 })
+
+const readPrevMsg = () => {
+  if (msgIndex.value > 0) {
+    msgIndex.value -= 1
+    selectedMsgId.value = userMsgs.value[msgIndex.value].Id
+  }
+}
+
+const readNextmsg = () => {
+  if (msgIndex.value < msgsNum.value - 1) {
+    msgIndex.value += 1
+    selectedMsgId.value = userMsgs.value[msgIndex.value].Id
+  }
+}
 </script>
 <template>
-  <div class="border-[0.5px] border-secondary bg-sand-100 pb-[390px]">
+  <div v-if="selectedMsg" class="border-[0.5px] border-secondary bg-sand-100 pb-[390px]">
     <div class="flex justify-end border-b-[0.5px] border-secondary bg-sand-200 py-3">
-      <p class="mr-3">第{{ msgNo + 1 }}個，共{{ msgsNum }}個。</p>
+      <p class="mr-3 text-primary">第{{ msgIndex + 1 }}個，共{{ msgsNum }}個。</p>
       <div class="mr-6 flex items-center justify-between gap-3">
-        <span class="cursor-pointer text-primary">
+        <button
+          type="button"
+          class="text-primary disabled:cursor-auto disabled:opacity-60"
+          :disabled="msgIndex === 0"
+          @click="readPrevMsg"
+        >
           <Icon name="mdi:chevron-left" size="24" />
-        </span>
-        <span class="cursor-pointer text-primary">
+        </button>
+        <button
+          type="button"
+          class="cursor-pointer text-primary disabled:cursor-auto disabled:opacity-60"
+          :disabled="msgIndex === msgsNum - 1"
+          @click="readNextmsg"
+        >
           <Icon name="mdi:chevron-right" size="24" />
-        </span>
-        <span class="cursor-pointer text-primary">
+        </button>
+        <button type="button" class="cursor-pointer text-primary" @click="delMyMsg(selectedMsgId)">
           <Icon name="material-symbols:delete-outline" size="24" />
-        </span>
+        </button>
       </div>
     </div>
     <div class="mb-[102px] ml-6 mt-6 flex items-center gap-2">
       <div class="h-[35px] w-[35px] overflow-hidden rounded-full">
-        <img :src="message.imgUrl" alt="avatar" />
+        <img src="/logo.svg" alt="logo" />
       </div>
-      <p>{{ message.name }}</p>
+      <p class="font-medium text-primary">{{ selectedMsg!.Name }}</p>
     </div>
     <p class="mb-8 flex justify-center font-light text-primary-dark">
-      {{ message.canMessage }}
+      {{ formattedMsg }}
     </p>
   </div>
 </template>

@@ -1,8 +1,11 @@
 // 追蹤/取消追蹤作家
+import { useToast } from '~/stores/toast'
+
 export const useWriterActions = () => {
-  const runtimeConfig = useRuntimeConfig()
-  const apiBase = runtimeConfig.public.apiBase
-  const userToken = useCookie('token')
+  const { setToast } = useToast()
+
+  const { apiBase, userToken } = useApiConfig()
+
   // SecondId 在重新取得文章時，帶入文章ID
   // SecondId 在重新取得作家資訊時，帶入作家ID
 
@@ -13,7 +16,7 @@ export const useWriterActions = () => {
     refresh: (secondId: string, userId: string) => Promise<void>
   ) => {
     if (!userToken.value) {
-      alert('請先登入')
+      setToast('請先登入！')
       return
     }
     try {
@@ -26,6 +29,7 @@ export const useWriterActions = () => {
       })
       console.log(res)
       if (res.StatusCode === 200) {
+        setToast('追蹤成功！')
         refresh(secondId, userId)
       }
     } catch (error: any) {
@@ -53,6 +57,7 @@ export const useWriterActions = () => {
       })
       console.log(res)
       if (res.StatusCode === 200) {
+        setToast('已取消追蹤！')
         refresh(secondId, userId)
       }
     } catch (error: any) {

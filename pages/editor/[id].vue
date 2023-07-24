@@ -29,9 +29,8 @@ const ruleUse = (value: boolean) => {
 
 const userStore = useUserStore()
 const { isLogin, userData } = storeToRefs(userStore)
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-// const userToken = useCookie('token')
+const { apiBase } = useApiConfig()
+
 const route = useRoute()
 
 const htmlContent = ref('')

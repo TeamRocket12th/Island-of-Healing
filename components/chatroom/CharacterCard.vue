@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useToast } from '~/stores/toast'
 
+const { showToast } = storeToRefs(useToast())
+const { setToast } = useToast()
 const { isLogin } = storeToRefs(useUserStore())
 const router = useRouter()
 defineProps({
@@ -14,8 +17,10 @@ const showDesc = ref(false)
 
 const checkIsLogin = (roleId: string) => {
   if (!isLogin.value) {
-    alert('請先登入才能聊天喔')
-    router.push('/login')
+    setToast('請先登入才能聊天喔！')
+    setTimeout(() => {
+      router.push('/login')
+    }, 1000)
   } else {
     router.push(`/chatroom/${roleId}`)
   }
@@ -23,6 +28,9 @@ const checkIsLogin = (roleId: string) => {
 </script>
 
 <template>
+  <div class="fixed right-10 top-52 z-20 3xl:right-80">
+    <ToastMsg v-if="showToast" />
+  </div>
   <div
     class="card-bg flex h-[468px] w-full flex-col items-center rounded-2xl px-11 pt-20 shadow-xl transition-all duration-700 hover:scale-105"
     @mouseenter="showDesc = true"

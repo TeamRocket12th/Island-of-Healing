@@ -10,9 +10,7 @@ const { userData } = storeToRefs(useUserStore())
 
 const selectedCategory = ref('個人成長')
 const toggleshowCategory = ref(false)
-const userToken = useCookie('token')
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+const { apiBase, userToken } = useApiConfig()
 
 const selectCategory = (category: string) => {
   selectedCategory.value = category

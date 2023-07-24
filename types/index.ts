@@ -135,6 +135,15 @@ declare global {
     read: boolean
   }
 
+  interface UserMsg {
+    Id: number
+    Name: string
+    ImgUrl: string
+    NotificationContent: string
+    IsRead: boolean
+    InitDate: string
+  }
+
   // 歷史訂單
   interface PastOrder {
     EndDate: string

@@ -8,9 +8,7 @@ definePageMeta({
 })
 useSeoMeta({ title: '歷史訂單' })
 
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
+const { apiBase, userToken } = useApiConfig()
 const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
 

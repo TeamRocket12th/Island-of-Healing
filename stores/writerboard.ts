@@ -1,8 +1,7 @@
 import { useLoading } from './loading'
 
 export const useWriterBoard = defineStore('writerboard', () => {
-  const runtimeConfig = useRuntimeConfig()
-  const apiBase = runtimeConfig.public.apiBase
+  const { apiBase } = useApiConfig()
 
   const { setLoading } = useLoading()
 

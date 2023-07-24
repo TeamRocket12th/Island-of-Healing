@@ -8,8 +8,7 @@ const router = useRouter()
 const data = {
   success: {
     alert: '謝謝您！您的訂單已經成立！',
-    content: '訂單確認電郵已經發送到您的電子郵箱：',
-    userEmail: userData.value.email
+    content: '訂單確認電郵已經發送到您的電子郵箱：'
   },
   failed: {
     alert: '很抱歉！您的訂單付款失敗！',
@@ -47,7 +46,7 @@ const isOrderOK = ref(true)
           </div>
           <div class="border-b border-t border-sand-200 p-4">
             <p class="text-primary-dark">{{ data.success.content }}</p>
-            <p class="text-primary-dark">{{ data.success.userEmail }}</p>
+            <p class="text-primary-dark">{{ userData.email }}</p>
           </div>
         </div>
         <div v-else>

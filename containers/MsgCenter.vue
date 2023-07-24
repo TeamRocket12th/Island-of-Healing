@@ -1,113 +1,51 @@
 <script setup lang="ts">
-const myMsgs = ref<MyMsg[]>([
-  {
-    email: 'mou12345',
-    imgUrl: 'https://picsum.photos/48',
-    name: '告解室基哥',
-    canMessage: '哈囉，我們是好物研究社團隊，謝謝您的支持和參與！',
-    date: '2023-05-25',
-    id: 1,
-    read: false
-  },
-  {
-    email: 'mou12345',
-    imgUrl: 'https://picsum.photos/48',
-    name: '告解室Ting',
-    canMessage: '哈囉，我們是好物研究社團隊，祝您度過美好的一天！',
-    date: '2023-06-01',
-    id: 2,
-    read: false
-  },
-  {
-    email: 'mou12345',
-    imgUrl: 'https://picsum.photos/48',
-    name: '告解室Nancy',
-    canMessage: '哈囉，我們是好物研究社團隊，我們已收到您的詢問，將盡快回覆。',
-    date: '2023-06-03',
-    id: 3,
-    read: false
-  },
-  {
-    email: 'mou12345',
-    imgUrl: 'https://picsum.photos/48',
-    name: '告解室Benson',
-    canMessage: '哈囉，我們是好物研究社團隊，感謝您的耐心等待，我們正在處理中。',
-    date: '2023-06-09',
-    id: 4,
-    read: false
-  },
-  {
-    email: 'mou12345',
-    imgUrl: 'https://picsum.photos/48',
-    name: '告解室Ben爸',
-    canMessage: '哈囉，我們是好物研究社團隊，希望您擁有愉快的使用體驗！',
-    date: '2023-06-16',
-    id: 5,
-    read: false
-  }
-])
+import { storeToRefs } from 'pinia'
+import { useLoading } from '~/stores/loading'
+import { useMsgs } from '~/stores/mymsgs'
 
-const sortedMsgs = ref<MyMsg[]>(myMsgs.value.slice())
-const msgsNum = ref(0)
-const msgIndex = ref(0)
+const { msgLoading } = storeToRefs(useLoading())
+const { setMsgLoading } = useLoading()
 
-const sortByDate = () => {
-  sortedMsgs.value.sort((a, b) => {
-    return new Date(b.date).getTime() - new Date(a.date).getTime()
-  })
-}
+const { userMsgs, unreadMsgs } = storeToRefs(useMsgs())
+const { getMyMsgs } = useMsgs()
 
-const defaultMsg = ref<MyMsg>({
-  email: '',
-  imgUrl: '',
-  name: '',
-  canMessage: '',
-  date: '2023-06-16',
-  id: 5,
-  read: false
-})
-
-sortByDate()
-defaultMsg.value = sortedMsgs.value[0]
-msgsNum.value = Number(sortedMsgs.value.length)
-
-const selectedMsg = ref<MyMsg | null>(null)
-
-const getMsg = (id: number) => {
-  selectedMsg.value = myMsgs.value.filter((msg) => msg.id === id)[0]
-  msgIndex.value = sortedMsgs.value.findIndex((msg) => msg.id === id)
-}
+setMsgLoading(true)
+onMounted(getMyMsgs)
 
 const showMobileMsg = ref(false)
 
 const toggleSmwindow = (value: boolean) => {
   showMobileMsg.value = value
 }
+
+onMounted(() => {
+  unreadMsgs.value = false
+})
 </script>
 
 <template>
-  <div class="grid-cols-12 lg:grid">
-    <MsgList
-      class="col-span-4"
-      :messages="sortedMsgs"
-      @get-msg="getMsg"
-      @toggle-smwindow="toggleSmwindow"
-    />
-    <MsgWindow
-      class="col-span-8 hidden lg:block"
-      :message="selectedMsg || defaultMsg"
-      :msgs-num="msgsNum"
-      :msg-no="msgIndex"
-    />
-    <client-only>
-      <Teleport to="main">
-        <SingleMsg
-          v-if="showMobileMsg"
-          class="absolute left-0 right-0 top-0 h-full w-full lg:hidden"
-          :message="selectedMsg || defaultMsg"
-          @back-to-list="toggleSmwindow"
-        />
-      </Teleport>
-    </client-only>
+  <div class="text-primary lg:mr-6">
+    <h2 class="mb-6 text-center font-serif-tc text-2xl font-bold lg:mb-14 lg:text-left">
+      我的訊息
+    </h2>
+    <div v-if="msgLoading">
+      <LoadingItem />
+    </div>
+    <div v-if="!msgLoading" class="grid-cols-12 gap-12 lg:grid">
+      <MsgList class="col-span-4" @toggle-smwindow="toggleSmwindow" />
+      <MsgWindow v-if="userMsgs.length > 0" class="col-span-8 hidden md:block" />
+      <client-only>
+        <Teleport to="main">
+          <SingleMsg
+            v-if="showMobileMsg"
+            class="absolute left-0 right-0 top-0 h-full w-full lg:hidden"
+            @back-to-list="toggleSmwindow"
+          />
+        </Teleport>
+      </client-only>
+    </div>
+    <p v-if="userMsgs.length === 0 && !msgLoading" class="text-center text-2xl text-primary">
+      目前還沒有訊息
+    </p>
   </div>
 </template>

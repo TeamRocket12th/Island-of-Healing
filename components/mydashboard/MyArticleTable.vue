@@ -27,9 +27,7 @@ const props = defineProps({
   }
 })
 
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
+const { apiBase, userToken } = useApiConfig()
 const articleAnalysis = ref<ArticleData[]>([])
 
 // 刪除文章確認Modal

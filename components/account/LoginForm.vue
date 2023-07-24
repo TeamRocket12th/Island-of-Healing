@@ -1,48 +1,63 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useToast } from '~/stores/toast'
 
 const { userLogin, getUserInfo, getUserToken } = useUserStore()
 const { emailRequired, emailRule, passwordRequired, passwordRule } = useValidate()
+const { showToast } = storeToRefs(useToast())
+const { setToast } = useToast()
 
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
+showToast.value = false
+const { apiBase } = useApiConfig()
 const router = useRouter()
 const passwordField = useTogglePassword()
-const loginInSuccess = ref(false)
-const user = reactive({
-  account: '',
-  password: ''
-})
+
+const loginFailed = ref(false)
+
+const account = ref('')
+const password = ref('')
 
 const handleLogin = async () => {
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/login`, {
       headers: { 'Content-type': 'application/json' },
       method: 'POST',
-      body: user
+      body: {
+        account: account.value,
+        password: password.value
+      }
     })
     console.log(res)
     if (res.StatusCode === 200) {
-      loginInSuccess.value = true
+      showToast.value = true
       userLogin()
       getUserInfo(res.Data.User)
       getUserToken(res.Token)
+      setToast('登入成功!')
       setTimeout(() => {
         router.replace('/')
       }, 500)
     }
   } catch (error: any) {
+    loginFailed.value = true
     console.log(error.response)
   }
 }
 
 const handleEnterKey = (event: any) => {
   if (event.key === 'Enter') {
-    if (user.account !== '' && user.password !== '') {
+    if (account.value !== '' && password.value !== '') {
       handleLogin()
     }
   }
 }
+
+watch(account, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    loginFailed.value = false
+  }
+})
 </script>
 <template>
   <div class="container flex items-center justify-center pb-[55px] font-serif-tc">
@@ -50,13 +65,9 @@ const handleEnterKey = (event: any) => {
       <div
         class="flex w-full flex-col items-center justify-center px-[74px] py-[124px] md:border md:border-primary 3xl:px-[516px] 3xl:py-[132px]"
       >
-        <p
-          v-if="loginInSuccess"
-          data-aos="fade-left"
-          class="fade-element absolute top-10 w-[322px] rounded bg-secondary py-3 pl-2 text-[14px] text-white duration-700 lg:right-0 lg:top-20 lg:h-[44px] lg:w-[348px]"
-        >
-          登入成功！
-        </p>
+        <div class="fixed right-10 top-52 z-20 3xl:right-80">
+          <ToastMsg v-if="showToast" />
+        </div>
         <div class="w-[322px]">
           <div class="tabs mb-8 hidden w-full items-center justify-center font-bold lg:flex">
             <NuxtLink
@@ -88,7 +99,7 @@ const handleEnterKey = (event: any) => {
               />
               <VField
                 id="account"
-                v-model="user.account"
+                v-model="account"
                 :rules="[emailRequired, emailRule]"
                 name="email"
                 type="email"
@@ -99,6 +110,7 @@ const handleEnterKey = (event: any) => {
                 @click="handleEnterKey"
               />
             </div>
+            <p v-if="loginFailed" class="block text-sm text-red-500">帳號或密碼錯誤，登入失敗</p>
             <VErrorMessage name="email" class="block text-sm text-red-500" />
             <label for="password" class="mt-4 block">密碼</label>
             <div class="relative my-1">
@@ -109,7 +121,7 @@ const handleEnterKey = (event: any) => {
               />
               <VField
                 id="password"
-                v-model="user.password"
+                v-model="password"
                 name="password"
                 :rules="[passwordRequired, passwordRule]"
                 :type="passwordField.passwordType.value"
