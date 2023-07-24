@@ -88,7 +88,7 @@ const unFollowWriter = async (id: number, writer: TrendingCreater) => {
       <li
         v-for="creater in trendingCreater"
         :key="creater.WriterId"
-        class="w-[151px] px-6 pb-3 pt-4 sm:col-span-2 sm:w-auto sm:p-0"
+        class="min-h-[250px] w-[151px] px-6 pb-3 pt-4 sm:col-span-2 sm:w-auto sm:p-0"
       >
         <NuxtLink :to="`/writer/${creater.WriterId}`">
           <div class="m-auto mb-4 h-[95px] w-[95px]">
@@ -99,6 +99,7 @@ const unFollowWriter = async (id: number, writer: TrendingCreater) => {
           <NuxtLink :to="`/writer/${creater.WriterId}`">{{ creater.Name }} </NuxtLink>
         </p>
         <p class="mb-4 text-center text-sm font-light text-primary">{{ creater.JobTitle }}</p>
+
         <button
           v-if="creater.IsFollowed && creater.WriterId !== userData.id"
           class="m-auto flex items-center rounded bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
