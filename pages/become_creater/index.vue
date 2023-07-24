@@ -3,7 +3,7 @@ definePageMeta({
   layout: 'landinglayout'
 })
 
-useHead({ title: '成為作家' })
+useSeoMeta({ title: '成為作家' })
 </script>
 <template>
   <div class="overflow-hidden bg-sand-100">

@@ -1,16 +1,33 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import Pusher from 'pusher-js'
 import { useUserStore } from '~/stores/user'
 import { useUIStore } from '~/stores/ui'
 import { useMsgs } from '~/stores/mymsgs'
 
-const userStore = useUserStore()
+const pusher = new Pusher('e8873cf4694b7f36fb0c', {
+  cluster: 'ap3'
+})
+
 const uiStore = useUIStore()
-const { isLogin, userData } = storeToRefs(userStore)
-const { userLogout } = userStore
+const { isLogin, userData } = storeToRefs(useUserStore())
+const { userLogout } = useUserStore()
 const { isWriterExpanded } = storeToRefs(uiStore)
-const { unreadMsgs } = storeToRefs(useMsgs())
+const { userMsgs, unreadMsgs } = storeToRefs(useMsgs())
 const { getMyMsgs } = useMsgs()
+
+const channel = pusher.subscribe(`my-channel-${userData.value.id}`)
+channel.bind('my-event', (data: ApiResponse) => {
+  console.log(data)
+  userMsgs.value = data.MessageResponse.Notification
+  unreadMsgs.value = true
+})
+
+pusher.connection.bind('error', function (err: any) {
+  if (err.error.data.code === 4004) {
+    console.log('Over limit!')
+  }
+})
 
 const showCategory = ref(false)
 
@@ -59,11 +76,12 @@ const isUserPage = computed(() => {
 })
 
 // 站內信Polling
-const msgInterval = setInterval(getMyMsgs, 15000)
+// const msgInterval = setInterval(getMyMsgs, 15000)
 
-onUnmounted(() => {
-  clearInterval(msgInterval)
-})
+// onUnmounted(() => {
+//   clearInterval(msgInterval)
+// })
+onMounted(getMyMsgs)
 </script>
 
 <template>

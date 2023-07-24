@@ -3,6 +3,7 @@ definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
 })
+useSeoMeta({ title: '會員設定' })
 </script>
 <template>
   <div><ProfileForm /></div>

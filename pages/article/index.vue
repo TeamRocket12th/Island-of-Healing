@@ -9,6 +9,8 @@ const { setLoading } = useLoading()
 const { userData } = storeToRefs(useUserStore())
 const { apiBase } = useApiConfig()
 
+useSeoMeta({ title: '探索文章' })
+
 const router = useRouter()
 
 // 文章分類代號
@@ -48,27 +50,27 @@ const selectedArticles = ref<ArticleCard[]>([])
 
 const recArticles = [
   {
-    ArticleImgUrl: 'https://picsum.photos/312/234',
-    Id: 1,
-    Initdate: '2023-03-20',
+    ArticleImgUrl: '/articlecover/cover6.jpg',
+    Id: 68,
+    Initdate: '2023-07-12',
     Title: '重拾自我價值：探索內在的力量',
     UserCollect: false,
     UserLike: false,
-    WriterNickName: '李柚子'
+    WriterNickName: '章家齊'
   },
   {
-    ArticleImgUrl: 'https://picsum.photos/312/234',
-    Id: 2,
-    Initdate: '2023-03-20',
+    ArticleImgUrl: '/articlecover/cover7.jpg',
+    Id: 67,
+    Initdate: '2023-07-12',
     Title: '認識自我與擁抱內在小孩的旅程',
     UserCollect: false,
     UserLike: false,
     WriterNickName: '莉莉安'
   },
   {
-    ArticleImgUrl: 'https://picsum.photos/312/234',
-    Id: 3,
-    Initdate: '2023-03-20',
+    ArticleImgUrl: '/articlecover/cover8.jpg',
+    Id: 66,
+    Initdate: '2023-07-12',
     Title: '別離與成長：好好道別的力量',
     UserCollect: false,
     UserLike: false,

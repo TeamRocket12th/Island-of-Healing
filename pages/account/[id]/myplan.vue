@@ -12,6 +12,7 @@ definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
 })
+useSeoMeta({ title: '變更訂閱' })
 
 const modalUse = ref(false)
 const showCancelModal = (value: boolean) => {

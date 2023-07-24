@@ -116,7 +116,7 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
           <button
             v-if="currentStep === 4"
             type="button"
-            class="rounded bg-secondary px-2 py-2 text-white"
+            class="ml-4 rounded bg-secondary px-2 py-2 text-white"
             @click="getStarted"
           >
             開始註冊
