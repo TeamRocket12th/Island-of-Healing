@@ -91,7 +91,7 @@ const feedBacks2 = [
       ></span>
       <ul
         data-aos="fade-right"
-        class="line-1 mb-4 flex flex-col justify-between gap-4 overflow-hidden md:flex-row md:px-10 xl:flex-nowrap xl:px-0"
+        class="line-1 mb-4 flex flex-col justify-between gap-4 md:flex-row md:px-10 xl:flex-nowrap xl:px-0"
       >
         <li
           v-for="item in feedBacks1"
@@ -116,7 +116,7 @@ const feedBacks2 = [
       </ul>
       <ul
         data-aos="fade-left"
-        class="line-2 mb-10 hidden flex-col justify-between gap-4 overflow-hidden xl:flex xl:flex-row"
+        class="line-2 mb-10 hidden flex-col justify-between gap-4 xl:flex xl:flex-row"
       >
         <li
           v-for="item in feedBacks2"

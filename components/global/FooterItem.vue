@@ -1,4 +1,17 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const show = ref(false)
+const toggleCategory = () => {
+  show.value = !show.value
+}
+const base = 'https://island-of-healing.vercel.app'
+const lists = ref([
+  { list: '個人成長', id: 1, url: `${base}/article?category=personal-growth` },
+  { list: '情緒察覺', id: 2, url: `${base}/article?category=emotional-awareness` },
+  { list: '親密關係', id: 3, url: `${base}/article?category=intimate-relationships` },
+  { list: '日常練習', id: 4, url: `${base}/article?category=daily-practice` },
+  { list: '所有文章', id: 5, url: `${base}/article?category=all` }
+])
+</script>
 
 <template>
   <footer class="bg-secondary">
@@ -17,9 +30,38 @@
       <div class="sm:py-7 sm:pl-7 xl:col-span-4 xl:col-start-9">
         <ul class="mb-6 flex flex-col sm:flex-row sm:gap-11">
           <li
-            class="border-b border-[#A09385] p-5 font-serif-tc text-base font-medium leading-normal sm:border-b-0 sm:p-0 sm:text-sm"
+            class="font-serif-tc text-base font-medium leading-normal sm:hidden sm:border-b-0 sm:p-0 sm:text-sm"
           >
-            <NuxtLink to="/"><p class="text-sand-100">精選文章</p></NuxtLink>
+            <div
+              class="flex cursor-pointer items-center justify-between border-b border-[#A09385] p-5"
+              @click="toggleCategory()"
+            >
+              <p class="text-sand-100">精選文章</p>
+              <Icon
+                :name="show ? 'ic:baseline-minus' : 'ic:baseline-plus'"
+                size="25"
+                class="text-white ease-in"
+              />
+            </div>
+
+            <div v-for="item in lists" :key="item.id">
+              <NuxtLink
+                :to="item.url"
+                class="show flex items-center border-b border-[#A09385] px-5 text-sand-100"
+                :class="show ? ' py-5 opacity-100' : 'h-0 opacity-0'"
+              >
+                {{ item.list }}
+              </NuxtLink>
+            </div>
+          </li>
+          <li
+            class="hidden border-b border-[#A09385] p-5 font-serif-tc text-base font-medium leading-normal sm:block sm:border-b-0 sm:p-0 sm:text-sm"
+          >
+            <NuxtLink to="/"
+              ><div class="flex items-center justify-between">
+                <p class="text-sand-100">精選文章</p>
+              </div></NuxtLink
+            >
           </li>
           <li
             class="border-b border-[#A09385] p-5 font-serif-tc text-base font-medium leading-normal sm:border-b-0 sm:p-0 sm:text-sm"
@@ -72,4 +114,11 @@
   </footer>
 </template>
 
-<style scoped></style>
+<style scoped>
+.show {
+  transition: all 0.5s;
+}
+.show:last-child {
+  margin-bottom: 0px;
+}
+</style>
