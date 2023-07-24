@@ -31,6 +31,8 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     apiKey: process.env.CHATGPT_API_KEY,
+    pusherKey: process.env.PUSHER_KEY,
+    pusherCluster: process.env.PUSHER_CLUSTER,
     public: {
       apiBase: 'https://islandofhealing.rocket-coding.com/api',
       mockApiBase: 'http://localhost:4000'
