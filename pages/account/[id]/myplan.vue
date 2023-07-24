@@ -14,6 +14,7 @@ definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
 })
+useSeoMeta({ title: '變更訂閱' })
 
 const modalUse = ref(false)
 const showCancelModal = (value: boolean) => {
@@ -63,7 +64,7 @@ onMounted(getUserOrder)
 </script>
 <template>
   <div>
-    <div v-if="isLoading">Loading...</div>
+    <div v-if="isLoading"><LoadingItem /></div>
     <PlanManagement
       v-else
       class="relative"

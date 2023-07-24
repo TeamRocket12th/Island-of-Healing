@@ -5,6 +5,7 @@ definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
 })
+useSeoMeta({ title: '我的追蹤' })
 </script>
 <template>
   <section>

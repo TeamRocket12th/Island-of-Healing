@@ -6,6 +6,8 @@ definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
 })
+useSeoMeta({ title: '歷史訂單' })
+
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const userToken = useCookie('token')

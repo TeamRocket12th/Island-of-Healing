@@ -8,6 +8,7 @@ definePageMeta({
   layout: 'userlayout',
   requiredAuth: true
 })
+useSeoMeta({ title: '審核進度' })
 
 const { nowPage } = usePageName()
 </script>

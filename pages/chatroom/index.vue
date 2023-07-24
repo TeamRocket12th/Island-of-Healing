@@ -4,6 +4,7 @@ import { useUserStore } from '~/stores/user'
 definePageMeta({
   layout: 'chatlayout'
 })
+useSeoMeta({ title: 'AI相談室' })
 
 const { userData } = storeToRefs(useUserStore())
 </script>

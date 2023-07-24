@@ -4,6 +4,7 @@ const email = ref(route.query.email)
 const guid = ref(route.query.guid)
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
+useSeoMeta({ title: '登入' })
 
 const activeTempPwd = async () => {
   try {

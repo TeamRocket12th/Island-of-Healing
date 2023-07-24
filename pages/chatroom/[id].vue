@@ -14,6 +14,7 @@ const isChatCountLoading = ref(false)
 const chatCount = ref(0)
 const isLimited = ref(false)
 
+useSeoMeta({ title: 'AI相談室' })
 watchEffect(() => {
   if (userData.value.myPlan === 'free' && chatCount.value === 5) {
     isLimited.value = true
@@ -61,6 +62,7 @@ definePageMeta({
   layout: 'chatlayout',
   requiredAuth: true
 })
+useHead({ title: 'AI相談室' })
 
 const { selectCharacterId } = useChatCharacters()
 const { id } = useRoute().params
