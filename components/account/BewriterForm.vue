@@ -11,7 +11,7 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  getWriter: {
+  getApplication: {
     type: Function,
     default: () => {}
   }
@@ -84,7 +84,7 @@ const applyForWriter = async () => {
       data.reason = ''
       data.work = ''
       data.socialMedia = ''
-      props.getWriter()
+      props.getApplication()
     }
   } catch (error: any) {
     console.log(error.response)
