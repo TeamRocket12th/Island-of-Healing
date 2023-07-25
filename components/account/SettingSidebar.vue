@@ -2,12 +2,14 @@
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useUIStore } from '~/stores/ui'
+import { useMsgs } from '~/stores/mymsgs'
 
 const userStore = useUserStore()
 const uiStore = useUIStore()
 const { userData } = storeToRefs(userStore)
 const { isWriterExpanded } = storeToRefs(uiStore)
 const { toggleWriterSettings } = uiStore
+const { unreadMsgs } = storeToRefs(useMsgs())
 </script>
 
 <template>
@@ -52,7 +54,8 @@ const { toggleWriterSettings } = uiStore
           </div>
         </NuxtLink>
       </li>
-      <li class="px-4">
+      <li class="relative px-4">
+        <span v-if="unreadMsgs" class="badge badge-xs absolute right-8 top-5 bg-orange-400"></span>
         <NuxtLink
           :to="`/account/${userData.id}/messages`"
           class="block w-full px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"

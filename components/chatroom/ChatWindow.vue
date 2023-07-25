@@ -138,7 +138,6 @@ const sendQuestion = () => {
     content: question.value
   })
   question.value = ''
-  console.log(chatMessages)
   getResponse(chatMessages)
 }
 
@@ -154,7 +153,9 @@ const handleEnterKey = (event) => {
 const scrollContainer = ref(null)
 
 const scrollToBottom = () => {
-  scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight
+  if (process.client) {
+    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight
+  }
 }
 onUpdated(() => {
   scrollToBottom()

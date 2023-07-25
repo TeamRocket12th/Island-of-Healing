@@ -18,12 +18,9 @@ const showDesc = ref(false)
 const checkIsLogin = (roleId: string) => {
   if (!isLogin.value) {
     setToast('請先登入才能聊天喔！')
-    setTimeout(() => {
-      router.push('/login')
-    }, 1000)
-  } else {
-    router.push(`/chatroom/${roleId}`)
+    return
   }
+  router.push(`/chatroom/${roleId}`)
 }
 </script>
 
