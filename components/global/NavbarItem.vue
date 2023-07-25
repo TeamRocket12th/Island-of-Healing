@@ -43,8 +43,16 @@ const toggleMobileMenu = () => {
     showMobileCategory.value = !showMobileCategory.value
   }
 }
-
+const toggleMobileMenu2 = () => {
+  showMobileCategory2.value = true
+  showMobileMenu.value = false
+}
+const CloseMobileMenuMemberCter = () => {
+  showMobileCategory2.value = false
+}
 const showMobileCategory = ref(false)
+const showMobileCategory2 = ref(false)
+
 const toggleMobileCategory = () => {
   showMobileCategory.value = !showMobileCategory.value
 }
@@ -436,6 +444,14 @@ onMounted(getMyMsgs)
               >成為作家</NuxtLink
             >
           </li>
+          <li class="border-b-[0.5px] border-primary">
+            <NuxtLink
+              class="block cursor-pointer py-5 font-serif-tc font-semibold text-primary"
+              @click="toggleMobileMenu2"
+              >會員中心</NuxtLink
+            >
+          </li>
+
           <li class="mt-5">
             <NuxtLink
               v-if="!isLogin"
@@ -459,6 +475,61 @@ onMounted(getMyMsgs)
         </ul>
       </div>
     </Transition>
+
+    <div
+      v-if="showMobileCategory2"
+      class="absolute top-[58px] z-[999] h-screen min-h-screen w-screen overflow-auto bg-sand-100 bg-opacity-90 px-4 sm:hidden"
+      style="backdrop-filter: blur(5px)"
+    >
+      <span class="block text-right" @click="CloseMobileMenuMemberCter"
+        ><Icon name="ic:outline-close" size="32" class="my-6 cursor-pointer text-primary" />
+      </span>
+      <ul
+        class="overflow-hidden transition-all duration-500"
+        :class="showMobileCategory2 ? 'max-h-96' : 'max-h-0'"
+      >
+        <li class="border-b-[0.5px] border-primary">
+          <NuxtLink
+            :to="`/account/${userData.id}/profile`"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="CloseMobileMenuMemberCter"
+            >會員設定</NuxtLink
+          >
+        </li>
+        <li class="border-b-[0.5px] border-primary">
+          <NuxtLink
+            :to="`/account/${userData.id}/collection`"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="CloseMobileMenuMemberCter"
+            >我的收藏</NuxtLink
+          >
+        </li>
+        <li class="border-b-[0.5px] border-primary">
+          <NuxtLink
+            :to="`/account/${userData.id}/following`"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="CloseMobileMenuMemberCter"
+            >我的追蹤</NuxtLink
+          >
+        </li>
+        <li class="border-b-[0.5px] border-primary">
+          <NuxtLink
+            :to="`/account/${userData.id}/messages`"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="CloseMobileMenuMemberCter"
+            >我的訊息</NuxtLink
+          >
+        </li>
+        <li class="border-b-[0.5px] border-primary">
+          <NuxtLink
+            :to="`/account/${userData.id}/pastorders`"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="CloseMobileMenuMemberCter"
+            >歷史訂單</NuxtLink
+          >
+        </li>
+      </ul>
+    </div>
   </header>
 </template>
 

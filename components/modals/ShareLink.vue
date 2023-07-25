@@ -8,7 +8,7 @@ onMounted(() => {
 })
 const route = useRoute()
 const url = route.fullPath
-const lineShareUrl = `http://localhost:3000${url}`
+const ShareUrl = `https://island-of-healing.vercel.app${url}`
 
 const emits = defineEmits(['close-modal'])
 
@@ -44,7 +44,7 @@ const copyUrl = () => {
         <ul class="mb-6 flex gap-7">
           <li class="flex cursor-pointer flex-col items-center justify-between">
             <!-- ${url}前面要放部屬的網址  -->
-            <NuxtLink :to="`https://www.facebook.com/sharer.php?u=${url}`" target="_blank">
+            <NuxtLink :to="`https://www.facebook.com/sharer.php?u=${ShareUrl}`" target="_blank">
               <img
                 src="~/assets/images/sharelink/facebook.svg"
                 alt="Facebook分享按鈕"
@@ -55,7 +55,7 @@ const copyUrl = () => {
           </li>
           <li class="flex cursor-pointer flex-col items-center justify-between">
             <!-- ${url}前面要放部屬的網址  -->
-            <NuxtLink :to="`https://twitter.com/intent/tweet?url=${url}`" target="_blank">
+            <NuxtLink :to="`https://twitter.com/intent/tweet?url=${ShareUrl}`" target="_blank">
               <img
                 src="~/assets/images/sharelink/twitter.svg"
                 alt="Twitter分享按鈕"
@@ -67,7 +67,7 @@ const copyUrl = () => {
           <li class="flex cursor-pointer flex-col items-center justify-between">
             <NuxtLink
               :to="`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(
-                lineShareUrl
+                ShareUrl
               )}`"
               target="_blank"
             >
@@ -91,7 +91,7 @@ const copyUrl = () => {
         <input
           type="text"
           class="w-full cursor-pointer rounded border border-secondary px-2 hover:border-2"
-          :value="url"
+          :value="ShareUrl"
           readonly
           @click="copyUrl"
         />
