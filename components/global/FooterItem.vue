@@ -3,13 +3,13 @@ const show = ref(false)
 const toggleCategory = () => {
   show.value = !show.value
 }
-const base = 'https://island-of-healing.vercel.app'
+
 const lists = ref([
-  { list: '個人成長', id: 1, url: `${base}/article?category=personal-growth` },
-  { list: '情緒察覺', id: 2, url: `${base}/article?category=emotional-awareness` },
-  { list: '親密關係', id: 3, url: `${base}/article?category=intimate-relationships` },
-  { list: '日常練習', id: 4, url: `${base}/article?category=daily-practice` },
-  { list: '所有文章', id: 5, url: `${base}/article?category=all` }
+  { list: '個人成長', id: 1, url: '/article?category=personal-growth' },
+  { list: '情緒察覺', id: 2, url: '/article?category=emotional-awareness' },
+  { list: '親密關係', id: 3, url: '/article?category=intimate-relationships' },
+  { list: '日常練習', id: 4, url: '/article?category=daily-practice' },
+  { list: '所有文章', id: 5, url: '/article?category=all' }
 ])
 </script>
 
@@ -57,7 +57,7 @@ const lists = ref([
           <li
             class="hidden border-b border-[#A09385] p-5 font-serif-tc text-base font-medium leading-normal sm:block sm:border-b-0 sm:p-0 sm:text-sm"
           >
-            <NuxtLink to="/"
+            <NuxtLink to="/article?category=all"
               ><div class="flex items-center justify-between">
                 <p class="text-sand-100">精選文章</p>
               </div></NuxtLink
