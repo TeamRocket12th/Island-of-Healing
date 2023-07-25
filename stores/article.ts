@@ -11,6 +11,7 @@ export const useArticle = defineStore('article', () => {
 
   const previewImage = ref('')
   const selectedImage = ref('')
+  const articleTitle = ref('')
 
-  return { article, previewImage, selectedImage }
+  return { article, previewImage, selectedImage, articleTitle }
 })

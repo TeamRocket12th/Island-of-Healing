@@ -12,7 +12,6 @@ const isChatCountLoading = ref(false)
 const chatCount = ref(0)
 const isLimited = ref(false)
 
-useSeoMeta({ title: 'AI相談室' })
 watchEffect(() => {
   if (userData.value.myPlan === 'free' && chatCount.value === 5) {
     isLimited.value = true
@@ -44,6 +43,9 @@ const getChatCount = async () => {
     isChatCountLoading.value = false
   }
 }
+useSeoMeta({
+  title: '開始聊天'
+})
 
 // 在次數小於5時，不用重新get
 const increaseChatCount = () => {
@@ -60,7 +62,6 @@ definePageMeta({
   layout: 'chatlayout',
   requiredAuth: true
 })
-useHead({ title: 'AI相談室' })
 
 const { selectCharacterId } = useChatCharacters()
 const { id } = useRoute().params

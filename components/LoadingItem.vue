@@ -3,7 +3,7 @@
 <template>
   <div>
     <div class="flex items-center justify-center gap-10">
-      <img src="/logo-loading.svg" alt="logo" class="w-[100px]" />
+      <img src="/logo.svg" alt="logo" class="w-[100px]" />
       <div class="text-primary-dark">
         <div class="flex">
           <p class="text-4xl-plus font-bold">Loading</p>
