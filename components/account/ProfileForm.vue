@@ -56,7 +56,6 @@ setLoading(true)
 onMounted(getUserInfo)
 
 const handleDateClick = (togglePopover: () => void) => {
-  event?.preventDefault()
   togglePopover()
 }
 const birth = ref('')
