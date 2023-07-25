@@ -27,7 +27,6 @@ const getPastorders = async () => {
     })
     if (res.StatusCode === 200) {
       orderData.value = res.OrdersData
-      // console.log(res)
       setLoading(false)
     }
   } catch (error: any) {

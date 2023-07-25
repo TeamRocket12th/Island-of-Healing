@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useChatCharacters } from '~/stores/characters'
 import { useUserStore } from '~/stores/user'
@@ -36,7 +36,7 @@ const saveChatCount = async () => {
     return
   }
   try {
-    const res = await $fetch(`${apiBase}/useaitimes/add`, {
+    const res: ApiResponse = await $fetch(`${apiBase}/useaitimes/add`, {
       headers: {
         'Content-type': 'application/json',
         Authorization: `Bearer ${userToken.value}`
@@ -45,26 +45,25 @@ const saveChatCount = async () => {
     })
     console.log(res)
     if (res.StatusCode === 200) {
-      console.log(res)
       props.increaseChatCount()
     }
-  } catch (error) {
+  } catch (error: any) {
     console.log(error.response)
   }
 }
 
 const { selectedCharacter } = storeToRefs(useChatCharacters())
 
-const answer = ref(null)
+const answer = ref<AIMessage | null>(null)
 const question = ref('')
 
-const chatMessages = {
-  clientMsgs: selectedCharacter.value.clientMsgs,
-  serverMsgs: selectedCharacter.value.serverMsgs
+const chatMessages: AllMessages = {
+  clientMsgs: selectedCharacter.value!.clientMsgs as AIMessage[],
+  serverMsgs: selectedCharacter.value!.serverMsgs as AIMessage[]
 }
 
-const recArticles = ref(selectedCharacter.value.recArticles)
-const recIntro = ref(selectedCharacter.value.recIntro)
+const recArticles = ref<RecArticles[]>(selectedCharacter.value!.recArticles)
+const recIntro = ref<string>(selectedCharacter.value!.recIntro)
 
 // ChatGpt Stream模式(逐字回覆)，部署到vercel不支援
 // const askQuestion = async () => {
@@ -102,19 +101,19 @@ const recIntro = ref(selectedCharacter.value.recIntro)
 //   })
 // }
 
-const getResponse = async (chatmsgs) => {
+const getResponse = async (chatmsgs: any) => {
   setChatLoading(true)
   try {
-    const res = await $fetch('/api/sendmsg', {
+    const res: ApiResponse = await $fetch('/api/sendmsg', {
       method: 'POST',
       body: JSON.stringify({ messages: chatmsgs })
     })
     if (res.ok) {
       answer.value = res.message
-      chatMessages.clientMsgs.push(answer.value)
+      chatMessages.clientMsgs.push(answer.value!)
       answer.value = null
     }
-  } catch (error) {
+  } catch (error: any) {
     console.log(error.response)
   } finally {
     setChatLoading(false)
@@ -138,10 +137,11 @@ const sendQuestion = () => {
     content: question.value
   })
   question.value = ''
+  console.log(chatMessages)
   getResponse(chatMessages)
 }
 
-const handleEnterKey = (event) => {
+const handleEnterKey = (event: KeyboardEvent) => {
   if (event.isComposing) {
     return
   }
@@ -150,11 +150,11 @@ const handleEnterKey = (event) => {
   }
 }
 
-const scrollContainer = ref(null)
+const scrollContainer = ref<HTMLElement | null>(null)
 
 const scrollToBottom = () => {
   if (process.client) {
-    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight
+    scrollContainer.value!.scrollTop = scrollContainer.value!.scrollHeight
   }
 }
 onUpdated(() => {
@@ -175,7 +175,7 @@ onUpdated(() => {
           >
             <ChatBubbles
               :chat-messages="chatMessages"
-              :answer="answer"
+              :answer="answer!"
               :rec-articles="recArticles"
               :rec-intro="recIntro"
             />
@@ -193,7 +193,7 @@ onUpdated(() => {
               <button
                 class="absolute right-0 h-full w-[50px] rounded-r-md py-1 text-secondary hover:bg-secondary hover:text-white disabled:hover:bg-transparent disabled:hover:text-secondary"
                 :disabled="isLimited"
-                @click="getResponse"
+                @click="sendQuestion"
               >
                 <Icon name="material-symbols:send-outline" size="20" />
               </button>

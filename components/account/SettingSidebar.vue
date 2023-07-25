@@ -55,13 +55,17 @@ const { unreadMsgs } = storeToRefs(useMsgs())
         </NuxtLink>
       </li>
       <li class="relative px-4">
-        <span v-if="unreadMsgs" class="badge badge-xs absolute right-8 top-5 bg-orange-400"></span>
         <NuxtLink
           :to="`/account/${userData.id}/messages`"
           class="block w-full px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
         >
           <div class="flex items-center">
-            <Icon name="ic:baseline-mail-outline" size="24" class="mr-2" />
+            <Icon
+              name="ic:baseline-mail-outline"
+              size="24"
+              class="mr-2"
+              :class="unreadMsgs ? ' text-orange-300' : ''"
+            />
             <p>我的訊息</p>
           </div>
         </NuxtLink>

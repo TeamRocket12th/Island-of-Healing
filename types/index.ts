@@ -225,15 +225,22 @@ declare global {
   }
 
   // AI聊天訊息
-  interface Message {
+
+  interface AIMessage {
     role: 'assistant' | 'user' | 'system'
     content: string
   }
 
-  type DefaultMsgs = Message[]
+  type DefaultMsgs = AIMessage[]
 
   interface AllMessages {
-    clientMsgs: Message[]
-    serverMsgs: Message[]
+    clientMsgs: AIMessage[]
+    serverMsgs: AIMessage[]
+  }
+
+  interface RecArticles {
+    title: string
+    url: string
+    id: number
   }
 }

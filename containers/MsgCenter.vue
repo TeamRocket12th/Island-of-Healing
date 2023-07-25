@@ -7,22 +7,17 @@ import { useToast } from '~/stores/toast'
 const { msgLoading } = storeToRefs(useLoading())
 const { setMsgLoading } = useLoading()
 
-const { userMsgs, unreadMsgs } = storeToRefs(useMsgs())
-const { getMyMsgs, delMyMsg } = useMsgs()
+const { userMsgs } = storeToRefs(useMsgs())
+const { getMyMsgs, readMyMsg, delMyMsg } = useMsgs()
 
 setMsgLoading(true)
 const { showToast } = storeToRefs(useToast())
-onMounted(getMyMsgs)
 
 const showMobileMsg = ref(false)
 
 const toggleSmwindow = (value: boolean) => {
   showMobileMsg.value = value
 }
-
-onMounted(() => {
-  unreadMsgs.value = false
-})
 
 const showConfirmModal = ref(false)
 const delId = ref(0)
@@ -48,6 +43,13 @@ const handleDelMsg = () => {
   showMobileMsg.value = false
   delMyMsg(delId.value)
 }
+
+onMounted(async () => {
+  await getMyMsgs()
+  if (userMsgs.value[0].IsRead === false) {
+    readMyMsg(userMsgs.value[0].Id)
+  }
+})
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useChatCharacters } from '~/stores/characters'
 import { useLoading } from '~/stores/loading'
@@ -17,7 +17,7 @@ defineProps({
     default: () => {}
   },
   recArticles: {
-    type: Array,
+    type: Array as PropType<RecArticles[]>,
     default: () => []
   },
   recIntro: {
