@@ -86,34 +86,6 @@ const openConfirm = (value: boolean, id: number) => {
         {{ selectedMsg.FollowedWriterNewArticleTitle }}
       </NuxtLink>
     </p>
-    <!-- <template v-if="showConfirmModal">
-      <ConfirmModal @close-confirm="closeConfirm">
-        <template #header>
-          <h2 class="text-xl text-primary">刪除訊息?</h2>
-        </template>
-        <template #content>
-          <p class="border-b border-t border-sand-200 pb-8 pl-4 pr-4 pt-4 text-primary-dark">
-            確定要刪除這則訊息嗎？
-          </p>
-        </template>
-        <template #footer>
-          <div class="flex justify-end gap-2 p-3">
-            <button
-              class="rounded p-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
-              @click="showConfirmModal = false"
-            >
-              取消
-            </button>
-            <button
-              class="rounded p-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
-              @click="handleDelMsg(selectedMsgId)"
-            >
-              確定
-            </button>
-          </div>
-        </template>
-      </ConfirmModal>
-    </template> -->
     <div v-if="showToast" class="fixed right-10 top-52 z-20 3xl:right-80">
       <ToastMsg />
     </div>
