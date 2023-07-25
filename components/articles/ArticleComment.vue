@@ -115,7 +115,7 @@ const closeConfirm = (value: boolean) => {
   showConfirmModal.value = value
 }
 
-const confrimDel = (id: number) => {
+const confirmDel = (id: number) => {
   showConfirmModal.value = true
   selectedId.value = id
   openCommentId.value = null
@@ -159,7 +159,7 @@ watchEffect(() => {
                 </button>
                 <button
                   class="py-1 text-primary hover:bg-btn-hover hover:text-white active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-                  @click="confrimDel(comment.CommentId)"
+                  @click="confirmDel(comment.CommentId)"
                 >
                   刪除
                 </button>

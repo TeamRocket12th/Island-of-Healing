@@ -142,6 +142,9 @@ declare global {
     NotificationContent: string
     IsRead: boolean
     InitDate: string
+    NotificationContentId: number
+    FollowedWriterNewArticleId: null | number
+    FollowedWriterNewArticleTitle: null | string
   }
 
   // 歷史訂單

@@ -1,8 +1,9 @@
 import { useLoading } from '~/stores/loading'
+import { useToast } from '~/stores/toast'
 
 export const useMsgs = defineStore('mymsgs', () => {
   const { setMsgLoading } = useLoading()
-
+  const { setToast } = useToast()
   const { apiBase, userToken } = useApiConfig()
 
   const userMsgs = ref<UserMsg[]>([])
@@ -99,7 +100,8 @@ export const useMsgs = defineStore('mymsgs', () => {
       console.log(res)
       if (res.StatusCode === 200) {
         console.log(res.Message)
-        getMyMsgs()
+        setToast('刪除成功！')
+        await getMyMsgs()
       }
     } catch (error: any) {
       console.log(error.response)
