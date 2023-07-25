@@ -5,8 +5,8 @@ import { useUserStore } from '~/stores/user'
 import { useUIStore } from '~/stores/ui'
 import { useMsgs } from '~/stores/mymsgs'
 
-const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
-  cluster: import.meta.env.VITE_PUSHER_CLUSTER
+const pusher = new Pusher('e8873cf4694b7f36fb0c', {
+  cluster: 'ap3'
 })
 
 const uiStore = useUIStore()
@@ -16,18 +16,20 @@ const { isWriterExpanded } = storeToRefs(uiStore)
 const { userMsgs, unreadMsgs } = storeToRefs(useMsgs())
 const { getMyMsgs } = useMsgs()
 
-const channel = pusher.subscribe(`my-channel-${userData.value.id}`)
-channel.bind('my-event', (data: ApiResponse) => {
-  console.log(data)
-  userMsgs.value = data.MessageResponse.Notification
-  unreadMsgs.value = true
-})
+if (process.client) {
+  const channel = pusher.subscribe(`my-channel-${userData.value.id}`)
+  channel.bind('my-event', (data: ApiResponse) => {
+    console.log(data)
+    userMsgs.value = data.MessageResponse.Notification
+    unreadMsgs.value = true
+  })
 
-pusher.connection.bind('error', function (err: any) {
-  if (err.error.data.code === 4004) {
-    console.log('Over limit!')
-  }
-})
+  pusher.connection.bind('error', function (err: any) {
+    if (err.error.data.code === 4004) {
+      console.log('Over limit!')
+    }
+  })
+}
 
 const showCategory = ref(false)
 

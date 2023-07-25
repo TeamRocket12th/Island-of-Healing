@@ -79,10 +79,12 @@ const recArticles = [
 ]
 
 const scrollTop = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  })
+  if (process.client) {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
 }
 
 // 分頁

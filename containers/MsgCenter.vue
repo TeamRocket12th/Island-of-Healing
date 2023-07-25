@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { useLoading } from '~/stores/loading'
 import { useMsgs } from '~/stores/mymsgs'
+import { useToast } from '~/stores/toast'
 
 const { msgLoading } = storeToRefs(useLoading())
 const { setMsgLoading } = useLoading()
@@ -10,6 +11,7 @@ const { userMsgs, unreadMsgs } = storeToRefs(useMsgs())
 const { getMyMsgs, delMyMsg } = useMsgs()
 
 setMsgLoading(true)
+const { showToast } = storeToRefs(useToast())
 onMounted(getMyMsgs)
 
 const showMobileMsg = ref(false)
@@ -55,6 +57,9 @@ const handleDelMsg = () => {
     </h2>
     <div v-if="msgLoading">
       <LoadingItem />
+    </div>
+    <div v-if="showToast" class="fixed right-10 top-52 z-20 3xl:right-80">
+      <ToastMsg />
     </div>
     <div v-if="!msgLoading" class="grid-cols-12 gap-12 lg:grid">
       <MsgList class="col-span-4" @toggle-smwindow="toggleSmwindow" @open-confirm="openConfirm" />

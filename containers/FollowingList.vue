@@ -37,15 +37,13 @@ onMounted(getFollowingList)
   <div
     class="relative mb-52 overflow-hidden border-primary bg-sand-100 pb-24 pt-10 md:border md:px-10"
   >
-    <div id="point">
-      <h2
-        class="mb-14 text-center font-serif-tc text-2xl font-bold leading-normal text-primary md:text-left"
-      >
-        我的追蹤
-      </h2>
-      <div v-if="isLoading"><LoadingItem /></div>
-      <WriterCardWide v-else :writer-info="followingWriters" />
-    </div>
+    <h2
+      class="mb-14 text-center font-serif-tc text-2xl font-bold leading-normal text-primary md:text-left"
+    >
+      我的追蹤
+    </h2>
+    <div v-if="isLoading"><LoadingItem /></div>
+    <WriterCardWide v-else :writer-info="followingWriters" />
   </div>
 </template>
 

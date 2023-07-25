@@ -7,9 +7,9 @@ export default defineNuxtConfig({
     '@pinia-plugin-persistedstate/nuxt',
     'nuxt-gtag'
   ],
-  typescript: {
-    typeCheck: true
-  },
+  // typescript: {
+  //   typeCheck: true
+  // },
   css: ['@/assets/css/main.css'],
   pinia: {
     autoImports: ['defineStore', ['defineStore', 'definePiniaStore']]
@@ -31,8 +31,6 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     apiKey: process.env.CHATGPT_API_KEY,
-    pusherKey: process.env.PUSHER_KEY,
-    pusherCluster: process.env.PUSHER_CLUSTER,
     public: {
       apiBase: 'https://islandofhealing.rocket-coding.com/api',
       mockApiBase: 'http://localhost:4000'
@@ -58,7 +56,7 @@ export default defineNuxtConfig({
         { property: 'og:description', content: '歡迎來到小島聊癒所' },
         {
           property: 'og:image',
-          content: 'https://hackmd.io/_uploads/B1Q3nka9h.png'
+          content: 'https://i.imgur.com/8wSgF1W.png'
         }
       ],
       link: [{ rel: 'icon', type: 'image/svg+xml', href: '/logo-web.svg' }]
