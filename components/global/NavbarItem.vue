@@ -16,18 +16,20 @@ const { isWriterExpanded } = storeToRefs(uiStore)
 const { userMsgs, unreadMsgs } = storeToRefs(useMsgs())
 const { getMyMsgs } = useMsgs()
 
-const channel = pusher.subscribe(`my-channel-${userData.value.id}`)
-channel.bind('my-event', (data: ApiResponse) => {
-  console.log(data)
-  userMsgs.value = data.MessageResponse.Notification
-  unreadMsgs.value = true
-})
+if (process.client) {
+  const channel = pusher.subscribe(`my-channel-${userData.value.id}`)
+  channel.bind('my-event', (data: ApiResponse) => {
+    console.log(data)
+    userMsgs.value = data.MessageResponse.Notification
+    unreadMsgs.value = true
+  })
 
-pusher.connection.bind('error', function (err: any) {
-  if (err.error.data.code === 4004) {
-    console.log('Over limit!')
-  }
-})
+  pusher.connection.bind('error', function (err: any) {
+    if (err.error.data.code === 4004) {
+      console.log('Over limit!')
+    }
+  })
+}
 
 const showCategory = ref(false)
 
