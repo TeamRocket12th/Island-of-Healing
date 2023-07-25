@@ -8,12 +8,12 @@
       >
         <NuxtLink to="/article/56">
           <div>
-            <div class="relative mb-3 max-w-full sm:h-auto">
-              <span class="categoryTag absolute left-0 top-0 mb-1">情緒察覺</span>
+            <div class="relative mb-3 max-w-full overflow-hidden sm:h-auto">
+              <span class="categoryTag absolute left-0 top-0 z-10 mb-1">情緒察覺</span>
               <img
                 src="/articlecover/cover1.jpeg"
                 alt="article-cover"
-                class="h-[267px] w-full object-cover sm:h-[175px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-110 sm:h-[175px]"
               />
             </div>
 
@@ -29,12 +29,12 @@
       >
         <NuxtLink to="/article/59">
           <div>
-            <div class="relative mb-3 max-w-full sm:h-auto sm:w-auto">
-              <span class="categoryTag absolute left-0 top-0 mb-1">個人成長</span>
+            <div class="relative mb-3 max-w-full overflow-hidden sm:h-auto sm:w-auto">
+              <span class="categoryTag absolute left-0 top-0 z-10 mb-1">個人成長</span>
               <img
                 src="/articlecover/cover2.jpeg"
                 alt="article-cover"
-                class="h-[267px] w-full object-cover sm:h-[400px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-110 sm:h-[400px]"
               />
             </div>
 
@@ -50,12 +50,12 @@
       <div class="col-span-4 border-b border-primary p-4 sm:border-b-0 sm:pb-0">
         <NuxtLink to="/article/60">
           <div>
-            <div class="relative mb-3 h-[267px] max-w-full sm:h-auto sm:w-auto">
-              <span class="categoryTag absolute left-0 top-0 mb-1">個人成長</span>
+            <div class="relative mb-3 h-[267px] max-w-full overflow-hidden sm:h-auto sm:w-auto">
+              <span class="categoryTag absolute left-0 top-0 z-10 mb-1">個人成長</span>
               <img
                 src="/articlecover/cover3.jpeg"
                 alt="article-cover"
-                class="h-[267px] w-full object-cover sm:h-[175px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-110 sm:h-[175px]"
               />
             </div>
 
@@ -73,12 +73,12 @@
       >
         <NuxtLink to="/article/57">
           <div>
-            <div class="relative mb-3 max-w-full sm:h-auto sm:w-auto">
-              <span class="categoryTag absolute left-0 top-0 mb-1">個人成長</span>
+            <div class="relative mb-3 max-w-full overflow-hidden sm:h-auto sm:w-auto">
+              <span class="categoryTag absolute left-0 top-0 z-10 mb-1">個人成長</span>
               <img
                 src="/articlecover/cover4.jpeg"
                 alt="article-cover"
-                class="h-[267px] w-full object-cover sm:h-[175px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-110 sm:h-[175px]"
               />
             </div>
 
@@ -94,12 +94,12 @@
       >
         <NuxtLink :to="`/article/61`">
           <div>
-            <div class="relative mb-3 max-w-full sm:h-auto sm:w-auto">
-              <span class="categoryTag absolute left-0 top-0 mb-1">個人成長</span>
+            <div class="relative mb-3 max-w-full overflow-hidden sm:h-auto sm:w-auto">
+              <span class="categoryTag absolute left-0 top-0 z-10 mb-1">個人成長</span>
               <img
                 src="/articlecover/cover5.jpeg"
                 alt="article-cover"
-                class="h-[267px] w-full object-cover sm:h-[175px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-110 sm:h-[175px]"
               />
             </div>
 

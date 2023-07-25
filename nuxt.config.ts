@@ -53,7 +53,7 @@ export default defineNuxtConfig({
         },
         { property: 'og:title', content: '小島聊癒所' },
         { property: 'og:url', content: 'https://island-of-healing.vercel.app' },
-        { property: 'og:description', content: '' }
+        { property: 'og:description', content: '歡迎來到小島聊癒所' }
       ],
       link: [{ rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]
     }

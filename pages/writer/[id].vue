@@ -7,8 +7,6 @@ const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
 const { isLogin, userData } = storeToRefs(useUserStore())
 
-useSeoMeta({ title: '作家' })
-
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const route = useRoute()
@@ -24,6 +22,7 @@ const getWriterInfo = async (writerId: string, userId: string) => {
     if (res.StatusCode === 200) {
       writerInfo.value = res.WriterData
       writerWorks.value = res.ArticlesData
+
       setLoading(false)
     }
   } catch (error) {
@@ -35,6 +34,7 @@ setLoading(true)
 onMounted(() => {
   getWriterInfo(writerId, userId)
 })
+useSeoMeta({ title: () => `${writerInfo.value?.NickName}｜小島聊癒所` })
 </script>
 
 <template>

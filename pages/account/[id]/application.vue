@@ -41,7 +41,7 @@ onMounted(getApplyForWriterProgress)
   <div class="mb-16 border-primary bg-sand-100 sm:mb-[213px] sm:border">
     <h2 class="mb-10 pl-10 pt-10 font-serif-tc text-2xl font-bold text-primary">成為作家</h2>
     <div v-if="isLoading" class="pb-20"><LoadingItem /></div>
-    <BewriterForm v-else :get-status="getStatus" />
+    <BewriterForm v-else :get-status="getStatus" :get-writer="getApplyForWriterProgress" />
   </div>
 </template>
 

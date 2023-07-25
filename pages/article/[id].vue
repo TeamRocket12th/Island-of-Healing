@@ -1,5 +1,19 @@
 <script setup>
+import { storeToRefs } from 'pinia'
 import ArticleSideBar from '~/containers/ArticleSideBar.vue'
+import { useArticle } from '~/stores/article'
+
+const { articleTitle } = storeToRefs(useArticle())
+
+useSeoMeta({ title: () => `小島聊癒所` })
+
+// onBeforeMount(() => {
+//   articleTitle.value = ''
+// })
+
+watch(articleTitle, (newTitle) => {
+  useSeoMeta({ title: () => `${newTitle}` })
+})
 </script>
 
 <template>
