@@ -2,7 +2,7 @@
 useSeoMeta({
   ogDescription: '提供心靈療癒的庇護所',
   ogTitle: '小島聊癒所',
-  ogImage: '/logo-loading.svg'
+  ogImage: '/logo.svg'
 })
 </script>
 

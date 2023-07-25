@@ -7,10 +7,6 @@ const { articleTitle } = storeToRefs(useArticle())
 
 useSeoMeta({ title: () => `小島聊癒所` })
 
-// onBeforeMount(() => {
-//   articleTitle.value = ''
-// })
-
 watch(articleTitle, (newTitle) => {
   useSeoMeta({ title: () => `${newTitle}` })
 })

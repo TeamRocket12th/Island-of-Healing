@@ -22,7 +22,6 @@ const getWriterInfo = async (writerId: string, userId: string) => {
     if (res.StatusCode === 200) {
       writerInfo.value = res.WriterData
       writerWorks.value = res.ArticlesData
-
       setLoading(false)
     }
   } catch (error) {
