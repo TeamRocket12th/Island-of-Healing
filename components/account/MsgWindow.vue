@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useMsgs } from '~/stores/mymsgs'
+import { useToast } from '~/stores/toast'
+
 const { userMsgs, msgIndex, msgsNum, selectedMsg, selectedMsgId } = storeToRefs(useMsgs())
-const { delMyMsg } = useMsgs()
+const { showToast } = storeToRefs(useToast())
 
 const formattedMsg = computed(() => {
   return selectedMsg.value!.NotificationContent.replace(/&nbsp;/g, '\n')
@@ -20,6 +22,20 @@ const readNextmsg = () => {
     msgIndex.value += 1
     selectedMsgId.value = userMsgs.value[msgIndex.value].Id
   }
+}
+
+// 顯示文章連結
+const msgType = ref(0)
+const showArticleLink = ref(false)
+watchEffect(() => {
+  msgType.value = selectedMsg.value!.NotificationContentId
+  msgType.value === 1 ? (showArticleLink.value = true) : (showArticleLink.value = false)
+})
+
+// 刪除訊息確認Modal
+const emits = defineEmits(['open-confirm'])
+const openConfirm = (value: boolean, id: number) => {
+  emits('open-confirm', value, id)
 }
 </script>
 <template>
@@ -43,7 +59,11 @@ const readNextmsg = () => {
         >
           <Icon name="mdi:chevron-right" size="24" />
         </button>
-        <button type="button" class="cursor-pointer text-primary" @click="delMyMsg(selectedMsgId)">
+        <button
+          type="button"
+          class="cursor-pointer text-primary"
+          @click="openConfirm(true, selectedMsgId)"
+        >
           <Icon name="material-symbols:delete-outline" size="24" />
         </button>
       </div>
@@ -57,6 +77,18 @@ const readNextmsg = () => {
     <p class="mb-8 flex justify-center font-light text-primary-dark">
       {{ formattedMsg }}
     </p>
+    <p class="text-center text-xl font-normal">
+      <NuxtLink
+        v-if="showArticleLink"
+        :to="`/article/${selectedMsg.FollowedWriterNewArticleId}`"
+        class="ml-2 underline"
+      >
+        {{ selectedMsg.FollowedWriterNewArticleTitle }}
+      </NuxtLink>
+    </p>
+    <div v-if="showToast" class="fixed right-10 top-52 z-20 3xl:right-80">
+      <ToastMsg />
+    </div>
   </div>
 </template>
 

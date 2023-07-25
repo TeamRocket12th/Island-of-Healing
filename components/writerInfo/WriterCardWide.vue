@@ -72,7 +72,7 @@ const closeConfirm = (value: boolean) => {
   showConfirmModal.value = value
 }
 
-const confrimDel = (writer: Writer) => {
+const confirmDel = (writer: Writer) => {
   showConfirmModal.value = true
   selectedId.value = writer.WriterId
   selectedWriter.value = writer
@@ -112,7 +112,7 @@ watchEffect(() => {
         <button
           v-if="writer.IsFollowing"
           class="flex items-center whitespace-nowrap rounded border bg-secondary px-2 py-1 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-          @click="confrimDel(writer)"
+          @click="confirmDel(writer)"
         >
           <Icon name="material-symbols:fitbit-check-small" size="20" />追蹤中
         </button>

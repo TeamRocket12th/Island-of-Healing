@@ -1,28 +1,28 @@
 <script setup lang="ts">
 const articles = [
   {
-    id: 1,
+    id: 74,
     type: '個人成長',
     title: '重建內在力量：創傷後的成長與自我照顧的關鍵',
-    imgUrl: 'https://picsum.photos/408/247',
+    imgUrl: '/articlecover/cover9.jpg',
     content:
-      '心理學家 Amos Tversky 和 Daniel Kahneman 在 1970 年代發展出認知偏見的理論，描述因為人類對於資訊處理上有一定的限度，所以在某些情境下會難以理性及有...'
+      '在人生的旅程中，我們可能會遭遇各種創傷和挑戰，這些經歷可能對我們的身心造成傷害和影響。然而，即...'
   },
   {
-    id: 2,
+    id: 73,
     type: '日常練習',
     title: '走出情緒低潮：五個簡單行動陪你重拾積極心態',
-    imgUrl: 'https://picsum.photos/408/247',
+    imgUrl: '/articlecover/cover10.jpg',
     content:
-      '在生活的旅途中，我們都會遇到情緒低潮的時刻。這些時刻讓我們感到沮喪、無助和失去方向。然而，我們並不孤單，而是有許多簡單而有效的方法可以幫助我們走出情緒低潮，重拾積極心態。'
+      '在生活的旅途中，我們都會遇到情緒低潮的時刻。這些時刻讓我們感到沮喪、無助和失去方向。...'
   },
   {
-    id: 3,
+    id: 72,
     type: '情緒察覺',
     title: '靜心與自我觀察：放鬆心靈的四個方法面對過度思考',
-    imgUrl: 'https://picsum.photos/408/247',
+    imgUrl: '/articlecover/cover11.jpg',
     content:
-      '在這個繁忙的現代生活中，我們往往被過度思考和內心的嘈雜聲所困擾。這些思緒無法停止地盤旋在我們的頭腦中，造成焦慮和壓力。'
+      '在這個繁忙的現代生活中，我們往往被過度思考和內心的嘈雜聲所困擾。這些思緒無法停止地盤旋在我們的...'
   }
 ]
 const formatTitle = (title: string) => {
@@ -40,14 +40,16 @@ const formatTitle = (title: string) => {
         <div class="h-[0.5px] w-[150px] bg-primary"></div>
       </div>
       <ul class="mb-3 grid-cols-12 sm:grid">
-        <li v-for="article in articles" :key="article.id" class="col-span-4 h-[460px] p-4">
+        <li v-for="article in articles" :key="article.id" class="col-span-4 p-4">
           <NuxtLink :to="`/article/${article.id}`">
             <div class="relative">
-              <div class="mb-2 overflow-hidden">
+              <div
+                class="mb-2 h-[260px] overflow-hidden sm:h-[110px] md:h-[140px] lg:h-[190px] xl:h-[260px]"
+              >
                 <img
                   :src="article.imgUrl"
                   alt="article-cover"
-                  class="w-ful duration-500 hover:scale-110"
+                  class="w-full duration-500 hover:scale-110"
                 />
               </div>
               <span

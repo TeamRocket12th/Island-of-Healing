@@ -6,10 +6,14 @@ const { apiBase, userToken } = useApiConfig()
 const { showToast } = storeToRefs(useToast())
 const { setToast } = useToast()
 
-defineProps({
+const props = defineProps({
   getStatus: {
     type: String,
     default: ''
+  },
+  getApplication: {
+    type: Function,
+    default: () => {}
   }
 })
 
@@ -80,6 +84,7 @@ const applyForWriter = async () => {
       data.reason = ''
       data.work = ''
       data.socialMedia = ''
+      props.getApplication()
     }
   } catch (error: any) {
     console.log(error.response)

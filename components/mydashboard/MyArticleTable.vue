@@ -34,7 +34,7 @@ const articleAnalysis = ref<ArticleData[]>([])
 const showConfirmModal = ref(false)
 const selectedArticle = ref<TableData>({})
 
-const confrimDel = (item: TableData) => {
+const confirmDel = (item: TableData) => {
   showConfirmModal.value = true
   selectedArticle.value = item
 }
@@ -273,7 +273,7 @@ const checkPreview = (progress: string, id: number) => {
                 type="button"
                 class="disabled:text-btn-disabled"
                 :disabled="item.Progress === '審核中'"
-                @click="confrimDel(item)"
+                @click="confirmDel(item)"
               >
                 <Icon name="material-symbols:delete-outline" size="24" />
               </button>
@@ -360,7 +360,7 @@ const checkPreview = (progress: string, id: number) => {
                 type="button"
                 class="disabled:text-btn-disabled"
                 :disabled="item.Progress === '審核中'"
-                @click="confrimDel(item)"
+                @click="confirmDel(item)"
               >
                 <Icon name="material-symbols:delete-outline" size="24" />
               </button>

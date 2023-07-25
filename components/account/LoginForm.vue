@@ -37,7 +37,7 @@ const handleLogin = async () => {
       setToast('登入成功!')
       setTimeout(() => {
         router.replace('/')
-      }, 700)
+      }, 900)
     }
   } catch (error: any) {
     loginFailed.value = true

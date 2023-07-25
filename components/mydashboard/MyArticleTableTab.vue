@@ -50,7 +50,7 @@ interface TableData {
 const showConfirmModal = ref(false)
 const selectedArticle = ref<TableData>({})
 
-const confrimDel = (item: TableData) => {
+const confirmDel = (item: TableData) => {
   showConfirmModal.value = true
   selectedArticle.value = item
 }
@@ -220,7 +220,7 @@ const handleDelAll = async () => {
       v-if="nowPage !== 'dashboard'"
       type="button"
       class="mb-3 rounded bg-secondary px-2 py-1 text-sm text-sand-100 hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white md:h-8"
-      @click="confrimDel"
+      @click="confirmDel"
     >
       全部刪除
     </button>

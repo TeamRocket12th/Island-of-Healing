@@ -7,8 +7,6 @@ const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
 const { isLogin, userData } = storeToRefs(useUserStore())
 
-useSeoMeta({ title: '作家' })
-
 const runtimeConfig = useRuntimeConfig()
 const apiBase = runtimeConfig.public.apiBase
 const route = useRoute()
@@ -35,6 +33,7 @@ setLoading(true)
 onMounted(() => {
   getWriterInfo(writerId, userId)
 })
+useSeoMeta({ title: () => `${writerInfo.value?.NickName}｜小島聊癒所` })
 </script>
 
 <template>
