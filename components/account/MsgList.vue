@@ -32,6 +32,7 @@ const { formatDate } = useDateFormat()
 // 刪除訊息確認Modal
 const openConfirm = (value: boolean, id: number) => {
   emits('open-confirm', value, id)
+  openDelId.value = null
 }
 </script>
 <template>
