@@ -56,8 +56,7 @@ export default defineNuxtConfig({
         { property: 'og:description', content: '歡迎來到小島聊癒所' },
         {
           property: 'og:image',
-          content:
-            'https://raw.githubusercontent.com/TeamRocket12th/Island-of-Healing/dev/public/logo-island.svg'
+          content: 'https://i.imgur.com/8wSgF1W.png'
         }
       ],
       link: [{ rel: 'icon', type: 'image/svg+xml', href: '/logo-web.svg' }]
