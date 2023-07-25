@@ -56,7 +56,10 @@ export default defineNuxtConfig({
         { property: 'og:title', content: '小島聊癒所' },
         { property: 'og:url', content: 'https://island-of-healing.vercel.app' },
         { property: 'og:description', content: '歡迎來到小島聊癒所' },
-        { property: 'og:image', content: '/logo-island.svg' }
+        {
+          property: 'og:image',
+          content: 'https://hackmd.io/_uploads/B1Q3nka9h.png'
+        }
       ],
       link: [{ rel: 'icon', type: 'image/svg+xml', href: '/logo-web.svg' }]
     }
