@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useMsgs } from '~/stores/mymsgs'
-import { useToast } from '~/stores/toast'
 
 const { userMsgs, msgIndex, msgsNum, selectedMsg, selectedMsgId } = storeToRefs(useMsgs())
-const { showToast } = storeToRefs(useToast())
 
 const formattedMsg = computed(() => {
   return selectedMsg.value!.NotificationContent.replace(/&nbsp;/g, '\n')
@@ -86,9 +84,6 @@ const openConfirm = (value: boolean, id: number) => {
         {{ selectedMsg.FollowedWriterNewArticleTitle }}
       </NuxtLink>
     </p>
-    <div v-if="showToast" class="fixed right-10 top-52 z-20 3xl:right-80">
-      <ToastMsg />
-    </div>
   </div>
 </template>
 
