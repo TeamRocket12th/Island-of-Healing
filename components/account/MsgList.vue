@@ -3,11 +3,11 @@ import { storeToRefs } from 'pinia'
 import { useMsgs } from '~/stores/mymsgs'
 
 const { userMsgs, selectedMsgId } = storeToRefs(useMsgs())
-const { setSelectedId, readMyMsg, delMyMsg } = useMsgs()
+const { setSelectedId, readMyMsg } = useMsgs()
 
 const showSmWindow = ref(false)
 
-const emits = defineEmits(['get-msg', 'toggle-smwindow'])
+const emits = defineEmits(['get-msg', 'toggle-smwindow', 'open-confirm'])
 const selectMsg = (id: number, read: boolean) => {
   if (!read) {
     readMyMsg(id)
@@ -27,12 +27,12 @@ const toggleDelBtn = (id: number) => {
   openDelId.value = openDelId.value === id ? null : id
 }
 
-const handleDel = (id: number) => {
-  openDelId.value = null
-  delMyMsg(id)
-}
-
 const { formatDate } = useDateFormat()
+
+// 刪除訊息確認Modal
+const openConfirm = (value: boolean, id: number) => {
+  emits('open-confirm', value, id)
+}
 </script>
 <template>
   <ul v-if="userMsgs.length > 0">
@@ -81,7 +81,7 @@ const { formatDate } = useDateFormat()
       <span
         v-if="openDelId === message.Id"
         class="absolute -bottom-[42px] right-0 z-10 flex w-32 items-center whitespace-nowrap border border-secondary bg-sand-100 p-2 text-secondary hover:bg-secondary hover:text-sand-100"
-        @click.stop="handleDel(message.Id)"
+        @click.stop="openConfirm(true, message.Id)"
       >
         <Icon name="material-symbols:delete-outline" size="24" class="pt-[2px]" />
         刪除訊息</span
