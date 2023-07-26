@@ -47,9 +47,9 @@ const openConfirm = (value: boolean, id: number) => {
       <div class="relative flex items-center justify-center py-3">
         <div
           v-if="!message.IsRead"
-          class="absolute left-[-20px] top-1/2 h-4 w-4 translate-y-[-50%] rounded-lg bg-secondary"
+          class="absolute -left-4 top-1/2 h-2 w-2 translate-y-[-50%] rounded-full bg-[#EF4444]"
         ></div>
-        <div class="h-[48px] w-[48px] overflow-hidden rounded-full">
+        <div class="h-12 w-12 overflow-hidden rounded-full">
           <img
             src="/logo.svg"
             alt="logo"

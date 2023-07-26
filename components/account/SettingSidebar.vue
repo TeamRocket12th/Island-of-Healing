@@ -60,12 +60,13 @@ const { unreadMsgs } = storeToRefs(useMsgs())
           class="block w-full px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
         >
           <div class="flex items-center">
-            <Icon
-              name="ic:baseline-mail-outline"
-              size="24"
-              class="mr-2"
-              :class="unreadMsgs ? ' text-orange-300' : ''"
-            />
+            <div class="relative">
+              <Icon name="ic:baseline-mail-outline" size="24" class="mr-2" />
+              <span
+                v-if="unreadMsgs"
+                class="absolute bottom-0 right-[6px] h-2 w-2 rounded-full bg-[#EF4444]"
+              ></span>
+            </div>
             <p>我的訊息</p>
           </div>
         </NuxtLink>
@@ -164,8 +165,5 @@ const { unreadMsgs } = storeToRefs(useMsgs())
 .router-link-active {
   background-color: #796959;
   color: #faf9f3;
-  span {
-    background-color: #faf9f3;
-  }
 }
 </style>
