@@ -267,7 +267,7 @@ const checkPreview = (progress: string, id: number) => {
               <button
                 type="button"
                 class="text-scondary disabled:text-btn-disabled"
-                :disabled="item.Progress === '審核成功'"
+                :disabled="item.Progress === '審核成功' || item.Progress === '審核中'"
                 @click="checkEdit(item.Progress, item.Id)"
               >
                 <Icon name="material-symbols:edit-outline" size="24" class="mr-3" />
