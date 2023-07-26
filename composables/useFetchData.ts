@@ -1,3 +1,4 @@
+// MockAPI
 export const getMockData = <T>(baseRoute: string, endpoint?: string) => {
   const runtimeConfig = useRuntimeConfig()
   const mockApiBase = runtimeConfig.public.mockApiBase

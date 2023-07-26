@@ -5,8 +5,8 @@ import { useUserStore } from '~/stores/user'
 import { useUIStore } from '~/stores/ui'
 import { useMsgs } from '~/stores/mymsgs'
 
-const pusher = new Pusher('e8873cf4694b7f36fb0c', {
-  cluster: 'ap3'
+const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
+  cluster: import.meta.env.VITE_PUSHER_CLUSTER
 })
 
 const uiStore = useUIStore()

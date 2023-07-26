@@ -146,7 +146,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
 <template>
   <ArticleDetailSkeleton v-if="isLoading" />
   <section v-if="articleDetail && !isLoading">
-    <div class="fixed right-10 top-52 z-20 3xl:right-80">
+    <div class="fixed right-10 top-24 z-20 3xl:right-80">
       <ToastMsg v-if="showToast" />
     </div>
     <div class="mb-10">
