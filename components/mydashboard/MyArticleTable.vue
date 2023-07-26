@@ -149,8 +149,6 @@ const progressWithCheckbox = ref<TableData[]>([])
 watchEffect(() => {
   dataWithCheckbox.value = filteredArticles.value.map((item) => ({ ...item, isChecked: false }))
   progressWithCheckbox.value = progressList.value.map((item) => ({ ...item, isChecked: false }))
-  console.log(dataWithCheckbox.value)
-  console.log(progressWithCheckbox.value)
 })
 
 // 確認是否可編輯
