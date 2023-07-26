@@ -8,7 +8,8 @@ onMounted(() => {
 })
 const route = useRoute()
 const url = route.fullPath
-const ShareUrl = `https://island-of-healing.vercel.app${url}`
+
+const shareUrl = `https://island-of-healing.vercel.app${url}`
 
 const emits = defineEmits(['close-modal'])
 
@@ -19,7 +20,7 @@ const closeModal = (value: boolean) => {
 const showSuccessMsg = ref(false)
 
 const copyUrl = () => {
-  navigator.clipboard.writeText(url)
+  navigator.clipboard.writeText(shareUrl)
   showSuccessMsg.value = true
   setTimeout(() => {
     showSuccessMsg.value = false
@@ -43,8 +44,7 @@ const copyUrl = () => {
       <div class="relative flex justify-between">
         <ul class="mb-6 flex gap-7">
           <li class="flex cursor-pointer flex-col items-center justify-between">
-            <!-- ${url}前面要放部屬的網址  -->
-            <NuxtLink :to="`https://www.facebook.com/sharer.php?u=${ShareUrl}`" target="_blank">
+            <NuxtLink :to="`https://www.facebook.com/sharer.php?u=${shareUrl}`" target="_blank">
               <img
                 src="~/assets/images/sharelink/facebook.svg"
                 alt="Facebook分享按鈕"
@@ -54,8 +54,7 @@ const copyUrl = () => {
             <p class="text-xs">Facebook</p>
           </li>
           <li class="flex cursor-pointer flex-col items-center justify-between">
-            <!-- ${url}前面要放部屬的網址  -->
-            <NuxtLink :to="`https://twitter.com/intent/tweet?url=${ShareUrl}`" target="_blank">
+            <NuxtLink :to="`https://twitter.com/intent/tweet?url=${shareUrl}`" target="_blank">
               <img
                 src="~/assets/images/sharelink/twitter.svg"
                 alt="Twitter分享按鈕"
@@ -67,7 +66,7 @@ const copyUrl = () => {
           <li class="flex cursor-pointer flex-col items-center justify-between">
             <NuxtLink
               :to="`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(
-                ShareUrl
+                shareUrl
               )}`"
               target="_blank"
             >
@@ -91,7 +90,7 @@ const copyUrl = () => {
         <input
           type="text"
           class="w-full cursor-pointer rounded border border-secondary px-2 hover:border-2"
-          :value="ShareUrl"
+          :value="shareUrl"
           readonly
           @click="copyUrl"
         />

@@ -32,8 +32,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiKey: process.env.CHATGPT_API_KEY,
     public: {
-      apiBase: 'https://islandofhealing.rocket-coding.com/api',
-      mockApiBase: 'http://localhost:4000'
+      apiBase: 'https://islandofhealing.rocket-coding.com/api'
+      // mockApiBase: 'http://localhost:4000'
     }
   },
   gtag: {
@@ -44,7 +44,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      viewport: 'width=500, initial-scale=1',
+      viewport: 'initial-scale=1',
       title: '小島聊癒所',
       meta: [
         {
