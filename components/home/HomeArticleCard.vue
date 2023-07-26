@@ -49,7 +49,7 @@ const formatTitle = (title: string) => {
                 <img
                   :src="article.imgUrl"
                   alt="article-cover"
-                  class="w-full duration-500 hover:scale-110"
+                  class="w-full duration-500 hover:scale-105"
                 />
               </div>
               <span

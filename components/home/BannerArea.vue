@@ -13,7 +13,7 @@
               <img
                 src="/articlecover/cover1.jpeg"
                 alt="article-cover"
-                class="h-[267px] w-full object-cover duration-500 hover:scale-110 sm:h-[175px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-105 sm:h-[175px]"
               />
             </div>
 
@@ -30,11 +30,11 @@
         <NuxtLink to="/article/59">
           <div>
             <div class="relative mb-3 max-w-full overflow-hidden sm:h-auto sm:w-auto">
-              <span class="categoryTag absolute left-0 top-0 z-10 mb-1">個人成長</span>
+              <span class="categoryTag absolute left-0 top-0 z-10 mb-1">日常練習</span>
               <img
                 src="/articlecover/cover2.jpeg"
                 alt="article-cover"
-                class="h-[267px] w-full object-cover duration-500 hover:scale-110 sm:h-[400px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-105 sm:h-[400px]"
               />
             </div>
 
@@ -55,7 +55,7 @@
               <img
                 src="/articlecover/cover3.jpeg"
                 alt="article-cover"
-                class="h-[267px] w-full object-cover duration-500 hover:scale-110 sm:h-[175px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-105 sm:h-[175px]"
               />
             </div>
 
@@ -78,7 +78,7 @@
               <img
                 src="/articlecover/cover4.jpeg"
                 alt="article-cover"
-                class="h-[267px] w-full object-cover duration-500 hover:scale-110 sm:h-[175px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-105 sm:h-[175px]"
               />
             </div>
 
@@ -95,11 +95,11 @@
         <NuxtLink :to="`/article/61`">
           <div>
             <div class="relative mb-3 max-w-full overflow-hidden sm:h-auto sm:w-auto">
-              <span class="categoryTag absolute left-0 top-0 z-10 mb-1">個人成長</span>
+              <span class="categoryTag absolute left-0 top-0 z-10 mb-1">親密關係</span>
               <img
                 src="/articlecover/cover5.jpeg"
                 alt="article-cover"
-                class="h-[267px] w-full object-cover duration-500 hover:scale-110 sm:h-[175px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-105 sm:h-[175px]"
               />
             </div>
 
