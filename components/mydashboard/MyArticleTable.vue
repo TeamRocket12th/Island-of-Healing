@@ -6,13 +6,16 @@ import { useLoading } from '~/stores/loading'
 
 const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
-setLoading(true)
 
 const { selectedCategory, selectedYear, selectedMonth, progressTab } = storeToRefs(myWorkStore())
 const { selectedArticleIds, postedArticles, allMyArticles } = storeToRefs(useWriterBoard())
 const { getMyArticles, delArticle } = useWriterBoard()
 
 const router = useRouter()
+
+if (postedArticles.value.length === 0 && allMyArticles.value.length === 0) {
+  setLoading(true)
+}
 
 // 取得作家後台文章列表
 onMounted(getMyArticles)
