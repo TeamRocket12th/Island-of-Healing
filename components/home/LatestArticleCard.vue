@@ -63,7 +63,7 @@ const formatTitle = (title: string) => {
               <img
                 :src="article.ArticleImgUrl ? article.ArticleImgUrl : '/default-article-cover.jpg'"
                 alt="article-cover"
-                class="h-full w-full object-cover duration-500 hover:scale-110"
+                class="h-full w-full object-cover duration-500 hover:scale-105"
               />
             </div>
             <h4 class="mb-3 font-serif-tc text-xl font-bold text-primary">

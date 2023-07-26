@@ -142,6 +142,16 @@ const addComment = async (id: number, articleId: string, userId: string) => {
 
 // 收藏文章訊息
 const { followWriter, unFollowWriter } = useWriterActions()
+
+const useTitle = ref<string | undefined>('')
+const emits = defineEmits(['use-title'])
+const useArticleTitle = (value: string | undefined) => {
+  emits('use-title', value)
+}
+onBeforeUpdate(() => {
+  useTitle.value = articleDetail.value?.Title
+  useArticleTitle(useTitle.value)
+})
 </script>
 <template>
   <ArticleDetailSkeleton v-if="isLoading" />

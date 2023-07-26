@@ -2,6 +2,12 @@
 import { storeToRefs } from 'pinia'
 import { useArticle } from '~/stores/article'
 import { useUserStore } from '~/stores/user'
+import { useToast } from '~/stores/toast'
+const { showToast } = storeToRefs(useToast())
+const { setToast } = useToast()
+
+showToast.value = false
+
 const articleUse = useArticle()
 const route = useRoute()
 const router = useRouter()
@@ -14,16 +20,23 @@ const { apiBase, userToken } = useApiConfig()
 
 const selectCategory = (category: string) => {
   selectedCategory.value = category
-  if (category === '個人成長') {
-    articleUse.article.ArticlesClassId = 1
-  } else if (category === '情緒察覺') {
-    articleUse.article.ArticlesClassId = 2
-  } else if (category === '親密關係') {
-    articleUse.article.ArticlesClassId = 3
-  } else if (category === '日常練習') {
-    articleUse.article.ArticlesClassId = 4
-  } else {
-    articleUse.article.ArticlesClassId = 1
+
+  switch (category) {
+    case '個人成長':
+      articleUse.article.ArticlesClassId = 1
+      break
+    case '情緒察覺':
+      articleUse.article.ArticlesClassId = 2
+      break
+    case '親密關係':
+      articleUse.article.ArticlesClassId = 3
+      break
+    case '日常練習':
+      articleUse.article.ArticlesClassId = 4
+      break
+    default:
+      articleUse.article.ArticlesClassId = 1
+      break
   }
 }
 
@@ -126,9 +139,7 @@ const postArticle = async () => {
       body: articleUse.article
     })
     if (res.StatusCode === 200) {
-      // console.log(res)
-      // console.log(res.ArticleId)
-      alert('新增成功')
+      showToast.value = true
       const articleId = res.ArticleId
       articleUse.article.Title = ''
       articleUse.article.Content = ''
@@ -138,7 +149,7 @@ const postArticle = async () => {
       articleUse.selectedImage = ''
       articleUse.previewImage = ''
       articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
-
+      setToast('新增成功!')
       if (formData.get('articleCover')) {
         updateArticleCover(articleId)
       }
@@ -160,9 +171,7 @@ const updateArticle = async () => {
     })
 
     if (res.StatusCode === 200) {
-      console.log(res)
-      alert('更新成功')
-      console.log(articleUse.article.ArticlesClassId)
+      showToast.value = true
       articleUse.article.Title = ''
       articleUse.article.Content = ''
       articleUse.article.Summary = ''
@@ -171,6 +180,7 @@ const updateArticle = async () => {
       articleUse.selectedImage = ''
       articleUse.previewImage = ''
       articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
+      setToast('更新成功!')
       if (formData.get('articleCover')) {
         const id = Number(route.params.id)
         updateArticleCover(id)
@@ -184,7 +194,6 @@ const updateArticle = async () => {
 // 新增草稿按鈕
 const saveDraft = () => {
   articleUse.article.Progress = 0
-  console.log(articleUse.article)
   if (route.params.id) {
     updateArticle()
   } else {
@@ -194,7 +203,7 @@ const saveDraft = () => {
   setTimeout(() => {
     router.push(`/account/${userData.value.id}/drafts`)
     postSent(false)
-  }, 1000)
+  }, 1500)
 }
 
 // 新增文章按鈕
@@ -209,7 +218,7 @@ const createPost = () => {
   setTimeout(() => {
     router.push(`/account/${userData.value.id}/mywork`)
     postSent(false)
-  }, 1000)
+  }, 1500)
 }
 
 const selectedOption = ref('免費')
@@ -252,14 +261,13 @@ onMounted(() => {
   if (route.params.id) {
     selectedCategory.value = props.articleData.Category
     selectCategory(selectedCategory.value)
-    console.log(props.articleData.Tags)
     articleUse.article.Tags = props.articleData.Tags
     if (props.articleData.Pay) {
       selectedOption.value = '付費'
     } else {
       selectedOption.value = '免費'
     }
-    // console.log(props.articleData.ImgUrl)
+
     if (props.articleData.ImgUrl !== '') {
       articleUse.selectedImage = props.articleData.ImgUrl
     } else {
@@ -283,6 +291,9 @@ watchEffect(() => {
   >
     <div class="col-span-12 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3">
       <div class="block">
+        <div class="fixed right-10 top-12 z-20 3xl:right-80">
+          <ToastMsg v-if="showToast" />
+        </div>
         <div class="flex w-full justify-end">
           <Icon
             name="ic:baseline-close"

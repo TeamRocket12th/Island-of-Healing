@@ -275,7 +275,7 @@ const insertImage = () => {
         </div>
         <textarea
           v-model="articleUse.article.Title"
-          class="font-weight mb-3 h-28 w-full resize-none bg-sand-100 pt-4 text-4xl font-bold text-primary outline-none placeholder:text-sand-300"
+          class="mb-3 h-28 w-full resize-none bg-sand-100 pt-4 text-4xl font-bold text-primary outline-none placeholder:text-sand-300"
           placeholder="請輸入標題"
         ></textarea>
       </div>

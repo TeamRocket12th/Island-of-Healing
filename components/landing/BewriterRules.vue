@@ -74,6 +74,15 @@ const getStarted = () => {
 }
 
 const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
+const imageUrlChanged = ref(false)
+watch(imageUrl, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    imageUrlChanged.value = true
+    setTimeout(() => {
+      imageUrlChanged.value = false
+    }, 1500)
+  }
+})
 </script>
 <template>
   <div class="container pb-16 pt-10 md:pb-[168px] md:pt-[94px]">
@@ -97,15 +106,10 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
         <div
           class="mb-5 overflow-y-hidden md:h-[250px] lg:h-[350px] xl:h-[430px] 2xl:h-[530px] 3xl:h-[460px]"
         >
-          <img :src="imageUrl" alt="成為作家" />
+          <img :src="imageUrl" alt="成為作家" :class="{ 'fade-in': imageUrlChanged }" />
         </div>
         <div class="flex justify-end">
-          <button
-            class="rounded px-5 py-2 text-secondary hover:bg-secondary hover:text-white"
-            @click="backStep"
-          >
-            返回
-          </button>
+          <button class="rounded px-5 py-2 text-secondary" @click="backStep">返回</button>
           <button
             v-if="currentStep !== 4"
             class="ml-4 rounded bg-secondary px-3 py-2 text-white"
@@ -127,7 +131,7 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
         <h2 class="mb-8 text-center text-2xl font-bold text-primary">申請作家身份流程</h2>
         <ul>
           <li v-for="(stepKey, index) in steps" :key="index" :class="['flex', 'gap-4']">
-            <div class="flex h-36 w-8 flex-wrap justify-center">
+            <div class="flex h-44 w-8 flex-wrap justify-center">
               <div>
                 <div
                   :class="[
@@ -152,7 +156,7 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
                   <p v-else class="text-white">{{ stepKey.id }}</p>
                 </div>
               </div>
-              <div class="h-[112px] w-[2px] bg-sand-300"></div>
+              <div class="h-[160px] w-[2px] bg-sand-300"></div>
             </div>
             <div
               :class="{
@@ -173,4 +177,19 @@ const imageUrl = computed(() => `/landingpage/rules/${step.value}.png`)
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.fade-in {
+  opacity: 0;
+  animation: fadeInAnimation 1.5s ease forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+</style>
