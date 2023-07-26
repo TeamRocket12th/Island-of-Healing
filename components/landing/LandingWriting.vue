@@ -1,4 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { isMobile, checkIsMobile } = useFadeUpOnMobile()
+
+onMounted(() => {
+  checkIsMobile()
+  window.addEventListener('resize', checkIsMobile)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkIsMobile)
+})
+</script>
 <template>
   <section class="container mb-10 lg:mb-[66px]">
     <h3
@@ -15,7 +26,10 @@
     </p>
     <div class="flex flex-wrap gap-[37px] lg:flex-nowrap">
       <div class="order-2 w-full lg:order-1 lg:w-1/3">
-        <div class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3" data-aos="fade-right">
+        <div
+          class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3"
+          :data-aos="isMobile ? 'fade-up' : 'fade-right'"
+        >
           <div class="flex justify-center lg:block">
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] border-secondary bg-sand-200"
@@ -32,7 +46,10 @@
             </p>
           </div>
         </div>
-        <div class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3" data-aos="fade-right">
+        <div
+          class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3"
+          :data-aos="isMobile ? 'fade-up' : 'fade-right'"
+        >
           <div class="flex justify-center lg:block">
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] border-secondary bg-sand-200"
@@ -49,7 +66,10 @@
             </p>
           </div>
         </div>
-        <div class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3" data-aos="fade-right">
+        <div
+          class="mb-11 w-full gap-4 rounded-2xl lg:flex lg:px-4 lg:py-3"
+          :data-aos="isMobile ? 'fade-up' : 'fade-right'"
+        >
           <div class="flex justify-center lg:block">
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] bg-sand-200"
@@ -68,7 +88,7 @@
         </div>
       </div>
       <div
-        data-aos="fade-left"
+        :data-aos="isMobile ? 'fade-up' : 'fade-left'"
         data-aos-anchor-placement="center-bottom"
         class="order-1 w-full rounded border-[0.5px] border-primary bg-sand-100 p-[1px] lg:order-2 lg:w-2/3"
         style="
@@ -79,7 +99,7 @@
           <source
             src="~/assets/video.mp4"
             type="video/mp4"
-            data-aos="fade-left"
+            :data-aos="isMobile ? 'fade-up' : 'fade-left'"
             data-aos-anchor-placement="center-bottom"
           />
         </video>

@@ -1,4 +1,14 @@
 <script setup lang="ts">
+const { isMobile, checkIsMobile } = useFadeUpOnMobile()
+
+onMounted(() => {
+  checkIsMobile()
+  window.addEventListener('resize', checkIsMobile)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkIsMobile)
+})
 const images = ref([
   { src: 'landingpage/article-list', alt: '建立個人品牌' },
   { src: 'landingpage/creators', alt: '增加曝光機會' },
@@ -20,7 +30,10 @@ onMounted(() => {
   <div class="bg-sand-100 px-10 py-10 pb-0 sm:pb-20 lg:px-0 lg:pb-10">
     <div class="container">
       <div class="flex flex-col md:flex-row">
-        <div class="mb-4 flex flex-col md:mb-0 md:w-1/2" data-aos="fade-right">
+        <div
+          class="mb-4 flex flex-col md:mb-0 md:w-1/2"
+          :data-aos="isMobile ? 'fade-up' : 'fade-right'"
+        >
           <h3 class="mb-5 text-[40px] font-bold text-primary">在 小島聊癒所 創作，你可以...</h3>
 
           <ul class="mb-8">
@@ -38,7 +51,7 @@ onMounted(() => {
         </div>
         <div
           class="image-slider flex w-full justify-end md:w-1/2"
-          data-aos="fade-left"
+          :data-aos="isMobile ? 'fade-up' : 'fade-left'"
           data-aos-anchor-placement="center-bottom"
         >
           <transition-group name="fade-in-out" tag="div" class="flex items-center">

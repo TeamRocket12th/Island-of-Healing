@@ -1,4 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { isMobile, checkIsMobile } = useFadeUpOnMobile()
+
+onMounted(() => {
+  checkIsMobile()
+  window.addEventListener('resize', checkIsMobile)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkIsMobile)
+})
+</script>
 <template>
   <section class="container pt-10 sm:pt-[120px]">
     <h2
@@ -28,7 +39,7 @@
       <div
         class="relative w-full lg:w-2/3 2xl:w-[60%] 3xl:w-2/3"
         data-aos-delay="2200"
-        data-aos="fade-right"
+        :data-aos="isMobile ? 'zoom-in' : 'zoom-in'"
       >
         <img src="/landingpage/bg-desktop.png" alt="desktop" class="lg:h-[420px] xl:h-[520px]" />
         <img
@@ -39,8 +50,8 @@
       </div>
       <div
         class="w-full text-center lg:w-1/3 lg:text-left lg:first-letter:w-1/3 2xl:w-[30%]"
-        data-aos-delay="2600"
-        data-aos="fade-left"
+        :data-aos-delay="isMobile ? null : '2600'"
+        :data-aos="isMobile ? 'zoom-in' : 'fade-left'"
       >
         <div class="mb-9 md:mb-5 xl:mb-11">
           <h4 class="mb-1 text-2xl font-medium text-primary">AI 推薦導流</h4>
