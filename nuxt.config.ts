@@ -44,7 +44,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      viewport: 'initial-scale=1',
+      viewport: 'width=device-width, initial-scale=1',
       title: '小島聊癒所',
       meta: [
         {
