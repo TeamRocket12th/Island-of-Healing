@@ -6,8 +6,6 @@ import { useToast } from '~/stores/toast'
 const { showToast } = storeToRefs(useToast())
 const { setToast } = useToast()
 
-showToast.value = false
-
 const articleUse = useArticle()
 const route = useRoute()
 const router = useRouter()
@@ -139,7 +137,6 @@ const postArticle = async () => {
       body: articleUse.article
     })
     if (res.StatusCode === 200) {
-      showToast.value = true
       const articleId = res.ArticleId
       articleUse.article.Title = ''
       articleUse.article.Content = ''
@@ -171,7 +168,6 @@ const updateArticle = async () => {
     })
 
     if (res.StatusCode === 200) {
-      showToast.value = true
       articleUse.article.Title = ''
       articleUse.article.Content = ''
       articleUse.article.Summary = ''
