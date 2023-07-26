@@ -15,6 +15,7 @@ export const useWriterBoard = defineStore('writerboard', () => {
     if (!userToken.value) {
       return
     }
+
     try {
       const res: ApiResponse = await $fetch(`${apiBase}/writer/articles`, {
         headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }

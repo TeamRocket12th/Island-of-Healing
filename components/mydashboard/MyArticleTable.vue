@@ -6,13 +6,16 @@ import { useLoading } from '~/stores/loading'
 
 const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
-setLoading(true)
 
 const { selectedCategory, selectedYear, selectedMonth, progressTab } = storeToRefs(myWorkStore())
 const { selectedArticleIds, postedArticles, allMyArticles } = storeToRefs(useWriterBoard())
 const { getMyArticles, delArticle } = useWriterBoard()
 
 const router = useRouter()
+
+if (postedArticles.value.length === 0 && allMyArticles.value.length === 0) {
+  setLoading(true)
+}
 
 // 取得作家後台文章列表
 onMounted(getMyArticles)
@@ -264,7 +267,7 @@ const checkPreview = (progress: string, id: number) => {
               <button
                 type="button"
                 class="text-scondary disabled:text-btn-disabled"
-                :disabled="item.Progress === '審核成功'"
+                :disabled="item.Progress === '審核成功' || item.Progress === '審核中'"
                 @click="checkEdit(item.Progress, item.Id)"
               >
                 <Icon name="material-symbols:edit-outline" size="24" class="mr-3" />
