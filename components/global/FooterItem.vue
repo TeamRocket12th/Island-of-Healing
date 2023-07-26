@@ -47,7 +47,7 @@ const lists = ref([
             <div v-for="item in lists" :key="item.id">
               <NuxtLink
                 :to="item.url"
-                class="show ml-3 flex items-center border-b border-[#A09385] px-5 text-sand-100"
+                class="show flex items-center border-b border-[#A09385] px-5 text-sand-100"
                 :class="show ? '  py-5 opacity-100' : 'h-0 opacity-0'"
               >
                 {{ item.list }}
