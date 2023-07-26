@@ -149,6 +149,8 @@ const progressWithCheckbox = ref<TableData[]>([])
 watchEffect(() => {
   dataWithCheckbox.value = filteredArticles.value.map((item) => ({ ...item, isChecked: false }))
   progressWithCheckbox.value = progressList.value.map((item) => ({ ...item, isChecked: false }))
+  console.log(dataWithCheckbox.value)
+  console.log(progressWithCheckbox.value)
 })
 
 // 確認是否可編輯
@@ -370,7 +372,9 @@ const checkPreview = (progress: string, id: number) => {
             </td>
           </tr>
         </tbody>
-        <tbody v-if="dataWithCheckbox.length === 0 && !isLoading">
+        <tbody
+          v-if="(dataWithCheckbox.length === 0 || progressWithCheckbox.length === 0) && !isLoading"
+        >
           <tr>
             <td colspan="6" class="pt-10 text-center text-2xl font-medium text-primary">
               找不到文章
