@@ -94,32 +94,6 @@ const changeNowPage = (p: number) => {
   nowPage.value = p
 }
 
-// 取得所有文章 $fetch
-// const getAllArticles = async (page = '1') => {
-//   changeNowPage(page)
-//   scrollTop()
-//   try {
-//     const res: ApiResponse = await $fetch(`${apiBase}/readallarticles`, {
-//       headers: {
-//         'Content-type': 'application/json'
-//       },
-//       method: 'POST',
-//       body: {
-//         Page: page,
-//         UserId: userData.value.id || '0'
-//       }
-//     })
-//     console.log(res)
-//     if (res.StatusCode === 200) {
-//       console.log(res.Message)
-//       articles.value = res.LatestArticleData
-//       selectedArticles.value = res.SelectedArticleData
-//     }
-//   } catch (error: any) {
-//     console.log(error.response)
-//   }
-// }
-
 // 取得所有文章 useFetch
 const getAllArticles = async (page = 1) => {
   setLoading(true)

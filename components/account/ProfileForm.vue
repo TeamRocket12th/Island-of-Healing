@@ -10,19 +10,12 @@ const { setLoading } = useLoading()
 const { showToast } = storeToRefs(useToast())
 const { setToast } = useToast()
 
-const userStore = useUserStore()
-const { userData } = storeToRefs(userStore)
+const { userData } = storeToRefs(useUserStore())
 const { apiBase, userToken } = useApiConfig()
-
-interface UserInfo {
-  Birthday: null | string
-  JobTitle: string
-  Bio: string
-}
 
 const NickName = ref<string>(userData.value.nickName)
 
-const userInfo: UserInfo = reactive({
+const userInfo: userProfile = reactive({
   Birthday: null,
   JobTitle: '',
   Bio: ''
@@ -56,7 +49,6 @@ setLoading(true)
 onMounted(getUserInfo)
 
 const handleDateClick = (togglePopover: () => void) => {
-  event?.preventDefault()
   togglePopover()
 }
 const birth = ref('')

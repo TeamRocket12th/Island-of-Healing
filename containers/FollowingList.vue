@@ -23,7 +23,6 @@ const getFollowingList = async () => {
     console.log(res)
     if (res.StatusCode === 200) {
       setLoading(false)
-      console.log(res.Data)
       followingWriters.value = res.Data
     }
   } catch (error: any) {

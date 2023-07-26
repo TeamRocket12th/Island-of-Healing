@@ -3,38 +3,8 @@ import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 
 const { userData } = storeToRefs(useUserStore())
-// const runtimeConfig = useRuntimeConfig()
-// const apiBase = runtimeConfig.public.apiBase
 const articles = ref<ArticleCard[]>([])
 const { formatDate } = useDateFormat()
-
-// const getAllArticles = async (page = '1') => {
-//   const { data, error } = await useFetch<ApiResponse>(`${apiBase}/readallarticles`, {
-//     key: 'getAllArticles',
-//     headers: {
-//       'Content-type': 'application/json'
-//     },
-//     method: 'POST',
-//     body: {
-//       Page: page,
-//       UserId: userData.value.id || '0'
-//     }
-//   })
-//   console.log(data.value)
-
-//   if (data.value!.StatusCode === 200) {
-//     articles.value = data.value!.LatestArticleData
-//   }
-//   if (error.value) {
-//     console.log(error.value)
-//   }
-// }
-
-// onMounted(() => {
-//   nextTick(() => {
-//     getAllArticles('1')
-//   })
-// })
 
 const { data } = await useFetch<ApiResponse>('/api/allarticles', {
   headers: {

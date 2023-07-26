@@ -342,7 +342,7 @@ onMounted(getMyMsgs)
     <Transition>
       <div
         v-if="showMobileMenu"
-        class="absolute top-[58px] z-[999] h-screen min-h-screen w-screen overflow-auto bg-sand-100 bg-opacity-90 px-4 sm:hidden"
+        class="absolute top-[58px] z-[999] min-h-screen w-screen overflow-auto bg-sand-100 bg-opacity-90 px-4 sm:hidden"
         style="backdrop-filter: blur(5px)"
       >
         <span class="block text-right" @click="toggleMobileMenu"
@@ -447,10 +447,10 @@ onMounted(getMyMsgs)
             >
           </li>
           <li class="border-b-[0.5px] border-primary">
-            <NuxtLink
+            <span
               class="block cursor-pointer py-5 font-serif-tc font-semibold text-primary"
               @click="toggleMobileMenu2"
-              >會員中心</NuxtLink
+              >會員中心</span
             >
           </li>
 

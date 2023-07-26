@@ -5,6 +5,16 @@ declare global {
     [key: string]: any
   }
 
+  // 熱門作家
+  interface TrendingCreater {
+    FollowCount: number
+    Imgurl: string
+    IsFollowed: boolean
+    JobTitle: string
+    Name: string
+    WriterId: number
+  }
+
   // 作家資訊
   interface Writer {
     NickName: string
@@ -15,9 +25,9 @@ declare global {
     IsFollowing: boolean
   }
 
-  // 作者個人頁面
+  // 作家個人頁面
 
-  // 作者個人文章
+  // 作家個人文章
   interface WriterWork {
     Id: number
     ImgUrl: string
@@ -28,7 +38,7 @@ declare global {
     Like: false
   }
 
-  // 作者個人資訊
+  // 作家個人資訊
   interface WriterInfo {
     Id: number
     Bio: string
@@ -68,37 +78,13 @@ declare global {
     IsRead: boolean
   }
 
-  // 文章內作者資訊
+  // 文章頁面作家資訊
   interface DetailWriter {
     Id: number
     Bio: string
     ImgUrl: string
     NickName: string
     Follow: boolean
-  }
-
-  // 文章摘要
-  interface ArticleSummary {
-    Id: number
-    Title: string
-    Category: string
-    Initdate: string
-    Progress: string
-    Pay: string
-    CollectNum: number
-    CommentNum: number
-    LikeNum?: number
-    ClickNum?: number
-  }
-
-  // 文章數據
-  interface ArticleData {
-    Id: number
-    Title: string
-    Initdate: string
-    Likes: number
-    Clicks: number
-    Comments: number
   }
 
   // 文章卡片
@@ -113,6 +99,8 @@ declare global {
     Category?: string
     Summary?: string
   }
+
+  // 會員設定
 
   // 文章留言
   interface Comment {
@@ -169,16 +157,38 @@ declare global {
     JobTitle?: string
     Bio?: string
   }
-  interface TrendingCreater {
-    FollowCount: number
-    Imgurl: string
-    IsFollowed: boolean
+
+  interface userProfile {
+    Birthday: null | string
     JobTitle: string
-    Name: string
-    WriterId: number
+    Bio: string
   }
 
   // 作家後台
+
+  // 作家後台管理文章資訊
+  interface ArticleSummary {
+    Id: number
+    Title: string
+    Category: string
+    Initdate: string
+    Progress: string
+    Pay: string
+    CollectNum: number
+    CommentNum: number
+    LikeNum?: number
+    ClickNum?: number
+  }
+
+  // 文章數據
+  interface ArticleData {
+    Id: number
+    Title: string
+    Initdate: string
+    Likes: number
+    Clicks: number
+    Comments: number
+  }
 
   // 追蹤人數
   interface FollowerOverview {
@@ -215,15 +225,22 @@ declare global {
   }
 
   // AI聊天訊息
-  interface Message {
+
+  interface AIMessage {
     role: 'assistant' | 'user' | 'system'
     content: string
   }
 
-  type DefaultMsgs = Message[]
+  type DefaultMsgs = AIMessage[]
 
   interface AllMessages {
-    clientMsgs: Message[]
-    serverMsgs: Message[]
+    clientMsgs: AIMessage[]
+    serverMsgs: AIMessage[]
+  }
+
+  interface RecArticles {
+    title: string
+    url: string
+    id: number
   }
 }

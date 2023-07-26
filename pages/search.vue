@@ -47,29 +47,6 @@ const recArticles = [
   }
 ]
 
-// const getSearchResult = async (keyword: string, category = '0', uId: string) => {
-//   setLoading(true)
-//   const { data, error } = await useFetch<ApiResponse>(
-//     `${apiBase}/searcharticle/${keyword}/${category}/${uId}`,
-//     {
-//       key: 'getAllArticles',
-//       headers: {
-//         'Content-type': 'application/json'
-//       }
-//     }
-//   )
-//   console.log(data.value)
-
-//   if (data.value!.StatusCode === 200) {
-//     console.log(data.value!.Message)
-//     searchArticles.value = data.value!.ArticlesData
-//     setLoading(false)
-//   }
-//   if (error.value) {
-//     console.log(error.value)
-//   }
-// }
-
 const getSearchResult = async (keyword: string, category = '0', uId: string) => {
   setLoading(true)
   try {

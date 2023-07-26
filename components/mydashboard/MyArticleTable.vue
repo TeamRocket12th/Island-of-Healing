@@ -422,6 +422,9 @@ const checkPreview = (progress: string, id: number) => {
       </template>
     </div>
   </div>
+  <div class="mt-10">
+    <LoadingItem v-if="isLoading" />
+  </div>
 </template>
 
 <style scoped>

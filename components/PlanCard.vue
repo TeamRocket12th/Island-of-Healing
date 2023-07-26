@@ -41,7 +41,7 @@ const faqItems = ref([
   }
 ])
 
-const toggleClass = (item: any) => {
+const toggleFaq = (item: any) => {
   item.isActive = !item.isActive
 }
 </script>
@@ -234,7 +234,7 @@ const toggleClass = (item: any) => {
             active: item.isActive
           }"
           class="cursor-pointer"
-          @click="toggleClass(item)"
+          @click="toggleFaq(item)"
         >
           <div class="flex items-center justify-between">
             <p class="py-4 leading-8">{{ item.question }}</p>
