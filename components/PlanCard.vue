@@ -4,7 +4,16 @@ import { useUserStore } from '~/stores/user'
 
 const { isLogin, userData } = storeToRefs(useUserStore())
 const userId = userData.value.id
+const { isMobile, checkIsMobile } = useFadeUpOnMobile()
 
+onMounted(() => {
+  checkIsMobile()
+  window.addEventListener('resize', checkIsMobile)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkIsMobile)
+})
 useHead({
   link: [
     {
@@ -85,14 +94,14 @@ const toggleFaq = (item: any) => {
   <section class="bg-white">
     <section class="container py-10 pb-[100px] lg:py-[100px] xl:py-[124px]">
       <h3
-        data-aos="fade-right"
+        :data-aos="isMobile ? 'fade-up' : 'fade-right'"
         class="mb-10 text-center text-4xl font-bold leading-[54px] text-primary 3xl:mb-8 3xl:text-5xl"
       >
         加入會員有什麼好處？
       </h3>
       <ul
         class="grid grid-flow-col grid-rows-3 gap-4 lg:grid-rows-1 3xl:gap-[110px]"
-        data-aos="fade-left"
+        :data-aos="isMobile ? 'fade-up' : 'fade-left'"
       >
         <li class="flex flex-col items-center justify-between">
           <div class="relative h-[300px] w-[330px]">
@@ -139,7 +148,7 @@ const toggleFaq = (item: any) => {
     </div>
     <div class="flex flex-col-reverse gap-6 md:grid md:grid-cols-12">
       <div
-        data-aos="fade-right"
+        :data-aos="isMobile ? 'fade-up' : 'fade-right'"
         class="col-span-full flex h-[560px] flex-col items-center justify-center rounded-lg bg-white text-primary shadow md:col-span-6 lg:col-span-5 lg:col-start-2 xl:col-span-4 xl:col-start-3"
       >
         <div class="mb-6 flex items-baseline">
@@ -178,7 +187,7 @@ const toggleFaq = (item: any) => {
         </NuxtLink>
       </div>
       <div
-        data-aos="fade-left"
+        :data-aos="isMobile ? 'fade-up' : 'fade-left'"
         class="shadow-top col-span-full flex h-[560px] flex-col items-center justify-center rounded-lg bg-white text-primary md:col-span-6 lg:col-span-5 lg:col-start-7 xl:col-span-4"
       >
         <div class="mb-6 flex items-baseline">

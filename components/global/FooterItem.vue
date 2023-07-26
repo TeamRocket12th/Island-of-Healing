@@ -48,7 +48,7 @@ const lists = ref([
               <NuxtLink
                 :to="item.url"
                 class="show flex items-center border-b border-[#A09385] px-5 text-sand-100"
-                :class="show ? ' py-5 opacity-100' : 'h-0 opacity-0'"
+                :class="show ? '  py-5 opacity-100' : 'h-0 opacity-0'"
               >
                 {{ item.list }}
               </NuxtLink>

@@ -1,4 +1,14 @@
 <script setup lang="ts">
+const { isMobile, checkIsMobile } = useFadeUpOnMobile()
+
+onMounted(() => {
+  checkIsMobile()
+  window.addEventListener('resize', checkIsMobile)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkIsMobile)
+})
 const feedBacks1 = [
   {
     id: 1,
@@ -83,62 +93,74 @@ const feedBacks2 = [
         <h3 class="mb-4 text-[40px] font-bold">50,000+位人氣作家推薦</h3>
         <p class="text-2xl font-[350]">還在等什麼！快跟其他創作者一起體驗 展開內容創作之旅</p>
       </div>
-      <span
-        class="absolute left-0 hidden w-[400px] bg-gradient-to-r from-sand-100 xl:block xl:h-[600px]"
-      ></span>
-      <span
-        class="absolute right-0 hidden w-[400px] bg-gradient-to-l from-sand-100 xl:block xl:h-[600px]"
-      ></span>
-      <ul
-        data-aos="fade-right"
-        class="line-1 mb-4 flex flex-col justify-between gap-4 md:flex-row md:px-10 xl:flex-nowrap xl:px-0"
-      >
-        <li
-          v-for="item in feedBacks1"
-          :key="item.id"
-          class="mx-auto w-[90%] rounded-3xl border bg-white p-6 lg:w-[49%] xl:w-[560px]"
+      <div class="relative">
+        <ul
+          :data-aos="isMobile ? 'fade-up' : 'fade-right'"
+          class="line-1 mb-4 flex flex-col justify-between gap-4 md:flex-row md:px-10 xl:flex-nowrap xl:px-0"
         >
-          <div class="mb-4 flex items-center">
-            <div class="h-[60px] w-[60px] overflow-hidden rounded-full">
-              <img
-                :src="`/landingpage/users/${item.imgName}.jpg`"
-                alt="作家圖片"
-                class="h-full w-full object-cover"
-              />
+          <li
+            v-for="item in feedBacks1"
+            :key="item.id"
+            class="mx-auto w-[90%] rounded-3xl border bg-white p-6 lg:w-[49%] xl:w-[560px]"
+          >
+            <span
+              v-if="item.id === 1"
+              class="absolute left-0 top-0 hidden w-[400px] bg-gradient-to-r from-sand-100 xl:block xl:h-[260px] 3xl:h-[240px]"
+            ></span>
+            <span
+              v-if="item.id === 4"
+              class="absolute right-[-100px] top-0 hidden w-[500px] bg-gradient-to-l from-sand-100 xl:block xl:h-[260px] 3xl:h-[240px]"
+            ></span>
+            <div class="mb-4 flex items-center">
+              <div class="h-[60px] w-[60px] overflow-hidden rounded-full">
+                <img
+                  :src="`/landingpage/users/${item.imgName}.jpg`"
+                  alt="作家圖片"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+              <div class="ml-3 flex flex-col">
+                <p class="text-lg tracking-wider text-primary">{{ item.name }}</p>
+                <p class="text-secondary">{{ item.position }}</p>
+              </div>
             </div>
-            <div class="ml-3 flex flex-col">
-              <p class="text-lg tracking-wider text-primary">{{ item.name }}</p>
-              <p class="text-secondary">{{ item.position }}</p>
-            </div>
-          </div>
-          <p class="font-[350] leading-6 tracking-widest text-primary-dark">{{ item.content }}</p>
-        </li>
-      </ul>
-      <ul
-        data-aos="fade-left"
-        class="line-2 mb-10 hidden flex-col justify-between gap-4 xl:flex xl:flex-row"
-      >
-        <li
-          v-for="item in feedBacks2"
-          :key="item.id"
-          class="mx-auto w-[560px] rounded-3xl border bg-white p-6"
+            <p class="font-[350] leading-6 tracking-widest text-primary-dark">{{ item.content }}</p>
+          </li>
+        </ul>
+        <ul
+          :data-aos="isMobile ? 'fade-up' : 'fade-left'"
+          class="line-2 mb-10 hidden flex-col justify-between gap-4 xl:flex xl:flex-row"
         >
-          <div class="mb-4 flex items-center">
-            <div class="h-[60px] w-[60px] overflow-hidden rounded-full">
-              <img
-                :src="`/landingpage/users/${item.imgName}.jpg`"
-                alt="作家圖片"
-                class="h-full w-full object-cover"
-              />
+          <li
+            v-for="item in feedBacks2"
+            :key="item.id"
+            class="mx-auto w-[560px] rounded-3xl border bg-white p-6"
+          >
+            <span
+              v-if="item.id === 5"
+              class="absolute bottom-0 left-[-100px] hidden w-[500px] bg-gradient-to-r from-sand-100 xl:block xl:h-[260px] 3xl:h-[240px]"
+            ></span>
+            <span
+              v-if="item.id === 9"
+              class="absolute bottom-0 right-0 hidden w-[400px] bg-gradient-to-l from-sand-100 xl:block xl:h-[260px] 3xl:h-[240px]"
+            ></span>
+            <div class="mb-4 flex items-center">
+              <div class="h-[60px] w-[60px] overflow-hidden rounded-full">
+                <img
+                  :src="`/landingpage/users/${item.imgName}.jpg`"
+                  alt="作家圖片"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+              <div class="ml-3 flex flex-col">
+                <p class="text-lg tracking-wider text-primary">{{ item.name }}</p>
+                <p class="text-secondary">{{ item.position }}</p>
+              </div>
             </div>
-            <div class="ml-3 flex flex-col">
-              <p class="text-lg tracking-wider text-primary">{{ item.name }}</p>
-              <p class="text-secondary">{{ item.position }}</p>
-            </div>
-          </div>
-          <p class="font-[350] leading-6 tracking-widest text-primary-dark">{{ item.content }}</p>
-        </li>
-      </ul>
+            <p class="font-[350] leading-6 tracking-widest text-primary-dark">{{ item.content }}</p>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
