@@ -16,7 +16,7 @@ const lists = ref([
 <template>
   <footer class="bg-secondary">
     <div
-      class="container h-auto pb-8 pt-10 sm:grid sm:h-[308px] sm:grid-cols-2 sm:py-[92px] xl:grid-cols-12"
+      class="container h-auto px-7 pb-8 pt-10 sm:grid sm:h-[308px] sm:grid-cols-2 sm:py-[92px] xl:grid-cols-12"
     >
       <div class="py-10 sm:py-7 sm:pr-12 xl:col-span-5">
         <h2 class="mb-4 font-serif-tc text-4xl font-semibold tracking-[1.08px] text-sand-100">
@@ -28,7 +28,7 @@ const lists = ref([
         </p>
       </div>
       <div class="sm:py-7 sm:pl-7 xl:col-span-4 xl:col-start-9">
-        <ul class="mb-6 flex flex-col sm:flex-row sm:gap-11">
+        <ul class="mb-6 flex flex-col justify-end sm:flex-row sm:gap-6">
           <li
             class="font-serif-tc text-base font-medium leading-normal sm:hidden sm:border-b-0 sm:p-0 sm:text-sm"
           >
@@ -74,7 +74,7 @@ const lists = ref([
             <NuxtLink to="/plans"><p class="text-sand-100">訂閱方案</p></NuxtLink>
           </li>
         </ul>
-        <div class="items-center gap-5 px-5 sm:flex sm:px-0">
+        <div class="items-center justify-between gap-4 px-5 sm:flex sm:px-0">
           <div class="hidden h-[0.5px] w-[139px] bg-sand-100 sm:block"></div>
           <p class="mb-5 font-serif-tc text-sm font-semibold text-sand-100 sm:mb-0">Follow</p>
           <div class="flex items-center gap-3">
