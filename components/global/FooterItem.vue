@@ -71,11 +71,6 @@ const lists = ref([
           <li
             class="border-b border-[#A09385] p-5 font-serif-tc text-base font-medium leading-normal sm:border-b-0 sm:p-0 sm:text-sm"
           >
-            <NuxtLink to="/"><p class="text-sand-100">論壇</p></NuxtLink>
-          </li>
-          <li
-            class="border-b border-[#A09385] p-5 font-serif-tc text-base font-medium leading-normal sm:border-b-0 sm:p-0 sm:text-sm"
-          >
             <NuxtLink to="/plans"><p class="text-sand-100">訂閱方案</p></NuxtLink>
           </li>
         </ul>
