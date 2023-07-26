@@ -119,7 +119,7 @@ onMounted(getMyMsgs)
                   tabindex="0"
                   class="btn-ghost btn-circle avatar btn flex w-24 flex-nowrap items-center"
                 >
-                  <span v-if="unreadMsgs" class="badge badge-xs bg-orange-400"></span>
+                  <span v-if="unreadMsgs" class="h-2 w-2 rounded-full bg-[#EF4444]"></span>
                   <div class="h-9 w-9 overflow-hidden rounded-full">
                     <img :src="userData.avatar" />
                   </div>
@@ -165,11 +165,11 @@ onMounted(getMyMsgs)
                   <li class="text-primary hover:bg-secondary hover:text-sand-100">
                     <NuxtLink
                       :to="`/account/${userData.id}/messages`"
-                      class="block p-[10px] font-medium"
+                      class="flex items-center p-[10px] font-medium"
                     >
                       <Icon name="ic:baseline-mail-outline" size="24" class="mr-2" />
                       <span>我的訊息</span>
-                      <span v-if="unreadMsgs" class="badge badge-xs ml-2 bg-orange-400"></span>
+                      <span v-if="unreadMsgs" class="ml-2 h-2 w-2 rounded-full bg-[#EF4444]"></span>
                     </NuxtLink>
                   </li>
                   <li
