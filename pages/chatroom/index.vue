@@ -111,14 +111,14 @@ const { userData } = storeToRefs(useUserStore())
               <h2
                 class="mb-4 text-center text-4xl font-bold leading-normal text-primary md:text-5xl"
               >
-                歡迎來到AI 相談室！
+                歡迎來到 AI相談室！
               </h2>
               <p class="px-[30px] text-center font-light leading-relaxed text-primary-dark md:px-0">
                 在以下測驗中，我們將探索您的個性特徵和心理狀態。請在開始測驗之前保持專注和放鬆，並按照問題的提示進行回答。
               </p>
             </div>
             <button
-              class="btn-test absolute bottom-[100px] mb-6 flex items-center py-3 pl-4 pr-3 text-2xl font-medium text-white shadow hover:scale-110 md:block"
+              class="btn-test absolute bottom-[100px] mb-4 flex items-center py-3 pl-4 pr-3 text-2xl font-medium text-white shadow hover:scale-110 md:block"
             >
               <NuxtLink to="/chatroom/questions">
                 開始測驗
