@@ -44,7 +44,7 @@ const openConfirm = (value: boolean, id: number) => {
       class="relative cursor-pointer px-6"
       @click="selectMsg(message.Id, message.IsRead)"
     >
-      <div class="relative flex justify-center py-3">
+      <div class="relative flex items-center justify-center py-3">
         <div
           v-if="!message.IsRead"
           class="absolute left-[-20px] top-1/2 h-4 w-4 translate-y-[-50%] rounded-lg bg-secondary"

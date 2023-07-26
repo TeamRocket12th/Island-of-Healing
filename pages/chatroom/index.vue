@@ -118,7 +118,7 @@ const { userData } = storeToRefs(useUserStore())
               </p>
             </div>
             <button
-              class="btn-test absolute bottom-[100px] mb-3 flex items-center py-3 pl-4 pr-3 text-2xl font-medium text-white shadow hover:scale-110 md:block"
+              class="btn-test absolute bottom-[100px] mb-6 flex items-center py-3 pl-4 pr-3 text-2xl font-medium text-white shadow hover:scale-110 md:block"
             >
               <NuxtLink to="/chatroom/questions">
                 開始測驗
@@ -127,7 +127,7 @@ const { userData } = storeToRefs(useUserStore())
                 </span>
               </NuxtLink>
             </button>
-            <button class="absolute bottom-[84px] transition-transform hover:scale-110 md:block">
+            <button class="absolute bottom-[84px] md:block">
               <NuxtLink to="/chatroom/characters" class="tracking-wide text-primary-dark underline"
                 >略過測驗</NuxtLink
               >

@@ -7,7 +7,7 @@ import { useToast } from '~/stores/toast'
 const { msgLoading } = storeToRefs(useLoading())
 const { setMsgLoading } = useLoading()
 
-const { userMsgs } = storeToRefs(useMsgs())
+const { userMsgs, selectedMsg } = storeToRefs(useMsgs())
 const { getMyMsgs, readMyMsg, delMyMsg } = useMsgs()
 
 setMsgLoading(true)
@@ -46,7 +46,7 @@ const handleDelMsg = () => {
 
 onMounted(async () => {
   await getMyMsgs()
-  if (userMsgs.value[0].IsRead === false) {
+  if (userMsgs.value.length > 0 && userMsgs.value[0].IsRead === false && !selectedMsg.value) {
     readMyMsg(userMsgs.value[0].Id)
   }
 })

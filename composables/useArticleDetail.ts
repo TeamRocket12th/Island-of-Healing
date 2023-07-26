@@ -1,12 +1,9 @@
 // 取得單篇文章資訊
 import { useLoading } from '~/stores/loading'
-import { useArticle } from '~/stores/article'
-const articleUse = useArticle()
 
 export const useArticleDetail = () => {
   const { setLoading } = useLoading()
-  const runtimeConfig = useRuntimeConfig()
-  const apiBase = runtimeConfig.public.apiBase
+  const { apiBase } = useApiConfig()
   const articleDetail = ref<ArticleDetail | null>(null)
   const writerInfo = ref<DetailWriter | null>(null)
   const isCollecting = ref(false)
@@ -24,7 +21,6 @@ export const useArticleDetail = () => {
     if (data.value?.StatusCode === 200) {
       articleDetail.value = data.value.ArticleData
       writerInfo.value = data.value.WriterData
-      articleUse.articleTitle = data.value.ArticleData.Title
       isCollecting.value = data.value.Collect
       isLiking.value = data.value.Like
       comments.value = data.value.Comment
