@@ -58,7 +58,7 @@ const formatTitle = (title: string) => {
           </div>
         </div>
         <NuxtLink :to="`/article/${article.Id}`">
-          <div class="flex flex-col">
+          <div class="flex h-[400px] flex-col">
             <div class="mb-3 h-[267px] max-w-full overflow-hidden">
               <img
                 :src="article.ArticleImgUrl ? article.ArticleImgUrl : '/default-article-cover.jpg'"
