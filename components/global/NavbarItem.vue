@@ -32,6 +32,8 @@ if (process.client) {
 }
 
 const showCategory = ref(false)
+const showMobileCategory = ref(false)
+const showMobileCategory2 = ref(false)
 
 const showMobileMenu = ref(false)
 const toggleMobileMenu = () => {
@@ -51,9 +53,12 @@ const toggleMobileMenu2 = () => {
 }
 const CloseMobileMenuMemberCter = () => {
   showMobileCategory2.value = false
+  if (showMobileCategory2.value) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = 'auto'
+  }
 }
-const showMobileCategory = ref(false)
-const showMobileCategory2 = ref(false)
 
 const toggleMobileCategory = () => {
   showMobileCategory.value = !showMobileCategory.value
