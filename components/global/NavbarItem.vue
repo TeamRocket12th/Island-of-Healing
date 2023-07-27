@@ -319,12 +319,6 @@ onMounted(getMyMsgs)
           </li>
           <span class="flex items-center pb-5 font-serif-tc text-xl font-medium">·</span>
           <li class="whitespace-nowrap pb-5">
-            <NuxtLink to="/forum" class="text-xl font-medium text-primary" leading-normal
-              >論壇</NuxtLink
-            >
-          </li>
-          <span class="flex items-center pb-5 font-serif-tc text-xl font-medium">·</span>
-          <li class="whitespace-nowrap pb-5">
             <NuxtLink to="/plans" class="text-xl font-medium leading-normal text-primary"
               >訂閱方案</NuxtLink
             >
@@ -420,14 +414,6 @@ onMounted(getMyMsgs)
               class="block py-5 font-serif-tc font-semibold text-primary"
               @click="toggleMobileMenu"
               >AI相談室</NuxtLink
-            >
-          </li>
-          <li class="border-b-[0.5px] border-primary">
-            <NuxtLink
-              to="/forum"
-              class="block py-5 font-serif-tc font-semibold text-primary"
-              @click="toggleMobileMenu"
-              >論壇</NuxtLink
             >
           </li>
           <li class="border-b-[0.5px] border-primary">
