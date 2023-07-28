@@ -18,7 +18,6 @@ const { data } = await useFetch<ApiResponse>('/api/allarticles', {
 })
 
 if (data.value!.StatusCode === 200) {
-  console.log(data.value)
   articles.value = data.value!.LatestArticleData
 } else {
   console.error(data.value!._data.Message)
