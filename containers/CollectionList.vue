@@ -10,7 +10,6 @@ const { setLoading } = useLoading()
 // 取得個人收藏文章列表
 const getCollectedArticleList = async () => {
   if (!userToken.value) {
-    alert('請先登入')
     return
   }
   setLoading(true)
@@ -21,7 +20,6 @@ const getCollectedArticleList = async () => {
         Authorization: `Bearer ${userToken.value}`
       }
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       collectedArticle.value = res.Data
       setLoading(false)

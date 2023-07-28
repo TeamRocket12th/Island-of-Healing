@@ -17,7 +17,6 @@ export const useArticleDetail = () => {
     const { data, error } = await useFetch<ApiResponse>(
       `${apiBase}/readarticle/${articleId}/${userId}`
     )
-    console.log(data.value)
     if (data.value?.StatusCode === 200) {
       articleDetail.value = data.value.ArticleData
       writerInfo.value = data.value.WriterData

@@ -23,7 +23,6 @@ export const useArticleActions = () => {
         },
         method: 'POST'
       })
-      console.log(res)
       if (res.StatusCode === 200) {
         setToast('收藏成功！')
         getArticleDetail(articleId, userId)
@@ -52,7 +51,6 @@ export const useArticleActions = () => {
         },
         method: 'PUT'
       })
-      console.log(res)
       if (res.StatusCode === 200) {
         setToast('取消收藏成功！')
         await getArticleDetail(articleId, userId)
@@ -81,7 +79,6 @@ export const useArticleActions = () => {
         },
         method: 'POST'
       })
-      console.log(res)
       if (res.StatusCode === 200) {
         setToast('已給予愛心！')
         getArticleDetail(articleId, userId)
@@ -110,7 +107,6 @@ export const useArticleActions = () => {
         },
         method: 'PUT'
       })
-      console.log(res)
       if (res.StatusCode === 200) {
         setToast('已收回愛心！')
         getArticleDetail(articleId, userId)

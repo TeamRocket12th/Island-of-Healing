@@ -20,8 +20,9 @@ const sendResetPwd = async () => {
       headers: { 'Content-type': 'application/json' },
       method: 'POST'
     })
-    console.log(res)
-    setToast(res.Message)
+    if (res.StatusCode === 200) {
+      setToast(res.Message)
+    }
   } catch (error: any) {
     console.log(error.response)
     emailError.value = true

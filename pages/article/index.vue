@@ -237,6 +237,7 @@ const skeletonNum = ref({
           <button
             :disabled="nowPage === 1"
             class="btn-page flex h-[38px] w-[38px] items-center justify-center border border-sand-200 bg-white text-secondary hover:bg-secondary hover:text-white disabled:text-btn-disabled disabled:hover:bg-white"
+            @click="handleReading(nowPage - 1)"
           >
             <span>
               <Icon name="material-symbols:chevron-left" size="24" />
@@ -254,7 +255,7 @@ const skeletonNum = ref({
           </button>
           <button
             :disabled="nowPage === allPages"
-            class="btn-page flex h-[38px] w-[38px] items-center justify-center border border-sand-200 bg-white text-secondary hover:bg-secondary hover:text-white disabled:text-btn-disabled disabled:hover:bg-white"
+            class="btn-page flex h-[38px] w-[38px] items-center justify-center border-b border-r border-t border-sand-200 bg-white text-secondary hover:bg-secondary hover:text-white disabled:text-btn-disabled disabled:hover:bg-white"
             @click="handleReading(nowPage + 1)"
           >
             <span>

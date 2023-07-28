@@ -29,7 +29,6 @@ const getUserInfo = async () => {
           Authorization: `Bearer ${userToken.value}`
         }
       })
-      console.log(res)
       if (res.StatusCode === 200) {
         NickName.value = res.Data.User.NickName
         userInfo.Birthday = res.Data.User.Birthday

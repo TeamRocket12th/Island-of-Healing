@@ -20,7 +20,6 @@ const getFollowingList = async () => {
         Authorization: `Bearer ${userToken.value}`
       }
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       setLoading(false)
       followingWriters.value = res.Data

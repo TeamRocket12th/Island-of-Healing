@@ -6,8 +6,7 @@ import { useToast } from '~/stores/toast'
 const { showToast } = storeToRefs(useToast())
 const { setToast } = useToast()
 
-const userStore = useUserStore()
-const { userLogout } = userStore
+const { userLogout } = useUserStore()
 
 const passwordField = useTogglePassword()
 const passwordCheckField = useTogglePassword()
@@ -88,11 +87,6 @@ const resetPwd = async () => {
             <div>
               <VErrorMessage name="password" class="text-[14px] text-red-500" />
             </div>
-            <!-- <div class="mb-4 mt-[10px] flex items-center">
-              <Icon name="mdi:alert-circle-outline" size="15" class="left-3" />
-             <p class="ml-1 text-[14px]">密碼不得少於6個字元</p> 
-            </div> -->
-
             <label for="passwordCheck" class="mt-6 block text-[16px]">重新輸入新密碼 :</label>
             <div class="relative mb-1 mt-2">
               <VField

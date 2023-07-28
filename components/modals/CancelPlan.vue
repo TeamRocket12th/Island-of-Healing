@@ -2,8 +2,14 @@
 import { useToast } from '~/stores/toast'
 
 const { setToast } = useToast()
-
 const { apiBase, userToken } = useApiConfig()
+
+const props = defineProps({
+  userOrder: {
+    type: Function,
+    default: () => {}
+  }
+})
 
 // 取消續訂
 const unsubscribe = async () => {
@@ -37,13 +43,6 @@ const cancelPlan = (value: boolean) => {
 const cancelCheck = (value: boolean) => {
   emits('cancel-check', value)
 }
-
-const props = defineProps({
-  userOrder: {
-    type: Function,
-    default: () => {}
-  }
-})
 </script>
 
 <template>
