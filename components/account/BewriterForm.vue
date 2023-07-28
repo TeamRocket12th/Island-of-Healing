@@ -68,7 +68,6 @@ const applyForWriter = async () => {
   if (!userToken.value) {
     return
   }
-  console.log(data)
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/applyforwriter`, {
       headers: {
@@ -79,7 +78,6 @@ const applyForWriter = async () => {
     if (res.StatusCode === 200) {
       setToast('已提交申請！')
       showSendModal.value = false
-      alert(res.Message)
       data.intro = ''
       data.reason = ''
       data.work = ''

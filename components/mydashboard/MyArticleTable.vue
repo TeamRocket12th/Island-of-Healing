@@ -3,9 +3,13 @@ import { storeToRefs } from 'pinia'
 import { myWorkStore } from '~/stores/mywork'
 import { useWriterBoard } from '~/stores/writerboard'
 import { useLoading } from '~/stores/loading'
+import { useToast } from '~/stores/toast'
 
+const { showToast } = storeToRefs(useToast())
 const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
+
+showToast.value = false
 
 const { selectedCategory, selectedYear, selectedMonth, progressTab } = storeToRefs(myWorkStore())
 const { selectedArticleIds, postedArticles, allMyArticles } = storeToRefs(useWriterBoard())
@@ -62,7 +66,6 @@ const getAnalysis = async (year: string, month: string) => {
     const res: ApiResponse = await $fetch(`${apiBase}/writer/articleanalysis/${year}/${month}`, {
       headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       articleAnalysis.value = res.ArticleAnalysisData
       dataLoaded.value = true
@@ -166,7 +169,6 @@ const collectArticle = (id: number) => {
   } else {
     selectedArticleIds.value.push(id)
   }
-  console.log(selectedArticleIds.value)
 }
 
 // 頁面改變時，重置選取的文章
@@ -195,6 +197,9 @@ const checkPreview = (progress: string, id: number) => {
 </script>
 <template>
   <div class="overflow-x-auto">
+    <div class="fixed right-10 top-36 z-20 3xl:right-80">
+      <ToastMsg v-if="showToast" />
+    </div>
     <div>
       <table class="w-[1240px] md:w-full">
         <thead>

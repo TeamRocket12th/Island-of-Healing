@@ -19,7 +19,6 @@ const { getMyMsgs } = useMsgs()
 if (process.client) {
   const channel = pusher.subscribe(`my-channel-${userData.value.id}`)
   channel.bind('my-event', (data: ApiResponse) => {
-    console.log(data)
     userMsgs.value = data.MessageResponse.Notification
     unreadMsgs.value = true
   })

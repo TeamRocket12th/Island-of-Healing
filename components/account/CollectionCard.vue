@@ -16,8 +16,6 @@ defineProps({
 const { formatDate } = useDateFormat()
 const { apiBase, userToken } = useApiConfig()
 
-const dataLoaded = ref(false)
-
 // 收藏文章
 const isCollected = async (articleId: number, article: Article) => {
   if (!userToken.value) {
@@ -34,7 +32,6 @@ const isCollected = async (articleId: number, article: Article) => {
     if (res.StatusCode === 200) {
       setToast('收藏成功！')
       article.IsCollected = !article.IsCollected
-      dataLoaded.value = true
     }
   } catch (error: any) {
     console.log(error.response)

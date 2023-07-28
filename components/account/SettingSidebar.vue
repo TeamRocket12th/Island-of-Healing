@@ -4,11 +4,9 @@ import { useUserStore } from '~/stores/user'
 import { useUIStore } from '~/stores/ui'
 import { useMsgs } from '~/stores/mymsgs'
 
-const userStore = useUserStore()
-const uiStore = useUIStore()
-const { userData } = storeToRefs(userStore)
-const { isWriterExpanded } = storeToRefs(uiStore)
-const { toggleWriterSettings } = uiStore
+const { userData } = storeToRefs(useUserStore())
+const { isWriterExpanded } = storeToRefs(useUIStore())
+const { toggleWriterSettings } = useUIStore()
 const { unreadMsgs } = storeToRefs(useMsgs())
 </script>
 

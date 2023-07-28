@@ -27,7 +27,6 @@ export const useWriterActions = () => {
         },
         method: 'POST'
       })
-      console.log(res)
       if (res.StatusCode === 200) {
         setToast('追蹤成功！')
         refresh(secondId, userId)
@@ -44,7 +43,7 @@ export const useWriterActions = () => {
     refresh: (secondId: string, userId: string) => Promise<void>
   ) => {
     if (!userToken.value) {
-      alert('請先登入')
+      setToast('請先登入！')
       return
     }
     try {
@@ -55,7 +54,6 @@ export const useWriterActions = () => {
         },
         method: 'DELETE'
       })
-      console.log(res)
       if (res.StatusCode === 200) {
         setToast('已取消追蹤！')
         refresh(secondId, userId)

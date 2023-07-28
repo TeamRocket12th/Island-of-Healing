@@ -30,8 +30,6 @@ const handleSignUp = async () => {
         Password: password.value
       }
     })
-    console.log(res)
-
     if (res.StatusCode === 200) {
       signUpSuccess.value = true
       setToast('註冊成功')

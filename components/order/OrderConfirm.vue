@@ -18,7 +18,6 @@ const handleSubmit = async () => {
     form.value.submit()
   }
 }
-console.log(customerData.value)
 </script>
 
 <template>
