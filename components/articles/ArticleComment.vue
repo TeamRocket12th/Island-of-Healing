@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useToast } from '~/stores/toast'
 
-const userStore = useUserStore()
-const { userData } = storeToRefs(userStore)
+const { userData } = storeToRefs(useUserStore())
 const { apiBase, userToken } = useApiConfig()
 const { useFormattedTime } = useDateFormat()
+const { setToast } = useToast()
 
 const props = defineProps({
   comments: {
@@ -74,7 +75,7 @@ const updateComment = async (id: number) => {
     })
     console.log(res)
     if (res.StatusCode === 200) {
-      alert(res.Message)
+      setToast('編輯成功！')
       editingId.value = null
       props.getArticleDetail(props.articleId, props.userId)
     }
@@ -100,7 +101,7 @@ const delComment = async (id: number) => {
     })
     console.log(res)
     if (res.StatusCode === 200) {
-      alert(res.Message)
+      setToast('已刪除！')
       props.getArticleDetail(props.articleId, props.userId)
     }
   } catch (error: any) {

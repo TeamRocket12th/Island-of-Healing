@@ -89,18 +89,18 @@ const scrollTop = () => {
 
 // 分頁
 const nowPage = ref(1)
-const allPages = ref<number[]>([])
+const allPages = ref<number | null>(null)
 const changeNowPage = (p: number) => {
   nowPage.value = p
 }
 
-// 取得所有文章 useFetch
+// 取得所有文章
 const getAllArticles = async (page = 1) => {
   setLoading(true)
   changeNowPage(page)
   scrollTop()
   try {
-    const { data, error } = await useFetch<ApiResponse>(`${apiBase}/readallarticles`, {
+    const res: ApiResponse = await $fetch(`${apiBase}/readallarticles`, {
       key: 'getAllArticles',
       headers: {
         'Content-type': 'application/json'
@@ -111,16 +111,12 @@ const getAllArticles = async (page = 1) => {
         UserId: userData.value.id || '0'
       }
     })
-    console.log(data.value)
+    console.log(res)
 
-    if (data.value && data.value.StatusCode === 200) {
-      articles.value = data.value!.LatestArticleData
-      selectedArticles.value = data.value!.SelectedArticleData
-      allPages.value = data.value!.TotalLatestPages
-
-      if (error.value) {
-        console.log(error.value)
-      }
+    if (res.StatusCode === 200) {
+      articles.value = res.LatestArticleData
+      selectedArticles.value = res.SelectedArticleData
+      allPages.value = res.TotalLatestPages
     }
   } catch (error) {
     console.log(error)
@@ -237,18 +233,35 @@ const skeletonNum = ref({
         <div class="col-span-3 hidden lg:block">
           <ArticleSideBar />
         </div>
-        <div class="col-span-9 text-center">
-          <span class="rounded border-b border-l border-t border-sand-200 py-3">
-            <button
-              v-for="(p, index) in allPages"
-              :key="index"
-              class="btn-page border-r border-sand-200 px-4 py-3 hover:bg-secondary hover:text-white"
-              :class="nowPage === p ? 'bg-secondary text-white' : 'bg-white text-secondary'"
-              @click="handleReading(p)"
-            >
-              {{ p }}
-            </button>
-          </span>
+        <div class="col-span-9 flex items-center justify-center">
+          <button
+            :disabled="nowPage === 1"
+            class="btn-page flex h-[38px] w-[38px] items-center justify-center border border-sand-200 bg-white text-secondary hover:bg-secondary hover:text-white disabled:text-btn-disabled disabled:hover:bg-white"
+            @click="handleReading(nowPage - 1)"
+          >
+            <span>
+              <Icon name="material-symbols:chevron-left" size="24" />
+            </span>
+          </button>
+
+          <button
+            v-for="(p, index) in allPages"
+            :key="index"
+            class="btn-page flex h-[38px] w-[35px] items-center justify-center border-b border-r border-t border-sand-200 px-4 py-3 hover:bg-secondary hover:text-white"
+            :class="nowPage === p ? 'bg-secondary text-white' : 'bg-white text-secondary'"
+            @click="handleReading(p)"
+          >
+            {{ p }}
+          </button>
+          <button
+            :disabled="nowPage === allPages"
+            class="btn-page flex h-[38px] w-[38px] items-center justify-center border-b border-r border-t border-sand-200 bg-white text-secondary hover:bg-secondary hover:text-white disabled:text-btn-disabled disabled:hover:bg-white"
+            @click="handleReading(nowPage + 1)"
+          >
+            <span>
+              <Icon name="material-symbols:chevron-right" size="24" />
+            </span>
+          </button>
         </div>
       </div>
     </div>

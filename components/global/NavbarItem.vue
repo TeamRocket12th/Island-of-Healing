@@ -19,7 +19,6 @@ const { getMyMsgs } = useMsgs()
 if (process.client) {
   const channel = pusher.subscribe(`my-channel-${userData.value.id}`)
   channel.bind('my-event', (data: ApiResponse) => {
-    console.log(data)
     userMsgs.value = data.MessageResponse.Notification
     unreadMsgs.value = true
   })
@@ -32,6 +31,8 @@ if (process.client) {
 }
 
 const showCategory = ref(false)
+const showMobileCategory = ref(false)
+const showMobileCategory2 = ref(false)
 
 const showMobileMenu = ref(false)
 const toggleMobileMenu = () => {
@@ -51,9 +52,12 @@ const toggleMobileMenu2 = () => {
 }
 const CloseMobileMenuMemberCter = () => {
   showMobileCategory2.value = false
+  if (showMobileCategory2.value) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = 'auto'
+  }
 }
-const showMobileCategory = ref(false)
-const showMobileCategory2 = ref(false)
 
 const toggleMobileCategory = () => {
   showMobileCategory.value = !showMobileCategory.value
@@ -249,10 +253,10 @@ onMounted(getMyMsgs)
           /></span>
         </div>
         <ul
-          class="hidden items-center justify-center gap-4 font-serif-tc sm:flex"
+          class="hidden items-center justify-center font-serif-tc sm:flex"
           :class="isUserPage ? 'border-none' : 'border-primary sm:border-b-[0.5px]'"
         >
-          <li v-if="userData.role === 'writer'" class="whitespace-nowrap pb-5">
+          <li v-if="userData.role === 'writer'" class="whitespace-nowrap px-4 pb-5">
             <NuxtLink to="/newstory" class="text-xl font-medium leading-normal text-primary"
               >發表文章</NuxtLink
             >
@@ -263,7 +267,7 @@ onMounted(getMyMsgs)
             >·</span
           >
           <li
-            class="relative whitespace-nowrap pb-5 text-xl font-medium leading-normal text-primary"
+            class="relative cursor-pointer whitespace-nowrap px-4 pb-5 text-xl font-medium leading-normal text-primary"
             @mouseover="showCategory = true"
             @mouseleave="showCategory = false"
           >
@@ -312,25 +316,19 @@ onMounted(getMyMsgs)
             </ul>
           </li>
           <span class="flex items-center pb-5 font-serif-tc text-xl font-medium">·</span>
-          <li class="whitespace-nowrap pb-5">
+          <li class="whitespace-nowrap px-4 pb-5">
             <NuxtLink to="/chatroom" class="text-xl font-medium leading-normal text-primary"
               >AI 相談室</NuxtLink
             >
           </li>
           <span class="flex items-center pb-5 font-serif-tc text-xl font-medium">·</span>
-          <li class="whitespace-nowrap pb-5">
-            <NuxtLink to="/forum" class="text-xl font-medium text-primary" leading-normal
-              >論壇</NuxtLink
-            >
-          </li>
-          <span class="flex items-center pb-5 font-serif-tc text-xl font-medium">·</span>
-          <li class="whitespace-nowrap pb-5">
+          <li class="whitespace-nowrap px-4 pb-5">
             <NuxtLink to="/plans" class="text-xl font-medium leading-normal text-primary"
               >訂閱方案</NuxtLink
             >
           </li>
           <span class="flex items-center pb-5 font-serif-tc text-xl font-medium">·</span>
-          <li class="whitespace-nowrap pb-5">
+          <li class="whitespace-nowrap px-4 pb-5">
             <NuxtLink to="/become_creater" class="text-xl font-medium leading-normal text-primary"
               >成為作家</NuxtLink
             >
@@ -420,14 +418,6 @@ onMounted(getMyMsgs)
               class="block py-5 font-serif-tc font-semibold text-primary"
               @click="toggleMobileMenu"
               >AI相談室</NuxtLink
-            >
-          </li>
-          <li class="border-b-[0.5px] border-primary">
-            <NuxtLink
-              to="/forum"
-              class="block py-5 font-serif-tc font-semibold text-primary"
-              @click="toggleMobileMenu"
-              >論壇</NuxtLink
             >
           </li>
           <li class="border-b-[0.5px] border-primary">

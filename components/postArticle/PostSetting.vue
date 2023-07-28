@@ -6,15 +6,15 @@ import { useToast } from '~/stores/toast'
 const { showToast } = storeToRefs(useToast())
 const { setToast } = useToast()
 
+const { userData } = storeToRefs(useUserStore())
+const { apiBase, userToken } = useApiConfig()
 const articleUse = useArticle()
+
 const route = useRoute()
 const router = useRouter()
 
-const { userData } = storeToRefs(useUserStore())
-
 const selectedCategory = ref('個人成長')
 const toggleshowCategory = ref(false)
-const { apiBase, userToken } = useApiConfig()
 
 const selectCategory = (category: string) => {
   selectedCategory.value = category

@@ -23,7 +23,6 @@ const { data } = await useFetch<TrendingCreater[]>(`${apiBase}/hotwriters/get`, 
   }
 })
 if (data.value) {
-  console.log(data.value)
   trendingCreater.value = data.value
 }
 
@@ -41,7 +40,6 @@ const followWriter = async (id: number, writer: TrendingCreater) => {
       },
       method: 'POST'
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       setToast('追蹤成功！')
       writer.IsFollowed = !writer.IsFollowed
@@ -65,7 +63,6 @@ const unFollowWriter = async (id: number, writer: TrendingCreater) => {
       },
       method: 'DELETE'
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       setToast('已取消追蹤！')
       writer.IsFollowed = !writer.IsFollowed

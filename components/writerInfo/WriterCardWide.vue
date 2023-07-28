@@ -18,7 +18,7 @@ const userToken = useCookie('token')
 // 追蹤作家
 const followWriter = async (id: number, writer: Writer) => {
   if (!userToken.value) {
-    alert('請先登入')
+    setToast('請先登入！')
     return
   }
   try {
@@ -29,7 +29,6 @@ const followWriter = async (id: number, writer: Writer) => {
       },
       method: 'POST'
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       setToast('追蹤成功！')
       writer.IsFollowing = !writer.IsFollowing
@@ -43,7 +42,7 @@ const followWriter = async (id: number, writer: Writer) => {
 const unFollowWriter = async (id: number, writer: Writer) => {
   showConfirmModal.value = false
   if (!userToken.value) {
-    alert('請先登入')
+    setToast('請先登入')
     return
   }
   try {
@@ -54,7 +53,6 @@ const unFollowWriter = async (id: number, writer: Writer) => {
       },
       method: 'DELETE'
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       setToast('取消追蹤成功！')
       writer.IsFollowing = !writer.IsFollowing
@@ -77,19 +75,12 @@ const confirmDel = (writer: Writer) => {
   selectedId.value = writer.WriterId
   selectedWriter.value = writer
 }
-
-watchEffect(() => {
-  if (typeof document !== 'undefined') {
-    document.body.style.overflow = showConfirmModal.value ? 'hidden' : 'auto'
-    // document.body.style.paddingRight = showConfirmModal.value ? '15px' : '0'
-  }
-})
 </script>
 
 <template>
   <div>
     <ul v-if="writerInfo.length > 0" class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:px-28">
-      <div class="fixed right-10 top-52 z-20 3xl:right-80">
+      <div class="fixed right-10 top-36 z-20 3xl:right-80">
         <ToastMsg v-if="showToast" />
       </div>
       <li

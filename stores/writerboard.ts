@@ -1,9 +1,10 @@
 import { useLoading } from './loading'
+import { useToast } from './toast'
 
 export const useWriterBoard = defineStore('writerboard', () => {
   const { apiBase } = useApiConfig()
-
   const { setLoading } = useLoading()
+  const { setToast } = useToast()
 
   const selectedArticleIds = ref<number[]>([])
   const postedArticles = ref<ArticleSummary[]>([])
@@ -20,7 +21,6 @@ export const useWriterBoard = defineStore('writerboard', () => {
       const res: ApiResponse = await $fetch(`${apiBase}/writer/articles`, {
         headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }
       })
-      console.log(res)
       if (res.StatusCode === 200) {
         postedArticles.value = res.Data.filter(
           (article: ArticleSummary) => article.Progress !== '草稿'
@@ -45,9 +45,8 @@ export const useWriterBoard = defineStore('writerboard', () => {
         headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` },
         method: 'DELETE'
       })
-      console.log(res)
       if (res.StatusCode === 200) {
-        console.log(res.Message)
+        setToast('已刪除！')
         getMyArticles()
       }
     } catch (error: any) {
