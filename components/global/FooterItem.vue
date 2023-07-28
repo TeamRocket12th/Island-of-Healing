@@ -74,7 +74,7 @@ const lists = ref([
             <NuxtLink to="/plans"><p class="text-sand-100">訂閱方案</p></NuxtLink>
           </li>
         </ul>
-        <div class="items-center justify-between gap-4 px-5 sm:flex sm:px-0">
+        <div class="items-center justify-end gap-4 px-5 sm:flex sm:px-0">
           <div class="hidden h-[0.5px] w-[139px] bg-sand-100 sm:block"></div>
           <p class="mb-5 font-serif-tc text-sm font-semibold text-sand-100 sm:mb-0">Follow</p>
           <div class="flex items-center gap-3">

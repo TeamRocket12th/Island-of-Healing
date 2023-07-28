@@ -137,7 +137,6 @@ const sendQuestion = () => {
     content: question.value
   })
   question.value = ''
-  console.log(chatMessages)
   getResponse(chatMessages)
 }
 

@@ -131,7 +131,7 @@ const addComment = async (id: number, articleId: string, userId: string) => {
     })
     console.log(res)
     if (res.StatusCode === 200) {
-      alert(res.Message)
+      setToast('新增成功！')
       userComment.value = ''
       getArticleDetail(articleId, userId)
     }
@@ -143,6 +143,7 @@ const addComment = async (id: number, articleId: string, userId: string) => {
 // 收藏文章訊息
 const { followWriter, unFollowWriter } = useWriterActions()
 
+// 文章頁面Title
 const htmlTitle = ref<string | undefined>('')
 const emits = defineEmits(['use-title'])
 const useHtmlTitle = (value: string | undefined) => {
