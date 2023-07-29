@@ -5,11 +5,25 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
-    'nuxt-gtag'
+    'nuxt-gtag',
+    '@nuxtjs/google-fonts'
   ],
+
   // typescript: {
   //   typeCheck: true
   // },
+  googleFonts: {
+    families: {
+      'Noto Serif TC': {
+        wght: [300, 400, 500, 600, 700]
+      },
+      'Noto Sans TC': {
+        wght: [300, 400, 500, 600, 700]
+      }
+    },
+    preload: true,
+    download: true
+  },
   css: ['@/assets/css/main.css'],
   pinia: {
     autoImports: ['defineStore', ['defineStore', 'definePiniaStore']]

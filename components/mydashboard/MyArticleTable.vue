@@ -376,7 +376,7 @@ const checkPreview = (progress: string, id: number) => {
           </tr>
         </tbody>
         <tbody
-          v-if="(dataWithCheckbox.length === 0 || progressWithCheckbox.length === 0) && !isLoading"
+          v-if="dataWithCheckbox.length === 0 && progressWithCheckbox.length === 0 && !isLoading"
         >
           <tr>
             <td colspan="6" class="pt-10 text-center text-2xl font-medium text-primary">
