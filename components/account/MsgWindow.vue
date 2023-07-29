@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useMsgs } from '~/stores/mymsgs'
 
 const { userMsgs, msgIndex, msgsNum, selectedMsg, selectedMsgId } = storeToRefs(useMsgs())
+const { readMyMsg } = useMsgs()
 
 const formattedMsg = computed(() => {
   return selectedMsg.value!.NotificationContent.replace(/&nbsp;/g, '\n')
@@ -12,6 +13,9 @@ const readPrevMsg = () => {
   if (msgIndex.value > 0) {
     msgIndex.value -= 1
     selectedMsgId.value = userMsgs.value[msgIndex.value].Id
+    if (!userMsgs.value[msgIndex.value].IsRead) {
+      readMyMsg(selectedMsgId.value)
+    }
   }
 }
 
@@ -19,6 +23,9 @@ const readNextmsg = () => {
   if (msgIndex.value < msgsNum.value - 1) {
     msgIndex.value += 1
     selectedMsgId.value = userMsgs.value[msgIndex.value].Id
+    if (!userMsgs.value[msgIndex.value].IsRead) {
+      readMyMsg(selectedMsgId.value)
+    }
   }
 }
 

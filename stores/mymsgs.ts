@@ -68,7 +68,6 @@ export const useMsgs = defineStore('mymsgs', () => {
         },
         method: 'PUT'
       })
-      console.log(res)
       if (res.StatusCode === 200) {
         console.log(res.Message)
         if (unreadNum.value > 0) {
@@ -97,10 +96,9 @@ export const useMsgs = defineStore('mymsgs', () => {
         },
         method: 'DELETE'
       })
-      console.log(res)
       if (res.StatusCode === 200) {
         console.log(res.Message)
-        setToast('刪除成功！')
+        setToast('已刪除！')
         await getMyMsgs()
       }
     } catch (error: any) {

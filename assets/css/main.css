@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 @layer base {
-    body {
+    html {
         font-family: 'Noto Sans TC', sans-serif;
         scroll-behavior:smooth;
         @apply leading-normal 
