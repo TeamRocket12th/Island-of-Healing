@@ -5,24 +5,11 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
-    'nuxt-gtag',
-    '@nuxtjs/google-fonts'
+    'nuxt-gtag'
   ],
-
   // typescript: {
   //   typeCheck: true
   // },
-  googleFonts: {
-    families: {
-      'Noto Serif TC': {
-        wght: [300, 400, 500, 600, 700]
-      },
-      'Noto Sans TC': {
-        wght: [300, 400, 500, 600, 700]
-      }
-    },
-    preload: true
-  },
   css: ['@/assets/css/main.css'],
   pinia: {
     autoImports: ['defineStore', ['defineStore', 'definePiniaStore']]
@@ -72,7 +59,19 @@ export default defineNuxtConfig({
           content: 'https://i.imgur.com/8wSgF1W.png'
         }
       ],
-      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/logo-web.svg' }]
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/logo-web.svg' },
+        {
+          rel: 'preload',
+          href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap',
+          as: 'style'
+        },
+        {
+          rel: 'preload',
+          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap',
+          as: 'style'
+        }
+      ]
     }
   }
 })

@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "@gtm-support/vue-gtm": "^2.0.0",
-    "@nuxtjs/google-fonts": "^3.0.2",
     "@pinia/nuxt": "^0.4.11",
     "@popperjs/core": "^2.11.8",
     "@tiptap/core": "^2.0.3",
