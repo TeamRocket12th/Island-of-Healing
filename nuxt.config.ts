@@ -21,8 +21,7 @@ export default defineNuxtConfig({
         wght: [300, 400, 500, 600, 700]
       }
     },
-    preload: true,
-    download: true
+    preload: true
   },
   css: ['@/assets/css/main.css'],
   pinia: {
