@@ -73,14 +73,13 @@ const updateComment = async (id: number) => {
         Comment: editingContent.value
       }
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       setToast('編輯成功！')
       editingId.value = null
       props.getArticleDetail(props.articleId, props.userId)
     }
   } catch (error: any) {
-    console.log(error.response)
+    setToast('發生錯誤！')
   }
 }
 
@@ -99,13 +98,12 @@ const delComment = async (id: number) => {
       },
       method: 'DELETE'
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       setToast('已刪除！')
       props.getArticleDetail(props.articleId, props.userId)
     }
   } catch (error: any) {
-    console.log(error.response)
+    setToast('發生錯誤！')
   }
 }
 

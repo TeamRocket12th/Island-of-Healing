@@ -28,7 +28,6 @@ const handleLogin = async () => {
         password: password.value
       }
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       showToast.value = true
       userLogin()
@@ -41,7 +40,7 @@ const handleLogin = async () => {
     }
   } catch (error: any) {
     loginFailed.value = true
-    console.log(error.response)
+    setToast('發生錯誤！')
   }
 }
 

@@ -28,7 +28,7 @@ export const useArticleActions = () => {
         getArticleDetail(articleId, userId)
       }
     } catch (error: any) {
-      console.log(error.response)
+      setToast('發生錯誤！')
     }
   }
 
@@ -56,7 +56,7 @@ export const useArticleActions = () => {
         await getArticleDetail(articleId, userId)
       }
     } catch (error: any) {
-      console.log(error.response)
+      setToast('發生錯誤！')
     }
   }
 
@@ -84,7 +84,7 @@ export const useArticleActions = () => {
         getArticleDetail(articleId, userId)
       }
     } catch (error: any) {
-      console.log(error.response)
+      setToast('發生錯誤！')
     }
   }
 
@@ -112,7 +112,7 @@ export const useArticleActions = () => {
         getArticleDetail(articleId, userId)
       }
     } catch (error: any) {
-      console.log(error.response)
+      setToast('發生錯誤！')
     }
   }
 

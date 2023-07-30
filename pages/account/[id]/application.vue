@@ -28,7 +28,6 @@ const getApplyForWriterProgress = async () => {
       }
     })
     if (res.StatusCode === 200) {
-      // console.log(res.WriterProgress)
       getStatus.value = res.WriterProgress
       setLoading(false)
     }

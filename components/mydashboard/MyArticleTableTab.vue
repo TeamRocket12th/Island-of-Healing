@@ -14,7 +14,11 @@ const { getCategory, getPostSelectedYear, getYear, getMonth } = useMyworkStore
 defineProps({
   nowPage: {
     type: String,
-    default: ''
+    default: '',
+    validator: (value: string) => {
+      const acceptableStrings = ['articleList', 'progress', 'drafts']
+      return acceptableStrings.includes(value)
+    }
   }
 })
 
