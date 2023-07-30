@@ -40,7 +40,6 @@ const handleLogin = async () => {
     }
   } catch (error: any) {
     loginFailed.value = true
-    setToast('發生錯誤！')
   }
 }
 
