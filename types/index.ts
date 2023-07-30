@@ -218,6 +218,7 @@ declare global {
   }
 
   interface CustomerData {
+    [key: string]: string | number
     nickName: string
     email: string
     phone: string
