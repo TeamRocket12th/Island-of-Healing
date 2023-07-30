@@ -59,19 +59,7 @@ export default defineNuxtConfig({
           content: 'https://i.imgur.com/8wSgF1W.png'
         }
       ],
-      link: [
-        { rel: 'icon', type: 'image/svg+xml', href: '/logo-web.svg' },
-        {
-          rel: 'preload',
-          href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700',
-          as: 'style'
-        },
-        {
-          rel: 'preload',
-          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700',
-          as: 'style'
-        }
-      ]
+      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/logo-web.svg' }]
     }
   }
 })

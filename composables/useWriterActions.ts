@@ -32,7 +32,7 @@ export const useWriterActions = () => {
         refresh(secondId, userId)
       }
     } catch (error: any) {
-      console.log(error.response)
+      setToast('發生錯誤！')
     }
   }
 
@@ -59,7 +59,7 @@ export const useWriterActions = () => {
         refresh(secondId, userId)
       }
     } catch (error: any) {
-      console.log(error.response)
+      setToast('發生錯誤！')
     }
   }
 

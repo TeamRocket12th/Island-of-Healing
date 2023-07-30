@@ -47,7 +47,6 @@ const getUserOrder = async () => {
         Authorization: `Bearer ${userToken.value}`
       }
     })
-    // console.log(res)
     if (res.StatusCode === 200) {
       endDate.value = res.EndDate
       renewMembership.value = res.RenewMembership

@@ -75,13 +75,12 @@ const markArticleAsRead = async (id: number) => {
       },
       method: 'POST'
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       setToast('解鎖成功！')
       isRead.value = true
     }
   } catch (error: any) {
-    console.log(error.response)
+    setToast('發生錯誤！')
   }
 }
 
@@ -128,14 +127,13 @@ const addComment = async (id: number, articleId: string, userId: string) => {
         ArticleId: id
       }
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       setToast('新增成功！')
       userComment.value = ''
       getArticleDetail(articleId, userId)
     }
   } catch (error: any) {
-    console.log(error.response)
+    setToast('發生錯誤！')
   }
 }
 
@@ -284,12 +282,14 @@ onBeforeUpdate(() => {
           <img :src="writerInfo?.ImgUrl" alt="avatar" class="h-[60px] w-[60px] rounded-full" />
           <button
             v-if="!writerInfo?.Follow"
+            type="button"
             class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
           >
             <Icon name="ic:baseline-plus" size="16" />追蹤
           </button>
           <button
             v-else
+            type="button"
             class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
           >
             <Icon name="material-symbols:fitbit-check-small" size="20" />
@@ -381,7 +381,9 @@ onBeforeUpdate(() => {
       </div>
     </div>
   </section>
-
+  <section v-if="!articleDetail && !isLoading">
+    <h2 class="pb-60 pt-28 text-center text-3xl text-primary">找不到文章</h2>
+  </section>
   <section>
     <h2 class="mb-6 font-serif-tc text-4xl font-bold text-primary md:text-2xl">你可能會喜歡</h2>
     <RecArticleCard />

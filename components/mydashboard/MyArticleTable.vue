@@ -30,7 +30,11 @@ interface TableData {
 const props = defineProps({
   nowPage: {
     type: String,
-    default: ''
+    default: '',
+    validator: (value: string) => {
+      const acceptableStrings = ['articleList', 'progress', 'drafts']
+      return acceptableStrings.includes(value)
+    }
   }
 })
 

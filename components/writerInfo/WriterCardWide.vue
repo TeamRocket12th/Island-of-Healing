@@ -34,7 +34,7 @@ const followWriter = async (id: number, writer: Writer) => {
       writer.IsFollowing = !writer.IsFollowing
     }
   } catch (error: any) {
-    console.log(error.response)
+    setToast('發生錯誤！')
   }
 }
 
@@ -58,7 +58,7 @@ const unFollowWriter = async (id: number, writer: Writer) => {
       writer.IsFollowing = !writer.IsFollowing
     }
   } catch (error: any) {
-    console.log(error.response)
+    setToast('發生錯誤！')
   }
 }
 

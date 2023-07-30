@@ -41,7 +41,7 @@ const resetPwd = async () => {
       router.replace('/login')
     }
   } catch (error: any) {
-    console.log(error.response)
+    setToast('發生錯誤！')
   }
 }
 </script>

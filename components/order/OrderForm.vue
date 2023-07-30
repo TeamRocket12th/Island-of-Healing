@@ -17,8 +17,20 @@ const customerInputs = ref<CustomerData>({
   planId: Number(route.query.id)
 })
 
+const isFormFilled = computed(() => {
+  return Object.values(customerInputs.value).every((v) => v !== '')
+})
+
+const isPhoneNumberValid = computed(() => {
+  const phoneNumberPattern = /^09\d{8}$/
+  return phoneNumberPattern.test(customerInputs.value.phone)
+})
+
 const emits = defineEmits(['custom-order', 'get-customer-data', 'get-payment-data'])
 const sendOrder = (value: boolean, data: CustomerData) => {
+  if (!isPhoneNumberValid.value) {
+    return
+  }
   emits('custom-order', value)
   getCustomerInfo(data)
 }
@@ -63,6 +75,7 @@ const sendOrder = (value: boolean, data: CustomerData) => {
               required
               class="block w-full rounded border border-secondary px-3 py-2 focus:outline-secondary"
             />
+            <span v-if="!isPhoneNumberValid" class="text-primary-dark">請輸入09開頭的手機號碼</span>
           </div>
         </form>
       </div>
@@ -91,6 +104,7 @@ const sendOrder = (value: boolean, data: CustomerData) => {
           <button
             type="button"
             class="block w-full rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+            :disabled="!isFormFilled || !isPhoneNumberValid"
             @click="sendOrder(true, customerInputs)"
           >
             同意並送出

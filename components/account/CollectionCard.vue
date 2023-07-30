@@ -34,7 +34,7 @@ const isCollected = async (articleId: number, article: Article) => {
       article.IsCollected = !article.IsCollected
     }
   } catch (error: any) {
-    console.log(error.response)
+    setToast('發生錯誤！')
   }
 }
 
@@ -55,7 +55,7 @@ const cancelCollect = async (articleId: number, article: Article) => {
         article.IsCollected = !article.IsCollected
       }
     } catch (error: any) {
-      console.log(error.response)
+      setToast('發生錯誤！')
     }
   }
 }
