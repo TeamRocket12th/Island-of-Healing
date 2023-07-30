@@ -63,12 +63,12 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/svg+xml', href: '/logo-web.svg' },
         {
           rel: 'preload',
-          href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap',
+          href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700',
           as: 'style'
         },
         {
           rel: 'preload',
-          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap',
+          href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700',
           as: 'style'
         }
       ]
