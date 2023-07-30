@@ -21,10 +21,11 @@ const getWriterInfo = async (writerId: string, userId: string) => {
     if (res.StatusCode === 200) {
       writerInfo.value = res.WriterData
       writerWorks.value = res.ArticlesData
-      setLoading(false)
     }
   } catch (error) {
     console.log(error)
+  } finally {
+    setLoading(false)
   }
 }
 
@@ -57,8 +58,11 @@ onMounted(() => {
       </div>
       <div class="lg:col-span-8">
         <p v-if="isLoading" class="mt-10"><LoadingItem /></p>
-        <WriterWorkCard v-else :writer-works="writerWorks" />
+        <WriterWorkCard v-if="!isLoading && writerInfo" :writer-works="writerWorks" />
       </div>
+      <h2 v-if="!isLoading" class="col-span-full pb-60 pt-28 text-center text-3xl text-primary">
+        找不到作家
+      </h2>
     </section>
   </main>
 </template>

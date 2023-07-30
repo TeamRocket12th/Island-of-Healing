@@ -381,7 +381,9 @@ onBeforeUpdate(() => {
       </div>
     </div>
   </section>
-
+  <section v-else>
+    <h2 class="pb-60 pt-28 text-center text-3xl text-primary">找不到文章</h2>
+  </section>
   <section>
     <h2 class="mb-6 font-serif-tc text-4xl font-bold text-primary md:text-2xl">你可能會喜歡</h2>
     <RecArticleCard />
