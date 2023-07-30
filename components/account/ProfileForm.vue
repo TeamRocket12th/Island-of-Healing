@@ -20,6 +20,7 @@ const userInfo: userProfile = reactive({
   Bio: ''
 })
 
+const valueChange = ref(false)
 const getUserInfo = async () => {
   if (userToken.value) {
     try {
@@ -36,6 +37,26 @@ const getUserInfo = async () => {
         userInfo.Bio = res.Data.User.Bio || ''
         userData.value.avatar = res.Data.User.ImgUrl
         setLoading(false)
+        watch(
+          [
+            () => NickName.value,
+            () => userInfo.Birthday,
+            () => userInfo.JobTitle,
+            () => userInfo.Bio
+          ],
+          ([name, birthday, jobTitle, bio]) => {
+            if (
+              name !== NickName.value ||
+              birthday !== res.Data.User.Birthday ||
+              (jobTitle !== res.Data.User.Jobtitle && jobTitle !== '') ||
+              (bio !== res.Data.User.Bio && bio !== '')
+            ) {
+              valueChange.value = true
+            } else {
+              valueChange.value = false
+            }
+          }
+        )
       }
     } catch (error: any) {
       console.log(error.response)
@@ -263,7 +284,7 @@ const updateUserPhoto = async (data: FormData) => {
           <button
             type="submit"
             class="rounded border bg-secondary px-[7px] py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-            :disabled="!meta.valid"
+            :disabled="!meta.valid || !valueChange"
             @click.prevent="updateUserInfo"
           >
             儲存變更

@@ -1,19 +1,12 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>
-    <div class="flex items-center justify-center gap-10">
-      <img src="/logo.svg" alt="logo" class="w-[100px]" />
-      <div class="text-primary-dark">
-        <div class="flex">
-          <p class="text-4xl-plus font-bold">Loading</p>
-          <div class="flex">
-            <span class="loading1 text-4xl-plus font-bold">.</span>
-            <span class="loading2 text-4xl-plus font-bold">.</span>
-            <span class="loading3 text-4xl-plus font-bold">.</span>
-          </div>
-        </div>
-      </div>
+  <div class="flex justify-center gap-1 text-primary-dark">
+    <p class="text-4xl-plus">Loading</p>
+    <div class="flex h-[50px] items-center gap-1">
+      <span class="loading1 text-4xl-plus">.</span>
+      <span class="loading2 text-4xl-plus">.</span>
+      <span class="loading3 text-4xl-plus">.</span>
     </div>
   </div>
 </template>
