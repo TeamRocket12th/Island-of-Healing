@@ -31,13 +31,11 @@ const getUserInfo = async () => {
         }
       })
       if (res.StatusCode === 200) {
-        console.log(res.Data)
         NickName.value = res.Data.User.NickName
         userInfo.Birthday = res.Data.User.Birthday
         userInfo.JobTitle = res.Data.User.Jobtitle || ''
         userInfo.Bio = res.Data.User.Bio || ''
         userData.value.avatar = res.Data.User.ImgUrl
-
         setLoading(false)
         watch(
           [
