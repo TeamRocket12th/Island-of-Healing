@@ -42,19 +42,19 @@ export const useChatCharacters = defineStore('characterStore', () => {
       ],
       recArticles: [
         {
-          title: '別離與成長：好好道別的力量',
-          url: '/article/66',
-          id: 66
+          title: '找回自信，追尋幸福-克服情緒低潮的勇氣',
+          url: '/article/71',
+          id: 71
         },
         {
-          title: '認識自我與擁抱內在小孩的旅程',
-          url: '/article/67',
-          id: 67
+          title: '行動力的關鍵：三個方法提升自我效能',
+          url: '/article/60',
+          id: 60
         },
         {
-          title: '走出情緒低潮：五個簡單行動陪你重拾積極心態',
-          url: '/article/73',
-          id: 73
+          title: '遇見人生十字路口：四個建議助你選擇正確的道路',
+          url: '/article/62',
+          id: 62
         }
       ],
       recIntro: '閱讀幫助我們拓展視野，看清前方：'
@@ -105,9 +105,9 @@ export const useChatCharacters = defineStore('characterStore', () => {
           id: 68
         },
         {
-          title: '探索往內習得安全感的力量和意義',
-          url: '/article/61',
-          id: 57
+          title: '靜心與自我觀察：放鬆心靈的四個方法面對過度思考',
+          url: '/article/72',
+          id: 72
         }
       ],
       recIntro: '以下文章可以幫助您更認識自己的情緒：'
@@ -148,14 +148,14 @@ export const useChatCharacters = defineStore('characterStore', () => {
       ],
       recArticles: [
         {
-          title: '探索情緒的四個迷思',
-          url: '/article/56',
-          id: 56
+          title: '別離與成長：好好道別的力量',
+          url: '/article/66',
+          id: 66
         },
         {
-          title: '行動力的關鍵：三個方法提升自我效能',
-          url: '/article/60',
-          id: 60
+          title: '擺脫不健康的家庭關係，重塑心理平衡',
+          url: '/article/64',
+          id: 64
         },
         {
           title: '獨處的力量：發現內在寧靜與成長的時刻',
@@ -205,19 +205,19 @@ export const useChatCharacters = defineStore('characterStore', () => {
       ],
       recArticles: [
         {
-          title: '探索情緒的四個迷思',
-          url: '/article/56',
-          id: 56
+          title: '養成良好習慣的重要性與方法',
+          url: '/article/206',
+          id: 206
         },
         {
-          title: '重拾自我價值：探索內在的力量',
-          url: '/article/68',
-          id: 68
+          title: '照顧身心的力量：分享三個簡單的實踐方法',
+          url: '/article/63',
+          id: 63
         },
         {
-          title: '轉化焦慮為生活的優勢',
-          url: '/article/57',
-          id: 57
+          title: '走出情緒低潮：五個簡單行動陪你重拾積極心態',
+          url: '/article/73',
+          id: 73
         }
       ],
       recIntro: '以下是本汪最近推薦的文章！'
