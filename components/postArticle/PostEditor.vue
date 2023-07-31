@@ -328,7 +328,7 @@ const insertImage = () => {
             >
               <Icon
                 name="material-symbols:format-h2"
-                size="20"
+                size="24"
                 class="rounded hover:bg-[#E9E4D9]"
               />
             </button>
@@ -338,7 +338,7 @@ const insertImage = () => {
             >
               <Icon
                 name="material-symbols:format-h3"
-                size="20"
+                size="24"
                 class="rounded hover:bg-[#E9E4D9]"
               />
             </button>
