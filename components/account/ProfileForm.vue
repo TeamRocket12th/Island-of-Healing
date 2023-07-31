@@ -46,7 +46,7 @@ const getUserInfo = async () => {
           ],
           ([name, birthday, jobTitle, bio]) => {
             if (
-              name !== NickName.value ||
+              name !== res.Data.User.NickName ||
               birthday !== res.Data.User.Birthday ||
               (jobTitle !== res.Data.User.Jobtitle && jobTitle !== '') ||
               (bio !== res.Data.User.Bio && bio !== '')
