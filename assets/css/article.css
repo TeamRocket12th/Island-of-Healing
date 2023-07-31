@@ -39,24 +39,30 @@ blockquote {
   color: #1e40af;
   cursor: pointer;
 }
-
-h2.custom-heading {
-  font-size: 24px;
-  color: #4e2a09;
-  font-family: 'Noto Sans TC';
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-h3.custom-heading {
-  font-size: 20px;
+h1.custom-heading {
+  font-size: 32px;
   color: #4e2a09;
   font-family: 'Noto Sans TC';
   font-weight: 600;
+  margin-bottom: 10px;
+}
+h2.custom-heading {
+  font-size: 28px;
+  color: #4e2a09;
+  font-family: 'Noto Sans TC';
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+h3.custom-heading {
+  font-size: 24px;
+  color: #4e2a09;
+  font-family: 'Noto Sans TC';
+  font-weight: 400;
   margin-bottom: 5px;
 }
 
 .text-p {
-  font-size: 16px;
+  font-size: 20px;
   color: #3d1f03;
   font-family: 'Noto Sans TC';
   font-weight: 300;

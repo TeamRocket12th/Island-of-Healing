@@ -56,7 +56,7 @@ onMounted(() => {
     extensions: [
       StarterKit.configure({
         heading: {
-          levels: [2, 3],
+          levels: [1, 2, 3],
           HTMLAttributes: {
             class: 'custom-heading'
           }
@@ -252,8 +252,8 @@ const insertImage = () => {
   <div class="grid grid-cols-12" @dragover.prevent="handleDragOver" @drop.prevent="handleDrop">
     <div class="relative col-span-8 col-start-3">
       <div>
-        <div class="flex justify-end sm:mt-4 sm:gap-3">
-          <div v-if="editor" class="mr-3 flex items-center text-secondary">
+        <div class="flex items-center justify-end gap-4 sm:mt-4 sm:gap-5">
+          <div v-if="editor" class="flex items-center text-secondary">
             {{ editor.storage.characterCount.characters() }}字
           </div>
           <div class="flex cursor-pointer items-center" @click="rulesShow(true)">
@@ -266,7 +266,7 @@ const insertImage = () => {
           </div>
           <div class="flex justify-end">
             <button
-              class="rounded px-3 py-[7px] text-sand-300 duration-100 hover:text-secondary sm:text-secondary sm:hover:bg-secondary sm:hover:text-white"
+              class="rounded bg-secondary px-3 py-[7px] text-white duration-100"
               @click="postSent(true)"
             >
               發表貼文
@@ -313,16 +313,34 @@ const insertImage = () => {
               <Icon name="material-symbols:link" size="24" class="rounded hover:bg-[#E9E4D9]" />
             </button>
             <button
+              :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+              @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+            >
+              <Icon
+                name="material-symbols:format-h1"
+                size="24"
+                class="rounded hover:bg-[#E9E4D9]"
+              />
+            </button>
+            <button
               :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
               @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
             >
-              <Icon name="ic:baseline-title" size="24" class="rounded hover:bg-[#E9E4D9]" />
+              <Icon
+                name="material-symbols:format-h2"
+                size="24"
+                class="rounded hover:bg-[#E9E4D9]"
+              />
             </button>
             <button
               :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
               @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
             >
-              <Icon name="ic:baseline-title" size="20" class="rounded hover:bg-[#E9E4D9]" />
+              <Icon
+                name="material-symbols:format-h3"
+                size="24"
+                class="rounded hover:bg-[#E9E4D9]"
+              />
             </button>
             <button @click="editor.chain().focus().setHorizontalRule().run()">
               <Icon
@@ -450,38 +468,31 @@ const insertImage = () => {
       </div>
     </div>
     <div
-      v-if="editor && !selectedStatus"
-      class="absolute bottom-0 -mx-3 flex w-full justify-start gap-2 bg-[#E9E4D9] px-4 py-3 text-secondary sm:hidden"
+      v-if="editor && selectedStatus"
+      class="absolute bottom-0 -mx-3 flex w-full justify-around bg-[#E9E4D9] py-3 text-secondary sm:hidden"
     >
       <button
-        :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-        class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
-        @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+        :disabled="!editor.can().chain().focus().toggleBold().run()"
+        :class="{ 'bold-active': editor.isActive('bold') }"
+        class="h-8 w-[50px] font-bold"
+        @click="editor.chain().focus().toggleBold().run()"
       >
-        <Icon name="material-symbols:text-fields" size="24" />
+        Bold
       </button>
       <button
-        :class="{ 'is-active': editor.isActive('blockquote') }"
-        class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
-        @click="editor.chain().focus().toggleBlockquote().run()"
+        :disabled="!editor.can().chain().focus().toggleItalic().run()"
+        :class="{ 'italic-active': editor.isActive('italic') }"
+        class="h-8 w-[50px]"
+        @click="editor.chain().focus().toggleItalic().run()"
       >
-        <Icon name="material-symbols:format-quote-outline" size="24" />
+        Italic
       </button>
       <button
-        :class="{ 'is-active': editor.isActive('bulletList') }"
-        class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
-        @click="editor.chain().focus().toggleBulletList().run()"
+        :class="{ 'link-active': editor.isActive('link') }"
+        class="h-8 w-[50px]"
+        @click="setLink"
       >
-        <Icon name="material-symbols:format-list-bulleted" size="24" />
-      </button>
-      <button
-        class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
-        @click="editor.chain().focus().setHorizontalRule().run()"
-      >
-        <Icon name="material-symbols:align-center" size="24" />
-      </button>
-      <button class="block h-8 w-8 rounded hover:bg-secondary hover:text-white" @click="addImage">
-        <Icon name="material-symbols:add-photo-alternate-outline" size="24" />
+        <span class="underline">Link</span>
       </button>
     </div>
   </div>
