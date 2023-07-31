@@ -80,7 +80,7 @@ watch(imageUrl, (newValue, oldValue) => {
     imageUrlChanged.value = true
     setTimeout(() => {
       imageUrlChanged.value = false
-    }, 1500)
+    }, 1000)
   }
 })
 </script>
