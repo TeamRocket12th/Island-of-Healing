@@ -31,11 +31,13 @@ const getUserInfo = async () => {
         }
       })
       if (res.StatusCode === 200) {
+        console.log(res.Data)
         NickName.value = res.Data.User.NickName
         userInfo.Birthday = res.Data.User.Birthday
         userInfo.JobTitle = res.Data.User.Jobtitle || ''
         userInfo.Bio = res.Data.User.Bio || ''
         userData.value.avatar = res.Data.User.ImgUrl
+
         setLoading(false)
         watch(
           [
@@ -46,7 +48,7 @@ const getUserInfo = async () => {
           ],
           ([name, birthday, jobTitle, bio]) => {
             if (
-              name !== NickName.value ||
+              name !== res.Data.User.NickName ||
               birthday !== res.Data.User.Birthday ||
               (jobTitle !== res.Data.User.Jobtitle && jobTitle !== '') ||
               (bio !== res.Data.User.Bio && bio !== '')
