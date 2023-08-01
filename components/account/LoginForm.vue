@@ -104,7 +104,7 @@ watch(account, (newValue, oldValue) => {
                 placeholder="帳號"
                 label="電子信箱"
                 class="input-bordered input w-full rounded border bg-sand-100 pl-12 text-secondary focus:outline-none"
-                :class="errors['email'] ? 'border-[#EF4444]' : 'border-secondary '"
+                :class="errors['email'] ? 'border-red-500' : 'border-secondary '"
                 @click="handleEnterKey"
               />
             </div>
@@ -126,7 +126,7 @@ watch(account, (newValue, oldValue) => {
                 placeholder="密碼"
                 maxlength="13"
                 class="input-bordered input w-full rounded border bg-sand-100 pl-12 text-secondary focus:outline-none"
-                :class="errors['password'] ? 'border-[#EF4444]' : 'border-secondary '"
+                :class="errors['password'] ? 'border-red-500' : 'border-secondary '"
                 @click="handleEnterKey"
               />
               <Icon
