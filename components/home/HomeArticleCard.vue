@@ -35,7 +35,7 @@ const formatTitle = (title: string) => {
 <template>
   <section class="bg-sand-100 py-[84px] sm:bg-sand-200">
     <div class="container">
-      <div class="mb-6 flex items-center gap-4 px-4">
+      <div class="mb-6 flex items-center gap-2 px-4">
         <h2 class="font-serif-tc text-4xl font-bold text-primary">精選文章</h2>
         <div class="h-[0.5px] w-[150px] bg-primary"></div>
       </div>
