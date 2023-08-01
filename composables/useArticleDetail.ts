@@ -35,8 +35,8 @@ export const useArticleDetail = () => {
     }
 
     if (error.value) {
-      console.log(error.value)
       setLoading(false)
+      throw createError({ statusCode: 404, message: '找不到文章' })
     }
   }
   return {

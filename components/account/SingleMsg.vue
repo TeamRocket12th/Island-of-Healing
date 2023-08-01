@@ -21,7 +21,9 @@ const msgType = ref(0)
 const showArticleLink = ref(false)
 watchEffect(() => {
   msgType.value = selectedMsg.value!.NotificationContentId
-  msgType.value === 1 ? (showArticleLink.value = true) : (showArticleLink.value = false)
+  msgType.value === 1 || msgType.value === 2
+    ? (showArticleLink.value = true)
+    : (showArticleLink.value = false)
 })
 </script>
 <template>

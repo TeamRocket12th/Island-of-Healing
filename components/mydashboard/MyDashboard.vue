@@ -103,7 +103,6 @@ const getFollowerOverview = async (year: string) => {
     const res: ApiResponse = await $fetch(`${apiBase}/writer/numberoffans/${year}`, {
       headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       followerOverview.value = res.NumberOfFansData
       chartMonths.value = followMonths.map((month) => res.NumberOfFansData[month])
@@ -139,7 +138,6 @@ const getWriterIncome = async (year: string, month: string) => {
         headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }
       }
     )
-    console.log(res)
     if (res.StatusCode === 200) {
       if (showYearlyIncome.value) {
         trafficIncome.value = Math.round(res.YearRoyalty)
@@ -196,10 +194,8 @@ const getWriterOverview = async (year: string, month: string) => {
     const res: ApiResponse = await $fetch(`${apiBase}/writer/overview/${year}/${month}`, {
       headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` }
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       writerOverview.value = res.OverviewData
-      console.log(res.Message)
     }
   } catch (error: any) {
     console.log(error.response)

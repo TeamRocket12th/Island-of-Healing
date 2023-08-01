@@ -45,7 +45,7 @@ const followWriter = async (id: number, writer: TrendingCreater) => {
       writer.IsFollowed = !writer.IsFollowed
     }
   } catch (error: any) {
-    console.log(error)
+    setToast('發生錯誤！')
   }
 }
 
@@ -68,7 +68,7 @@ const unFollowWriter = async (id: number, writer: TrendingCreater) => {
       writer.IsFollowed = !writer.IsFollowed
     }
   } catch (error: any) {
-    console.log(error)
+    setToast('發生錯誤！')
   }
 }
 </script>
@@ -95,7 +95,9 @@ const unFollowWriter = async (id: number, writer: TrendingCreater) => {
         <p class="mb-1 text-center font-serif-tc font-bold text-primary">
           <NuxtLink :to="`/writer/${creater.WriterId}`">{{ creater.Name }} </NuxtLink>
         </p>
-        <p class="mb-4 text-center text-sm font-light text-primary">{{ creater.JobTitle }}</p>
+        <p class="mb-4 min-h-[21px] text-center text-sm font-light text-primary">
+          {{ creater.JobTitle }}
+        </p>
         <button
           v-if="creater.IsFollowed"
           class="m-auto flex items-center rounded bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"

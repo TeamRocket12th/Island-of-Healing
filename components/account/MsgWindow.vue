@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useMsgs } from '~/stores/mymsgs'
 
 const { userMsgs, msgIndex, msgsNum, selectedMsg, selectedMsgId } = storeToRefs(useMsgs())
+const { readMyMsg } = useMsgs()
 
 const formattedMsg = computed(() => {
   return selectedMsg.value!.NotificationContent.replace(/&nbsp;/g, '\n')
@@ -12,6 +13,9 @@ const readPrevMsg = () => {
   if (msgIndex.value > 0) {
     msgIndex.value -= 1
     selectedMsgId.value = userMsgs.value[msgIndex.value].Id
+    if (!userMsgs.value[msgIndex.value].IsRead) {
+      readMyMsg(selectedMsgId.value)
+    }
   }
 }
 
@@ -19,6 +23,9 @@ const readNextmsg = () => {
   if (msgIndex.value < msgsNum.value - 1) {
     msgIndex.value += 1
     selectedMsgId.value = userMsgs.value[msgIndex.value].Id
+    if (!userMsgs.value[msgIndex.value].IsRead) {
+      readMyMsg(selectedMsgId.value)
+    }
   }
 }
 
@@ -28,7 +35,9 @@ const showArticleLink = ref(false)
 watchEffect(() => {
   if (userMsgs.value.length > 0 && selectedMsg.value) {
     msgType.value = selectedMsg.value!.NotificationContentId
-    msgType.value === 1 ? (showArticleLink.value = true) : (showArticleLink.value = false)
+    msgType.value === 1 || msgType.value === 2
+      ? (showArticleLink.value = true)
+      : (showArticleLink.value = false)
   }
 })
 

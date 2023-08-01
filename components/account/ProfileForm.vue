@@ -54,7 +54,7 @@ const getUserInfo = async () => {
         )
       }
     } catch (error: any) {
-      console.log(error.response)
+      setToast('發生錯誤！')
     }
   }
 }
@@ -87,7 +87,6 @@ const openFilePicker = () => {
 const selectFile = (event: Event) => {
   const formData = new FormData()
   const file: any = (event.target as HTMLInputElement).files?.[0]
-  console.log('file', file)
 
   formData.append('userphoto', file)
 
@@ -128,14 +127,13 @@ const updateUserInfo = async () => {
         Bio: userInfo.Bio
       }
     })
-
     if (res.StatusCode === 200) {
       userData.value.nickName = NickName.value
       setToast('已成功更新資料！')
       valueChange.value = false
     }
   } catch (error: any) {
-    console.log(error.response)
+    setToast('發生錯誤！')
   }
 }
 
@@ -156,7 +154,7 @@ const updateUserPhoto = async (data: FormData) => {
       getUserInfo()
     }
   } catch (error: any) {
-    console.log(error.response)
+    setToast('發生錯誤！')
   }
 }
 </script>

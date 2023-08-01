@@ -43,7 +43,6 @@ const saveChatCount = async () => {
       },
       method: 'PUT'
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       props.increaseChatCount()
     }
