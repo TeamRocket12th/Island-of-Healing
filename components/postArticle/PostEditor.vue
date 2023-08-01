@@ -238,12 +238,17 @@ const insertImage = () => {
   const imageSrc = blobUrl.value
 
   if (imageSrc) {
-    editor.value.commands.insertContent({
-      type: 'image',
-      attrs: {
-        src: imageSrc
+    editor.value.commands.insertContent([
+      {
+        type: 'image',
+        attrs: {
+          src: imageSrc
+        }
+      },
+      {
+        type: 'paragraph'
       }
-    })
+    ])
   }
 }
 </script>
