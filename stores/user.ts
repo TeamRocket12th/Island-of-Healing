@@ -69,7 +69,6 @@ export const useUserStore = defineStore(
       isLogin.value = false
       userInfo.value = null
       authToken.value = null
-      console.log('token 驗證失敗')
       router.replace('/login')
     }
 
