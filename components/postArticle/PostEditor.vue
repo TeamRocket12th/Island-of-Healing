@@ -257,7 +257,7 @@ const insertImage = () => {
   <div class="grid grid-cols-12" @dragover.prevent="handleDragOver" @drop.prevent="handleDrop">
     <div class="relative col-span-8 col-start-3">
       <div>
-        <div class="flex items-center justify-end gap-4 sm:mt-4 sm:gap-5">
+        <div class="mt-2 flex items-center justify-end gap-4 sm:mt-4 sm:gap-5">
           <div v-if="editor" class="flex items-center text-secondary">
             {{ editor.storage.characterCount.characters() }}字
           </div>
@@ -449,26 +449,38 @@ const insertImage = () => {
     </div>
     <div>
       <div
-        v-if="editor && selectedStatus"
-        class="absolute bottom-0 -mx-6 flex w-full flex-wrap justify-around bg-[#E9E4D9] py-3 text-secondary sm:hidden"
+        v-if="editor && !selectedStatus"
+        class="absolute bottom-0 left-0 flex w-full gap-2 bg-[#E9E4D9] py-3 pl-4 text-secondary sm:hidden"
       >
         <button
-          :disabled="!editor.can().chain().focus().toggleBold().run()"
-          :class="{ 'bold-active': editor.isActive('bold') }"
-          class="h-8 font-bold"
-          @click="editor.chain().focus().toggleBold().run()"
+          :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+          class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
+          @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
         >
-          Bold
+          <Icon name="material-symbols:text-fields" size="24" />
         </button>
         <button
-          :disabled="!editor.can().chain().focus().toggleItalic().run()"
-          :class="{ 'italic-active': editor.isActive('italic') }"
-          @click="editor.chain().focus().toggleItalic().run()"
+          :class="{ 'is-active': editor.isActive('blockquote') }"
+          class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
+          @click="editor.chain().focus().toggleBlockquote().run()"
         >
-          Italic
+          <Icon name="material-symbols:format-quote-outline" size="24" />
         </button>
-        <button :class="{ 'link-active': editor.isActive('link') }" @click="setLink">
-          <span class="underline">Link</span>
+        <button
+          :class="{ 'is-active': editor.isActive('bulletList') }"
+          class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
+          @click="editor.chain().focus().toggleBulletList().run()"
+        >
+          <Icon name="material-symbols:format-list-bulleted" size="24" />
+        </button>
+        <button
+          class="block h-8 w-8 rounded hover:bg-secondary hover:text-white"
+          @click="editor.chain().focus().setHorizontalRule().run()"
+        >
+          <Icon name="material-symbols:align-center" size="24" />
+        </button>
+        <button class="block h-8 w-8 rounded hover:bg-secondary hover:text-white" @click="addImage">
+          <Icon name="material-symbols:add-photo-alternate-outline" size="24" />
         </button>
       </div>
     </div>
