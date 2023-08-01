@@ -18,7 +18,6 @@ const toggleshowCategory = ref(false)
 
 const selectCategory = (category: string) => {
   selectedCategory.value = category
-
   switch (category) {
     case '個人成長':
       articleUse.article.ArticlesClassId = 1
@@ -270,6 +269,16 @@ onMounted(() => {
       articleUse.selectedImage = ''
     }
   }
+  if (articleUse.article.ArticlesClassId === 2) {
+    selectedCategory.value = '情緒察覺'
+  } else if (articleUse.article.ArticlesClassId === 3) {
+    selectedCategory.value = '親密關係'
+  } else if (articleUse.article.ArticlesClassId === 4) {
+    selectedCategory.value = '日常練習'
+  }
+  if (articleUse.article.Pay === true) {
+    selectedOption.value = '付費'
+  }
 })
 
 const photoAlert = ref(true)
@@ -283,7 +292,7 @@ watchEffect(() => {
 </script>
 <template>
   <div
-    class="container absolute left-1/2 top-1/2 mt-[200px] grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-12 md:mt-16 md:h-screen md:pt-0"
+    class="container absolute left-1/2 top-1/2 mt-[240px] grid -translate-x-1/2 -translate-y-1/2 grid-cols-12 bg-sand-100 pt-12 md:mt-16 md:h-screen md:pt-0"
   >
     <div class="col-span-12 lg:col-span-10 lg:col-start-2 xl:col-span-8 xl:col-start-3">
       <div class="block">
