@@ -172,7 +172,9 @@ onBeforeUpdate(() => {
       <div class="mb-5 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <div class="h-9 w-9">
-            <img :src="writerInfo?.ImgUrl" alt="writer" class="h-full w-full rounded-full" />
+            <NuxtLink :to="`/writer/${writerInfo?.Id}`">
+              <img :src="writerInfo?.ImgUrl" alt="writer" class="h-full w-full rounded-full" />
+            </NuxtLink>
           </div>
           <div>
             <p class="text-sm font-light text-primary-dark">作家</p>
@@ -279,7 +281,10 @@ onBeforeUpdate(() => {
     <div v-if="articleDetail" class="mb-9 flex items-center justify-between py-6">
       <div class="items-center md:flex">
         <div class="flex justify-between sm:mr-2">
-          <img :src="writerInfo?.ImgUrl" alt="avatar" class="h-[60px] w-[60px] rounded-full" />
+          <NuxtLink :to="`/writer/${writerInfo?.Id}`">
+            <img :src="writerInfo?.ImgUrl" alt="avatar" class="h-[60px] w-[60px] rounded-full"
+          /></NuxtLink>
+
           <button
             v-if="!writerInfo?.Follow"
             type="button"
@@ -299,8 +304,8 @@ onBeforeUpdate(() => {
         <div>
           <NuxtLink :to="`/writer/${writerInfo?.Id}`">
             <p class="font-medium text-primary">作家·{{ writerInfo?.NickName }}</p>
-            <p class="font-light text-primary-dark">{{ writerInfo?.Bio }}</p>
           </NuxtLink>
+          <p class="font-light text-primary-dark">{{ writerInfo?.Bio }}</p>
         </div>
       </div>
       <div>
