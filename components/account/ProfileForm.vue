@@ -36,7 +36,6 @@ const getUserInfo = async () => {
         userInfo.JobTitle = res.Data.User.Jobtitle || ''
         userInfo.Bio = res.Data.User.Bio || ''
         userData.value.avatar = res.Data.User.ImgUrl
-        console.log(res.Data.User.Birthday)
         setLoading(false)
         watch(
           [
@@ -129,7 +128,7 @@ const updateUserInfo = async () => {
         Bio: userInfo.Bio
       }
     })
-    console.log(res)
+
     if (res.StatusCode === 200) {
       userData.value.nickName = NickName.value
       setToast('已成功更新資料！')
@@ -145,7 +144,6 @@ const updateUserPhoto = async (data: FormData) => {
   if (!userToken.value) {
     return
   }
-  console.log(data)
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/upload/userphoto`, {
       headers: {
@@ -165,7 +163,7 @@ const updateUserPhoto = async (data: FormData) => {
 
 <template>
   <div class="col-span-9">
-    <div v-if="isLoading" class="py-14"><LoadingItem /></div>
+    <div v-if="isLoading" class="py-14 lg:pb-14 lg:pr-20 lg:pt-20"><LoadingItem /></div>
     <div v-else class="flex flex-wrap pt-6 md:flex-nowrap lg:gap-4 lg:pt-10">
       <div class="mx-auto my-0">
         <div class="relative h-[100px] w-[100px] rounded-full bg-[#E9E4D9]">
