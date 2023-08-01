@@ -3,8 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { usePaymentStore } from '~/stores/payment'
 
-const userStore = useUserStore()
-const { userData } = storeToRefs(userStore)
+const { userData } = storeToRefs(useUserStore())
 const { selectedOrder } = storeToRefs(usePaymentStore())
 const { getCustomerInfo } = usePaymentStore()
 
@@ -15,6 +14,16 @@ const customerInputs = ref<CustomerData>({
   email: userData.value.email,
   phone: '',
   planId: Number(route.query.id)
+})
+
+watchEffect(() => {
+  route.query.id === '1'
+    ? (selectedOrder.value.planName = '月付讀到飽專案')
+    : (selectedOrder.value.planName = '年付讀到飽專案')
+})
+
+watchEffect(() => {
+  route.query.id === '1' ? (selectedOrder.value.price = 120) : (selectedOrder.value.price = 1200)
 })
 
 const isFormFilled = computed(() => {

@@ -9,7 +9,7 @@ import { useToast } from '~/stores/toast'
 const { showToast } = storeToRefs(useToast())
 
 const { isLoading } = storeToRefs(useLoading())
-const { selectedOrder, customerData } = storeToRefs(usePaymentStore())
+const { customerData } = storeToRefs(usePaymentStore())
 
 const props = defineProps({
   renewMembership: {
@@ -61,15 +61,7 @@ const renderPlan = (plan: string) => {
 }
 
 const selectPlan = (planName: string) => {
-  selectedOrder.value.planName = planName
-
-  if (planName === '月付讀到飽專案') {
-    selectedOrder.value.price = 120
-    customerData.value.planId = 1
-  } else {
-    selectedOrder.value.price = 1200
-    customerData.value.planId = 2
-  }
+  planName === '月付讀到飽專案' ? (customerData.value.planId = 1) : (customerData.value.planId = 2)
 }
 
 const selected = () => {

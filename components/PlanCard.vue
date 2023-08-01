@@ -14,6 +14,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('resize', checkIsMobile)
 })
+
 useHead({
   link: [
     {
@@ -52,6 +53,17 @@ const faqItems = ref([
 
 const toggleFaq = (item: any) => {
   item.isActive = !item.isActive
+}
+
+const handleNavigation = (orderId: number) => {
+  if (!isLogin.value) {
+    return navigateTo('/signup')
+  }
+  if (userData.value.myPlan === 'free') {
+    return navigateTo(`/neworder?id=${orderId}`)
+  } else {
+    return navigateTo(`/account/${userId}/myplan`)
+  }
 }
 </script>
 
@@ -179,12 +191,19 @@ const toggleFaq = (item: any) => {
             </li>
           </ul>
         </div>
-        <NuxtLink
+        <!-- <NuxtLink
           :to="isLogin ? `/account/${userId}/myplan` : '/signup'"
           class="btn h-[38px] w-[68%] border-secondary bg-white text-secondary hover:bg-btn-hover hover:text-white active:bg-btn-active disabled:bg-btn-disabled disabled:text-white 3xl:w-[286px]"
         >
           立即訂閱
-        </NuxtLink>
+        </NuxtLink> -->
+        <button
+          type="button"
+          class="btn h-[38px] w-[68%] border-secondary bg-white text-secondary hover:bg-btn-hover hover:text-white active:bg-btn-active disabled:bg-btn-disabled disabled:text-white 3xl:w-[286px]"
+          @click="handleNavigation(1)"
+        >
+          立即訂閱
+        </button>
       </div>
       <div
         :data-aos="isMobile ? 'fade-up' : 'fade-left'"
@@ -218,12 +237,19 @@ const toggleFaq = (item: any) => {
             </li>
           </ul>
         </div>
-        <NuxtLink
+        <!-- <NuxtLink
           :to="isLogin ? `/account/${userId}/myplan` : '/signup'"
           class="btn h-[38px] w-[68%] bg-secondary text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white 3xl:w-[286px]"
         >
           立即訂閱
-        </NuxtLink>
+        </NuxtLink> -->
+        <button
+          type="button"
+          class="btn h-[38px] w-[68%] bg-secondary text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white 3xl:w-[286px]"
+          @click="handleNavigation(2)"
+        >
+          立即訂閱
+        </button>
       </div>
     </div>
   </section>
