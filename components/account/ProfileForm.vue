@@ -36,6 +36,7 @@ const getUserInfo = async () => {
         userInfo.JobTitle = res.Data.User.Jobtitle || ''
         userInfo.Bio = res.Data.User.Bio || ''
         userData.value.avatar = res.Data.User.ImgUrl
+        console.log(res.Data.User.Birthday)
         setLoading(false)
         watch(
           [
@@ -45,12 +46,7 @@ const getUserInfo = async () => {
             () => userInfo.Bio
           ],
           ([name, birthday, jobTitle, bio]) => {
-            if (
-              name !== res.Data.User.NickName ||
-              birthday !== res.Data.User.Birthday ||
-              (jobTitle !== res.Data.User.Jobtitle && jobTitle !== '') ||
-              (bio !== res.Data.User.Bio && bio !== '')
-            ) {
+            if (name || birthday || jobTitle || bio) {
               valueChange.value = true
             } else {
               valueChange.value = false
@@ -72,14 +68,14 @@ const handleDateClick = (togglePopover: () => void) => {
 }
 const birth = ref('')
 
+const { formatDate } = useDateFormat()
+
 const formattedDate = computed(() => {
   if (userInfo.Birthday) {
     const selectedDate = new Date(userInfo.Birthday)
-    const year = selectedDate.getFullYear()
-    const month = String(selectedDate.getMonth() + 1).padStart(2, '0')
-    const day = String(selectedDate.getDate()).padStart(2, '0')
-    birth.value = `${year}-${month}-${day}`
-    return `${year}-${month}-${day}`
+
+    birth.value = formatDate(String(selectedDate))
+    return formatDate(String(selectedDate))
   } else {
     return '請選擇日期'
   }
@@ -127,7 +123,7 @@ const updateUserInfo = async () => {
       method: 'PUT',
       body: {
         NickName: NickName.value,
-        Birthday: userInfo.Birthday,
+        Birthday: birth.value,
         JobTitle: userInfo.JobTitle,
         Bio: userInfo.Bio
       }
@@ -135,6 +131,7 @@ const updateUserInfo = async () => {
     if (res.StatusCode === 200) {
       userData.value.nickName = NickName.value
       setToast('已成功更新資料！')
+      valueChange.value = false
     }
   } catch (error: any) {
     setToast('發生錯誤！')
@@ -165,12 +162,13 @@ const updateUserPhoto = async (data: FormData) => {
 
 <template>
   <div class="col-span-9">
-    <div v-if="isLoading" class="py-16"><LoadingItem /></div>
+    <div v-if="isLoading" class="py-14"><LoadingItem /></div>
     <div v-else class="flex flex-wrap pt-6 md:flex-nowrap lg:gap-4 lg:pt-10">
       <div class="mx-auto my-0">
         <div class="relative h-[100px] w-[100px] rounded-full bg-[#E9E4D9]">
           <img :src="userData.avatar" class="h-full w-full rounded-full object-contain" />
           <button
+            type="button"
             class="absolute bottom-0 right-0 flex h-9 w-9 items-center justify-center rounded-full bg-secondary hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
             @click="openFilePicker"
           >
@@ -219,7 +217,7 @@ const updateUserPhoto = async (data: FormData) => {
                       class="w-full cursor-pointer rounded border-primary text-primary-dark outline-none"
                       readonly
                     />
-                    <button>
+                    <button type="button">
                       <Icon name="material-symbols:arrow-drop-down" size="24" />
                     </button>
                   </div>

@@ -25,7 +25,6 @@ onBeforeUnmount(() => {
       <NuxtLink
         to="/become_creater/steps"
         class="mx-auto mb-9 flex h-[60px] w-[137px] items-center justify-center rounded bg-secondary px-4 py-3 text-2xl text-white hover:bg-btn-hover active:bg-btn-active"
-        data-aos="zoom-in"
         >開始使用</NuxtLink
       >
       <img

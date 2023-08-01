@@ -77,7 +77,7 @@ const unFollowWriter = async (id: number, writer: TrendingCreater) => {
   <section class="container mb-6 py-[84px]">
     <div class="mb-6 flex items-center gap-2 sm:px-4">
       <h2 class="font-serif-tc text-4xl font-bold text-primary">熱門創作者</h2>
-      <div class="h-[0.5px] bg-primary"></div>
+      <div class="h-[0.5px] w-[150px] bg-primary"></div>
     </div>
     <ul
       class="flex h-[250px] items-center gap-6 overflow-x-scroll sm:grid sm:grid-cols-12 sm:overflow-auto"
