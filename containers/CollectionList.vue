@@ -22,10 +22,11 @@ const getCollectedArticleList = async () => {
     })
     if (res.StatusCode === 200) {
       collectedArticle.value = res.Data
-      setLoading(false)
     }
   } catch (error: any) {
     console.log(error.response)
+  } finally {
+    setLoading(false)
   }
 }
 onMounted(getCollectedArticleList)

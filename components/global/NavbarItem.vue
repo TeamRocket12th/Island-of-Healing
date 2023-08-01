@@ -105,7 +105,9 @@ onMounted(getMyMsgs)
         <div
           class="flex h-14 items-center justify-between py-4 sm:border-b-[0.5px] sm:border-primary"
         >
-          <p class="font-serif-tc font-medium tracking-[3px] text-primary">提供心靈療癒的庇護所</p>
+          <NuxtLink to="/" class="font-serif-tc font-medium tracking-[3px] text-primary"
+            >提供心靈療癒的庇護所</NuxtLink
+          >
           <ul class="hidden items-center gap-6 sm:flex">
             <li v-if="!isLogin">
               <NuxtLink to="/login" class="font-serif-tc font-bold text-primary">登入</NuxtLink>
