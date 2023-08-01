@@ -10,7 +10,6 @@ const { setMsgLoading } = useLoading()
 const { userMsgs, selectedMsg } = storeToRefs(useMsgs())
 const { getMyMsgs, readMyMsg, delMyMsg } = useMsgs()
 
-setMsgLoading(true)
 const { showToast } = storeToRefs(useToast())
 
 const showMobileMsg = ref(false)
@@ -45,6 +44,7 @@ const handleDelMsg = () => {
 }
 
 onMounted(async () => {
+  setMsgLoading(true)
   await getMyMsgs()
   if (userMsgs.value.length > 0 && userMsgs.value[0].IsRead === false && !selectedMsg.value) {
     readMyMsg(userMsgs.value[0].Id)

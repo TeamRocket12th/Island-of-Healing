@@ -21,11 +21,12 @@ const getFollowingList = async () => {
       }
     })
     if (res.StatusCode === 200) {
-      setLoading(false)
       followingWriters.value = res.Data
     }
   } catch (error: any) {
     console.log(error.response)
+  } finally {
+    setLoading(false)
   }
 }
 setLoading(true)
