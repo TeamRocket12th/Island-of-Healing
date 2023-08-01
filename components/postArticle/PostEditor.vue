@@ -257,7 +257,7 @@ const insertImage = () => {
   <div class="grid grid-cols-12" @dragover.prevent="handleDragOver" @drop.prevent="handleDrop">
     <div class="relative col-span-8 col-start-3">
       <div>
-        <div class="mt-2 flex items-center justify-end gap-4 sm:mt-4 sm:gap-5">
+        <div class="mt-3 flex items-center justify-end gap-4 sm:mt-4 sm:gap-5">
           <div v-if="editor" class="flex items-center text-secondary">
             {{ editor.storage.characterCount.characters() }}字
           </div>
