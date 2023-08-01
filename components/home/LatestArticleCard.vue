@@ -24,8 +24,8 @@ if (data.value!.StatusCode === 200) {
 }
 
 const formatTitle = (title: string) => {
-  if (title.length > 18) {
-    return title.substring(0, 18) + '...'
+  if (title.length > 17) {
+    return title.substring(0, 17) + '...'
   }
   return title
 }
