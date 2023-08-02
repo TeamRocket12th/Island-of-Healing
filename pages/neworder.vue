@@ -3,12 +3,32 @@ import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 
 const { userData } = storeToRefs(useUserStore())
-
+const { apiBase, userToken } = useApiConfig()
 const route = useRoute()
+
+const getUserOrder = async () => {
+  if (!userToken.value) {
+    return
+  }
+  try {
+    const res: ApiResponse = await $fetch(`${apiBase}/userorderdetail/get`, {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${userToken.value}`
+      }
+    })
+    if (res.StatusCode === 200) {
+      userData.value.myPlan = res.Plan
+    }
+  } catch (error: any) {
+    console.log(error)
+  }
+}
+
 useSeoMeta({ title: '訂單明細' })
 onMounted(() => {
   if (route.query.status === 'success') {
-    userData.value.myPlan = 'monthly'
+    getUserOrder()
     orderResult.value = true
   }
 })
