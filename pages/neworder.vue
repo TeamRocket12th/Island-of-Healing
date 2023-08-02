@@ -1,8 +1,14 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
+
+const { userData } = storeToRefs(useUserStore())
+
 const route = useRoute()
 useSeoMeta({ title: '訂單明細' })
 onMounted(() => {
   if (route.query.status === 'success') {
+    userData.value.myPlan = 'monthly'
     orderResult.value = true
   }
 })
