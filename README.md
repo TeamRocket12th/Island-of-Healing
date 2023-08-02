@@ -1,7 +1,8 @@
 
+
+<div align="center" style="margin-bottom: 60px">
+<img width="120" src="https://raw.githubusercontent.com/TeamRocket12th/Island-of-Healing/dev/public/logo-web.svg" alt="logo">
 <h1 align="center">小島聊癒所 | 療癒文章平台</h1> 
-<div align="center" style="margin-bottom: 30px">
-<img width="100" src="https://raw.githubusercontent.com/TeamRocket12th/Island-of-Healing/dev/public/logo-web.svg" alt="logo">
 </div>
 
 
