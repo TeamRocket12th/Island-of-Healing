@@ -1,15 +1,18 @@
 
 
-<div align="center" style="margin-bottom: 60px">
+<div align="center" style="margin-bottom: 40px">
 <img width="120" src="https://raw.githubusercontent.com/TeamRocket12th/Island-of-Healing/dev/public/logo-web.svg" alt="logo">
 <h1 align="center">小島聊癒所 | 療癒文章平台</h1> 
 </div>
-
 
 <p align="center">
 幫助人們緩解內在心理壓力，提供心靈療癒的文章平台。 </br>
 希望使用者透過閱讀文章減少焦慮，找到歸屬感。
 </p>
+
+<img alt="demo" src="https://i.imgur.com/HqsSUVN.png"/>
+
+
 
 ---
 
@@ -21,7 +24,7 @@
 
 ### 簡潔的閱讀介面
 - 提供乾淨易讀的閱讀體驗
-- 以心靈療癒類文章為主，提供你生活的避風港
+- 以心靈療癒類文章為主，成為你生活的避風港
 
 ### 易用的寫作編輯器
 - 支援Markdown語法
@@ -77,15 +80,14 @@
 
 ## 開發工具
 
-<h3 align="center">📙 設計工具</h3>
-
+<h3>📙 設計工具</h3>
 <p style="margin-bottom: 80px">
  <img alt="Figma" src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" />
  <img alt="PhotoShop" src="https://img.shields.io/badge/Adobe%20Photoshop-31A8FF?style=for-the-badge&logo=Adobe%20Photoshop&logoColor=black"/>
 </p>
 
-
-<h3 align="center">📗 前端技術</h3>
+---
+<h3>📗 前端技術</h3>
 
 <p style="margin-bottom: 80px">
   <img alt="VS Code" src="https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white" />
@@ -103,7 +105,8 @@
   <img alt="PRETTIER" src="https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E" />
 </p>
 
-<h3 align="center">📘 後端技術</h3>
+---
+<h3>📘 後端技術</h3>
 
 <p>
   <img alt="Visual_Studio" src="https://img.shields.io/badge/Visual_Studio-5C2D91?style=for-the-badge&logo=visual%20studio&logoColor=white" />
