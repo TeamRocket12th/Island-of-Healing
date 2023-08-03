@@ -32,7 +32,11 @@
 - AI角色推薦文章，加強導流
 
 
-
+## 相關連結
+- [設計稿](https://www.figma.com/file/HC1yylX1rxo1izrzBN1bsm/%E5%B0%8F%E5%B3%B6%E8%81%8A%E7%99%92%E6%89%80?node-id=1%3A4&mode=dev)
+- [前台網站](https://island-of-healing.vercel.app/)
+- [後台Repo](https://github.com/TeamRocket12th/Island-Of-Healing-BackStage)
+- [Swagger](https://islandofhealing.rocket-coding.com/swagger/index.html?url=/swagger/v1/swagger.json#/AdministratorSystem)
 
 
 ## 功能介紹
@@ -72,9 +76,18 @@
   - 通知文章審核成功
 
 ## 開發工具
-<h3 align="center">🗝 前端技術</h3>
 
-<p>
+<h3 align="center">📙 設計工具</h3>
+
+<p style="margin-bottom: 80px">
+ <img alt="Figma" src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" />
+ <img alt="PhotoShop" src="https://img.shields.io/badge/Adobe%20Photoshop-31A8FF?style=for-the-badge&logo=Adobe%20Photoshop&logoColor=black"/>
+</p>
+
+
+<h3 align="center">📗 前端技術</h3>
+
+<p style="margin-bottom: 80px">
   <img alt="VS Code" src="https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white" />
    <img alt="Vue" src="https://img.shields.io/badge/Vue%20js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D"/>
     <img alt="Nuxt" src="https://img.shields.io/badge/nuxt%20js-00C58E?style=for-the-badge&logo=nuxtdotjs&logoColor=white"/>
@@ -90,7 +103,7 @@
   <img alt="PRETTIER" src="https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E" />
 </p>
 
-<h3 align="center">🗝 後端技術</h3>
+<h3 align="center">📘 後端技術</h3>
 
 <p>
   <img alt="Visual_Studio" src="https://img.shields.io/badge/Visual_Studio-5C2D91?style=for-the-badge&logo=visual%20studio&logoColor=white" />
