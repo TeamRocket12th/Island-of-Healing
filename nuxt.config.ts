@@ -7,9 +7,9 @@ export default defineNuxtConfig({
     '@pinia-plugin-persistedstate/nuxt',
     'nuxt-gtag'
   ],
-  // typescript: {
-  //   typeCheck: true
-  // },
+  typescript: {
+    typeCheck: true
+  },
   css: ['@/assets/css/main.css'],
   pinia: {
     autoImports: ['defineStore', ['defineStore', 'definePiniaStore']]
@@ -59,7 +59,14 @@ export default defineNuxtConfig({
           content: 'https://i.imgur.com/8wSgF1W.png'
         }
       ],
-      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/logo-web.svg' }]
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: '/logo-web.svg'
+        },
+        { rel: 'icon', type: 'image/png', href: '/logo-island.png' }
+      ]
     }
   }
 })
