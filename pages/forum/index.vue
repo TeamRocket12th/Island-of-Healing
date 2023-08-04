@@ -4,7 +4,7 @@ useSeoMeta({ title: '島民集會所｜論壇' })
 
 <template>
   <div class="flex h-60 items-center justify-center">
-    <h2 class="text-4xl text-primary">島民集會所 目前施工中...</h2>
+    <h2 class="text-4xl text-primary">島民集會所 論壇首頁</h2>
   </div>
 </template>
 
