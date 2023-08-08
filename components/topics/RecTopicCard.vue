@@ -28,10 +28,10 @@ const articleList = [
     >
       <h4 class="mb-[14px] pt-6 text-xl font-bold">{{ article.title }}</h4>
       <div class="flex justify-between pb-6">
-        <p class="w-2/3 font-[300]">
+        <p class="w-2/3 font-light">
           {{ article.content }}
         </p>
-        <div class="flex w-1/3 items-end justify-end font-[300] text-primary-dark">
+        <div class="flex w-1/3 items-end justify-end font-light text-primary-dark">
           <span> 2023-05-23 </span>
           <span class="ml-3"><Icon name="mdi:message-reply-outline" size="16" /></span>
         </div>
