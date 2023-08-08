@@ -13,5 +13,12 @@ export const useLoading = defineStore('loading', () => {
   const setMsgLoading = (loading: boolean) => {
     msgLoading.value = loading
   }
-  return { isLoading, setLoading, chatLoading, setChatLoading, msgLoading, setMsgLoading }
+  return {
+    isLoading,
+    setLoading,
+    chatLoading,
+    setChatLoading,
+    msgLoading,
+    setMsgLoading
+  }
 })
