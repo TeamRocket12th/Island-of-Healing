@@ -184,14 +184,14 @@ onUpdated(() => {
               <input
                 v-model.trim="question"
                 type="text"
-                class="w-full rounded-md border-none px-4 py-2 placeholder:text-sand-300 focus:outline-secondary disabled:opacity-90"
+                class="w-full rounded-md border-none px-4 py-2 placeholder:text-sand-300 focus:outline-secondary"
                 placeholder="說點什麼吧？"
+                disabled
                 @keydown.enter="handleEnterKey"
               />
               <button
                 class="absolute right-0 h-full w-[50px] rounded-r-md py-1 text-secondary hover:bg-secondary hover:text-white disabled:hover:bg-transparent disabled:hover:text-secondary"
                 :disabled="isLimited"
-                @click="sendQuestion"
               >
                 <Icon name="material-symbols:send-outline" size="20" />
               </button>
