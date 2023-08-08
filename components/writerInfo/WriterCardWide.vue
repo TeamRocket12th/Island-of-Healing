@@ -44,16 +44,15 @@ const confirmDel = (writer: Writer) => {
         class="mb-6 flex items-center justify-between border bg-white p-6 shadow-sm"
       >
         <NuxtLink :to="`/writer/${writer.WriterId}`">
-          <span class="flex items-center gap-2">
+          <div class="flex items-center gap-2">
             <div class="h-[60px] w-[60px] overflow-hidden rounded-full">
-              <img :src="writer.ImgUrl" alt="writer" />
+              <img :src="writer.ImgUrl" alt="writer" class="h-full w-full object-cover" />
             </div>
             <div>
               <p class="font-medium text-primary">{{ writer.NickName }}</p>
-
               <p class="text-sm text-primary-dark">{{ writer.JobTitle }}。{{ writer.Bio }}</p>
             </div>
-          </span>
+          </div>
         </NuxtLink>
         <button
           v-if="writer.IsFollowing"

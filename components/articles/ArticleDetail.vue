@@ -45,7 +45,7 @@ onMounted(() => {
 })
 
 // 對文章做的動作
-const { AddToCollection, cancelCollection, likeArticle, unlikeArticle } = useArticleActions()
+const { handleCollectionAction, likeArticle, unlikeArticle } = useArticleActions()
 
 const textarea = ref<HTMLTextAreaElement | null>(null)
 const emojiPicker = ref<any>(null)
@@ -266,7 +266,15 @@ onBeforeUpdate(() => {
                 <li
                   v-if="!isCollecting"
                   class="cursor-pointer"
-                  @click="AddToCollection(articleDetail.Id, articleId, userId, getArticleDetail)"
+                  @click="
+                    handleCollectionAction(
+                      articleDetail.Id,
+                      true,
+                      articleDetail,
+                      userId,
+                      getArticleDetail
+                    )
+                  "
                 >
                   <Icon
                     name="material-symbols:bookmark-outline-rounded"
@@ -277,7 +285,15 @@ onBeforeUpdate(() => {
                 <li
                   v-else
                   class="cursor-pointer text-secondary"
-                  @click="cancelCollection(articleDetail.Id, articleId, userId, getArticleDetail)"
+                  @click="
+                    handleCollectionAction(
+                      articleDetail.Id,
+                      false,
+                      articleDetail,
+                      userId,
+                      getArticleDetail
+                    )
+                  "
                 >
                   <Icon name="material-symbols:bookmark" size="20" class="text-secondary" />
                 </li>
@@ -290,7 +306,7 @@ onBeforeUpdate(() => {
         </div>
       </div>
     </div>
-    <div v-if="articleDetail" class="mb-9 flex items-center justify-between py-6">
+    <div v-if="articleDetail" class="mb-9 block items-center justify-between py-6 sm:flex">
       <div class="items-center md:flex">
         <div class="flex justify-between sm:mr-2">
           <NuxtLink :to="`/writer/${writerInfo?.Id}`">
@@ -300,16 +316,23 @@ onBeforeUpdate(() => {
           <button
             v-if="!writerInfo?.Follow"
             type="button"
-            class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
+            class="flex h-10 w-[72px] items-center justify-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
+            @click="toggleFollow"
           >
-            <Icon name="ic:baseline-plus" size="16" />追蹤
+            <span>
+              <Icon name="ic:baseline-plus" size="16" />
+            </span>
+            追蹤
           </button>
           <button
             v-else
             type="button"
-            class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
+            class="flex h-10 w-[72px] items-center justify-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
+            @click="toggleFollow"
           >
-            <Icon name="material-symbols:fitbit-check-small" size="20" />
+            <span>
+              <Icon name="material-symbols:fitbit-check-small" size="20" />
+            </span>
             追蹤中
           </button>
         </div>
