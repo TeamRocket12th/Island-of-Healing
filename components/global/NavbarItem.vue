@@ -89,6 +89,8 @@ const isUserPage = computed(() => {
   }
 })
 
+const { searchArticle } = useSearch()
+
 // 站內信Polling
 // const msgInterval = setInterval(getMyMsgs, 15000)
 
@@ -325,6 +327,12 @@ onMounted(getMyMsgs)
           </li>
           <span class="flex items-center pb-5 font-serif-tc text-xl font-medium">·</span>
           <li class="whitespace-nowrap px-4 pb-5">
+            <NuxtLink to="/forum" class="text-xl font-medium leading-normal text-primary"
+              >論壇</NuxtLink
+            >
+          </li>
+          <span class="flex items-center pb-5 font-serif-tc text-xl font-medium">·</span>
+          <li class="whitespace-nowrap px-4 pb-5">
             <NuxtLink to="/plans" class="text-xl font-medium leading-normal text-primary"
               >訂閱方案</NuxtLink
             >
@@ -348,7 +356,7 @@ onMounted(getMyMsgs)
         <span class="block text-right" @click="toggleMobileMenu"
           ><Icon name="ic:outline-close" size="32" class="my-6 cursor-pointer text-primary" />
         </span>
-        <SearchInput class="mb-3" />
+        <SearchInput class="mb-3" search-place-holder="搜尋文章" :search-fn="searchArticle" />
         <ul>
           <li v-if="userData.role === 'writer'" class="border-b-[0.5px] border-primary">
             <NuxtLink

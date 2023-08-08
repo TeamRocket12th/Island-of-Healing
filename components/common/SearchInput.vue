@@ -1,9 +1,15 @@
 <script setup lang="ts">
-const router = useRouter()
+defineProps({
+  searchPlaceHolder: {
+    type: String,
+    default: '搜尋'
+  },
+  searchFn: {
+    type: Function,
+    required: true
+  }
+})
 const keyWord = ref('')
-const handleSearch = () => {
-  router.push({ path: '/search', query: { q: keyWord.value, c: '0' } })
-}
 </script>
 
 <template>
@@ -12,8 +18,8 @@ const handleSearch = () => {
       v-model="keyWord"
       type="text"
       class="h-10 w-full rounded border border-primary bg-transparent p-[10px] pl-[38px] text-primary placeholder-sand-300 focus:outline-sand-300"
-      placeholder="搜尋文章"
-      @change="handleSearch"
+      :placeholder="searchPlaceHolder"
+      @change="searchFn(keyWord)"
     />
     <Icon
       name="mdi:magnify"
