@@ -5,7 +5,6 @@ import { useToast } from '~/stores/toast'
 
 const { userData } = storeToRefs(useUserStore())
 const { showToast } = storeToRefs(useToast())
-const { setToast } = useToast()
 
 showToast.value = false
 
@@ -26,51 +25,7 @@ if (data.value) {
   trendingCreater.value = data.value
 }
 
-// 追蹤作家
-const followWriter = async (id: number, writer: TrendingCreater) => {
-  if (!userToken.value) {
-    setToast('請先登入！')
-    return
-  }
-  try {
-    const res: ApiResponse = await $fetch(`${apiBase}/writer/follow/${id}`, {
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${userToken.value}`
-      },
-      method: 'POST'
-    })
-    if (res.StatusCode === 200) {
-      setToast('追蹤成功！')
-      writer.IsFollowed = !writer.IsFollowed
-    }
-  } catch (error: any) {
-    setToast('發生錯誤！')
-  }
-}
-
-// 取消追蹤作家
-const unFollowWriter = async (id: number, writer: TrendingCreater) => {
-  if (!userToken.value) {
-    setToast('請先登入！')
-    return
-  }
-  try {
-    const res: ApiResponse = await $fetch(`${apiBase}/writer/cancelfollow/${id}`, {
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${userToken.value}`
-      },
-      method: 'DELETE'
-    })
-    if (res.StatusCode === 200) {
-      setToast('已取消追蹤！')
-      writer.IsFollowed = !writer.IsFollowed
-    }
-  } catch (error: any) {
-    setToast('發生錯誤！')
-  }
-}
+const { handleFollowAction } = useWriterActions()
 </script>
 
 <template>
@@ -102,7 +57,7 @@ const unFollowWriter = async (id: number, writer: TrendingCreater) => {
           v-if="creater.IsFollowed"
           class="m-auto flex items-center rounded bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
           :disabled="creater.WriterId === userData.id"
-          @click="unFollowWriter(creater.WriterId, creater)"
+          @click="handleFollowAction(creater.WriterId, false, creater)"
         >
           <Icon name="material-symbols:fitbit-check-small" size="16" />
           <span class="pr-[2px] text-sm leading-normal">追蹤中</span>
@@ -111,7 +66,7 @@ const unFollowWriter = async (id: number, writer: TrendingCreater) => {
           v-if="!creater.IsFollowed"
           class="m-auto flex items-center rounded bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
           :disabled="creater.WriterId === userData.id"
-          @click="followWriter(creater.WriterId, creater)"
+          @click="handleFollowAction(creater.WriterId, true, creater)"
         >
           <Icon name="ic:outline-plus" size="16" />
           <span class="pr-[3px] text-sm leading-normal">追蹤</span>

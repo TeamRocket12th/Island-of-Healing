@@ -17,7 +17,6 @@ defineProps({
   },
   writerInfo: {
     type: Object as () => WriterInfo,
-    default: () => {},
     required: true
   },
   getWriterInfo: {
@@ -26,11 +25,11 @@ defineProps({
   }
 })
 
-const { followWriter, unFollowWriter } = useWriterActions()
+const { handleFollowAction } = useWriterActions()
 </script>
 <template>
   <div class="relative mb-10 h-[511px] bg-white px-[68px] py-[58px] shadow-sm md:mb-0">
-    <div class="fixed right-10 top-52 z-20 3xl:right-80">
+    <div class="fixed right-10 top-36 z-20 3xl:right-80">
       <ToastMsg v-if="showToast" />
     </div>
     <div class="mx-auto mb-6 h-[95px] w-[95px]">
@@ -60,7 +59,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
     <button
       v-if="!writerInfo.Follow && writerInfo.Id !== userData.id"
       class="mb-16 flex w-full items-center justify-center gap-2 rounded-md bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-      @click="followWriter(writerInfo.Id, writerId, userId, getWriterInfo)"
+      @click="handleFollowAction(writerInfo.Id, true, writerInfo, writerId, userId, getWriterInfo)"
     >
       <Icon name="ic:round-plus" size="24" />
       <span>追蹤</span>
@@ -68,7 +67,7 @@ const { followWriter, unFollowWriter } = useWriterActions()
     <button
       v-else-if="writerInfo.Follow && writerInfo.Id !== userData.id"
       class="mb-16 flex w-full items-center justify-center gap-2 rounded-md bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-      @click="unFollowWriter(writerInfo.Id, writerId, userId, getWriterInfo)"
+      @click="handleFollowAction(writerInfo.Id, false, writerInfo, writerId, userId, getWriterInfo)"
     >
       <Icon name="material-symbols:fitbit-check-small" size="24" />
       <span>追蹤中</span>

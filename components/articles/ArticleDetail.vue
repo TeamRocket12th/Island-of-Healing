@@ -13,6 +13,7 @@ const { showToast } = storeToRefs(useToast())
 const { setToast } = useToast()
 
 setLoading(true)
+showToast.value = false
 
 const { apiBase, userToken } = useApiConfig()
 const { useFormattedTime } = useDateFormat()
@@ -137,8 +138,19 @@ const addComment = async (id: number, articleId: string, userId: string) => {
   }
 }
 
-// 收藏文章訊息
-const { followWriter, unFollowWriter } = useWriterActions()
+const { handleFollowAction } = useWriterActions()
+const toggleFollow = () => {
+  if (writerInfo.value && writerInfo.value!.Id !== userData.value.id) {
+    handleFollowAction(
+      writerInfo.value!.Id,
+      !writerInfo.value?.Follow,
+      writerInfo.value,
+      articleId,
+      userId,
+      getArticleDetail
+    )
+  }
+}
 
 // 文章頁面Title
 const htmlTitle = ref<string | undefined>('')
@@ -312,14 +324,14 @@ onBeforeUpdate(() => {
         <button
           v-if="!writerInfo?.Follow && writerInfo?.Id !== userData.id"
           class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
-          @click="followWriter(writerInfo?.Id!, articleId, userId, getArticleDetail)"
+          @click="toggleFollow"
         >
           <Icon name="ic:baseline-plus" size="20" />追蹤
         </button>
         <button
           v-else-if="writerInfo?.Follow && writerInfo?.Id !== userData.id"
           class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
-          @click="unFollowWriter(writerInfo?.Id!, articleId, userId, getArticleDetail)"
+          @click="toggleFollow"
         >
           <Icon name="material-symbols:fitbit-check-small" size="20" />追蹤中
         </button>
