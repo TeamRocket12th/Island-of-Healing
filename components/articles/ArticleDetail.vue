@@ -349,26 +349,28 @@ onBeforeUpdate(() => {
       </div>
     </div>
     <!--留言-->
-    <div v-if="isLogin && (!isLock || writerInfo?.Id === userData.id)">
-      <div class="mb-6">
-        <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
-      </div>
+    <div>
+      <p class="mb-6 font-serif-tc text-2xl font-bold text-primary">留言</p>
       <ArticleComment
         :comments="comments"
         :article-id="articleId"
         :user-id="userId"
         :get-article-detail="getArticleDetail"
       />
-      <div class="mb-2 flex items-center">
-        <div class="mr-2 h-9 w-9">
-          <img :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />
+      <div v-if="isLogin && (!isLock || writerInfo?.Id === userData.id)">
+        <div class="mb-2 flex items-center">
+          <div class="mr-2 h-9 w-9">
+            <img :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />
+          </div>
+          <span class="font-medium text-primary">{{ userData.nickName }}</span>
         </div>
-        <span class="font-medium text-primary">{{ userData.nickName }}</span>
+
+        <CommentInput @send-input-txt="handleAddComment" />
       </div>
-      <CommentInput @send-input-txt="handleAddComment" />
-    </div>
-    <div v-else class="my-20 flex items-center justify-center text-primary-dark">
-      <NuxtLink to="/login" class="text-xl text-primary underline">要先登入才能留言喔</NuxtLink>
+
+      <div v-else class="my-20 flex items-center justify-center text-primary-dark">
+        <NuxtLink to="/login" class="text-xl text-primary underline">要先登入才能留言喔</NuxtLink>
+      </div>
     </div>
   </section>
   <section v-if="!articleDetail && !isLoading">

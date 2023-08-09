@@ -37,7 +37,7 @@ const insertEmoji = (emoji: any) => {
 
 <template>
   <div class="grid-cols-7 gap-6 text-right md:grid md:text-left">
-    <div class="relative col-span-5 mb-4 md:mb-0">
+    <div class="relative col-span-5 mb-4 md:mb-0 xl:col-span-6">
       <textarea
         ref="textarea"
         v-model="inputText"
@@ -63,9 +63,9 @@ const insertEmoji = (emoji: any) => {
         />
       </ClientOnly>
     </div>
-    <div class="col-span-2">
+    <div class="col-span-2 xl:col-span-1">
       <button
-        class="h-10 rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+        class="h-10 whitespace-nowrap rounded bg-secondary p-2 text-right text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white xl:w-full"
         :disabled="!inputText"
         @click="sendInputTxt(inputText)"
       >

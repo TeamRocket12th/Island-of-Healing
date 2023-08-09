@@ -83,7 +83,7 @@ const handleAddComment = (inputTxt: string) => {
       class="mb-9 border-b-[0.5px] border-primary pb-20"
     ></div>
     <!--話題留言-->
-    <section>
+    <div>
       <p class="mb-7 font-serif-tc text-2xl font-bold text-primary">留言</p>
       <TopicComment :topic-id="topicId" :comments="topicComments" :get-topic="getTopic" />
       <div v-if="isLogin">
@@ -98,7 +98,7 @@ const handleAddComment = (inputTxt: string) => {
       <div v-else class="my-20 flex items-center justify-center text-primary-dark">
         <NuxtLink to="/login" class="text-xl text-primary underline">要先登入才能留言喔</NuxtLink>
       </div>
-    </section>
+    </div>
   </section>
   <section v-if="!topicDetail && !isLoading">
     <h2 class="pb-60 pt-28 text-center text-3xl text-primary">找不到話題</h2>
