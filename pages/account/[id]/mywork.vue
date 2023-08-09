@@ -11,6 +11,7 @@ definePageMeta({
 useSeoMeta({ title: '文章列表' })
 
 const { nowPage } = usePageName()
+const { searchArticle } = useSearch()
 </script>
 <template>
   <div class="mb-40 border-primary bg-sand-100 pb-20 pt-10 lg:border lg:px-10">
@@ -23,7 +24,7 @@ const { nowPage } = usePageName()
         >
           <div class="flex items-center"><Icon name="ic:outline-plus" size="20" /> 新增文章</div>
         </NuxtLink>
-        <SearchInput />
+        <SearchInput :search-fn="searchArticle" />
       </div>
     </div>
     <MyArticleTableTab :now-page="nowPage" />

@@ -10,18 +10,14 @@ const { setToast } = useToast()
 
 const props = defineProps({
   comments: {
-    type: Array as () => Comment[],
+    type: Array as () => TopicComment[],
     required: true
   },
-  articleId: {
+  topicId: {
     type: String,
     required: true
   },
-  userId: {
-    type: String,
-    required: true
-  },
-  getArticleDetail: {
+  getTopic: {
     type: Function,
     required: true
   }
@@ -40,29 +36,13 @@ const startToEdit = (id: number, content: string) => {
   toggleEditBtns(id)
 }
 
-const editArea = ref(null as any)
-const emojiPicker = ref<any>(null)
-
-const showEmojiPicker = ref(false)
-const insertEmoji = (emoji: any) => {
-  editingContent.value += emoji.i
-  showEmojiPicker.value = false
-}
-
-const autoResizeE = () => {
-  if (editArea.value[0]) {
-    editArea.value[0].style.height = 'auto'
-    editArea.value[0].style.height = `${editArea.value[0].scrollHeight}px`
-  }
-}
-
-// 編輯文章內的留言
-const updateComment = async (id: number) => {
+// 編輯話題內的留言
+const updateComment = async (id: string, inputTxt: string) => {
   if (!userToken.value) {
     return
   }
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/articlecomment/update`, {
+    const res: ApiResponse = await $fetch(`${apiBase}/conversationcomment/update`, {
       headers: {
         'Content-type': 'application/json',
         Authorization: `Bearer ${userToken.value}`
@@ -70,28 +50,32 @@ const updateComment = async (id: number) => {
       method: 'PUT',
       body: {
         CommentId: id,
-        Comment: editingContent.value
+        Comment: inputTxt
       }
     })
     if (res.StatusCode === 200) {
       setToast('編輯成功！')
       editingId.value = null
-      props.getArticleDetail(props.articleId, props.userId)
+      props.getTopic(props.topicId)
     }
   } catch (error: any) {
     setToast('發生錯誤！')
   }
 }
 
-// 刪除文章內的留言
-const delComment = async (id: number) => {
+const handleUpdateComment = (inputTxt: string) => {
+  updateComment(String(editingId.value), inputTxt)
+}
+
+// 刪除話題內的留言
+const delComment = async (id: string) => {
   openCommentId.value = null
   if (!userToken.value) {
     return
   }
   showConfirmModal.value = false
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/articlecomment/delete/${id}`, {
+    const res: ApiResponse = await $fetch(`${apiBase}/conversationcomment/delete/${id}`, {
       headers: {
         'Content-type': 'application/json',
         Authorization: `Bearer ${userToken.value}`
@@ -100,7 +84,7 @@ const delComment = async (id: number) => {
     })
     if (res.StatusCode === 200) {
       setToast('已刪除！')
-      props.getArticleDetail(props.articleId, props.userId)
+      props.getTopic(props.topicId)
     }
   } catch (error: any) {
     setToast('發生錯誤！')
@@ -108,7 +92,7 @@ const delComment = async (id: number) => {
 }
 
 // 刪除留言確認Modal
-const selectedId = ref(0)
+const selectedId = ref('')
 const showConfirmModal = ref(false)
 const closeConfirm = (value: boolean) => {
   showConfirmModal.value = value
@@ -116,7 +100,7 @@ const closeConfirm = (value: boolean) => {
 
 const confirmDel = (id: number) => {
   showConfirmModal.value = true
-  selectedId.value = id
+  selectedId.value = String(id)
   openCommentId.value = null
 }
 
@@ -134,7 +118,6 @@ watchEffect(() => {
       <div class="mr-3 mt-3 h-9 w-9 sm:mt-0">
         <img :src="comment.ImgUrl" alt="user" class="h-full w-full rounded-full" />
       </div>
-
       <div class="w-full">
         <div class="flex justify-between">
           <p class="mb-1 font-medium text-primary">{{ comment.NickName }}</p>
@@ -176,41 +159,7 @@ watchEffect(() => {
           </div>
         </div>
         <div v-if="comment.UserId === userData.id && editingId === comment.CommentId">
-          <div class="mb-4 grid-cols-7 gap-5 md:mb-0 md:grid">
-            <div class="relative col-span-6">
-              <textarea
-                ref="editArea"
-                v-model="editingContent"
-                cols="60"
-                rows="2"
-                max="50"
-                placeholder="留言分享你的想法吧！"
-                class="h-10 w-full resize-none overflow-hidden rounded border border-secondary py-2 pl-2 pr-10 text-primary-dark outline-primary placeholder:text-sand-300"
-                @input="autoResizeE"
-              ></textarea>
-              <span class="cursor-pointer" @click="showEmojiPicker = !showEmojiPicker"
-                ><Icon
-                  name="ic:outline-sentiment-satisfied-alt"
-                  size="20"
-                  class="absolute right-[10px] top-[10px] text-secondary hover:text-primary"
-              /></span>
-              <ClientOnly>
-                <EmojiPicker
-                  v-if="showEmojiPicker"
-                  ref="emojiPicker"
-                  class="absolute right-[10px] top-8 z-[60]"
-                  @select="insertEmoji"
-                />
-              </ClientOnly>
-            </div>
-            <button
-              class="col-span-1 h-10 whitespace-nowrap rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-              :disabled="!editingContent"
-              @click="updateComment(comment.CommentId)"
-            >
-              發表留言
-            </button>
-          </div>
+          <CommentInput :editing-content="editingContent" @send-input-txt="handleUpdateComment" />
           <button class="text-sm text-[#1E40AF] underline" @click="editingId = null">取消</button>
         </div>
         <div v-else class="flex justify-between">
