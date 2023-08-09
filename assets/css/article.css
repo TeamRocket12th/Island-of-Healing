@@ -18,7 +18,7 @@ blockquote {
 .custom-bullet-list {
   list-style-type: disc;
   margin: auto;
-  padding: 20px;
+  padding: 24px;
 }
 .custom-bullet-list li {
   margin-bottom: 10px;
@@ -27,7 +27,7 @@ blockquote {
 .custom-ordered-list {
   list-style-type: numbered;
   margin: auto;
-  padding: 20px;
+  padding: 24px;
 }
 
 .custom-ordered-list li {
