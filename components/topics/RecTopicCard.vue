@@ -26,9 +26,9 @@ const articleList = [
       :key="index"
       class="border-b border-primary/10 text-primary"
     >
-      <h4 class="mb-[14px] pt-6 text-xl font-bold">{{ article.title }}</h4>
+      <h4 class="mb-[14px] cursor-pointer pt-6 text-xl font-bold">{{ article.title }}</h4>
       <div class="flex justify-between pb-6">
-        <p class="w-2/3 font-light">
+        <p class="w-2/3 cursor-pointer font-light">
           {{ article.content }}
         </p>
         <div class="flex w-1/3 items-end justify-end font-light text-primary-dark">
