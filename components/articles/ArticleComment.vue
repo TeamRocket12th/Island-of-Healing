@@ -40,24 +40,8 @@ const startToEdit = (id: number, content: string) => {
   toggleEditBtns(id)
 }
 
-const editArea = ref(null as any)
-const emojiPicker = ref<any>(null)
-
-const showEmojiPicker = ref(false)
-const insertEmoji = (emoji: any) => {
-  editingContent.value += emoji.i
-  showEmojiPicker.value = false
-}
-
-const autoResizeE = () => {
-  if (editArea.value[0]) {
-    editArea.value[0].style.height = 'auto'
-    editArea.value[0].style.height = `${editArea.value[0].scrollHeight}px`
-  }
-}
-
 // 編輯文章內的留言
-const updateComment = async (id: number) => {
+const updateComment = async (id: string, inputTxt: string) => {
   if (!userToken.value) {
     return
   }
@@ -70,7 +54,7 @@ const updateComment = async (id: number) => {
       method: 'PUT',
       body: {
         CommentId: id,
-        Comment: editingContent.value
+        Comment: inputTxt
       }
     })
     if (res.StatusCode === 200) {
@@ -81,6 +65,10 @@ const updateComment = async (id: number) => {
   } catch (error: any) {
     setToast('發生錯誤！')
   }
+}
+
+const handleUpdateComment = (inputTxt: string) => {
+  updateComment(String(editingId.value), inputTxt)
 }
 
 // 刪除文章內的留言
@@ -175,41 +163,7 @@ watchEffect(() => {
           </div>
         </div>
         <div v-if="comment.UserId === userData.id && editingId === comment.CommentId">
-          <div class="mb-4 grid-cols-7 gap-5 md:mb-0 md:grid">
-            <div class="relative col-span-6">
-              <textarea
-                ref="editArea"
-                v-model="editingContent"
-                cols="60"
-                rows="2"
-                max="50"
-                placeholder="留言分享你的想法吧！"
-                class="h-10 w-full resize-none overflow-hidden rounded border border-secondary py-2 pl-2 pr-10 text-primary-dark outline-primary placeholder:text-sand-300"
-                @input="autoResizeE"
-              ></textarea>
-              <span class="cursor-pointer" @click="showEmojiPicker = !showEmojiPicker"
-                ><Icon
-                  name="ic:outline-sentiment-satisfied-alt"
-                  size="20"
-                  class="absolute right-[10px] top-[10px] text-secondary hover:text-primary"
-              /></span>
-              <ClientOnly>
-                <EmojiPicker
-                  v-if="showEmojiPicker"
-                  ref="emojiPicker"
-                  class="absolute right-[10px] top-8 z-[60]"
-                  @select="insertEmoji"
-                />
-              </ClientOnly>
-            </div>
-            <button
-              class="col-span-1 h-10 whitespace-nowrap rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-              :disabled="!editingContent"
-              @click="updateComment(comment.CommentId)"
-            >
-              發表留言
-            </button>
-          </div>
+          <CommentInput :editing-content="editingContent" @send-input-txt="handleUpdateComment" />
           <button class="text-sm text-[#1E40AF] underline" @click="editingId = null">取消</button>
         </div>
         <div v-else class="flex justify-between">

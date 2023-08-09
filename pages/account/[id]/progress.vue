@@ -11,13 +11,14 @@ definePageMeta({
 useSeoMeta({ title: '審核進度' })
 
 const { nowPage } = usePageName()
+const { searchArticle } = useSearch()
 </script>
 <template>
   <div class="mb-40 border-primary bg-sand-100 px-10 pb-20 pt-10 lg:border">
     <div class="mb-6 items-center justify-between md:flex">
       <h2 class="mb-16 font-serif-tc text-2xl font-bold text-primary">審核進度</h2>
       <div class="flex items-center">
-        <SearchInput />
+        <SearchInput :search-fn="searchArticle" />
       </div>
     </div>
     <div>
