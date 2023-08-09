@@ -1,39 +1,38 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useArticle } from '~/stores/article'
-import { useUserStore } from '~/stores/user'
+// import { useUserStore } from '~/stores/user'
 import { useToast } from '~/stores/toast'
-
+import { useTopic } from '~/stores/topic'
 const { showToast } = storeToRefs(useToast())
 const { setToast } = useToast()
 
-const { userData } = storeToRefs(useUserStore())
+// const { userData } = storeToRefs(useUserStore())
 const { apiBase, userToken } = useApiConfig()
-const articleUse = useArticle()
 
+const topicUse = useTopic()
 const route = useRoute()
 const router = useRouter()
 
-const selectedCategory = ref('個人成長')
+const selectedCategory = ref('解憂相談室')
 const toggleshowCategory = ref(false)
 
 const selectCategory = (category: string) => {
   selectedCategory.value = category
   switch (category) {
-    case '個人成長':
-      articleUse.article.ArticlesClassId = 1
+    case '解憂相談室':
+      topicUse.topic.ConversationsCategoryId = 1
       break
-    case '情緒察覺':
-      articleUse.article.ArticlesClassId = 2
+    case '愛情相談室':
+      topicUse.topic.ConversationsCategoryId = 2
       break
-    case '親密關係':
-      articleUse.article.ArticlesClassId = 3
+    case '靈魂相談室':
+      topicUse.topic.ConversationsCategoryId = 3
       break
-    case '日常練習':
-      articleUse.article.ArticlesClassId = 4
+    case '職場相談室':
+      topicUse.topic.ConversationsCategoryId = 4
       break
     default:
-      articleUse.article.ArticlesClassId = 1
+      topicUse.topic.ConversationsCategoryId = 1
       break
   }
 }
@@ -49,22 +48,22 @@ const postSent = (value: boolean) => {
 const newTag = ref<string>('')
 
 const addTag = () => {
-  if (newTag.value && !articleUse.article.Tags.includes(newTag.value)) {
-    articleUse.article.Tags.push(newTag.value)
+  if (newTag.value && !topicUse.topic.Tags.includes(newTag.value)) {
+    topicUse.topic.Tags.push(newTag.value)
 
     newTag.value = ''
   }
 }
 
 const removeTag = (index: number) => {
-  articleUse.article.Tags.splice(index, 1)
+  topicUse.topic.Tags.splice(index, 1)
 }
 
 const maxContentCount = 30
-const summaryCount = ref(`(${articleUse.article.Summary.length}/${maxContentCount})`)
+const summaryCount = ref(`(${topicUse.topic.Summary.length}/${maxContentCount})`)
 
 watch(
-  () => articleUse.article.Summary,
+  () => topicUse.topic.Summary,
   (newSummary) => {
     summaryCount.value = `(${newSummary.length}/${maxContentCount})`
   }
@@ -87,19 +86,19 @@ const openFilePicker = (): void => {
 }
 
 const selectFile = (event: Event) => {
-  articleUse.previewImage = ''
+  topicUse.previewImage = ''
   const file: any = (event.target as HTMLInputElement).files?.[0]
   if (file) {
     const reader = new FileReader()
     reader.onload = () => {
-      articleUse.selectedImage = reader.result as string
+      topicUse.selectedImage = reader.result as string
     }
     reader.readAsDataURL(file)
   }
-  if (formData.get('articleCover')) {
-    formData.set('articleCover', file)
+  if (formData.get('topicCover')) {
+    formData.set('topicCover', file)
   } else {
-    formData.append('articleCover', file)
+    formData.append('topicCover', file)
   }
 }
 
@@ -109,77 +108,79 @@ const handleDragOver = (event: DragEvent) => {
 // 拖曳取得本機圖片
 const handleDrop = (event: DragEvent) => {
   event.preventDefault()
-  articleUse.selectedImage = ''
+  topicUse.selectedImage = ''
   const file: File = event.dataTransfer!.files[0]
   const reader = new FileReader()
-  // sentArticleCoverImg(formData)
   reader.onload = () => {
-    articleUse.previewImage = reader.result as string
+    topicUse.previewImage = reader.result as string
   }
   reader.readAsDataURL(file)
-  if (formData.get('articleCover')) {
-    formData.set('articleCover', file)
+  if (formData.get('topicCover')) {
+    formData.set('topicCover', file)
   } else {
-    formData.append('articleCover', file)
+    formData.append('topicCover', file)
   }
 }
 
-//  新增文章
-const postArticle = async () => {
+//  新增話題
+const ConversationId = ref(null as number | null)
+const postTopic = async () => {
   if (!userToken.value) {
     return
   }
 
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/article/create`, {
+    const res: ApiResponse = await $fetch(`${apiBase}/conversation/create`, {
       headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` },
       method: 'POST',
-      body: articleUse.article
+      body: topicUse.topic
     })
     if (res.StatusCode === 200) {
-      const articleId = res.ArticleId
-      articleUse.article.Title = ''
-      articleUse.article.Content = ''
-      articleUse.article.Summary = ''
-      selectedCategory.value = '個人成長'
-      selectedOption.value = '免費'
-      articleUse.selectedImage = ''
-      articleUse.previewImage = ''
-      articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
+      const id = res.ConversationId
+      ConversationId.value = id
+      topicUse.topic.Title = ''
+      topicUse.topic.Content = ''
+      topicUse.topic.Summary = ''
+      selectedCategory.value = '解憂相談室'
+      selectedOption.value = '是'
+      topicUse.selectedImage = ''
+      topicUse.previewImage = ''
+      topicUse.topic.Tags.splice(0, topicUse.topic.Tags.length)
+      console.log(id)
       setToast('新增成功!')
-      if (formData.get('articleCover')) {
-        updateArticleCover(articleId)
+      if (formData.get('topicCover')) {
+        updateTopicCover(id)
       }
     }
   } catch (error: any) {
     console.log(error.response)
   }
 }
-// 更新文章
-const updateArticle = async () => {
+// 更新話題
+const updateTopic = async () => {
   if (!userToken.value) {
     return
   }
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/article/update/${route.params.id}`, {
+    const res: ApiResponse = await $fetch(`${apiBase}/conversation/update/${route.params.id}`, {
       headers: { 'Content-type': 'application/json', Authorization: `Bearer ${userToken.value}` },
       method: 'PUT',
-      body: articleUse.article
+      body: topicUse.topic
     })
 
     if (res.StatusCode === 200) {
-      articleUse.article.Title = ''
-      articleUse.article.Content = ''
-      articleUse.article.Summary = ''
-      articleUse.article.ArticlesClassId = 1
-      selectedOption.value = '免費'
-      articleUse.selectedImage = ''
-      articleUse.previewImage = ''
-      articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
+      topicUse.topic.Title = ''
+      topicUse.topic.Content = ''
+      topicUse.topic.Summary = ''
+      topicUse.topic.ConversationsCategoryId = 1
+      selectedOption.value = '是'
+      topicUse.selectedImage = ''
+      topicUse.previewImage = ''
+      topicUse.topic.Tags.splice(0, topicUse.topic.Tags.length)
       setToast('更新成功!')
-      if (formData.get('articleCover')) {
+      if (formData.get('topicCover')) {
         const id = Number(route.params.id)
-        updateArticleCover(id)
+        updateTopicCover(id)
       }
     }
   } catch (error: any) {
@@ -187,52 +188,39 @@ const updateArticle = async () => {
   }
 }
 
-// 新增草稿按鈕
-const saveDraft = () => {
-  articleUse.article.Progress = 0
-  if (route.params.id) {
-    updateArticle()
-  } else {
-    postArticle()
-  }
-
-  setTimeout(() => {
-    router.push(`/account/${userData.value.id}/drafts`)
-    postSent(false)
-  }, 1500)
-}
-
-// 新增文章按鈕
+// 新增話題按鈕
 const createPost = () => {
-  articleUse.article.Progress = 1
   if (route.params.id) {
-    updateArticle()
+    updateTopic()
+    setTimeout(() => {
+      router.push(`/forum/${route.params.id}`)
+      postSent(false)
+    }, 1500)
   } else {
-    postArticle()
+    postTopic()
+    setTimeout(() => {
+      router.push(`/forum/${ConversationId}`)
+      postSent(false)
+    }, 1500)
   }
-
-  setTimeout(() => {
-    router.push(`/account/${userData.value.id}/mywork`)
-    postSent(false)
-  }, 1500)
 }
 
-const selectedOption = ref('免費')
+const selectedOption = ref('是')
 watch(selectedOption, (newValue) => {
-  if (newValue === '付費') {
-    articleUse.article.Pay = true
+  if (newValue === '是') {
+    topicUse.topic.Anonymous = true
   } else {
-    articleUse.article.Pay = false
+    topicUse.topic.Anonymous = false
   }
 })
 
-// 更新圖片封面
-const updateArticleCover = async (id: number) => {
+// 更新話題圖片封面
+const updateTopicCover = async (id: number) => {
   if (!userToken.value) {
     return
   }
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/article/updatearticleimg/${id}`, {
+    const res: ApiResponse = await $fetch(`${apiBase}/conversation/updateconversationimg/${id}`, {
       headers: {
         Authorization: `Bearer ${userToken.value}`
       },
@@ -246,45 +234,23 @@ const updateArticleCover = async (id: number) => {
     console.log(error.response)
   }
 }
-const props = defineProps({
-  articleData: {
-    type: Object,
-    default: () => {}
-  }
-})
 
 onMounted(() => {
-  if (route.params.id) {
-    selectedCategory.value = props.articleData.Category
-    selectCategory(selectedCategory.value)
-    articleUse.article.Tags = props.articleData.Tags
-    if (props.articleData.Pay) {
-      selectedOption.value = '付費'
-    } else {
-      selectedOption.value = '免費'
-    }
-
-    if (props.articleData.ImgUrl !== '') {
-      articleUse.selectedImage = props.articleData.ImgUrl
-    } else {
-      articleUse.selectedImage = ''
-    }
+  if (topicUse.topic.ConversationsCategoryId === 2) {
+    selectedCategory.value = '愛情相談室'
+  } else if (topicUse.topic.ConversationsCategoryId === 3) {
+    selectedCategory.value = '靈魂相談室'
+  } else if (topicUse.topic.ConversationsCategoryId === 4) {
+    selectedCategory.value = '職場相談室'
   }
-  if (articleUse.article.ArticlesClassId === 2) {
-    selectedCategory.value = '情緒察覺'
-  } else if (articleUse.article.ArticlesClassId === 3) {
-    selectedCategory.value = '親密關係'
-  } else if (articleUse.article.ArticlesClassId === 4) {
-    selectedCategory.value = '日常練習'
-  }
-  if (articleUse.article.Pay === true) {
-    selectedOption.value = '付費'
+  if (topicUse.topic.Anonymous === false) {
+    selectedOption.value = '否'
   }
 })
 
 const photoAlert = ref(true)
 watchEffect(() => {
-  if (articleUse.selectedImage === '' && articleUse.previewImage === '') {
+  if (topicUse.selectedImage === '' && topicUse.previewImage === '') {
     photoAlert.value = true
   } else {
     photoAlert.value = false
@@ -311,18 +277,18 @@ watchEffect(() => {
         <VForm v-slot="{ meta }">
           <div class="relative block md:flex">
             <div class="w-full md:py-[54px] xl:px-[54px]">
-              <h3 class="mb-3 text-base text-primary">文章封面</h3>
+              <h3 class="mb-3 text-base text-primary">貼文封面</h3>
               <div>
                 <div
                   class="relative h-[200px] max-w-full overflow-hidden bg-sand-200 bg-cover bg-center"
-                  :style="{ backgroundImage: `url(${articleUse.previewImage})` }"
+                  :style="{ backgroundImage: `url(${topicUse.previewImage})` }"
                   @dragover.prevent="handleDragOver"
                   @drop.prevent="handleDrop"
                 >
                   <img
-                    v-if="articleUse.selectedImage"
+                    v-if="topicUse.selectedImage"
                     class="pointer-events-none h-[200px] w-full"
-                    :src="articleUse.selectedImage"
+                    :src="topicUse.selectedImage"
                     alt="Selected Image"
                   />
                   <input ref="fileInput" type="file" style="display: none" @change="selectFile" />
@@ -341,23 +307,23 @@ watchEffect(() => {
                     @click="openFilePicker"
                   >
                     <Icon name="material-symbols:add" size="16" class="text-white" />
-                    <span class="text-sm text-white">新增封面</span>
+                    <span class="text-sm text-white">貼文封面</span>
                   </button>
                 </div>
               </div>
               <div class="mb-4">
-                <label for="articleTitle" class="mb-2 block text-base text-primary">文章標題</label>
+                <label for="topicTitle" class="mb-2 block text-base text-primary">貼文標題</label>
                 <VField
-                  id="articleTitle"
-                  v-model="articleUse.article.Title"
-                  name="articleTitle"
+                  id="topicTitle"
+                  v-model="topicUse.topic.Title"
+                  name="topicTitle"
                   type="text"
-                  placeholder="請輸入文章標題"
-                  label="*文章標題"
+                  placeholder="請輸入貼文標題"
+                  label="*貼文標題"
                   class="w-full rounded border border-secondary px-3 py-2 text-primary outline-none placeholder:text-sand-300"
                   rules="required"
                 />
-                <VErrorMessage name="articleTitle" class="text-sm text-primary" />
+                <VErrorMessage name="topicTitle" class="text-sm text-primary" />
               </div>
               <div class="mb-5 md:mb-0">
                 <h3 class="mb-2 text-base text-primary">新增標籤</h3>
@@ -366,7 +332,7 @@ watchEffect(() => {
                 >
                   <Icon name="material-symbols:sell-outline" size="24" class="text-secondary" />
                   <span
-                    v-for="(tag, index) in articleUse.article.Tags"
+                    v-for="(tag, index) in topicUse.topic.Tags"
                     :key="index"
                     class="relative flex items-center gap-1 rounded border-[0.5px] border-primary bg-sand-200 px-3 text-primary"
                   >
@@ -378,7 +344,7 @@ watchEffect(() => {
                   <div>
                     <input
                       v-model="newTag"
-                      placeholder="請輸入文章標籤"
+                      placeholder="請輸入貼文標籤"
                       class="bg-sand pl-1 text-primary outline-none placeholder:text-sand-300"
                       @keydown.enter.prevent="addTag"
                     />
@@ -388,33 +354,33 @@ watchEffect(() => {
             </div>
             <div class="md:mb-[54px] md:ml-6 md:w-2/3 md:pt-[54px]">
               <fieldset class="mb-10 block">
-                <legend class="mb-2 text-base text-primary">閱讀權限</legend>
+                <legend class="mb-2 text-base text-primary">是否匿名發表貼文</legend>
                 <div class="flex items-center gap-3">
                   <div>
                     <input
-                      id="free"
+                      id="true"
                       v-model="selectedOption"
                       type="radio"
                       name="drone"
-                      value="免費"
+                      value="是"
                       checked
                     />
-                    <label for="free" class="text-secondary">所有人觀看</label>
+                    <label for="true" class="text-secondary">是</label>
                   </div>
                   <div>
                     <input
-                      id="pay"
+                      id="false"
                       v-model="selectedOption"
                       type="radio"
                       name="drone"
-                      value="付費"
+                      value="否"
                     />
-                    <label for="pay" class="text-secondary">付費會員觀看</label>
+                    <label for="false" class="text-secondary">否</label>
                   </div>
                 </div>
               </fieldset>
               <div class="dropdown mb-5 block">
-                <h3 class="mb-2 text-base text-primary">文章分類</h3>
+                <h3 class="mb-2 text-base text-primary">相談室分類</h3>
                 <label
                   tabindex="0"
                   class="btn flex justify-between rounded border-secondary bg-white"
@@ -432,39 +398,39 @@ watchEffect(() => {
                   <li>
                     <a
                       class="text-primary hover:bg-secondary hover:text-white"
-                      @click="selectCategory('個人成長')"
-                      >個人成長</a
+                      @click="selectCategory('解憂相談室')"
+                      >解憂相談室</a
                     >
                   </li>
                   <li>
                     <a
                       class="text-primary hover:bg-secondary hover:text-white"
-                      @click="selectCategory('情緒察覺')"
-                      >情緒察覺</a
+                      @click="selectCategory('愛情相談室')"
+                      >愛情相談室</a
                     >
                   </li>
                   <li>
                     <a
                       class="text-primary hover:bg-secondary hover:text-white"
-                      @click="selectCategory('親密關係')"
-                      >親密關係</a
+                      @click="selectCategory('靈魂相談室')"
+                      >靈魂相談室</a
                     >
                   </li>
                   <li>
                     <a
                       class="text-primary hover:bg-secondary hover:text-white"
-                      @click="selectCategory('日常練習')"
-                      >日常練習</a
+                      @click="selectCategory('職場相談室')"
+                      >職場相談室</a
                     >
                   </li>
                 </ul>
               </div>
               <div>
                 <div class="mb-10">
-                  <label for="userIntro" class="mb-2 block text-primary"> 內容摘要</label>
+                  <label for="userIntro" class="mb-2 block text-primary">內容摘要</label>
                   <VField
                     id="userIntro"
-                    v-model="articleUse.article.Summary"
+                    v-model="topicUse.topic.Summary"
                     name="userIntro"
                     as="textarea"
                     label="*內容摘要"
@@ -472,7 +438,7 @@ watchEffect(() => {
                     maxlength="30"
                     rows="4"
                     class="w-full rounded border border-secondary p-3 py-[7px] text-primary outline-none placeholder:text-sand-300"
-                    placeholder="輸入你的文章摘要..."
+                    placeholder="輸入你的貼文摘要..."
                   />
                   <div class="relative flex">
                     <VErrorMessage name="userIntro" class="text-primary" />
@@ -482,13 +448,6 @@ watchEffect(() => {
               </div>
             </div>
             <div class="flex justify-end md:absolute md:bottom-0 md:right-0">
-              <button
-                class="mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white disabled:text-sand-300 disabled:hover:bg-[#cfccc9] md:mb-0"
-                :disabled="!meta.valid"
-                @click.prevent="saveDraft"
-              >
-                儲存草稿
-              </button>
               <button
                 class="mb-6 rounded px-3 py-2 text-secondary duration-100 hover:bg-secondary hover:text-white disabled:text-sand-300 disabled:hover:bg-[#cfccc9] md:mb-0"
                 :disabled="!meta.valid"
