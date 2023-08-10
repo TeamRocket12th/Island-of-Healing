@@ -5,7 +5,7 @@ definePageMeta({
   layout: 'postlayout'
 })
 
-useSeoMeta({ title: '發表論壇' })
+useSeoMeta({ title: '發表話題' })
 const topicUse = useTopic()
 
 const settingShow = ref(false)

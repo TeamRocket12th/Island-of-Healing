@@ -3,8 +3,9 @@ useSeoMeta({ title: '島民集會所｜論壇' })
 </script>
 
 <template>
-  <div class="flex h-60 items-center justify-center">
-    <h2 class="text-4xl text-primary">島民集會所 論壇首頁</h2>
+  <div class="container h-full items-center justify-center">
+    <div class="mb-6 h-[200px] w-full bg-[#EEEAE1]"></div>
+    <TopicCard />
   </div>
 </template>
 
