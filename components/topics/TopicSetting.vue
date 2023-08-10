@@ -199,7 +199,7 @@ const createPost = () => {
   } else {
     postTopic()
     setTimeout(() => {
-      router.push(`/forum/${ConversationId}`)
+      router.push(`/forum/${ConversationId.value}`)
       postSent(false)
     }, 1500)
   }
