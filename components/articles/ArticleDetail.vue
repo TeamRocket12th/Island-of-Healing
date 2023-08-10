@@ -357,7 +357,7 @@ onBeforeUpdate(() => {
         :user-id="userId"
         :get-article-detail="getArticleDetail"
       />
-      <div v-if="isLogin && (!isLock || writerInfo?.Id === userData.id)">
+      <div v-if="!isPreview && isLogin && (!isLock || writerInfo?.Id === userData.id)">
         <div class="mb-2 flex items-center">
           <div class="mr-2 h-9 w-9">
             <img :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />

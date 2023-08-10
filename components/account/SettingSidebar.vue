@@ -16,7 +16,7 @@ const { unreadMsgs } = storeToRefs(useMsgs())
       <div class="h-[44px] w-[44px] overflow-hidden rounded-full">
         <img :src="userData.avatar" alt="user" />
       </div>
-      <p>{{ userData.nickName }}</p>
+      <p class="text-secondary">{{ userData.nickName }}</p>
     </div>
     <ul class="whitespace-nowrap font-serif-tc font-medium text-primary">
       <li class="px-4">
@@ -121,7 +121,17 @@ const { unreadMsgs } = storeToRefs(useMsgs())
           </li>
         </ul>
       </li>
-      <li class="px-4"></li>
+      <li class="px-4">
+        <NuxtLink
+          :to="`/account/${userData.id}/mytopic`"
+          class="block px-6 py-3 hover:bg-btn-hover hover:text-sand-100 active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
+        >
+          <div class="flex items-center">
+            <Icon name="ic:outline-chat" size="24" class="mr-2" />
+            <p>我的話題</p>
+          </div>
+        </NuxtLink>
+      </li>
       <li v-if="userData.role === 'writer'" class="px-4">
         <NuxtLink
           :to="`/account/${userData.id}/dashboard`"

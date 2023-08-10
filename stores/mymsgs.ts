@@ -31,7 +31,6 @@ export const useMsgs = defineStore('mymsgs', () => {
           Authorization: `Bearer ${userToken.value}`
         }
       })
-      console.log(res)
       if (res.StatusCode === 200) {
         userMsgs.value = res.Notification
         msgsNum.value = res.Notification.length
@@ -69,7 +68,6 @@ export const useMsgs = defineStore('mymsgs', () => {
         method: 'PUT'
       })
       if (res.StatusCode === 200) {
-        console.log(res.Message)
         if (unreadNum.value > 0) {
           unreadNum.value -= 1
         }
@@ -97,7 +95,6 @@ export const useMsgs = defineStore('mymsgs', () => {
         method: 'DELETE'
       })
       if (res.StatusCode === 200) {
-        console.log(res.Message)
         setToast('已刪除！')
         await getMyMsgs()
       }

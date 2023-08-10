@@ -266,4 +266,22 @@ declare global {
     NickName: string
     UserId: number
   }
+
+  interface PosterData {
+    Id: number
+    NickName: string
+    Bio: string
+    ImgUrl: string
+  }
+
+  interface MyTopic {
+    Anonymous: boolean
+    Category: string
+    CategoryId: number
+    CommentsNum: number
+    Id: number
+    Initdate: string
+    Title: string
+    isChecked?: boolean
+  }
 }

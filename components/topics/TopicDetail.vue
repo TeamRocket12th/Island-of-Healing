@@ -11,13 +11,14 @@ const { setToast } = useToast()
 const { isLoading } = storeToRefs(useLoading())
 const { setLoading } = useLoading()
 
-const { topicDetail, topicComments, getTopic } = useTopicDetail()
+const { topicDetail, topicComments, posterInfo, getTopic } = useTopicDetail()
 const { useFormattedTime } = useDateFormat()
 const route = useRoute()
 const topicId = route.params.id as string
 const haveCover = ref(false)
 setLoading(true)
 
+showToast.value = false
 onMounted(() => {
   getTopic(topicId)
   if (topicDetail.value?.ImgUrl) {
@@ -64,12 +65,19 @@ const handleAddComment = (inputTxt: string) => {
     <div class="fixed right-10 top-24 z-20 3xl:right-80">
       <ToastMsg v-if="showToast" />
     </div>
-    <div class="flex justify-between">
-      <h2 class="text-3xl-plus font-bold text-primary">{{ topicDetail?.Title }}</h2>
+    <div class="mb-6 flex justify-between">
+      <div class="flex items-center gap-3">
+        <div class="overflow-hidden">
+          <img :src="posterInfo?.ImgUrl" alt="poster" class="h-9 w-9 rounded-full" />
+        </div>
+        <p class="text-primary">{{ posterInfo?.NickName }}</p>
+      </div>
+
       <span class="font-light text-primary-dark"
         >{{ useFormattedTime(topicDetail.Initdate) }} 發表於 {{ topicDetail.Category }}
       </span>
     </div>
+    <h2 class="text-3xl-plus font-medium text-primary">{{ topicDetail?.Title }}</h2>
     <div class="border-b-[0.5px] border-primary pb-6"></div>
     <div class="my-6">
       <img

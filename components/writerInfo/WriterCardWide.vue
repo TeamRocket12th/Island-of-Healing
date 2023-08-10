@@ -6,7 +6,8 @@ const { showToast } = storeToRefs(useToast())
 defineProps({
   writerInfo: {
     type: Array as () => Writer[],
-    required: true
+    required: true,
+    default: () => []
   }
 })
 
