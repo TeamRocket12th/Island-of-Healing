@@ -16,7 +16,7 @@ defineProps({
     type: String,
     default: '',
     validator: (value: string) => {
-      const acceptableStrings = ['articleList', 'progress', 'drafts']
+      const acceptableStrings = ['articleList', 'progress', 'drafts', 'dashboard']
       return acceptableStrings.includes(value)
     }
   }

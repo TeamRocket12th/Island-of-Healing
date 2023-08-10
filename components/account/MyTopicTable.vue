@@ -26,7 +26,6 @@ const getMyTopic = async () => {
       }
     })
     if (res.StatusCode === 200) {
-      console.log(res)
       mytopicList.value = res.Data
     }
   } catch (error: any) {
