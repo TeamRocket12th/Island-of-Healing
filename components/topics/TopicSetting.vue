@@ -234,8 +234,30 @@ const updateTopicCover = async (id: number) => {
     console.log(error.response)
   }
 }
+const props = defineProps({
+  conversationData: {
+    type: Object,
+    default: () => {}
+  }
+})
 
 onMounted(() => {
+  if (route.params.id) {
+    selectedCategory.value = props.conversationData.Category
+    selectCategory(selectedCategory.value)
+    topicUse.topic.Tags = props.conversationData.Tags
+    if (props.conversationData.Anonymous) {
+      selectedOption.value = '是'
+    } else {
+      selectedOption.value = '否'
+    }
+
+    if (props.conversationData.ImgUrl !== '') {
+      topicUse.selectedImage = props.conversationData.ImgUrl
+    } else {
+      topicUse.selectedImage = ''
+    }
+  }
   if (topicUse.topic.ConversationsCategoryId === 4) {
     selectedCategory.value = '愛情相談室'
   } else if (topicUse.topic.ConversationsCategoryId === 6) {
