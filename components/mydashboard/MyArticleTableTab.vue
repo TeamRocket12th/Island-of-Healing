@@ -224,6 +224,7 @@ const handleDelAll = async () => {
       v-if="nowPage !== 'dashboard'"
       type="button"
       class="mb-3 rounded bg-secondary px-2 py-1 text-sm text-sand-100 hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white md:h-8"
+      :disabled="selectedArticleIds.length === 0"
       @click="confirmDel"
     >
       全部刪除

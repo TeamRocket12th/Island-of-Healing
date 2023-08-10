@@ -9,12 +9,50 @@ const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
   cluster: import.meta.env.VITE_PUSHER_CLUSTER
 })
 
-const uiStore = useUIStore()
 const { isLogin, userData } = storeToRefs(useUserStore())
 const { userLogout } = useUserStore()
-const { isWriterExpanded } = storeToRefs(uiStore)
+const { isWriterExpanded, showAccountMenu } = storeToRefs(useUIStore())
+const { toggleAccountMenu } = useUIStore()
 const { userMsgs, unreadMsgs } = storeToRefs(useMsgs())
 const { getMyMsgs } = useMsgs()
+
+// const accountMenuRef = ref<HTMLElement | null>(null)
+
+// onMounted(() => {
+//   document.addEventListener('mousedown', handleClickOutside)
+// })
+
+// onBeforeUnmount(() => {
+//   document.removeEventListener('mousedown', handleClickOutside)
+// })
+
+// const handleClickOutside = (event: MouseEvent) => {
+//   if (
+//     accountMenuRef.value &&
+//     !accountMenuRef.value.contains(event.target as Node) &&
+//     showAccountMenu.value
+//   ) {
+//     toggleAccountMenu()
+//   }
+// }
+
+const liRef = ref<HTMLElement | null>(null)
+onMounted(() => {
+  document.body.addEventListener('click', handleBodyClick)
+  window.addEventListener('resize', checkWindowSize)
+})
+
+onBeforeUnmount(() => {
+  document.body.removeEventListener('click', handleBodyClick)
+  window.removeEventListener('resize', checkWindowSize)
+})
+
+const handleBodyClick = (event: MouseEvent) => {
+  // 如果點擊的目標不是 li 或其子元素，就關閉 accountMenu
+  if (!liRef.value || !liRef.value.contains(event.target as Node)) {
+    showAccountMenu.value = false
+  }
+}
 
 if (process.client) {
   const channel = pusher.subscribe(`my-channel-${userData.value.id}`)
@@ -121,8 +159,8 @@ onMounted(getMyMsgs)
                 >註冊</NuxtLink
               >
             </li>
-            <li v-if="isLogin">
-              <div class="dropdown-end dropdown">
+            <li v-if="isLogin" ref="liRef" class="relative" @click="toggleAccountMenu">
+              <div>
                 <label
                   tabindex="0"
                   class="btn-ghost btn-circle avatar btn flex w-24 flex-nowrap items-center"
@@ -136,8 +174,10 @@ onMounted(getMyMsgs)
                   /></span>
                 </label>
                 <ul
+                  v-show="showAccountMenu"
+                  ref="accountMenuRef"
                   tabindex="0"
-                  class="dropdown-content relative top-[108%] z-[100] w-48 border-[0.5px] border-primary bg-sand-100 font-serif-tc text-base shadow"
+                  class="absolute right-0 top-[52px] z-[100] w-48 border-[0.5px] border-primary bg-sand-100 font-serif-tc text-base shadow"
                 >
                   <li class="text-primary hover:bg-secondary hover:text-sand-100">
                     <NuxtLink
@@ -191,6 +231,15 @@ onMounted(getMyMsgs)
                     >
                       <Icon name="material-symbols:clarify-outline" size="24" class="mr-2" />
                       <span>我的文章</span>
+                    </NuxtLink>
+                  </li>
+                  <li class="text-primary hover:bg-secondary hover:text-sand-100">
+                    <NuxtLink
+                      :to="`/account/${userData.id}/mytopic`"
+                      class="block p-[10px] font-medium"
+                    >
+                      <Icon name="ic:outline-chat" size="24" class="mr-2" />
+                      <span>我的話題</span>
                     </NuxtLink>
                   </li>
                   <li
@@ -520,6 +569,22 @@ onMounted(getMyMsgs)
             class="block py-5 font-serif-tc font-semibold text-primary"
             @click="CloseMobileMenuMemberCter"
             >我的訊息</NuxtLink
+          >
+        </li>
+        <li class="border-b-[0.5px] border-primary">
+          <NuxtLink
+            :to="`/account/${userData.id}/mywork`"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="CloseMobileMenuMemberCter"
+            >我的文章</NuxtLink
+          >
+        </li>
+        <li class="border-b-[0.5px] border-primary">
+          <NuxtLink
+            :to="`/account/${userData.id}/mytopic`"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="CloseMobileMenuMemberCter"
+            >我的話題</NuxtLink
           >
         </li>
         <li class="border-b-[0.5px] border-primary">

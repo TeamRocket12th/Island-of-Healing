@@ -18,6 +18,7 @@ const topicId = route.params.id as string
 const haveCover = ref(false)
 setLoading(true)
 
+showToast.value = false
 onMounted(() => {
   getTopic(topicId)
   if (topicDetail.value?.ImgUrl) {
