@@ -72,7 +72,7 @@ const formatTitle = (title: string) => {
       </ul>
       <NuxtLink to="/article" class="font-serif-tc text-xl font-semibold text-primary">
         <div class="flex items-center justify-center">
-          <span class="border-b border-primary">閱讀更多</span>
+          <span class="border-b border-primary">更多文章</span>
           <Icon name="ic:outline-keyboard-arrow-right" size="24" />
         </div>
       </NuxtLink>

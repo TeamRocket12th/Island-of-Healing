@@ -26,6 +26,8 @@ const showMobileCategory = ref(false)
 const toggleMobileCategory = () => {
   showMobileCategory.value = !showMobileCategory.value
 }
+
+const { searchArticle } = useSearch()
 </script>
 
 <template>
@@ -154,7 +156,7 @@ const toggleMobileCategory = () => {
         <span class="block text-right" @click="toggleMobileMenu"
           ><Icon name="ic:outline-close" size="32" class="my-6 cursor-pointer text-primary" />
         </span>
-        <SearchInput class="mb-3" />
+        <SearchInput class="mb-3" :search-fn="searchArticle" />
         <ul>
           <li v-if="userData.role === 'writer'" class="border-b border-primary">
             <NuxtLink

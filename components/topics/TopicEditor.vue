@@ -6,20 +6,20 @@ import { Underline } from '@tiptap/extension-underline'
 import { Placeholder } from '@tiptap/extension-placeholder'
 import { CharacterCount } from '@tiptap/extension-character-count'
 import { Editor, EditorContent, BubbleMenu } from '@tiptap/vue-3'
-
-import { useArticle } from '~/stores/article'
+import { useTopic } from '~/stores/topic'
 import '~/assets/css/article.css'
 
 const { apiBase, userToken } = useApiConfig()
 const editor = ref(null)
-const articleUse = useArticle()
+
+const topicUse = useTopic()
 
 const emits = defineEmits(['post-upload', 'post-rules'])
 const postSent = (value) => {
   emits('post-upload', value)
   convertImagesToFormData()
   if (checkformData.value) {
-    addArticleImgurl()
+    addConversationImgurl()
   }
 }
 const rulesShow = (value) => {
@@ -39,7 +39,7 @@ watchEffect(() => {
   if (editor.value !== null) {
     const html = editor.value.getHTML()
     htmlOutput.value = html
-    articleUse.article.Content = html
+    topicUse.topic.Content = html
   }
 })
 
@@ -89,7 +89,7 @@ onMounted(() => {
         }
       }),
       Placeholder.configure({
-        placeholder: '開始寫作吧...'
+        placeholder: '開始發表吧...'
       }),
       CharacterCount
     ]
@@ -151,12 +151,17 @@ watch(previewImage, (newValue) => {
     insertImage()
   }
 })
+watch(
+  () => topicUse.topic.Title,
+  (newTitle) => {
+    topicUse.Title = newTitle
+  }
+)
 
 // 偵測內容裡有圖片的
 const imgTagArr = ref([])
 const checkformData = ref(false)
 watch(htmlOutput, (newValue) => {
-  // console.log(articleUse.article.Content)
   const imgTags = newValue.match(/<img[^>]+>/g)
   imgTagArr.value = imgTags
 })
@@ -188,13 +193,13 @@ const convertImagesToFormData = () => {
   }
 }
 
-// 新增文章圖片
-const addArticleImgurl = async () => {
+// 新增話題圖片
+const addConversationImgurl = async () => {
   if (!userToken.value) {
     return
   }
   try {
-    const res = await $fetch(`${apiBase}/articlecontentimgurl/create`, {
+    const res = await $fetch(`${apiBase}/conversationcontentimgurl/create`, {
       headers: {
         Authorization: `Bearer ${userToken.value}`
       },
@@ -203,7 +208,7 @@ const addArticleImgurl = async () => {
     })
 
     if (res.StatusCode === 200) {
-      const imgTags = articleUse.article.Content.match(/<img[^>]+>/g)
+      const imgTags = topicUse.topic.Content.match(/<img[^>]+>/g)
       if (imgTags) {
         let base64Index = 0
         for (let i = 0; i < imgTags.length; i++) {
@@ -213,12 +218,12 @@ const addArticleImgurl = async () => {
             const src = srcMatch[1]
             const dataUrlPrefix = 'data:image'
             if (src.startsWith(dataUrlPrefix)) {
-              if (base64Index < res.ArticleContentImgData.length) {
-                const updatedImgTag = imgTag.replace(src, res.ArticleContentImgData[base64Index])
-                articleUse.article.Content = articleUse.article.Content.replace(
-                  imgTag,
-                  updatedImgTag
+              if (base64Index < res.ConversationContentImgData.length) {
+                const updatedImgTag = imgTag.replace(
+                  src,
+                  res.ConversationContentImgData[base64Index]
                 )
+                topicUse.topic.Content = topicUse.topic.Content.replace(imgTag, updatedImgTag)
                 base64Index++
               }
             }
@@ -276,7 +281,7 @@ const insertImage = () => {
           </div>
         </div>
         <textarea
-          v-model="articleUse.article.Title"
+          v-model="topicUse.topic.Title"
           class="mb-3 h-28 w-full resize-none bg-sand-100 pt-4 text-4xl font-bold text-primary outline-none placeholder:text-sand-300"
           placeholder="請輸入標題"
         ></textarea>

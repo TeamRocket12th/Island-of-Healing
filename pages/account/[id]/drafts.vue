@@ -10,6 +10,7 @@ definePageMeta({
 useSeoMeta({ title: '我的草稿' })
 
 const { nowPage } = usePageName()
+const { searchArticle } = useSearch()
 </script>
 <template>
   <div class="mb-40 border-primary bg-sand-100 px-10 pb-20 pt-10 lg:border">
@@ -22,7 +23,7 @@ const { nowPage } = usePageName()
         >
           <div class="flex items-center"><Icon name="ic:outline-plus" size="20" /> 新增文章</div>
         </NuxtLink>
-        <SearchInput />
+        <SearchInput :search-fn="searchArticle" />
       </div>
     </div>
     <div>

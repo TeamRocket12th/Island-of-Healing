@@ -66,16 +66,33 @@ definePageMeta({
 const { selectCharacterId } = useChatCharacters()
 const { id } = useRoute().params
 selectCharacterId(id as string)
+
+const openVideo = ref(false)
+const closeVideo = (value: boolean) => {
+  openVideo.value = value
+}
 </script>
 
 <template>
   <main class="pb-20">
     <section>
       <div class="min-h-16 mt-4">
-        <div v-if="userData.myPlan === 'free' && !isChatCountLoading">
+        <!-- <div v-if="userData.myPlan === 'free' && !isChatCountLoading">
           <p v-if="isLimited" class="text-center text-xl text-primary">已達免費帳號上限</p>
           <p v-else class="text-center text-xl text-primary">免費試用中</p>
           <p class="mt-2 text-center text-primary">目前已使用 {{ chatCount }} / 5 次</p>
+        </div> -->
+        <div class="text-center">
+          <p class="mb-4 text-center text-xl text-primary">
+            不好意思！ 目前員工休假中，暫不開放聊天...😅
+          </p>
+          <button
+            type="button"
+            class="inline-block rounded-md bg-secondary px-2 py-1 font-light text-white hover:bg-btn-hover"
+            @click="openVideo = true"
+          >
+            觀看Demo影片
+          </button>
         </div>
       </div>
 
@@ -85,6 +102,7 @@ selectCharacterId(id as string)
         :get-chat-count="getChatCount"
         :increase-chat-count="increaseChatCount"
       />
+      <ChatVideo v-if="openVideo" @close-video="closeVideo" />
     </section>
   </main>
 </template>

@@ -20,7 +20,7 @@ const { data } = await useFetch<ApiResponse>('/api/allarticles', {
 if (data.value!.StatusCode === 200) {
   articles.value = data.value!.LatestArticleData
 } else {
-  console.error(data.value!._data.Message)
+  console.log(data.value!._data.Message)
 }
 
 const formatTitle = (title: string) => {
@@ -37,7 +37,6 @@ const formatTitle = (title: string) => {
         <h2 class="font-serif-tc text-4xl font-bold text-primary">最新文章</h2>
         <div class="h-[0.5px] w-[150px] bg-primary"></div>
       </div>
-      <SearchInput class="hidden sm:block" />
     </div>
 
     <ul class="mb-3 grid-cols-12 gap-4 md:grid">

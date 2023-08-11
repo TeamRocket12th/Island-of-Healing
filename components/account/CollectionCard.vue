@@ -3,7 +3,6 @@ import { storeToRefs } from 'pinia'
 import { useToast } from '~/stores/toast'
 
 const { showToast } = storeToRefs(useToast())
-const { setToast } = useToast()
 
 defineProps({
   collectedArticles: {
@@ -14,56 +13,13 @@ defineProps({
 })
 
 const { formatDate } = useDateFormat()
-const { apiBase, userToken } = useApiConfig()
 
-// 收藏文章
-const isCollected = async (articleId: number, article: Article) => {
-  if (!userToken.value) {
-    return
-  }
-  try {
-    const res: ApiResponse = await $fetch(`${apiBase}/article/collect/${articleId}`, {
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${userToken.value}`
-      },
-      method: 'POST'
-    })
-    if (res.StatusCode === 200) {
-      setToast('收藏成功！')
-      article.IsCollected = !article.IsCollected
-    }
-  } catch (error: any) {
-    setToast('發生錯誤！')
-  }
-}
-
-// 取消收藏文章
-const cancelCollect = async (articleId: number, article: Article) => {
-  if (userToken.value) {
-    try {
-      const res: ApiResponse = await $fetch(`${apiBase}/article/cancelcollect/${articleId}`, {
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${userToken.value}`
-        },
-        method: 'PUT'
-      })
-
-      if (res.StatusCode === 200) {
-        setToast('已取消收藏！')
-        article.IsCollected = !article.IsCollected
-      }
-    } catch (error: any) {
-      setToast('發生錯誤！')
-    }
-  }
-}
+const { handleCollectionAction } = useArticleActions()
 </script>
 
 <template>
   <div class="grid grid-cols-12">
-    <div class="fixed right-10 top-52 z-20 3xl:right-80">
+    <div class="fixed right-10 top-36 z-20 3xl:right-80">
       <ToastMsg v-if="showToast" />
     </div>
     <div class="col-span-10 col-start-2 grid sm:pb-[106px]">
@@ -94,7 +50,9 @@ const cancelCollect = async (articleId: number, article: Article) => {
                   </NuxtLink>
                 </div>
                 <NuxtLink :to="`/article/${article.ArticleId}`">
-                  <h3 class="mb-4 font-serif-tc text-xl font-bold text-primary sm:mb-2">
+                  <h3
+                    class="mb-4 inline-block font-serif-tc text-xl font-bold text-primary sm:mb-2"
+                  >
                     {{ article.Title }}
                   </h3>
                 </NuxtLink>
@@ -105,31 +63,21 @@ const cancelCollect = async (articleId: number, article: Article) => {
               <div class="hidden sm:flex sm:justify-between">
                 <p class="font-light">{{ formatDate(article.Initdate) }}</p>
                 <div class="flex cursor-pointer items-center gap-1">
-                  <span
+                  <div
                     v-if="article.IsCollected"
-                    class="text-secondary"
-                    @click="cancelCollect(article.ArticleId, article)"
+                    @click="handleCollectionAction(article.ArticleId, false, article)"
                   >
-                    <Icon name="material-symbols:bookmark" size="24" />
-                  </span>
-                  <span
-                    v-else
-                    class="text-sand-300"
-                    @click="isCollected(article.ArticleId, article)"
-                    ><Icon name="material-symbols:bookmark-outline-rounded" size="24"
-                  /></span>
-                  <span
-                    v-if="article.IsCollected"
-                    class="font-light text-secondary"
-                    @click="cancelCollect(article.ArticleId, article)"
-                    >已收藏</span
-                  >
-                  <span
-                    v-else
-                    class="font-light text-secondary"
-                    @click="isCollected(article.ArticleId, article)"
-                    >收藏</span
-                  >
+                    <span class="text-secondary">
+                      <Icon name="material-symbols:bookmark" size="24" />
+                    </span>
+                    <span class="font-light text-secondary">已收藏</span>
+                  </div>
+                  <div v-else @click="handleCollectionAction(article.ArticleId, true, article)">
+                    <span class="text-sand-300"
+                      ><Icon name="material-symbols:bookmark-outline-rounded" size="24" />
+                    </span>
+                    <span class="font-light text-secondary">收藏</span>
+                  </div>
                 </div>
               </div>
               <div class="flex items-center justify-between sm:hidden">
@@ -147,31 +95,21 @@ const cancelCollect = async (articleId: number, article: Article) => {
                   <p class="font-light">·{{ formatDate(article.Initdate) }}</p>
                 </div>
                 <div class="flex cursor-pointer items-center gap-1">
-                  <span
+                  <div
                     v-if="article.IsCollected"
-                    class="text-secondary"
-                    @click="cancelCollect(article.ArticleId, article)"
+                    @click="handleCollectionAction(article.ArticleId, false, article)"
                   >
-                    <Icon name="material-symbols:bookmark" size="24" />
-                  </span>
-                  <span
-                    v-else
-                    class="text-sand-300"
-                    @click="isCollected(article.ArticleId, article)"
-                    ><Icon name="material-symbols:bookmark-outline-rounded" size="24"
-                  /></span>
-                  <span
-                    v-if="article.IsCollected"
-                    class="font-light text-secondary"
-                    @click="cancelCollect(article.ArticleId, article)"
-                    >已收藏</span
-                  >
-                  <span
-                    v-else
-                    class="font-light text-secondary"
-                    @click="isCollected(article.ArticleId, article)"
-                    >收藏</span
-                  >
+                    <span class="text-secondary">
+                      <Icon name="material-symbols:bookmark" size="24" />
+                    </span>
+                    <span class="font-light text-secondary">已收藏</span>
+                  </div>
+                  <div v-else @click="handleCollectionAction(article.ArticleId, true, article)">
+                    <span class="text-sand-300"
+                      ><Icon name="material-symbols:bookmark-outline-rounded" size="24"
+                    /></span>
+                    <span class="font-light text-secondary">收藏</span>
+                  </div>
                 </div>
               </div>
             </div>

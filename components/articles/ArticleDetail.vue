@@ -13,6 +13,7 @@ const { showToast } = storeToRefs(useToast())
 const { setToast } = useToast()
 
 setLoading(true)
+showToast.value = false
 
 const { apiBase, userToken } = useApiConfig()
 const { useFormattedTime } = useDateFormat()
@@ -44,22 +45,7 @@ onMounted(() => {
 })
 
 // 對文章做的動作
-const { AddToCollection, cancelCollection, likeArticle, unlikeArticle } = useArticleActions()
-
-const textarea = ref<HTMLTextAreaElement | null>(null)
-const emojiPicker = ref<any>(null)
-
-const autoResize = () => {
-  textarea.value!.style.height = '40px'
-  textarea.value!.style.height = textarea.value!.scrollHeight + 'px'
-}
-
-const userComment = ref('')
-const showEmojiPicker = ref(false)
-const insertEmoji = (emoji: any) => {
-  userComment.value += emoji.i
-  showEmojiPicker.value = false
-}
+const { handleCollectionAction, likeArticle, unlikeArticle } = useArticleActions()
 
 // 計算付費文章點擊數+1
 const markArticleAsRead = async (id: number) => {
@@ -111,7 +97,7 @@ watchEffect(() => {
 })
 
 // 新增文章留言
-const addComment = async (id: number, articleId: string, userId: string) => {
+const addArticleComment = async (id: number, articleId: string, userId: string, text: string) => {
   if (!userToken.value) {
     return
   }
@@ -123,13 +109,12 @@ const addComment = async (id: number, articleId: string, userId: string) => {
       },
       method: 'POST',
       body: {
-        Comment: userComment.value,
+        Comment: text,
         ArticleId: id
       }
     })
     if (res.StatusCode === 200) {
       setToast('新增成功！')
-      userComment.value = ''
       getArticleDetail(articleId, userId)
     }
   } catch (error: any) {
@@ -137,8 +122,23 @@ const addComment = async (id: number, articleId: string, userId: string) => {
   }
 }
 
-// 收藏文章訊息
-const { followWriter, unFollowWriter } = useWriterActions()
+const { handleFollowAction } = useWriterActions()
+const toggleFollow = () => {
+  if (writerInfo.value && writerInfo.value!.Id !== userData.value.id) {
+    handleFollowAction(
+      writerInfo.value!.Id,
+      !writerInfo.value?.Follow,
+      writerInfo.value,
+      articleId,
+      userId,
+      getArticleDetail
+    )
+  }
+}
+
+const handleAddComment = (inputTxt: string) => {
+  addArticleComment(articleDetail.value?.Id as number, articleId, userId, inputTxt)
+}
 
 // 文章頁面Title
 const htmlTitle = ref<string | undefined>('')
@@ -153,7 +153,7 @@ onBeforeUpdate(() => {
 </script>
 <template>
   <ArticleDetailSkeleton v-if="isLoading" />
-  <section v-if="articleDetail && !isLoading">
+  <section v-if="articleDetail && !isLoading" class="mb-28">
     <div class="fixed right-10 top-24 z-20 3xl:right-80">
       <ToastMsg v-if="showToast" />
     </div>
@@ -169,7 +169,7 @@ onBeforeUpdate(() => {
         ><Icon name="material-symbols:lock-open-outline" size="16" /> 文章已解鎖</span
       >
       <p v-if="isPreview" class="mb-2 text-right text-primary">目前為預覽模式</p>
-      <div class="mb-5 flex items-center justify-between">
+      <div class="mb-6 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <div class="h-9 w-9">
             <NuxtLink :to="`/writer/${writerInfo?.Id}`">
@@ -177,12 +177,10 @@ onBeforeUpdate(() => {
             </NuxtLink>
           </div>
           <div>
-            <p class="text-sm font-light text-primary-dark">作家</p>
-            <p class="text-sm text-primary-dark">
-              <NuxtLink :to="`/writer/${writerInfo?.Id}`">
-                {{ writerInfo?.NickName }}
-              </NuxtLink>
-            </p>
+            <p class="font-light text-primary-dark">作家</p>
+            <NuxtLink :to="`/writer/${writerInfo?.Id}`" class="text-primary-dark">
+              {{ writerInfo?.NickName }}
+            </NuxtLink>
           </div>
         </div>
         <div>
@@ -254,7 +252,15 @@ onBeforeUpdate(() => {
                 <li
                   v-if="!isCollecting"
                   class="cursor-pointer"
-                  @click="AddToCollection(articleDetail.Id, articleId, userId, getArticleDetail)"
+                  @click="
+                    handleCollectionAction(
+                      articleDetail.Id,
+                      true,
+                      articleDetail,
+                      userId,
+                      getArticleDetail
+                    )
+                  "
                 >
                   <Icon
                     name="material-symbols:bookmark-outline-rounded"
@@ -265,7 +271,15 @@ onBeforeUpdate(() => {
                 <li
                   v-else
                   class="cursor-pointer text-secondary"
-                  @click="cancelCollection(articleDetail.Id, articleId, userId, getArticleDetail)"
+                  @click="
+                    handleCollectionAction(
+                      articleDetail.Id,
+                      false,
+                      articleDetail,
+                      userId,
+                      getArticleDetail
+                    )
+                  "
                 >
                   <Icon name="material-symbols:bookmark" size="20" class="text-secondary" />
                 </li>
@@ -278,7 +292,7 @@ onBeforeUpdate(() => {
         </div>
       </div>
     </div>
-    <div v-if="articleDetail" class="mb-9 flex items-center justify-between py-6">
+    <div v-if="articleDetail" class="mb-9 block items-center justify-between py-6 sm:flex">
       <div class="items-center md:flex">
         <div class="flex justify-between sm:mr-2">
           <NuxtLink :to="`/writer/${writerInfo?.Id}`">
@@ -288,16 +302,23 @@ onBeforeUpdate(() => {
           <button
             v-if="!writerInfo?.Follow"
             type="button"
-            class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
+            class="flex h-10 w-[72px] items-center justify-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
+            @click="toggleFollow"
           >
-            <Icon name="ic:baseline-plus" size="16" />追蹤
+            <span>
+              <Icon name="ic:baseline-plus" size="16" />
+            </span>
+            追蹤
           </button>
           <button
             v-else
             type="button"
-            class="flex h-10 w-[72px] items-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
+            class="flex h-10 w-[72px] items-center justify-center whitespace-nowrap rounded border bg-secondary px-3 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:hidden"
+            @click="toggleFollow"
           >
-            <Icon name="material-symbols:fitbit-check-small" size="20" />
+            <span>
+              <Icon name="material-symbols:fitbit-check-small" size="20" />
+            </span>
             追蹤中
           </button>
         </div>
@@ -312,77 +333,41 @@ onBeforeUpdate(() => {
         <button
           v-if="!writerInfo?.Follow && writerInfo?.Id !== userData.id"
           class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
-          @click="followWriter(writerInfo?.Id!, articleId, userId, getArticleDetail)"
+          @click="toggleFollow"
         >
           <Icon name="ic:baseline-plus" size="20" />追蹤
         </button>
         <button
           v-else-if="writerInfo?.Follow && writerInfo?.Id !== userData.id"
           class="hidden items-center whitespace-nowrap rounded border bg-secondary px-3 py-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white sm:flex"
-          @click="unFollowWriter(writerInfo?.Id!, articleId, userId, getArticleDetail)"
+          @click="toggleFollow"
         >
           <Icon name="material-symbols:fitbit-check-small" size="20" />追蹤中
         </button>
       </div>
     </div>
     <!--留言-->
-    <div v-if="!isLock || writerInfo?.Id === userData.id">
-      <div class="mb-6">
-        <p class="font-serif-tc text-2xl font-bold text-primary">留言</p>
-      </div>
+    <div>
+      <p class="mb-6 font-serif-tc text-2xl font-bold text-primary">留言</p>
       <ArticleComment
         :comments="comments"
         :article-id="articleId"
         :user-id="userId"
         :get-article-detail="getArticleDetail"
       />
-      <div v-if="isLogin" class="mb-28">
+      <div v-if="!isPreview && isLogin && (!isLock || writerInfo?.Id === userData.id)">
         <div class="mb-2 flex items-center">
           <div class="mr-2 h-9 w-9">
             <img :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />
           </div>
           <span class="font-medium text-primary">{{ userData.nickName }}</span>
         </div>
-        <div class="grid-cols-7 gap-6 text-right md:grid md:text-left">
-          <div class="relative col-span-5 mb-4 md:mb-0">
-            <textarea
-              ref="textarea"
-              v-model="userComment"
-              cols="60"
-              rows="2"
-              max="50"
-              placeholder="留言分享你的想法吧！"
-              class="focus: h-10 w-full resize-none overflow-hidden rounded border border-secondary py-2 pl-2 pr-10 text-primary-dark outline-primary placeholder:text-sand-300"
-              @input="autoResize"
-            ></textarea>
-            <span class="cursor-pointer" @click="showEmojiPicker = !showEmojiPicker"
-              ><Icon
-                name="ic:outline-sentiment-satisfied-alt"
-                size="20"
-                class="absolute right-[10px] top-[10px] z-50 text-secondary hover:text-primary"
-            /></span>
-            <ClientOnly>
-              <EmojiPicker
-                v-if="showEmojiPicker"
-                ref="emojiPicker"
-                class="absolute right-[10px] top-8"
-                @select="insertEmoji"
-              />
-            </ClientOnly>
-          </div>
-          <div class="col-span-2">
-            <button
-              class="h-10 rounded bg-secondary p-2 text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-              :disabled="!userComment"
-              @click="addComment(articleDetail?.Id as number, articleId, userId)"
-            >
-              發表留言
-            </button>
-          </div>
-        </div>
+
+        <CommentInput @send-input-txt="handleAddComment" />
       </div>
+
       <div v-else class="my-20 flex items-center justify-center text-primary-dark">
-        <NuxtLink to="/login" class="text-xl text-primary underline">要先登入才能留言喔</NuxtLink>
+        <NuxtLink to="/login" class="text-xl text-primary underline">要先登入才能留言喔！</NuxtLink>
       </div>
     </div>
   </section>

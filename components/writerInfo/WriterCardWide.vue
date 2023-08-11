@@ -2,64 +2,20 @@
 import { storeToRefs } from 'pinia'
 import { useToast } from '~/stores/toast'
 const { showToast } = storeToRefs(useToast())
-const { setToast } = useToast()
 
 defineProps({
   writerInfo: {
     type: Array as () => Writer[],
-    default: () => [],
-    required: true
+    required: true,
+    default: () => []
   }
 })
 
-const runtimeConfig = useRuntimeConfig()
-const apiBase = runtimeConfig.public.apiBase
-const userToken = useCookie('token')
-// 追蹤作家
-const followWriter = async (id: number, writer: Writer) => {
-  if (!userToken.value) {
-    setToast('請先登入！')
-    return
-  }
-  try {
-    const res: ApiResponse = await $fetch(`${apiBase}/writer/follow/${id}`, {
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${userToken.value}`
-      },
-      method: 'POST'
-    })
-    if (res.StatusCode === 200) {
-      setToast('追蹤成功！')
-      writer.IsFollowing = !writer.IsFollowing
-    }
-  } catch (error: any) {
-    setToast('發生錯誤！')
-  }
-}
+const { handleFollowAction } = useWriterActions()
 
-// 取消追蹤作家
-const unFollowWriter = async (id: number, writer: Writer) => {
+const unfollowAndCloseModal = async (id: number, writer: Writer | null) => {
+  await handleFollowAction(id, false, writer!)
   showConfirmModal.value = false
-  if (!userToken.value) {
-    setToast('請先登入')
-    return
-  }
-  try {
-    const res: ApiResponse = await $fetch(`${apiBase}/writer/cancelfollow/${id}`, {
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${userToken.value}`
-      },
-      method: 'DELETE'
-    })
-    if (res.StatusCode === 200) {
-      setToast('取消追蹤成功！')
-      writer.IsFollowing = !writer.IsFollowing
-    }
-  } catch (error: any) {
-    setToast('發生錯誤！')
-  }
 }
 
 // 取消追蹤確認Modal
@@ -89,16 +45,15 @@ const confirmDel = (writer: Writer) => {
         class="mb-6 flex items-center justify-between border bg-white p-6 shadow-sm"
       >
         <NuxtLink :to="`/writer/${writer.WriterId}`">
-          <span class="flex items-center gap-2">
+          <div class="flex items-center gap-2">
             <div class="h-[60px] w-[60px] overflow-hidden rounded-full">
-              <img :src="writer.ImgUrl" alt="writer" />
+              <img :src="writer.ImgUrl" alt="writer" class="h-full w-full object-cover" />
             </div>
             <div>
               <p class="font-medium text-primary">{{ writer.NickName }}</p>
-
               <p class="text-sm text-primary-dark">{{ writer.JobTitle }}。{{ writer.Bio }}</p>
             </div>
-          </span>
+          </div>
         </NuxtLink>
         <button
           v-if="writer.IsFollowing"
@@ -110,7 +65,7 @@ const confirmDel = (writer: Writer) => {
         <button
           v-else
           class="flex items-center whitespace-nowrap rounded border bg-secondary px-2 py-1 text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
-          @click="followWriter(writer.WriterId, writer)"
+          @click="handleFollowAction(writer.WriterId, true, writer)"
         >
           <Icon name="ic:baseline-plus" size="20" />追蹤
         </button>
@@ -139,7 +94,7 @@ const confirmDel = (writer: Writer) => {
             </button>
             <button
               class="rounded p-[7px] text-secondary duration-100 hover:bg-secondary hover:text-white"
-              @click="unFollowWriter(selectedId, selectedWriter!)"
+              @click="unfollowAndCloseModal(selectedId, selectedWriter!)"
             >
               確定
             </button>

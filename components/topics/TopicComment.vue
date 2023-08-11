@@ -10,18 +10,14 @@ const { setToast } = useToast()
 
 const props = defineProps({
   comments: {
-    type: Array as () => Comment[],
+    type: Array as () => TopicComment[],
     required: true
   },
-  articleId: {
+  topicId: {
     type: String,
     required: true
   },
-  userId: {
-    type: String,
-    required: true
-  },
-  getArticleDetail: {
+  getTopic: {
     type: Function,
     required: true
   }
@@ -40,13 +36,13 @@ const startToEdit = (id: number, content: string) => {
   toggleEditBtns(id)
 }
 
-// 編輯文章內的留言
+// 編輯話題內的留言
 const updateComment = async (id: string, inputTxt: string) => {
   if (!userToken.value) {
     return
   }
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/articlecomment/update`, {
+    const res: ApiResponse = await $fetch(`${apiBase}/conversationcomment/update`, {
       headers: {
         'Content-type': 'application/json',
         Authorization: `Bearer ${userToken.value}`
@@ -60,7 +56,7 @@ const updateComment = async (id: string, inputTxt: string) => {
     if (res.StatusCode === 200) {
       setToast('編輯成功！')
       editingId.value = null
-      props.getArticleDetail(props.articleId, props.userId)
+      props.getTopic(props.topicId)
     }
   } catch (error: any) {
     setToast('發生錯誤！')
@@ -71,15 +67,15 @@ const handleUpdateComment = (inputTxt: string) => {
   updateComment(String(editingId.value), inputTxt)
 }
 
-// 刪除文章內的留言
-const delComment = async (id: number) => {
+// 刪除話題內的留言
+const delComment = async (id: string) => {
   openCommentId.value = null
   if (!userToken.value) {
     return
   }
   showConfirmModal.value = false
   try {
-    const res: ApiResponse = await $fetch(`${apiBase}/articlecomment/delete/${id}`, {
+    const res: ApiResponse = await $fetch(`${apiBase}/conversationcomment/delete/${id}`, {
       headers: {
         'Content-type': 'application/json',
         Authorization: `Bearer ${userToken.value}`
@@ -88,7 +84,7 @@ const delComment = async (id: number) => {
     })
     if (res.StatusCode === 200) {
       setToast('已刪除！')
-      props.getArticleDetail(props.articleId, props.userId)
+      props.getTopic(props.topicId)
     }
   } catch (error: any) {
     setToast('發生錯誤！')
@@ -96,7 +92,7 @@ const delComment = async (id: number) => {
 }
 
 // 刪除留言確認Modal
-const selectedId = ref(0)
+const selectedId = ref('')
 const showConfirmModal = ref(false)
 const closeConfirm = (value: boolean) => {
   showConfirmModal.value = value
@@ -104,7 +100,7 @@ const closeConfirm = (value: boolean) => {
 
 const confirmDel = (id: number) => {
   showConfirmModal.value = true
-  selectedId.value = id
+  selectedId.value = String(id)
   openCommentId.value = null
 }
 
@@ -115,13 +111,13 @@ watchEffect(() => {
   }
 })
 </script>
+
 <template>
   <ul class="mb-4">
     <li v-for="comment in comments" :key="comment.CommentId" class="mb-6 flex">
       <div class="mr-3 mt-3 h-9 w-9 sm:mt-0">
         <img :src="comment.ImgUrl" alt="user" class="h-full w-full rounded-full" />
       </div>
-
       <div class="w-full">
         <div class="flex justify-between">
           <p class="mb-1 font-medium text-primary">{{ comment.NickName }}</p>

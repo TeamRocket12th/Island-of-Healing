@@ -244,4 +244,44 @@ declare global {
     url: string
     id: number
   }
+
+  // 論壇
+
+  interface TopicDetail {
+    Id: number
+    Title: string
+    Content: string
+    Initdate: string
+    Tags: string[]
+    Anonymous: boolean
+    Category: string
+    ImgUrl: string
+    Summary: string
+  }
+  interface TopicComment {
+    Comment: string
+    CommentId: number
+    ImgUrl: string
+    LatestDate: string
+    NickName: string
+    UserId: number
+  }
+
+  interface PosterData {
+    Id: number
+    NickName: string
+    Bio: string
+    ImgUrl: string
+  }
+
+  interface MyTopic {
+    Anonymous: boolean
+    Category: string
+    CategoryId: number
+    CommentsNum: number
+    Id: number
+    Initdate: string
+    Title: string
+    isChecked?: boolean
+  }
 }
