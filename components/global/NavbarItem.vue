@@ -16,26 +16,6 @@ const { toggleAccountMenu } = useUIStore()
 const { userMsgs, unreadMsgs } = storeToRefs(useMsgs())
 const { getMyMsgs } = useMsgs()
 
-// const accountMenuRef = ref<HTMLElement | null>(null)
-
-// onMounted(() => {
-//   document.addEventListener('mousedown', handleClickOutside)
-// })
-
-// onBeforeUnmount(() => {
-//   document.removeEventListener('mousedown', handleClickOutside)
-// })
-
-// const handleClickOutside = (event: MouseEvent) => {
-//   if (
-//     accountMenuRef.value &&
-//     !accountMenuRef.value.contains(event.target as Node) &&
-//     showAccountMenu.value
-//   ) {
-//     toggleAccountMenu()
-//   }
-// }
-
 const liRef = ref<HTMLElement | null>(null)
 onMounted(() => {
   document.body.addEventListener('click', handleBodyClick)
@@ -48,7 +28,6 @@ onBeforeUnmount(() => {
 })
 
 const handleBodyClick = (event: MouseEvent) => {
-  // 如果點擊的目標不是 li 或其子元素，就關閉 accountMenu
   if (!liRef.value || !liRef.value.contains(event.target as Node)) {
     showAccountMenu.value = false
   }
@@ -148,14 +127,17 @@ onMounted(getMyMsgs)
           <NuxtLink to="/" class="font-serif-tc font-medium tracking-[3px] text-primary"
             >提供心靈療癒的庇護所</NuxtLink
           >
-          <ul class="hidden items-center gap-6 sm:flex">
+          <ul class="hidden items-center sm:flex" :class="{ 'gap-6': !isLogin }">
+            <li :class="{ 'mr:6': !isLogin }">
+              <SmallSearch :search-fn="searchArticle" search-place-holder="搜尋文章" />
+            </li>
             <li v-if="!isLogin">
               <NuxtLink to="/login" class="font-serif-tc font-bold text-primary">登入</NuxtLink>
             </li>
             <li v-if="!isLogin">
               <NuxtLink
                 to="/signup"
-                class="rounded bg-secondary px-2 py-1 font-serif-tc font-bold text-sand-100"
+                class="inline-block w-[61px] rounded bg-secondary px-2 py-1 text-center font-serif-tc font-bold text-sand-100"
                 >註冊</NuxtLink
               >
             </li>
@@ -324,46 +306,39 @@ onMounted(getMyMsgs)
             @mouseover="showCategory = true"
             @mouseleave="showCategory = false"
           >
-            <button>精選文章</button>
+            <NuxtLink :to="{ name: 'article', query: { category: 'all' } }">專欄文章</NuxtLink>
             <ul
               v-show="showCategory"
-              class="category-shadow absolute -left-20 top-full z-[100] w-[164px] whitespace-nowrap border border-primary bg-white font-normal"
+              class="category-shadow absolute left-0 top-full z-[100] w-[120px] whitespace-nowrap border border-primary bg-white font-normal"
               @mouseover="showCategory = true"
               @mouseleave="showCategory = false"
             >
               <li>
-                <RouterLink
+                <NuxtLink
                   :to="{ name: 'article', query: { category: 'personal-growth' } }"
                   class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
-                  >個人成長</RouterLink
+                  >個人成長</NuxtLink
                 >
               </li>
               <li>
-                <RouterLink
+                <NuxtLink
                   :to="{ name: 'article', query: { category: 'emotional-awareness' } }"
                   class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
-                  >情緒察覺</RouterLink
+                  >情緒察覺</NuxtLink
                 >
               </li>
               <li>
-                <RouterLink
+                <NuxtLink
                   :to="{ name: 'article', query: { category: 'intimate-relationships' } }"
                   class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
-                  >親密關係</RouterLink
+                  >親密關係</NuxtLink
                 >
               </li>
               <li>
-                <RouterLink
+                <NuxtLink
                   :to="{ name: 'article', query: { category: 'daily-practice' } }"
-                  class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
-                  >日常練習</RouterLink
-                >
-              </li>
-              <li>
-                <RouterLink
-                  :to="{ name: 'article', query: { category: 'all' } }"
                   class="block w-full bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
-                  >所有文章</RouterLink
+                  >日常練習</NuxtLink
                 >
               </li>
             </ul>
@@ -420,7 +395,7 @@ onMounted(getMyMsgs)
               class="flex cursor-pointer items-center justify-between border-b-[0.5px] border-primary pb-5"
               @click="toggleMobileCategory"
             >
-              <p class="font-serif-tc font-semibold text-primary">精選文章</p>
+              <p class="font-serif-tc font-semibold text-primary">專欄文章</p>
               <span class="text-primary duration-200" :class="{ 'rotate-180': showMobileCategory }">
                 <Icon name="ic:outline-expand-more" size="24" />
               </span>

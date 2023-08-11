@@ -198,7 +198,7 @@ const updateUserPhoto = async (data: FormData) => {
               class="my-2 w-full rounded border border-primary bg-white px-3 py-[6px] text-primary-dark outline-none"
               rules="required"
             />
-            <VErrorMessage name="userName" class="text-primary" />
+            <VErrorMessage name="userName" class="text-[#EF4444]" />
           </div>
           <div class="w-full pt-4 lg:w-1/3 lg:pl-8 lg:pt-0">
             <label for="birthday" class="mb-2 block text-primary">生日</label>
@@ -235,7 +235,7 @@ const updateUserPhoto = async (data: FormData) => {
             class="my-2 block w-full rounded border border-primary bg-white px-3 py-[6px] text-primary-dark outline-none lg:w-2/3"
             rules="required"
           />
-          <VErrorMessage name="jobTitle" class="text-primary" />
+          <VErrorMessage name="jobTitle" class="text-[#EF4444]" />
         </div>
         <div v-if="userData.role === 'writer'" class="mb-12 lg:mb-11">
           <label for="userIntro" class="mb-2 block text-primary">自我介紹</label>
@@ -252,7 +252,7 @@ const updateUserPhoto = async (data: FormData) => {
             placeholder="向其他人簡單介紹你自己吧!可以分享你的創作理念、寫作方向，建議 20-30 字為佳！"
           />
           <div class="relative flex">
-            <VErrorMessage name="userIntro" class="text-primary" />
+            <VErrorMessage name="userIntro" class="text-[#EF4444]" />
             <p class="absolute right-0">{{ characterCount }}</p>
           </div>
         </div>
