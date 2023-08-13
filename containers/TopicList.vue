@@ -10,7 +10,7 @@ const { isLoading } = storeToRefs(useLoading())
 
 const selectedCategory = ref('解憂相談室')
 const toggleshowCategory = ref(false)
-const ConversationsCategoryId = ref<number>(1)
+const conversationsCategoryId = ref<number>(1)
 const toggleCategory = (status: boolean) => {
   toggleshowCategory.value = status
 }
@@ -18,27 +18,29 @@ const selectCategory = (category: string) => {
   selectedCategory.value = category
   switch (category) {
     case '解憂相談室':
-      ConversationsCategoryId.value = 1
+      conversationsCategoryId.value = 1
       break
     case '愛情相談室':
-      ConversationsCategoryId.value = 4
+      conversationsCategoryId.value = 4
+      topicUse.nowPage = 1
       break
     case '靈魂相談室':
-      ConversationsCategoryId.value = 6
+      conversationsCategoryId.value = 6
+      topicUse.nowPage = 1
       break
     case '職場相談室':
-      ConversationsCategoryId.value = 7
+      conversationsCategoryId.value = 7
+      topicUse.nowPage = 1
       break
     default:
-      ConversationsCategoryId.value = 1
+      conversationsCategoryId.value = 1
       break
   }
-  getSpTopic(1, ConversationsCategoryId.value)
+  getSpTopic(1, conversationsCategoryId.value)
 }
 
 const allPages = ref<number>(1)
-const TotalConversations = ref<number>(200)
-const CategoryDescription = ref<string>('有什麼話就在這裡說說，說說之後 也許所有事情都會更好一點。')
+const totalConversations = ref<number>(200)
 
 const conversations = ref<TopicData[]>([])
 const scrollTop = () => {
@@ -65,19 +67,15 @@ const getSpTopic = async (nowPage: number, category: number) => {
     if (res.StatusCode === 200) {
       console.log(res)
       scrollTop()
-      setLoading(false)
-      if (res.TotalPages === 1) {
-        allPages.value = 1
-      } else {
-        allPages.value = res.TotalPages
-      }
+      allPages.value = res.TotalPages
       conversations.value = res.ConversationsData
-      TotalConversations.value = res.TotalConversations
-      CategoryDescription.value = res.CategoryDescription
-      ConversationsCategoryId.value = category
+      totalConversations.value = res.TotalConversations
+      conversationsCategoryId.value = category
     }
   } catch (error: any) {
     console.log(error.response)
+  } finally {
+    setLoading(false)
   }
 }
 
@@ -85,7 +83,7 @@ onMounted(() => handleReading(1))
 setLoading(true)
 
 const handleReading = (page: number) => {
-  getSpTopic(page, ConversationsCategoryId.value)
+  getSpTopic(page, conversationsCategoryId.value)
 
   topicUse.nowPage = page
   console.log(topicUse.nowPage)
@@ -140,8 +138,8 @@ const handleReading = (page: number) => {
   </div>
   <div class="mb-[52px] flex items-center justify-between">
     <div class="text-primary-dark">
-      <p class="mb-1">{{ TotalConversations }} 篇文章</p>
-      <p>{{ CategoryDescription }}</p>
+      <p class="mb-1">{{ totalConversations }} 篇文章</p>
+      <p>有什麼話就在這裡說說，說說之後 也許所有事情都會更好一點。</p>
     </div>
     <NuxtLink to="/newtopic">
       <button class="flex rounded bg-secondary px-3 py-2 text-white">
