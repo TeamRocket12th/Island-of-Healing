@@ -275,5 +275,7 @@ declare global {
     ConversationImgUrl: string
     PosterNickName: string
     Summary: string
+    CommentsNum: number
+    PosterImgUrl: string
   }
 }
