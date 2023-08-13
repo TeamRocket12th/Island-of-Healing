@@ -16,6 +16,16 @@
 
 ---
 
+## 相關連結
+- [簡報介紹](https://www.figma.com/proto/AG6ArbfdvMQmrhRpRrEwv0/%E5%B0%8F%E5%B3%B6%E8%81%8A%E7%99%92%E6%89%80%E7%B0%A1%E5%A0%B1?page-id=0%3A1&type=design&node-id=1-480&viewport=554%2C360%2C0.06&t=gRFko5Yg66gN0QvY-1&scaling=scale-down&starting-point-node-id=1%3A480)
+- [設計稿](https://www.figma.com/file/HC1yylX1rxo1izrzBN1bsm/%E5%B0%8F%E5%B3%B6%E8%81%8A%E7%99%92%E6%89%80?node-id=1%3A4&mode=dev)
+- [前台網站](https://island-of-healing.vercel.app/)
+- [後台Repo](https://github.com/TeamRocket12th/Island-Of-Healing-BackStage)
+- [Swagger](https://islandofhealing.rocket-coding.com/swagger/index.html?url=/swagger/v1/swagger.json#/AdministratorSystem)
+
+
+
+
 ## 平台特色
 
 ### 有價內容變現
@@ -33,13 +43,6 @@
 ### AI角色互動
 - 人性化的角色設計，是你聊天的好夥伴
 - AI角色推薦文章，加強導流
-
-
-## 相關連結
-- [設計稿](https://www.figma.com/file/HC1yylX1rxo1izrzBN1bsm/%E5%B0%8F%E5%B3%B6%E8%81%8A%E7%99%92%E6%89%80?node-id=1%3A4&mode=dev)
-- [前台網站](https://island-of-healing.vercel.app/)
-- [後台Repo](https://github.com/TeamRocket12th/Island-Of-Healing-BackStage)
-- [Swagger](https://islandofhealing.rocket-coding.com/swagger/index.html?url=/swagger/v1/swagger.json#/AdministratorSystem)
 
 
 ## 功能介紹
@@ -117,3 +120,32 @@
   <img alt="SWAGGER" src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white" />
   <img alt="Azure" src="https://img.shields.io/badge/microsoft%20azure-0089D6?style=for-the-badge&logo=microsoft-azure&logoColor=white" />
 </p>
+
+---
+
+## Git協作相關規範
+
+### Git Commit
+範例：`feat: 新增購物車功能`
+
+| commit 類型 | 程式碼改動 | 使用情境 |
+| --- | --- | --- |
+| feat | 有 | 新增功能 (feature) |
+| fix | 有 | 修復bug |
+| style | 有 | 修改CSS樣式 |
+| update | 有 | 不影響功能，單純更新 |
+| refactor | 有 | 重構 (不是新增功能，也不是修復 bug 的更改) |
+| doc | 無 | 文件相關 |
+| merge | 有 | 發PR時遇到衝突，合併其他分支(ex: dev)解衝突 |
+
+### Git Branch
+| 分支名稱 | 說明 |
+| --- | --- |
+| main | 正式分支 |
+| dev | 測試分支 |
+| release-版本號 | 整合發布分支 |
+| feature/xxx | 功能分支 |
+| hotfix/xxx | 緊急Bug修復 |
+
+### Git Flow
+![Git Flow Chart](https://dnncommunity.org/DesktopModules/Blog/BlogImage.ashx?TabId=65&ModuleId=454&Blog=1&Post=1470&w=1140&h=400&c=0&key=289a2e46-efbd-471c-830d-ccfdd93d46ea)
