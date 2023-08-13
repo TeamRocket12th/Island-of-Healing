@@ -5,5 +5,11 @@ export const useUIStore = defineStore('ui', () => {
     isWriterExpanded.value = !isWriterExpanded.value
   }
 
-  return { isWriterExpanded, toggleWriterSettings }
+  const showAccountMenu = ref(false)
+  const toggleAccountMenu = (event: MouseEvent) => {
+    showAccountMenu.value = !showAccountMenu.value
+    event.stopPropagation()
+  }
+
+  return { isWriterExpanded, toggleWriterSettings, showAccountMenu, toggleAccountMenu }
 })

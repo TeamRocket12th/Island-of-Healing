@@ -180,10 +180,12 @@ const years = ['2020', '2021', '2022', '2023']
 const months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
 
 const toggleYears = () => {
+  isMonthsOpen.value = false
   isYearsOpen.value = !isYearsOpen.value
 }
 
 const toggleMonths = () => {
+  isYearsOpen.value = false
   isMonthsOpen.value = !isMonthsOpen.value
 }
 
@@ -373,7 +375,7 @@ watchEffect(async () => {
               <Icon name="material-symbols:arrow-drop-down" size="20" />
               <ul
                 v-if="isYearsOpen"
-                class="absolute top-[103%] w-20 rounded border border-primary bg-white text-sm"
+                class="absolute top-[103%] w-full rounded border border-primary bg-white text-sm"
               >
                 <li
                   v-for="(year, index) in years"
@@ -394,12 +396,12 @@ watchEffect(async () => {
               <Icon name="ic:round-arrow-drop-down" size="24" />
               <ul
                 v-if="isMonthsOpen"
-                class="absolute top-[103%] h-36 w-16 overflow-y-scroll rounded border border-primary bg-white text-sm"
+                class="absolute left-0 top-[103%] h-36 w-full overflow-y-scroll rounded border border-primary bg-white text-sm"
               >
                 <li
                   v-for="(month, index) in months"
                   :key="index"
-                  class="px-4 py-1 hover:bg-secondary hover:text-sand-100"
+                  class="px-4 py-1 text-center hover:bg-secondary hover:text-sand-100"
                   :class="{ 'border-b border-[edeae6]': index !== months.length - 1 }"
                   @click="getOverViewMonth(month)"
                 >

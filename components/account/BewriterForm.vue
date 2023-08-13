@@ -122,7 +122,7 @@ watchEffect(() => {
 幫助我們更了解你！"
           />
           <div class="relative flex">
-            <VErrorMessage name="userIntro" class="text-primary" />
+            <VErrorMessage name="userIntro" class="text-[#EF4444]" />
             <p class="absolute right-0">{{ introCount }}</p>
           </div>
         </div>
@@ -142,7 +142,7 @@ watchEffect(() => {
             placeholder="可以分享你的創作理念、動機..."
           />
           <div class="relative flex">
-            <VErrorMessage name="userReason" class="text-primary" />
+            <VErrorMessage name="userReason" class="text-[#EF4444]" />
             <p class="absolute right-0">{{ reasonCount }}</p>
           </div>
         </div>
@@ -162,7 +162,7 @@ watchEffect(() => {
             placeholder="name@example.com"
           />
           <div class="relative flex">
-            <VErrorMessage name="userWork" class="text-primary" />
+            <VErrorMessage name="userWork" class="text-[#EF4444]" />
             <p class="absolute right-0">{{ workCount }}</p>
           </div>
         </div>
@@ -173,13 +173,13 @@ watchEffect(() => {
           <VField
             id="userSocialMedia"
             v-model="data.socialMedia"
-            name="userMedia"
+            name="userSocialMedia"
             rows="4"
             :rules="required"
             class="w-full rounded border border-primary bg-white p-2 text-primary-dark outline-none placeholder:text-sand-300"
             placeholder="Facebook、Instagram、Twitter"
           />
-          <VErrorMessage name="userSocialMedia" class="text-primary" />
+          <VErrorMessage name="userSocialMedia" class="text-[#EF4444]" />
         </div>
         <div class="flex justify-end">
           <button

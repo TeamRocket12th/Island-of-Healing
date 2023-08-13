@@ -9,12 +9,29 @@ const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
   cluster: import.meta.env.VITE_PUSHER_CLUSTER
 })
 
-const uiStore = useUIStore()
 const { isLogin, userData } = storeToRefs(useUserStore())
 const { userLogout } = useUserStore()
-const { isWriterExpanded } = storeToRefs(uiStore)
+const { isWriterExpanded, showAccountMenu } = storeToRefs(useUIStore())
+const { toggleAccountMenu } = useUIStore()
 const { userMsgs, unreadMsgs } = storeToRefs(useMsgs())
 const { getMyMsgs } = useMsgs()
+
+const liRef = ref<HTMLElement | null>(null)
+onMounted(() => {
+  document.body.addEventListener('click', handleBodyClick)
+  window.addEventListener('resize', checkWindowSize)
+})
+
+onBeforeUnmount(() => {
+  document.body.removeEventListener('click', handleBodyClick)
+  window.removeEventListener('resize', checkWindowSize)
+})
+
+const handleBodyClick = (event: MouseEvent) => {
+  if (!liRef.value || !liRef.value.contains(event.target as Node)) {
+    showAccountMenu.value = false
+  }
+}
 
 if (process.client) {
   const channel = pusher.subscribe(`my-channel-${userData.value.id}`)
@@ -110,19 +127,22 @@ onMounted(getMyMsgs)
           <NuxtLink to="/" class="font-serif-tc font-medium tracking-[3px] text-primary"
             >提供心靈療癒的庇護所</NuxtLink
           >
-          <ul class="hidden items-center gap-6 sm:flex">
+          <ul class="hidden items-center sm:flex" :class="{ 'gap-6': !isLogin }">
+            <li :class="{ 'mr:6': !isLogin }">
+              <SmallSearch :search-fn="searchArticle" search-place-holder="搜尋文章" />
+            </li>
             <li v-if="!isLogin">
               <NuxtLink to="/login" class="font-serif-tc font-bold text-primary">登入</NuxtLink>
             </li>
             <li v-if="!isLogin">
               <NuxtLink
                 to="/signup"
-                class="rounded bg-secondary px-2 py-1 font-serif-tc font-bold text-sand-100"
+                class="inline-block w-[61px] rounded bg-secondary px-2 py-1 text-center font-serif-tc font-bold text-sand-100"
                 >註冊</NuxtLink
               >
             </li>
-            <li v-if="isLogin">
-              <div class="dropdown-end dropdown">
+            <li v-if="isLogin" ref="liRef" class="relative" @click="toggleAccountMenu">
+              <div>
                 <label
                   tabindex="0"
                   class="btn-ghost btn-circle avatar btn flex w-24 flex-nowrap items-center"
@@ -136,8 +156,10 @@ onMounted(getMyMsgs)
                   /></span>
                 </label>
                 <ul
+                  v-show="showAccountMenu"
+                  ref="accountMenuRef"
                   tabindex="0"
-                  class="dropdown-content relative top-[108%] z-[100] w-48 border-[0.5px] border-primary bg-sand-100 font-serif-tc text-base shadow"
+                  class="absolute right-0 top-[52px] z-[100] w-48 border-[0.5px] border-primary bg-sand-100 font-serif-tc text-base shadow"
                 >
                   <li class="text-primary hover:bg-secondary hover:text-sand-100">
                     <NuxtLink
@@ -191,6 +213,15 @@ onMounted(getMyMsgs)
                     >
                       <Icon name="material-symbols:clarify-outline" size="24" class="mr-2" />
                       <span>我的文章</span>
+                    </NuxtLink>
+                  </li>
+                  <li class="text-primary hover:bg-secondary hover:text-sand-100">
+                    <NuxtLink
+                      :to="`/account/${userData.id}/mytopic`"
+                      class="block p-[10px] font-medium"
+                    >
+                      <Icon name="ic:outline-chat" size="24" class="mr-2" />
+                      <span>我的話題</span>
                     </NuxtLink>
                   </li>
                   <li
@@ -275,46 +306,39 @@ onMounted(getMyMsgs)
             @mouseover="showCategory = true"
             @mouseleave="showCategory = false"
           >
-            <button>精選文章</button>
+            <NuxtLink :to="{ name: 'article', query: { category: 'all' } }">專欄文章</NuxtLink>
             <ul
               v-show="showCategory"
-              class="category-shadow absolute -left-20 top-full z-[100] w-[164px] whitespace-nowrap border border-primary bg-white font-normal"
+              class="category-shadow absolute left-0 top-full z-[100] w-[120px] whitespace-nowrap border border-primary bg-white font-normal"
               @mouseover="showCategory = true"
               @mouseleave="showCategory = false"
             >
               <li>
-                <RouterLink
+                <NuxtLink
                   :to="{ name: 'article', query: { category: 'personal-growth' } }"
                   class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
-                  >個人成長</RouterLink
+                  >個人成長</NuxtLink
                 >
               </li>
               <li>
-                <RouterLink
+                <NuxtLink
                   :to="{ name: 'article', query: { category: 'emotional-awareness' } }"
                   class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
-                  >情緒察覺</RouterLink
+                  >情緒察覺</NuxtLink
                 >
               </li>
               <li>
-                <RouterLink
+                <NuxtLink
                   :to="{ name: 'article', query: { category: 'intimate-relationships' } }"
                   class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
-                  >親密關係</RouterLink
+                  >親密關係</NuxtLink
                 >
               </li>
               <li>
-                <RouterLink
+                <NuxtLink
                   :to="{ name: 'article', query: { category: 'daily-practice' } }"
-                  class="block w-full border-b border-[#CDCDCD] bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
-                  >日常練習</RouterLink
-                >
-              </li>
-              <li>
-                <RouterLink
-                  :to="{ name: 'article', query: { category: 'all' } }"
                   class="block w-full bg-sand-100 p-[10px] hover:bg-secondary hover:text-sand-100"
-                  >所有文章</RouterLink
+                  >日常練習</NuxtLink
                 >
               </li>
             </ul>
@@ -371,7 +395,7 @@ onMounted(getMyMsgs)
               class="flex cursor-pointer items-center justify-between border-b-[0.5px] border-primary pb-5"
               @click="toggleMobileCategory"
             >
-              <p class="font-serif-tc font-semibold text-primary">精選文章</p>
+              <p class="font-serif-tc font-semibold text-primary">專欄文章</p>
               <span class="text-primary duration-200" :class="{ 'rotate-180': showMobileCategory }">
                 <Icon name="ic:outline-expand-more" size="24" />
               </span>
@@ -520,6 +544,22 @@ onMounted(getMyMsgs)
             class="block py-5 font-serif-tc font-semibold text-primary"
             @click="CloseMobileMenuMemberCter"
             >我的訊息</NuxtLink
+          >
+        </li>
+        <li class="border-b-[0.5px] border-primary">
+          <NuxtLink
+            :to="`/account/${userData.id}/mywork`"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="CloseMobileMenuMemberCter"
+            >我的文章</NuxtLink
+          >
+        </li>
+        <li class="border-b-[0.5px] border-primary">
+          <NuxtLink
+            :to="`/account/${userData.id}/mytopic`"
+            class="block py-5 font-serif-tc font-semibold text-primary"
+            @click="CloseMobileMenuMemberCter"
+            >我的話題</NuxtLink
           >
         </li>
         <li class="border-b-[0.5px] border-primary">

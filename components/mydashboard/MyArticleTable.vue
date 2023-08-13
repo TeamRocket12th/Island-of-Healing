@@ -32,7 +32,7 @@ const props = defineProps({
     type: String,
     default: '',
     validator: (value: string) => {
-      const acceptableStrings = ['articleList', 'progress', 'drafts']
+      const acceptableStrings = ['articleList', 'progress', 'drafts', 'dashboard']
       return acceptableStrings.includes(value)
     }
   }
@@ -163,7 +163,7 @@ const checkEdit = (progress: string, id: number) => {
   if (progress === '審核中' || progress === '審核成功') {
     return
   }
-  router.push(`/editor/${id}`)
+  router.push(`/editarticle/${id}`)
 }
 
 // 收集選取文章

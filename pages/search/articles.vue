@@ -51,7 +51,6 @@ const getSearchResult = async (keyword: string, category = '0', uId: string) => 
   setLoading(true)
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/searcharticle/${keyword}/${category}/${uId}`)
-    console.log(res)
     if (res.StatusCode === 200) {
       searchArticles.value = res.ArticlesData
     }

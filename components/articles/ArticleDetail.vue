@@ -169,7 +169,7 @@ onBeforeUpdate(() => {
         ><Icon name="material-symbols:lock-open-outline" size="16" /> 文章已解鎖</span
       >
       <p v-if="isPreview" class="mb-2 text-right text-primary">目前為預覽模式</p>
-      <div class="mb-5 flex items-center justify-between">
+      <div class="mb-6 flex items-center justify-between">
         <div class="flex items-center gap-2">
           <div class="h-9 w-9">
             <NuxtLink :to="`/writer/${writerInfo?.Id}`">
@@ -177,12 +177,10 @@ onBeforeUpdate(() => {
             </NuxtLink>
           </div>
           <div>
-            <p class="text-sm font-light text-primary-dark">作家</p>
-            <p class="text-sm text-primary-dark">
-              <NuxtLink :to="`/writer/${writerInfo?.Id}`">
-                {{ writerInfo?.NickName }}
-              </NuxtLink>
-            </p>
+            <p class="font-light text-primary-dark">作家</p>
+            <NuxtLink :to="`/writer/${writerInfo?.Id}`" class="text-primary-dark">
+              {{ writerInfo?.NickName }}
+            </NuxtLink>
           </div>
         </div>
         <div>
@@ -357,7 +355,7 @@ onBeforeUpdate(() => {
         :user-id="userId"
         :get-article-detail="getArticleDetail"
       />
-      <div v-if="isLogin && (!isLock || writerInfo?.Id === userData.id)">
+      <div v-if="!isPreview && isLogin && (!isLock || writerInfo?.Id === userData.id)">
         <div class="mb-2 flex items-center">
           <div class="mr-2 h-9 w-9">
             <img :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />
@@ -369,7 +367,7 @@ onBeforeUpdate(() => {
       </div>
 
       <div v-else class="my-20 flex items-center justify-center text-primary-dark">
-        <NuxtLink to="/login" class="text-xl text-primary underline">要先登入才能留言喔</NuxtLink>
+        <NuxtLink to="/login" class="text-xl text-primary underline">要先登入才能留言喔！</NuxtLink>
       </div>
     </div>
   </section>
