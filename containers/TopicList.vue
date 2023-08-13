@@ -148,33 +148,7 @@ const handleReading = (page: number) => {
       </button>
     </NuxtLink>
   </div>
-  <div class="flex justify-between">
-    <div class="flex gap-3">
-      <button
-        type="button"
-        class="rounded border border-secondary px-2 py-1 text-secondary duration-300 hover:bg-secondary hover:text-white"
-      >
-        全部
-      </button>
-      <button
-        type="button"
-        class="rounded border border-secondary px-2 py-1 text-secondary duration-300 hover:bg-secondary hover:text-white"
-      >
-        最新
-      </button>
-      <button
-        type="button"
-        class="rounded border border-secondary px-2 py-1 text-secondary duration-300 hover:bg-secondary hover:text-white"
-      >
-        熱門
-      </button>
-      <button
-        type="button"
-        class="rounded border border-secondary px-2 py-1 text-secondary duration-300 hover:bg-secondary hover:text-white"
-      >
-        精選
-      </button>
-    </div>
+  <div class="flex justify-end">
     <SearchInput class="hidden sm:block" search-place-holder="話題搜尋" :search-fn="searchTopic" />
   </div>
   <div v-if="isLoading" class="py-40">
