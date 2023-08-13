@@ -23,13 +23,13 @@ const selectCategory = (category: string) => {
       topicUse.topic.ConversationsCategoryId = 1
       break
     case '愛情相談室':
-      topicUse.topic.ConversationsCategoryId = 2
+      topicUse.topic.ConversationsCategoryId = 4
       break
     case '靈魂相談室':
-      topicUse.topic.ConversationsCategoryId = 3
+      topicUse.topic.ConversationsCategoryId = 6
       break
     case '職場相談室':
-      topicUse.topic.ConversationsCategoryId = 4
+      topicUse.topic.ConversationsCategoryId = 7
       break
     default:
       topicUse.topic.ConversationsCategoryId = 1
@@ -193,14 +193,14 @@ const createPost = () => {
   if (route.params.id) {
     updateTopic()
     setTimeout(() => {
-      router.push(`/forum/${route.params.id}`)
       postSent(false)
+      router.push(`/forum/${route.params.id}`)
     }, 1500)
   } else {
     postTopic()
     setTimeout(() => {
-      router.push(`/forum/${ConversationId.value}`)
       postSent(false)
+      router.push(`/forum/${ConversationId.value}`)
     }, 1500)
   }
 }
@@ -234,13 +234,35 @@ const updateTopicCover = async (id: number) => {
     console.log(error.response)
   }
 }
+const props = defineProps({
+  conversationData: {
+    type: Object,
+    default: () => {}
+  }
+})
 
 onMounted(() => {
-  if (topicUse.topic.ConversationsCategoryId === 2) {
+  if (route.params.id) {
+    selectedCategory.value = props.conversationData.Category
+    selectCategory(selectedCategory.value)
+    topicUse.topic.Tags = props.conversationData.Tags
+    if (props.conversationData.Anonymous) {
+      selectedOption.value = '是'
+    } else {
+      selectedOption.value = '否'
+    }
+
+    if (props.conversationData.ImgUrl !== '') {
+      topicUse.selectedImage = props.conversationData.ImgUrl
+    } else {
+      topicUse.selectedImage = ''
+    }
+  }
+  if (topicUse.topic.ConversationsCategoryId === 4) {
     selectedCategory.value = '愛情相談室'
-  } else if (topicUse.topic.ConversationsCategoryId === 3) {
+  } else if (topicUse.topic.ConversationsCategoryId === 6) {
     selectedCategory.value = '靈魂相談室'
-  } else if (topicUse.topic.ConversationsCategoryId === 4) {
+  } else if (topicUse.topic.ConversationsCategoryId === 7) {
     selectedCategory.value = '職場相談室'
   }
   if (topicUse.topic.Anonymous === false) {

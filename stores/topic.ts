@@ -9,6 +9,6 @@ export const useTopic = defineStore('topic', () => {
   })
   const previewImage = ref('')
   const selectedImage = ref('')
-
-  return { topic, previewImage, selectedImage }
+  const nowPage = ref(1)
+  return { topic, previewImage, selectedImage, nowPage }
 })
