@@ -11,7 +11,7 @@ const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
 
 const { isLogin, userData } = storeToRefs(useUserStore())
 const { userLogout } = useUserStore()
-const { isWriterExpanded, showAccountMenu } = storeToRefs(useUIStore())
+const { isWriterExpanded, showAccountMenu, showMobileMenu } = storeToRefs(useUIStore())
 const { toggleAccountMenu } = useUIStore()
 const { userMsgs, unreadMsgs } = storeToRefs(useMsgs())
 const { getMyMsgs } = useMsgs()
@@ -47,11 +47,14 @@ if (process.client) {
   })
 }
 
+// 文章分類選單
 const showCategory = ref(false)
 const showMobileCategory = ref(false)
-const showMobileCategory2 = ref(false)
 
-const showMobileMenu = ref(false)
+// 手機版會員中心選單
+const showMobileMemberCenter = ref(false)
+
+// 手機版選單
 const toggleMobileMenu = () => {
   showMobileMenu.value = !showMobileMenu.value
   if (showMobileMenu.value) {
@@ -64,12 +67,12 @@ const toggleMobileMenu = () => {
   }
 }
 const toggleMobileMenu2 = () => {
-  showMobileCategory2.value = true
+  showMobileMemberCenter.value = true
   showMobileMenu.value = false
 }
 const CloseMobileMenuMemberCter = () => {
-  showMobileCategory2.value = false
-  if (showMobileCategory2.value) {
+  showMobileMemberCenter.value = false
+  if (showMobileMemberCenter.value) {
     document.body.style.overflow = 'hidden'
   } else {
     document.body.style.overflow = 'auto'
@@ -456,6 +459,14 @@ onMounted(getMyMsgs)
           </li>
           <li class="border-b-[0.5px] border-primary">
             <NuxtLink
+              to="/forum"
+              class="block py-5 font-serif-tc font-semibold text-primary"
+              @click="toggleMobileMenu"
+              >論壇</NuxtLink
+            >
+          </li>
+          <li class="border-b-[0.5px] border-primary">
+            <NuxtLink
               to="/plans"
               class="block py-5 font-serif-tc font-semibold text-primary"
               @click="toggleMobileMenu"
@@ -503,7 +514,7 @@ onMounted(getMyMsgs)
     </Transition>
 
     <div
-      v-if="showMobileCategory2"
+      v-if="showMobileMemberCenter"
       class="absolute top-[58px] z-[999] h-screen min-h-screen w-screen overflow-auto bg-sand-100 bg-opacity-90 px-4 sm:hidden"
       style="backdrop-filter: blur(5px)"
     >
@@ -512,7 +523,7 @@ onMounted(getMyMsgs)
       </span>
       <ul
         class="overflow-hidden transition-all duration-500"
-        :class="showMobileCategory2 ? 'max-h-96' : 'max-h-0'"
+        :class="showMobileMemberCenter ? 'max-h-96' : 'max-h-0'"
       >
         <li class="border-b-[0.5px] border-primary">
           <NuxtLink

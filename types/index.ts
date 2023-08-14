@@ -266,7 +266,18 @@ declare global {
     NickName: string
     UserId: number
   }
-
+  interface TopicData {
+    Id: number
+    Title: string
+    Initdate: string
+    Anonymous: boolean
+    PosterId: number
+    ConversationImgUrl: string
+    PosterNickName: string
+    Summary: string
+    CommentsNum: number
+    PosterImgUrl: string
+  }
   interface PosterData {
     Id: number
     NickName: string
