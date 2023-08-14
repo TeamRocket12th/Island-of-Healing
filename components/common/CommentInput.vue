@@ -65,7 +65,7 @@ const insertEmoji = (emoji: any) => {
     </div>
     <div class="col-span-2 xl:col-span-1">
       <button
-        class="h-10 whitespace-nowrap rounded bg-secondary p-2 text-right text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white xl:w-full"
+        class="h-10 whitespace-nowrap rounded bg-secondary p-2 text-center text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white xl:w-full"
         :disabled="!inputText"
         @click="sendInputTxt(inputText)"
       >
