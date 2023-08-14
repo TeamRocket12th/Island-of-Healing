@@ -20,8 +20,8 @@ defineProps({
 </script>
 <template>
   <div class="flex flex-col justify-between sm:flex-row">
-    <div class="flex cursor-pointer flex-wrap gap-6" @click="topicPage(topic.Id)">
-      <div class="h-[150px] w-full sm:w-[220px]">
+    <div class="flex cursor-pointer flex-wrap gap-6 sm:flex-nowrap" @click="topicPage(topic.Id)">
+      <div class="h-[150px] w-full flex-shrink-0 sm:w-[220px]">
         <img
           v-if="topic.ConversationImgUrl"
           :src="topic.ConversationImgUrl"
@@ -51,7 +51,7 @@ defineProps({
       </div>
     </div>
     <div class="flex items-end justify-between gap-3 text-primary-dark sm:justify-normal">
-      <p>{{ formatDate(topic.Initdate) }}</p>
+      <p class="whitespace-nowrap">{{ formatDate(topic.Initdate) }}</p>
       <div class="flex items-center justify-center gap-1 text-primary-dark">
         <span>
           <Icon name="material-symbols:mode-comment-outline" size="16"></Icon>
