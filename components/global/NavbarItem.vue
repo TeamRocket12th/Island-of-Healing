@@ -456,6 +456,14 @@ onMounted(getMyMsgs)
           </li>
           <li class="border-b-[0.5px] border-primary">
             <NuxtLink
+              to="/forum"
+              class="block py-5 font-serif-tc font-semibold text-primary"
+              @click="toggleMobileMenu"
+              >論壇</NuxtLink
+            >
+          </li>
+          <li class="border-b-[0.5px] border-primary">
+            <NuxtLink
               to="/plans"
               class="block py-5 font-serif-tc font-semibold text-primary"
               @click="toggleMobileMenu"

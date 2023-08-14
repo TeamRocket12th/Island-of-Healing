@@ -19,8 +19,8 @@ const haveCover = ref(false)
 setLoading(true)
 
 showToast.value = false
-onMounted(() => {
-  getTopic(topicId)
+onMounted(async () => {
+  await getTopic(topicId)
   if (topicDetail.value?.ImgUrl) {
     haveCover.value = true
   }
@@ -43,7 +43,6 @@ const addTopicComment = async (topicId: string, text: string) => {
         ConversationId: topicId
       }
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       getTopic(topicId)
       setToast('新增成功！')
@@ -65,12 +64,18 @@ const handleAddComment = (inputTxt: string) => {
     <div class="fixed right-10 top-24 z-20 3xl:right-80">
       <ToastMsg v-if="showToast" />
     </div>
-    <div class="mb-6 flex justify-between">
-      <div class="flex items-center gap-3">
+    <div class="mb-6 flex flex-wrap justify-between gap-3 sm:flex-nowrap sm:gap-0">
+      <div v-if="!topicDetail.Anonymous" class="flex items-center gap-3">
         <div class="overflow-hidden">
           <img :src="posterInfo?.ImgUrl" alt="poster" class="h-9 w-9 rounded-full" />
         </div>
         <p class="text-primary">{{ posterInfo?.NickName }}</p>
+      </div>
+      <div v-else class="flex items-center gap-3">
+        <div class="overflow-hidden">
+          <img src="/anonymous.png" alt="poster" class="h-9 w-9 rounded-full" />
+        </div>
+        <p class="text-primary">匿名</p>
       </div>
 
       <span class="font-light text-primary-dark"
@@ -81,7 +86,7 @@ const handleAddComment = (inputTxt: string) => {
     <div class="border-b-[0.5px] border-primary pb-6"></div>
     <div class="my-6">
       <img
-        :src="haveCover ? topicDetail?.Content : 'https://picsum.photos/904/300'"
+        :src="haveCover ? topicDetail?.ImgUrl : 'https://picsum.photos/904/300'"
         alt="topic-cover"
         class="w-full"
       />
