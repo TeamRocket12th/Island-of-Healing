@@ -11,7 +11,6 @@ export const useTopicDetail = () => {
   const getTopic = async (topicId: string) => {
     try {
       const res: ApiResponse = await $fetch(`${apiBase}/readconversation/${topicId}`)
-      console.log(res)
       if (res.StatusCode === 200) {
         topicDetail.value = res.ConversationData
         topicComments.value = res.Comments

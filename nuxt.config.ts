@@ -44,6 +44,9 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      htmlAttrs: {
+        lang: 'zh-Hant'
+      },
       viewport: 'width=device-width, initial-scale=1',
       title: '小島聊癒所',
       meta: [

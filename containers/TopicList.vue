@@ -65,7 +65,6 @@ const getSpTopic = async (nowPage: number, category: number) => {
       }
     })
     if (res.StatusCode === 200) {
-      console.log(res)
       scrollTop()
       allPages.value = res.TotalPages
       conversations.value = res.ConversationsData
@@ -86,65 +85,78 @@ const handleReading = (page: number) => {
   getSpTopic(page, conversationsCategoryId.value)
 
   topicUse.nowPage = page
-  console.log(topicUse.nowPage)
 }
 </script>
 
 <template>
-  <div class="dropdown mb-5">
-    <label
-      tabindex="0"
-      class="btn flex justify-between rounded border-secondary bg-white"
-      @click="toggleCategory(true)"
-    >
-      <span class="text-lg font-normal text-secondary">{{ selectedCategory }}</span>
-      <Icon name="material-symbols:arrow-drop-down" size="24" class="text-primary" />
-    </label>
-    <ul
-      v-if="toggleshowCategory"
-      tabindex="0"
-      class="dropdown-content menu rounded-box w-full border-secondary bg-base-100 p-2 shadow"
-      @click="toggleCategory(false)"
-    >
-      <li>
-        <a
-          class="text-primary hover:bg-secondary hover:text-white"
-          @click="selectCategory('解憂相談室')"
-          >解憂相談室</a
-        >
-      </li>
-      <li>
-        <a
-          class="text-primary hover:bg-secondary hover:text-white"
-          @click="selectCategory('愛情相談室')"
-          >愛情相談室</a
-        >
-      </li>
-      <li>
-        <a
-          class="text-primary hover:bg-secondary hover:text-white"
-          @click="selectCategory('靈魂相談室')"
-          >靈魂相談室</a
-        >
-      </li>
-      <li>
-        <a
-          class="text-primary hover:bg-secondary hover:text-white"
-          @click="selectCategory('職場相談室')"
-          >職場相談室</a
-        >
-      </li>
-    </ul>
+  <div class="mb-5 flex items-center justify-between sm:block">
+    <div class="dropdown">
+      <label
+        tabindex="0"
+        class="btn flex justify-between rounded border-secondary bg-white"
+        @click="toggleCategory(true)"
+      >
+        <span class="text-normal font-normal text-secondary sm:text-lg">{{
+          selectedCategory
+        }}</span>
+        <Icon name="material-symbols:arrow-drop-down" size="24" class="text-primary" />
+      </label>
+      <ul
+        v-if="toggleshowCategory"
+        tabindex="0"
+        class="dropdown-content menu rounded-box w-full border-secondary bg-base-100 p-2 shadow"
+        @click="toggleCategory(false)"
+      >
+        <li>
+          <span
+            class="text-primary hover:bg-secondary hover:text-white"
+            @click="selectCategory('解憂相談室')"
+            >解憂相談室</span
+          >
+        </li>
+        <li>
+          <span
+            class="text-primary hover:bg-secondary hover:text-white"
+            @click="selectCategory('愛情相談室')"
+            >愛情相談室</span
+          >
+        </li>
+        <li>
+          <span
+            class="text-primary hover:bg-secondary hover:text-white"
+            @click="selectCategory('靈魂相談室')"
+            >靈魂相談室</span
+          >
+        </li>
+        <li>
+          <span
+            class="text-primary hover:bg-secondary hover:text-white"
+            @click="selectCategory('職場相談室')"
+            >職場相談室</span
+          >
+        </li>
+      </ul>
+    </div>
+    <NuxtLink class="block sm:hidden" to="/newtopic">
+      <button type="button" class="flex rounded bg-secondary px-3 py-2 text-white">
+        <Icon name="material-symbols:add" size="24"></Icon>
+        <p class="whitespace-nowrap">發表話題</p>
+      </button>
+    </NuxtLink>
   </div>
-  <div class="mb-[52px] flex items-center justify-between">
+
+  <div
+    v-if="!isLoading"
+    class="mb-[52px] flex flex-wrap items-center justify-between gap-4 sm:gap-0"
+  >
     <div class="text-primary-dark">
-      <p class="mb-1">{{ totalConversations }} 篇文章</p>
+      <p class="mb-1">{{ totalConversations }} 則話題</p>
       <p>有什麼話就在這裡說說，說說之後 也許所有事情都會更好一點。</p>
     </div>
-    <NuxtLink to="/newtopic">
+    <NuxtLink class="hidden sm:block" to="/newtopic">
       <button class="flex rounded bg-secondary px-3 py-2 text-white">
         <Icon name="material-symbols:add" size="24"></Icon>
-        <p>發表貼文</p>
+        <p class="whitespace-nowrap">發表話題</p>
       </button>
     </NuxtLink>
   </div>

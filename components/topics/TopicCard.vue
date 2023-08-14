@@ -19,33 +19,43 @@ defineProps({
 })
 </script>
 <template>
-  <div class="flex cursor-pointer justify-between">
-    <div class="flex gap-6" @click="topicPage(topic.Id)">
-      <div class="h-[150px] w-[220px] bg-[#D9D9D9]">
+  <div class="flex flex-col justify-between sm:flex-row">
+    <div class="flex cursor-pointer flex-wrap gap-6" @click="topicPage(topic.Id)">
+      <div class="h-[150px] w-full sm:w-[220px]">
         <img
           v-if="topic.ConversationImgUrl"
           :src="topic.ConversationImgUrl"
-          alt=""
+          alt="topic-cover"
+          class="h-full w-full object-cover object-center"
+        />
+        <img
+          v-else
+          src="https://picsum.photos/150/220"
+          alt="topic-cover"
           class="h-full w-full object-cover object-center"
         />
       </div>
       <div>
         <div class="mb-2 flex items-center gap-1">
           <div class="h-4 w-4 rounded-full bg-[#D9D9D9]">
-            <img :src="topic.PosterImgUrl" alt="" class="rounded-full object-cover" />
+            <img
+              :src="topic.PosterImgUrl ? topic.PosterImgUrl : '/anonymous.png'"
+              alt="poster"
+              class="rounded-full object-cover"
+            />
           </div>
           <p class="text-sm text-primary-dark">{{ topic.PosterNickName }}</p>
         </div>
         <h3 class="mb-4 text-2xl text-primary">{{ topic.Title }}</h3>
-        <p class="text-primary-dark">{{ topic.Summary }}</p>
+        <p class="hidden text-primary-dark sm:block">{{ topic.Summary }}</p>
       </div>
     </div>
-    <div class="flex items-end gap-3">
+    <div class="flex items-end justify-between gap-3 text-primary-dark sm:justify-normal">
       <p>{{ formatDate(topic.Initdate) }}</p>
-      <div class="flex items-center justify-center gap-1">
-        <div>
+      <div class="flex items-center justify-center gap-1 text-primary-dark">
+        <span>
           <Icon name="material-symbols:mode-comment-outline" size="16"></Icon>
-        </div>
+        </span>
         <p>{{ topic.CommentsNum }}</p>
       </div>
     </div>
