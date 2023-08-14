@@ -1,4 +1,10 @@
 export const useUIStore = defineStore('ui', () => {
+  // 手機版導覽選單
+  const showMobileMenu = ref(false)
+  const toggleMobileMenu = () => {
+    showMobileMenu.value = !showMobileMenu.value
+  }
+
   // 作家後台選單狀態
   const isWriterExpanded = ref(false)
   const toggleWriterSettings = () => {
@@ -11,5 +17,12 @@ export const useUIStore = defineStore('ui', () => {
     event.stopPropagation()
   }
 
-  return { isWriterExpanded, toggleWriterSettings, showAccountMenu, toggleAccountMenu }
+  return {
+    isWriterExpanded,
+    toggleWriterSettings,
+    showAccountMenu,
+    toggleAccountMenu,
+    showMobileMenu,
+    toggleMobileMenu
+  }
 })

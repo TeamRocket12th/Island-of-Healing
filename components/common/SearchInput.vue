@@ -1,5 +1,10 @@
 <script setup lang="ts">
-defineProps({
+import { storeToRefs } from 'pinia'
+import { useUIStore } from '~/stores/ui'
+
+const { showMobileMenu } = storeToRefs(useUIStore())
+
+const props = defineProps({
   searchPlaceHolder: {
     type: String,
     default: '搜尋'
@@ -10,6 +15,13 @@ defineProps({
   }
 })
 const keyWord = ref('')
+
+const handleSearch = (keyWord: string) => {
+  props.searchFn(keyWord)
+  if (showMobileMenu.value) {
+    showMobileMenu.value = false
+  }
+}
 </script>
 
 <template>
@@ -19,7 +31,7 @@ const keyWord = ref('')
       type="text"
       class="h-10 w-full rounded border border-primary bg-transparent p-[10px] pl-[38px] text-primary placeholder-sand-300 focus:outline-sand-300"
       :placeholder="searchPlaceHolder"
-      @change="searchFn(keyWord)"
+      @change="handleSearch(keyWord)"
     />
     <Icon
       name="mdi:magnify"

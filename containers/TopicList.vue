@@ -145,7 +145,10 @@ const handleReading = (page: number) => {
     </NuxtLink>
   </div>
 
-  <div class="mb-[52px] flex flex-wrap items-center justify-between gap-4 sm:gap-0">
+  <div
+    v-if="!isLoading"
+    class="mb-[52px] flex flex-wrap items-center justify-between gap-4 sm:gap-0"
+  >
     <div class="text-primary-dark">
       <p class="mb-1">{{ totalConversations }} 則話題</p>
       <p>有什麼話就在這裡說說，說說之後 也許所有事情都會更好一點。</p>
