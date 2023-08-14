@@ -89,11 +89,11 @@ const handleReading = (page: number) => {
 </script>
 
 <template>
-  <div class="mb-5 flex items-center justify-between sm:block">
+  <div class="mb-5 mt-6 flex items-center justify-between sm:mt-0 sm:block">
     <div class="dropdown">
       <label
         tabindex="0"
-        class="btn flex justify-between rounded border-secondary bg-white"
+        class="btn flex justify-between rounded border-secondary bg-white px-2 hover:border-secondary hover:bg-[#f2f0ee] hover:text-secondary"
         @click="toggleCategory(true)"
       >
         <span class="text-normal font-normal text-secondary sm:text-lg">{{
@@ -104,7 +104,7 @@ const handleReading = (page: number) => {
       <ul
         v-if="toggleshowCategory"
         tabindex="0"
-        class="dropdown-content menu rounded-box w-full border-secondary bg-base-100 p-2 shadow"
+        class="dropdown-content menu w-full rounded border-secondary bg-base-100 p-2 shadow"
         @click="toggleCategory(false)"
       >
         <li>
