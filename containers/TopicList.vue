@@ -2,6 +2,9 @@
 import { storeToRefs } from 'pinia'
 import { useTopic } from '~/stores/topic'
 import { useLoading } from '~/stores/loading'
+import { useUserStore } from '~/stores/user'
+
+const { isLogin } = storeToRefs(useUserStore())
 const { apiBase } = useApiConfig()
 const { searchTopic } = useSearch()
 const topicUse = useTopic()
@@ -137,7 +140,7 @@ const handleReading = (page: number) => {
         </li>
       </ul>
     </div>
-    <NuxtLink class="block sm:hidden" to="/newtopic">
+    <NuxtLink v-if="isLogin" class="block sm:hidden" to="/newtopic">
       <button type="button" class="flex rounded bg-secondary px-3 py-2 text-white">
         <Icon name="material-symbols:add" size="24"></Icon>
         <p class="whitespace-nowrap">發表話題</p>
@@ -153,7 +156,7 @@ const handleReading = (page: number) => {
       <p class="mb-1">{{ totalConversations }} 則話題</p>
       <p>有什麼話就在這裡說說，說說之後 也許所有事情都會更好一點。</p>
     </div>
-    <NuxtLink class="hidden sm:block" to="/newtopic">
+    <NuxtLink v-if="isLogin" class="hidden sm:block" to="/newtopic">
       <button class="flex rounded bg-secondary px-3 py-2 text-white">
         <Icon name="material-symbols:add" size="24"></Icon>
         <p class="whitespace-nowrap">發表話題</p>
