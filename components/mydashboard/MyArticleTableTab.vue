@@ -76,11 +76,10 @@ const handleDelAll = async () => {
   showConfirmModal.value = false
   try {
     await Promise.all(selectedArticleIds.value.map((id: number) => delArticle(id)))
-    console.log(selectedArticleIds.value)
     selectedArticleIds.value = []
     await getMyArticles()
   } catch (error: any) {
-    console.error(error)
+    console.error(error.response)
   }
 }
 </script>

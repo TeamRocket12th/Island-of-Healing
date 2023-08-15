@@ -41,7 +41,6 @@ export const usePaymentStore = defineStore('payment', () => {
     if (!userToken.value) {
       return
     }
-    console.log(customerData.planId)
     try {
       const res: ApiResponse = await $fetch(`${apiBase}/NewebPay/setchargedata`, {
         headers: {
@@ -56,10 +55,8 @@ export const usePaymentStore = defineStore('payment', () => {
           PlanId: customerData?.planId
         }
       })
-      console.log(res)
       if (res.Status) {
         paymentData.value = res.PaymentData
-        console.log(paymentData.value)
         selectedOrder.value.planName = ''
         selectedOrder.value.price = null
       }

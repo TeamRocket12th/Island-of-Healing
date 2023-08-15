@@ -5,6 +5,13 @@ import { useUserStore } from '~/stores/user'
 const { userData } = storeToRefs(useUserStore())
 const router = useRouter()
 
+defineProps({
+  orderStatus: {
+    type: Boolean,
+    required: true
+  }
+})
+
 const data = {
   success: {
     alert: '謝謝您！您的訂單已經成立！',
@@ -21,8 +28,6 @@ const closeResult = (value: boolean) => {
   emits('close-result', value)
   router.replace('/')
 }
-
-const isOrderOK = ref(true)
 </script>
 
 <template>
@@ -32,7 +37,7 @@ const isOrderOK = ref(true)
   >
     <div class="container mb-28 mt-[60px] grid grid-cols-12 rounded-lg px-10 pb-14 pt-10">
       <div class="col-span-6 col-start-4 rounded border bg-white shadow">
-        <div v-if="isOrderOK">
+        <div v-if="orderStatus">
           <div class="mb-4 flex items-center justify-between gap-2 p-4">
             <div class="flex gap-2">
               <div>
@@ -67,7 +72,7 @@ const isOrderOK = ref(true)
         </div>
         <div class="flex justify-end p-3">
           <button
-            v-if="isOrderOK"
+            v-if="orderStatus"
             class="rounded border bg-secondary p-[7px] text-sm text-white hover:bg-btn-hover active:bg-btn-active disabled:bg-btn-disabled disabled:text-white"
             @click="closeResult(false)"
           >

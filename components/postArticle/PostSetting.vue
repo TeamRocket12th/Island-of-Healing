@@ -176,7 +176,7 @@ const updateArticle = async () => {
       articleUse.selectedImage = ''
       articleUse.previewImage = ''
       articleUse.article.Tags.splice(0, articleUse.article.Tags.length)
-      setToast('更新成功!')
+      setToast('更新成功！')
       if (formData.get('articleCover')) {
         const id = Number(route.params.id)
         updateArticleCover(id)
@@ -240,7 +240,7 @@ const updateArticleCover = async (id: number) => {
       body: formData
     })
     if (res.StatusCode === 200) {
-      console.log(res)
+      setToast('更新成功！')
     }
   } catch (error: any) {
     console.log(error.response)

@@ -33,7 +33,6 @@ const getChatCount = async () => {
         Authorization: `Bearer ${userToken.value}`
       }
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       chatCount.value = res.UserAITimes
     }

@@ -16,7 +16,6 @@ export const getMockData = <T>(baseRoute: string, endpoint?: string) => {
       const res: ApiResponse = await $fetch(apiUrl)
       if (res.statusCode === 200) {
         data.value = res.data
-        console.log(res)
       } else {
         throw new Error(`HTTP status code is ${res.statusCode}`)
       }

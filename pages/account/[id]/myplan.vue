@@ -51,10 +51,11 @@ const getUserOrder = async () => {
       endDate.value = res.EndDate
       renewMembership.value = res.RenewMembership
       userData.value.myPlan = res.Plan
-      setLoading(false)
     }
   } catch (error: any) {
     console.log(error)
+  } finally {
+    setLoading(false)
   }
 }
 onMounted(getUserOrder)

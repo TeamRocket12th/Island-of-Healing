@@ -12,6 +12,6 @@ export default defineEventHandler(async (event) => {
   if (body.Status === 'SUCCESS') {
     return sendRedirect(event, 'https://island-of-healing.vercel.app/neworder?status=success', 302)
   } else {
-    return sendRedirect(event, 'https://island-of-healing.vercel.app/neworder?status=success', 302)
+    return sendRedirect(event, 'https://island-of-healing.vercel.app/neworder?status=fail', 302)
   }
 })
