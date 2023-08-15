@@ -227,7 +227,7 @@ const updateTopicCover = async (id: number) => {
       body: formData
     })
     if (res.StatusCode === 200) {
-      setToast('更新成功！')
+      return
     }
   } catch (error: any) {
     console.log(error.response)
