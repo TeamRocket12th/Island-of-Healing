@@ -156,7 +156,6 @@ watch(previewImage, (newValue) => {
 const imgTagArr = ref([])
 const checkformData = ref(false)
 watch(htmlOutput, (newValue) => {
-  // console.log(articleUse.article.Content)
   const imgTags = newValue.match(/<img[^>]+>/g)
   imgTagArr.value = imgTags
 })

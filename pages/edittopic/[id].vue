@@ -16,7 +16,6 @@ const getTopicDetail = async () => {
   try {
     const res = await $fetch(`${apiBase}/readconversation/${route.params.id}`)
     if (res.StatusCode === 200) {
-      console.log(res)
       conversationData.value = res.ConversationData
       htmlContent.value = res.ConversationData.Content
       topicUse.topic.Title = res.ConversationData.Title

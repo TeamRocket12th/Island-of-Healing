@@ -111,15 +111,13 @@ const getAllArticles = async (page = 1) => {
         UserId: userData.value.id || '0'
       }
     })
-    console.log(res)
-
     if (res.StatusCode === 200) {
       articles.value = res.LatestArticleData
       selectedArticles.value = res.SelectedArticleData
       allPages.value = res.TotalLatestPages
     }
-  } catch (error) {
-    console.log(error)
+  } catch (error: any) {
+    console.log(error.response)
   } finally {
     setLoading(false)
   }
@@ -140,7 +138,6 @@ const getSpArticles = async (nowPage: number, category: string) => {
         UserId: userData.value.id || '0'
       }
     })
-    console.log(res)
     if (res.StatusCode === 200) {
       articles.value = res.ArticleData
       allPages.value = res.TotalPages
@@ -154,16 +151,6 @@ const getSpArticles = async (nowPage: number, category: string) => {
 }
 
 setLoading(true)
-
-// onMounted(() => {
-//   nextTick(() => {
-//     if (category.value === 'all') {
-//       getAllArticles(nowPage.value)
-//     } else {
-//       getSpArticles(nowPage.value, category.value)
-//     }
-//   })
-// })
 
 const handleReading = (page: number) => {
   changeNowPage(page)

@@ -146,7 +146,6 @@ const postTopic = async () => {
       topicUse.selectedImage = ''
       topicUse.previewImage = ''
       topicUse.topic.Tags.splice(0, topicUse.topic.Tags.length)
-      console.log(id)
       setToast('新增成功!')
       if (formData.get('topicCover')) {
         updateTopicCover(id)
@@ -177,7 +176,7 @@ const updateTopic = async () => {
       topicUse.selectedImage = ''
       topicUse.previewImage = ''
       topicUse.topic.Tags.splice(0, topicUse.topic.Tags.length)
-      setToast('更新成功!')
+      setToast('更新成功！')
       if (formData.get('topicCover')) {
         const id = Number(route.params.id)
         updateTopicCover(id)
@@ -228,7 +227,7 @@ const updateTopicCover = async (id: number) => {
       body: formData
     })
     if (res.StatusCode === 200) {
-      console.log(res)
+      setToast('更新成功！')
     }
   } catch (error: any) {
     console.log(error.response)

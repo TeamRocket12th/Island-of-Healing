@@ -18,10 +18,8 @@ const getSearchResult = async (keyword: string) => {
     const res: ApiResponse = await $fetch(
       `${apiBase}/searchconversation/${keyword}/${topicUse.nowPage}`
     )
-    console.log(res)
     if (res.StatusCode === 200) {
       searchTopic.value = res.ConversationsData
-      console.log(res.ConversationsData)
     }
   } catch (error: any) {
     console.log(error.response)

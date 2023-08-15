@@ -1,3 +1,5 @@
+import { useFetch } from 'nuxt/app'
+
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig()
   const apiBase = runtimeConfig.public.apiBase
