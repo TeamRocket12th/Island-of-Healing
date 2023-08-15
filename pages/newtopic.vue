@@ -2,7 +2,8 @@
 import { useTopic } from '~/stores/topic'
 
 definePageMeta({
-  layout: 'postlayout'
+  layout: 'postlayout',
+  requiredAuth: true
 })
 
 useSeoMeta({ title: '發表話題' })
