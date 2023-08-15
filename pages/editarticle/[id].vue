@@ -41,8 +41,6 @@ const getArticleDetail = async () => {
   try {
     const res: ApiResponse = await $fetch(`${apiBase}/readarticle/${route.params.id}/${userId}`)
     if (res.StatusCode === 200) {
-      console.log(res)
-      console.log(res.ArticleData)
       htmlContent.value = res.ArticleData.Content
       articleData.value = res.ArticleData
       articleUse.article.Title = res.ArticleData.Title

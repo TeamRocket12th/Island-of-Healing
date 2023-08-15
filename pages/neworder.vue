@@ -25,10 +25,13 @@ const getUserOrder = async () => {
   }
 }
 
+const orderPayment = ref(false)
+
 useSeoMeta({ title: '訂單明細' })
-onMounted(() => {
-  if (route.query.status === 'success') {
-    getUserOrder()
+onMounted(async () => {
+  if (['success', 'fail'].includes(route.query.status as string)) {
+    orderPayment.value = route.query.status === 'success'
+    await getUserOrder()
     orderResult.value = true
   }
 })
@@ -63,7 +66,7 @@ watchEffect(() => {
     </Teleport>
     <Teleport to="body">
       <Transition>
-        <OrderResult v-if="orderResult" @close-result="closeResult" />
+        <OrderResult v-if="orderResult" :order-status="orderPayment" @close-result="closeResult" />
       </Transition>
     </Teleport>
   </main>
