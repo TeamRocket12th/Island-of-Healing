@@ -13,41 +13,42 @@
 
 <img alt="demo" src="https://i.imgur.com/HqsSUVN.png"/>
 
-
-
 ---
 
 ## 相關連結
+
 - [簡報介紹](https://www.figma.com/proto/AG6ArbfdvMQmrhRpRrEwv0/%E5%B0%8F%E5%B3%B6%E8%81%8A%E7%99%92%E6%89%80%E7%B0%A1%E5%A0%B1?page-id=0%3A1&type=design&node-id=1-480&viewport=554%2C360%2C0.06&t=gRFko5Yg66gN0QvY-1&scaling=scale-down&starting-point-node-id=1%3A480)
 - [設計稿](https://www.figma.com/file/HC1yylX1rxo1izrzBN1bsm/%E5%B0%8F%E5%B3%B6%E8%81%8A%E7%99%92%E6%89%80?node-id=1%3A4&mode=dev)
 - [前台網站](https://island-of-healing.vercel.app/)
-- [後台Repo](https://github.com/TeamRocket12th/Island-Of-Healing-BackStage)
+- [後台 Repo](https://github.com/TeamRocket12th/Island-Of-Healing-BackStage)
 - [Swagger](https://islandofhealing.rocket-coding.com/swagger/index.html?url=/swagger/v1/swagger.json#/AdministratorSystem)
-
-
-
 
 ## 平台特色
 
 ### 有價內容變現
-  - 專注寫作，經營個人品牌和讀者群
-  - 付費文章訂閱服務，根據流量取得分潤
+
+- 專注寫作，經營個人品牌和讀者群
+- 付費文章訂閱服務，根據流量取得分潤
 
 ### 簡潔的閱讀介面
+
 - 提供乾淨易讀的閱讀體驗
 - 以心靈療癒類文章為主，成為你生活的避風港
 
 ### 易用的寫作編輯器
-- 支援Markdown語法
+
+- 支援 Markdown 語法
 - 支援本地圖片拖曳上傳
 
-### AI角色互動
-- 人性化的角色設計，是你聊天的好夥伴
-- AI角色推薦文章，加強導流
+### AI 角色互動
 
+- 人性化的角色設計，是你聊天的好夥伴
+- AI 角色推薦文章，加強導流
 
 ## 功能介紹
+
 ### < 使用者 >
+
 - 註冊登入
 - 個人資訊編輯更新
 - 閱讀文章
@@ -58,12 +59,13 @@
 - 付費訂閱平臺，解鎖付費文章
 - 透過「藍新金流」刷卡付款
 - 查看歷史訂單
-- 與平台設定的AI角色聊天
+- 與平台設定的 AI 角色聊天
 - 收到站內信通知
 - 向平台申請成為作家
-
+- 到論壇與其他島民交流互動
 
 ### < 作家 >
+
 - 更改個人頭銜 & 簡介
 - 發表文章
 - 設定文章為免費/付費
@@ -72,6 +74,7 @@
 - 查看平台分潤金額
 
 ### < 平台管理員 >
+
 - 審核作家申請是否通過
 - 審核文章是否通過並發表
 - 取消作家身份
@@ -91,6 +94,7 @@
 </p>
 
 ---
+
 <h3>📗 前端技術</h3>
 
 <p style="margin-bottom: 80px">
@@ -100,6 +104,7 @@
     <img alt="Pinia" src="https://img.shields.io/badge/Pinia-fcda7e?style=for-the-badge&logo=pinia&logoColor=white"/>
    <img alt="CSS3" src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" />
   <img alt="Tailwind" src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+   <img alt='daisyui' src='https://img.shields.io/badge/daisyUI-css?style=for-the-badge&logo=daisyui&logoColor=white&color=%235A0EF8'>
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
   <img alt="Pusher Channels" src="https://img.shields.io/badge/Pusher_Channels-%23300D4F?style=for-the-badge&logo=Pusher&logoColor=white"/>
   <img alt="Vercel" src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" />
@@ -107,9 +112,11 @@
         <img alt="GIt" src="https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white" />
     <img alt="ESLINT" src="https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white" />
   <img alt="PRETTIER" src="https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E" />
+   <img alt='Mockoon' src='https://img.shields.io/badge/mockoon-api?style=for-the-badge&logoColor=white&color=gray'>
 </p>
 
 ---
+
 <h3>📘 後端技術</h3>
 
 <p>
@@ -124,29 +131,33 @@
 
 ---
 
-## Git協作相關規範
+## Git 協作相關規範
 
 ### Git Commit
+
 範例：`feat: 新增購物車功能`
 
-| commit 類型 | 程式碼改動 | 使用情境 |
-| --- | --- | --- |
-| feat | 有 | 新增功能 (feature) |
-| fix | 有 | 修復bug |
-| style | 有 | 修改CSS樣式 |
-| update | 有 | 不影響功能，單純更新 |
-| refactor | 有 | 重構 (不是新增功能，也不是修復 bug 的更改) |
-| doc | 無 | 文件相關 |
-| merge | 有 | 發PR時遇到衝突，合併其他分支(ex: dev)解衝突 |
+| commit 類型 | 程式碼改動 | 使用情境                                      |
+| ----------- | ---------- | --------------------------------------------- |
+| feat        | 有         | 新增功能 (feature)                            |
+| fix         | 有         | 修復 bug                                      |
+| style       | 有         | 修改 CSS 樣式                                 |
+| update      | 有         | 不影響功能，單純更新                          |
+| refactor    | 有         | 重構 (不是新增功能，也不是修復 bug 的更改)    |
+| doc         | 無         | 文件相關                                      |
+| merge       | 有         | 發 PR 時遇到衝突，合併其他分支(ex: dev)解衝突 |
 
 ### Git Branch
-| 分支名稱 | 說明 |
-| --- | --- |
-| main | 正式分支 |
-| dev | 測試分支 |
-| release-版本號 | 整合發布分支 |
-| feature/xxx | 功能分支 |
-| hotfix/xxx | 緊急Bug修復 |
+
+| 分支名稱       | 說明               |
+| -------------- | ------------------ |
+| main           | 正式分支           |
+| dev            | 測試分支           |
+| release-版本號 | 整合發布分支       |
+| feature/xxx    | 功能分支           |
+| update/xxx     | 已有功能的更新分支 |
+| hotfix/xxx     | 緊急 Bug 修復      |
 
 ### Git Flow
+
 ![Git Flow Chart](https://dnncommunity.org/DesktopModules/Blog/BlogImage.ashx?TabId=65&ModuleId=454&Blog=1&Post=1470&w=1140&h=400&c=0&key=289a2e46-efbd-471c-830d-ccfdd93d46ea)
