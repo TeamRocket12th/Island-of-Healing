@@ -1,8 +1,9 @@
-
-
 <div align="center" style="margin-bottom: 40px">
 <img width="120" src="https://raw.githubusercontent.com/TeamRocket12th/Island-of-Healing/dev/public/logo-web.svg" alt="logo">
-<h1 align="center">小島聊癒所 | 療癒文章平台</h1> 
+<h1 align="center"><a href="https://island-of-healing.vercel.app/">
+小島聊癒所 | 療癒文章平台
+</a>
+</h1> 
 </div>
 
 <p align="center">
