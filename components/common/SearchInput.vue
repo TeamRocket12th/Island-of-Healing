@@ -20,6 +20,7 @@ const handleSearch = (keyWord: string) => {
   props.searchFn(keyWord)
   if (showMobileMenu.value) {
     showMobileMenu.value = false
+    document.body.style.overflow = 'auto'
   }
 }
 </script>
