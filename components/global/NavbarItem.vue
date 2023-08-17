@@ -377,7 +377,7 @@ onMounted(getMyMsgs)
     <Transition>
       <div
         v-if="showMobileMenu"
-        class="absolute top-[58px] z-[999] min-h-screen w-screen overflow-auto bg-sand-100 bg-opacity-90 px-4 sm:hidden"
+        class="fixed bottom-0 top-[58px] z-[999] max-h-screen w-screen overflow-y-scroll bg-sand-100 bg-opacity-90 px-4 sm:hidden"
         style="backdrop-filter: blur(5px)"
       >
         <span class="block text-right" @click="toggleMobileMenu"
