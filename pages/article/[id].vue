@@ -7,7 +7,7 @@ const useTitle = (value) => {
 }
 useSeoMeta({ title: () => `小島聊癒所` })
 watch(titleTag, (newTitle) => {
-  useSeoMeta({ title: () => `${newTitle}` })
+  useSeoMeta({ title: () => `${newTitle}`, ogTitle: () => `${newTitle}` })
 })
 </script>
 

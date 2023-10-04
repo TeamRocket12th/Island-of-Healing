@@ -32,15 +32,19 @@ const {
   comments,
   isLock,
   isRead,
+  articleNotFound,
   getArticleDetail
 } = useArticleDetail()
 
 onMounted(() => {
-  nextTick(() => {
+  nextTick(async () => {
     if (route.query.status === 'preview') {
       isPreview.value = true
     }
-    getArticleDetail(articleId, userId)
+    await getArticleDetail(articleId, userId)
+    if (!articleDetail.value) {
+      articleNotFound.value = true
+    }
   })
 })
 
@@ -371,7 +375,7 @@ onBeforeUpdate(() => {
       </div>
     </div>
   </section>
-  <section v-if="!articleDetail && !isLoading">
+  <section v-if="!articleDetail && !isLoading && articleNotFound">
     <h2 class="pb-60 pt-28 text-center text-3xl text-primary">找不到文章</h2>
   </section>
   <section>
