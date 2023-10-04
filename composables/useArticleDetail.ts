@@ -12,6 +12,7 @@ export const useArticleDetail = () => {
   const comments = ref<Comment[]>([])
   const haveCover = ref(false)
   const isLock = ref(true)
+  const articleNotFound = ref(false)
 
   const getArticleDetail = async (articleId: string, userId: string) => {
     const { data, error } = await useFetch<ApiResponse>(
@@ -36,6 +37,7 @@ export const useArticleDetail = () => {
 
     if (error.value) {
       setLoading(false)
+      articleNotFound.value = true
       throw createError({ statusCode: 404, message: '找不到文章' })
     }
   }
@@ -48,6 +50,7 @@ export const useArticleDetail = () => {
     haveCover,
     isLock,
     isRead,
+    articleNotFound,
     getArticleDetail
   }
 }
