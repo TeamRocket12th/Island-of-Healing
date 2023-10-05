@@ -58,8 +58,8 @@ const increaseChatCount = () => {
 onMounted(getChatCount)
 
 definePageMeta({
-  layout: 'chatlayout',
-  requiredAuth: true
+  layout: 'chatlayout'
+  // requiredAuth: true
 })
 
 const { selectCharacterId } = useChatCharacters()
