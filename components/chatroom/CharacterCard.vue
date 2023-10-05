@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useUserStore } from '~/stores/user'
+// import { useUserStore } from '~/stores/user'
 import { useToast } from '~/stores/toast'
 
 const { showToast } = storeToRefs(useToast())
-const { setToast } = useToast()
-const { isLogin } = storeToRefs(useUserStore())
+// const { setToast } = useToast()
+// const { isLogin } = storeToRefs(useUserStore())
 const router = useRouter()
 defineProps({
   c: {
@@ -16,10 +16,10 @@ defineProps({
 const showDesc = ref(false)
 
 const checkIsLogin = (roleId: string) => {
-  if (!isLogin.value) {
-    setToast('請先登入才能聊天喔！')
-    return
-  }
+  // if (!isLogin.value) {
+  //   setToast('請先登入才能聊天喔！')
+  //   return
+  // }
   router.push(`/chatroom/${roleId}`)
 }
 </script>
