@@ -47,7 +47,7 @@ const confirmDel = (writer: Writer) => {
         <NuxtLink :to="`/writer/${writer.WriterId}`">
           <div class="flex items-center gap-2">
             <div class="h-[60px] w-[60px] overflow-hidden rounded-full">
-              <img :src="writer.ImgUrl" alt="writer" class="h-full w-full object-cover" />
+              <NuxtImg :src="writer.ImgUrl" alt="writer" class="h-full w-full object-cover" />
             </div>
             <div>
               <p class="font-medium text-primary">{{ writer.NickName }}</p>

@@ -28,7 +28,7 @@ const { handleCollectionAction } = useArticleActions()
           <div class="block w-full gap-4 sm:flex sm:p-6">
             <div class="w-full sm:w-1/2 lg:w-1/4">
               <NuxtLink :to="`/article/${article.ArticleId}`">
-                <img
+                <NuxtImg
                   :src="
                     article.ArticleImgUrl ? article.ArticleImgUrl : '/default-article-cover.jpg'
                   "
@@ -42,7 +42,7 @@ const { handleCollectionAction } = useArticleActions()
                 <div class="mb-3 hidden items-center gap-1 sm:flex">
                   <NuxtLink :to="`/writer/${article.WriterId}`">
                     <div class="h-6 w-6 overflow-hidden rounded-full">
-                      <img :src="article.WriterImgUrl" alt="writer-pic" class="h-full w-full" />
+                      <NuxtImg :src="article.WriterImgUrl" alt="writer-pic" class="h-full w-full" />
                     </div>
                   </NuxtLink>
                   <NuxtLink :to="`/writer/${article.WriterId}`">
@@ -85,7 +85,11 @@ const { handleCollectionAction } = useArticleActions()
                   <div class="flex items-center gap-1">
                     <NuxtLink :to="`/writer/${article.WriterId}`">
                       <div class="h-6 w-6 overflow-hidden rounded-full">
-                        <img :src="article.WriterImgUrl" alt="writer-pic" class="h-full w-full" />
+                        <NuxtImg
+                          :src="article.WriterImgUrl"
+                          alt="writer-pic"
+                          class="h-full w-full"
+                        />
                       </div>
                     </NuxtLink>
                     <NuxtLink :to="`/writer/${article.WriterId}`">

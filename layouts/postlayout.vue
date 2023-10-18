@@ -64,7 +64,7 @@ const { searchArticle } = useSearch()
               <div class="dropdown-end dropdown">
                 <label tabindex="0" class="btn-ghost btn-circle avatar btn flex w-20 items-center">
                   <div class="h-9 w-9 overflow-hidden rounded-full">
-                    <img :src="userData.avatar" />
+                    <NuxtImg :src="userData.avatar" />
                   </div>
                   <span class="block">
                     <Icon name="ic:outline-arrow-drop-down" size="24" class="text-secondary"

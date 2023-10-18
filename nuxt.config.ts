@@ -5,7 +5,8 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
-    'nuxt-gtag'
+    'nuxt-gtag',
+    '@nuxt/image'
   ],
   // typescript: {
   //   typeCheck: true
@@ -32,7 +33,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiKey: process.env.CHATGPT_API_KEY,
     public: {
-      apiBase: 'https://islandofhealing.rocket-coding.com/api'
+      apiBase: process.env.APIBASEURL
       // mockApiBase: 'http://localhost:4000'
     }
   },
@@ -40,7 +41,8 @@ export default defineNuxtConfig({
     id: 'G-96SY6NF307',
     config: {
       page_title: '小島聊癒所'
-    }
+    },
+    loadingStrategy: 'defer'
   },
   app: {
     head: {

@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@gtm-support/vue-gtm": "^2.0.0",
+    "@nuxt/image": "^1.0.0-rc.3",
     "@pinia/nuxt": "^0.4.11",
     "@popperjs/core": "^2.11.8",
     "@tiptap/core": "^2.0.3",

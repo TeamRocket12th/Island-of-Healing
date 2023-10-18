@@ -93,11 +93,11 @@ const handleNavigation = (orderId: number) => {
       >
         開始使用
       </NuxtLink>
-      <img
+      <NuxtImg
         data-aos-delay="1800"
         data-aos="zoom-in"
         data-aos-anchor-placement="top-bottom"
-        src="~/assets/images/plancard/work-work-from-home-01.svg"
+        src="/plancard/work-work-from-home-01.svg"
         class="mx-auto w-[402px] xl:w-[600px]"
         alt="subplan-pic"
       />
@@ -117,11 +117,7 @@ const handleNavigation = (orderId: number) => {
       >
         <li class="flex flex-col items-center justify-between">
           <div class="relative h-[300px] w-[330px]">
-            <img
-              src="~/assets/images/plancard/creator-1.svg"
-              alt="membership"
-              class="absolute bottom-0 mb-3"
-            />
+            <img src="/plancard/creator-1.svg" alt="membership" class="absolute bottom-0 mb-3" />
           </div>
           <p class="text-xl font-bold text-primary" data-aos="fade-up">
             ⁠零⁠廣⁠告⁠干⁠擾⁠的⁠閱讀⁠體⁠驗
@@ -129,21 +125,13 @@ const handleNavigation = (orderId: number) => {
         </li>
         <li class="flex flex-col items-center justify-between">
           <div class="relative h-[300px] w-[330px]">
-            <img
-              src="~/assets/images/plancard/creator-2.svg"
-              alt="membership"
-              class="absolute bottom-0 mb-3"
-            />
+            <img src="/plancard/creator-2.svg" alt="membership" class="absolute bottom-0 mb-3" />
           </div>
           <p class="text-xl font-bold text-primary" data-aos="fade-up">無限使用AI相談室</p>
         </li>
         <li class="flex flex-col items-center justify-between">
           <div class="relative h-[300px] w-[330px]">
-            <img
-              src="~/assets/images/plancard/creator-3.svg"
-              alt="membership"
-              class="absolute bottom-0 mb-3"
-            />
+            <img src="/plancard/creator-3.svg" alt="membership" class="absolute bottom-0 mb-3" />
           </div>
           <p class="text-xl font-bold text-primary" data-aos="fade-up">提供交流和支持的社群</p>
         </li>

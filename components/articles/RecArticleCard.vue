@@ -10,7 +10,12 @@ const { data: recArticles } = useFetch('/api/recArticles')
     >
       <div class="mb-4 h-[186px] w-full sm:w-[30%] md:mb-0 md:h-[152px]">
         <NuxtLink :to="`/article/${article.id}`">
-          <img :src="article.coverUrl" alt="cover" class="h-full w-full object-cover" />
+          <NuxtImg
+            format="webp"
+            :src="article.coverUrl"
+            alt="cover"
+            class="h-full w-full object-cover"
+          />
         </NuxtLink>
       </div>
 
@@ -23,7 +28,8 @@ const { data: recArticles } = useFetch('/api/recArticles')
           <div class="flex items-center gap-1">
             <NuxtLink :to="`/writer/${article.writerInfo.id}`">
               <div class="flex gap-1">
-                <img
+                <NuxtImg
+                  format="webp"
                   :src="article.writerInfo.imgUrl"
                   alt="avatar"
                   class="h-6 w-6 rounded-full object-cover"

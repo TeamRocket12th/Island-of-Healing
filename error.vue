@@ -15,7 +15,7 @@ const handleClearError = () =>
       </h1>
       <p class="mb-6 text-3xl text-primary">{{ error.message }}</p>
       <div class="mb-4">
-        <img src="/errorpage.jpg" alt="errorduck" class="block rounded-md" />
+        <NuxtImg src="/errorpage.jpg" alt="errorduck" class="block rounded-md" />
       </div>
 
       <p class="mb-6 text-2xl text-primary">好像發生錯誤了...</p>

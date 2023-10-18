@@ -46,7 +46,9 @@ const formatTitle = (title: string) => {
               <div
                 class="mb-2 h-[260px] overflow-hidden sm:h-[110px] md:h-[140px] lg:h-[190px] xl:h-[260px]"
               >
-                <img
+                <NuxtImg
+                  format="webp"
+                  loading="lazy"
                   :src="article.imgUrl"
                   alt="article-cover"
                   class="w-full duration-500 hover:scale-105"
