@@ -74,7 +74,7 @@ onBeforeUnmount(() => {
             <div
               class="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border-[2px] bg-sand-200"
             >
-              <img src="/landingpage/markdown-icon.svg" alt="" class="" />
+              <NuxtImg src="/landingpage/markdown-icon.svg" alt="" class="" />
             </div>
           </div>
           <div>

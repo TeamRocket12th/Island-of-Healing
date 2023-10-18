@@ -152,7 +152,7 @@ onMounted(getMyMsgs)
                 >
                   <span v-if="unreadMsgs" class="h-2 w-2 rounded-full bg-[#EF4444]"></span>
                   <div class="h-9 w-9 overflow-hidden rounded-full">
-                    <img :src="userData.avatar" />
+                    <NuxtImg :src="userData.avatar" class="h-full w-full" />
                   </div>
                   <span class="block text-secondary">
                     <Icon name="ic:outline-arrow-drop-down" size="24"

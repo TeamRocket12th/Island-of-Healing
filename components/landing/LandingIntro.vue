@@ -41,8 +41,12 @@ onBeforeUnmount(() => {
         data-aos-delay="2200"
         :data-aos="isMobile ? 'zoom-in' : 'zoom-in'"
       >
-        <img src="/landingpage/bg-desktop.png" alt="desktop" class="lg:h-[420px] xl:h-[520px]" />
-        <img
+        <NuxtImg
+          src="/landingpage/bg-desktop.png"
+          alt="desktop"
+          class="lg:h-[420px] xl:h-[520px]"
+        />
+        <NuxtImg
           src="/landingpage/bg-iphone.png"
           alt="phone"
           class="absolute bottom-0 w-1/5 xl:h-[340px]"

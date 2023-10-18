@@ -33,7 +33,7 @@ const { handleFollowAction } = useWriterActions()
       <ToastMsg v-if="showToast" />
     </div>
     <div class="mx-auto mb-6 h-[95px] w-[95px]">
-      <img :src="writerInfo.ImgUrl" alt="writer-pic" class="h-full w-full rounded-full" />
+      <NuxtImg :src="writerInfo.ImgUrl" alt="writer-pic" class="h-full w-full rounded-full" />
     </div>
     <h2 class="text-center font-serif-tc text-2xl font-bold text-primary">
       {{ writerInfo.NickName }}
