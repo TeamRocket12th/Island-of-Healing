@@ -113,7 +113,7 @@ const feedBacks2 = [
             ></span>
             <div class="mb-4 flex items-center">
               <div class="h-[60px] w-[60px] overflow-hidden rounded-full">
-                <img
+                <NuxtImg
                   :src="`/landingpage/users/${item.imgName}.jpg`"
                   alt="作家圖片"
                   class="h-full w-full object-cover"
@@ -146,7 +146,7 @@ const feedBacks2 = [
             ></span>
             <div class="mb-4 flex items-center">
               <div class="h-[60px] w-[60px] overflow-hidden rounded-full">
-                <img
+                <NuxtImg
                   :src="`/landingpage/users/${item.imgName}.jpg`"
                   alt="作家圖片"
                   class="h-full w-full object-cover"

@@ -177,7 +177,7 @@ onBeforeUpdate(() => {
         <div class="flex items-center gap-2">
           <div class="h-9 w-9">
             <NuxtLink :to="`/writer/${writerInfo?.Id}`">
-              <img :src="writerInfo?.ImgUrl" alt="writer" class="h-full w-full rounded-full" />
+              <NuxtImg :src="writerInfo?.ImgUrl" alt="writer" class="h-full w-full rounded-full" />
             </NuxtLink>
           </div>
           <div>
@@ -198,10 +198,10 @@ onBeforeUpdate(() => {
         <h2 class="mb-6 font-serif-tc text-3xl-plus font-bold text-primary">
           {{ articleDetail?.Title }}
         </h2>
-        <img
+        <NuxtImg
           :src="articleDetail.ImgUrl ? articleDetail.ImgUrl : '/default-article-cover.jpg'"
           alt="cover"
-          class="mb-6 block"
+          class="mb-6 block h-full w-full"
         />
         <div v-if="isLock && !isPreview">
           <p class="mb-10 text-xl font-medium text-primary">
@@ -300,7 +300,7 @@ onBeforeUpdate(() => {
       <div class="items-center md:flex">
         <div class="flex justify-between sm:mr-2">
           <NuxtLink :to="`/writer/${writerInfo?.Id}`">
-            <img :src="writerInfo?.ImgUrl" alt="avatar" class="h-[60px] w-[60px] rounded-full"
+            <NuxtImg :src="writerInfo?.ImgUrl" alt="avatar" class="h-[60px] w-[60px] rounded-full"
           /></NuxtLink>
 
           <button
@@ -362,7 +362,7 @@ onBeforeUpdate(() => {
       <div v-if="!isPreview && isLogin && (!isLock || writerInfo?.Id === userData.id)">
         <div class="mb-2 flex items-center">
           <div class="mr-2 h-9 w-9">
-            <img :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />
+            <NuxtImg :src="userData.avatar" alt="avatar" class="h-full w-full rounded-full" />
           </div>
           <span class="font-medium text-primary">{{ userData.nickName }}</span>
         </div>

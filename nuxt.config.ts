@@ -5,7 +5,8 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
-    'nuxt-gtag'
+    'nuxt-gtag',
+    '@nuxt/image'
   ],
   // typescript: {
   //   typeCheck: true

@@ -22,13 +22,13 @@ defineProps({
   <div class="flex flex-col justify-between sm:flex-row">
     <div class="flex cursor-pointer flex-wrap gap-6 sm:flex-nowrap" @click="topicPage(topic.Id)">
       <div class="h-[150px] w-full flex-shrink-0 sm:w-[220px]">
-        <img
+        <NuxtImg
           v-if="topic.ConversationImgUrl"
           :src="topic.ConversationImgUrl"
           alt="topic-cover"
           class="h-full w-full object-cover object-center"
         />
-        <img
+        <NuxtImg
           v-else
           src="https://picsum.photos/150/220"
           alt="topic-cover"
@@ -38,7 +38,7 @@ defineProps({
       <div>
         <div class="mb-2 flex items-center gap-1">
           <div class="h-4 w-4 rounded-full bg-[#D9D9D9]">
-            <img
+            <NuxtImg
               :src="topic.PosterImgUrl ? topic.PosterImgUrl : '/anonymous.png'"
               alt="poster"
               class="rounded-full object-cover"

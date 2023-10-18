@@ -31,7 +31,7 @@ const { formatDate } = useDateFormat()
         <NuxtLink :to="`/article/${work.Id}`">
           <div class="flex flex-col items-center gap-6 md:flex-row">
             <div class="h-[186px] w-full md:h-[168px] md:w-[30%]">
-              <img
+              <NuxtImg
                 :src="work.ImgUrl ? work.ImgUrl : '/default-article-cover.jpg'"
                 alt="cover"
                 class="h-full w-full object-cover"

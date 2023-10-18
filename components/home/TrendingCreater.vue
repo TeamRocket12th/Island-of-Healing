@@ -44,7 +44,12 @@ const { handleFollowAction } = useWriterActions()
       >
         <NuxtLink :to="`/writer/${creater.WriterId}`">
           <div class="m-auto mb-4 h-[95px] w-[95px]">
-            <img :src="creater.Imgurl" alt="avatar" class="rounded-full" />
+            <NuxtImg
+              loading="lazy"
+              :src="creater.Imgurl"
+              alt="avatar"
+              class="h-full w-full rounded-full"
+            />
           </div>
         </NuxtLink>
         <p class="mb-1 text-center font-serif-tc font-bold text-primary">

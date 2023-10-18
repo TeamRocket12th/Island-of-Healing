@@ -27,19 +27,19 @@ onBeforeUnmount(() => {
         class="mx-auto mb-9 flex h-[60px] w-[137px] items-center justify-center rounded bg-secondary px-4 py-3 text-2xl text-white hover:bg-btn-hover active:bg-btn-active"
         >開始使用</NuxtLink
       >
-      <img
+      <NuxtImg
         src="/landingpage/pen.png"
         alt=""
         class="absolute bottom-[170px] z-10 hidden w-[248px] lg:right-[2%] lg:block 2xl:xl:right-[10%]"
         :data-aos="isMobile ? 'fade-up' : 'fade-left'"
       />
-      <img
+      <NuxtImg
         src="/landingpage/line.png"
         alt=""
         class="absolute bottom-[170px] z-0 hidden w-[500px] lg:right-[2%] lg:block 2xl:right-[4%]"
         :data-aos="isMobile ? 'fade-up' : 'fade-left'"
       />
-      <img
+      <NuxtImg
         src="/landingpage/note.png"
         alt=""
         class="absolute bottom-[160px] z-0 hidden w-[383px] lg:left-[5%] lg:block 2xl:left-[12%]"

@@ -56,7 +56,7 @@ onMounted(() => {
         >
           <transition-group name="fade-in-out" tag="div" class="flex items-center">
             <div v-for="(image, index) in images" :key="index" class="h-[300px] lg:h-[510px]">
-              <img
+              <NuxtImg
                 v-if="currentIndex === index"
                 :src="`/${image.src}.png`"
                 :alt="image.alt"
