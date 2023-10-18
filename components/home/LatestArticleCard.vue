@@ -59,6 +59,7 @@ const formatTitle = (title: string) => {
           <div class="flex h-[400px] flex-col">
             <div class="mb-3 h-[267px] max-w-full overflow-hidden">
               <NuxtImg
+                format="webp"
                 :src="article.ArticleImgUrl ? article.ArticleImgUrl : '/default-article-cover.jpg'"
                 alt="article-cover"
                 class="h-full w-full object-cover duration-500 hover:scale-105"

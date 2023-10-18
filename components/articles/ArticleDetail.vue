@@ -199,6 +199,7 @@ onBeforeUpdate(() => {
           {{ articleDetail?.Title }}
         </h2>
         <NuxtImg
+          format="webp"
           :src="articleDetail.ImgUrl ? articleDetail.ImgUrl : '/default-article-cover.jpg'"
           alt="cover"
           class="mb-6 block h-full w-full"
