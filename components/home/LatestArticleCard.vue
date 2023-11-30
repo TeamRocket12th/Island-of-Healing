@@ -14,7 +14,8 @@ const { data } = await useFetch<ApiResponse>('/api/allarticles', {
   body: {
     Page: 1,
     UserId: userData.value.id || '0'
-  }
+  },
+  lazy: true
 })
 
 if (data.value!.StatusCode === 200) {
