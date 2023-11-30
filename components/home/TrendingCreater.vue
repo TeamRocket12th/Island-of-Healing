@@ -19,7 +19,8 @@ const { data } = await useFetch<TrendingCreater[]>(`${apiBase}/hotwriters/get`, 
   },
   params: {
     userid: userData.value.id || '0'
-  }
+  },
+  lazy: true
 })
 if (data.value) {
   trendingCreater.value = data.value
