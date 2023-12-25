@@ -28,7 +28,7 @@ if (data.value?.StatusCode === 200) {
 }
 
 if (error.value) {
-  console.log(error.value)
+  throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
 }
 </script>
 
