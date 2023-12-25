@@ -22,9 +22,12 @@ const { data } = await useFetch<TrendingCreater[]>(`${apiBase}/hotwriters/get`, 
   },
   lazy: true
 })
-if (data.value) {
-  trendingCreater.value = data.value
-}
+
+watchEffect(() => {
+  if (data.value) {
+    trendingCreater.value = data.value
+  }
+})
 
 const { handleFollowAction } = useWriterActions()
 </script>

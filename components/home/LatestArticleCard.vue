@@ -1,28 +1,11 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { useUserStore } from '~/stores/user'
-
-const { userData } = storeToRefs(useUserStore())
-const articles = ref<ArticleCard[]>([])
-const { formatDate } = useDateFormat()
-
-const { data } = await useFetch<ApiResponse>('/api/allarticles', {
-  headers: {
-    'Content-type': 'application/json'
-  },
-  method: 'POST',
-  body: {
-    Page: 1,
-    UserId: userData.value.id || '0'
-  },
-  lazy: true
+defineProps({
+  latestArticles: {
+    type: Array as () => ArticleCard[],
+    default: () => []
+  }
 })
-
-if (data.value!.StatusCode === 200) {
-  articles.value = data.value!.LatestArticleData
-} else {
-  console.log(data.value!._data.Message)
-}
+const { formatDate } = useDateFormat()
 
 const formatTitle = (title: string) => {
   if (title.length > 17) {
@@ -42,7 +25,7 @@ const formatTitle = (title: string) => {
 
     <ul class="mb-3 grid-cols-12 gap-4 md:grid">
       <li
-        v-for="article in articles"
+        v-for="article in latestArticles"
         :key="article.Id"
         class="mb-3 flex h-auto grow flex-col p-4 md:col-span-6 lg:col-span-4"
       >
@@ -63,7 +46,8 @@ const formatTitle = (title: string) => {
                 format="webp"
                 :src="article.ArticleImgUrl ? article.ArticleImgUrl : '/default-article-cover.jpg'"
                 alt="article-cover"
-                class="h-full w-full object-cover duration-500 hover:scale-105"
+                class="h-full object-cover duration-500 hover:scale-105"
+                width="460"
               />
             </div>
             <h4 class="mb-3 font-serif-tc text-xl font-bold text-primary">
