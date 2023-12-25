@@ -49,9 +49,10 @@ const formatTitle = (title: string) => {
                 <NuxtImg
                   format="webp"
                   loading="lazy"
+                  width="407"
                   :src="article.imgUrl"
                   alt="article-cover"
-                  class="w-full duration-500 hover:scale-105"
+                  class="duration-500 hover:scale-105"
                 />
               </div>
               <span
