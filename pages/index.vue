@@ -22,10 +22,11 @@ const { data, error } = await useFetch<ApiResponse>('/api/allarticles', {
   },
   lazy: true
 })
-
-if (data.value?.StatusCode === 200) {
-  latestArticles.value = data.value?.LatestArticleData
-}
+watchEffect(() => {
+  if (data.value) {
+    latestArticles.value = data.value?.LatestArticleData
+  }
+})
 
 if (error.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
