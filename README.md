@@ -89,8 +89,8 @@
 
 ### 體驗試用
 
-帳號：demo27@mail.com
-密碼：Test0000
+- 帳號：demo27@mail.com
+- 密碼：Test0000
 
 ## 開發工具
 
