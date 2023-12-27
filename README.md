@@ -23,6 +23,7 @@
 - [後台 Repo](https://github.com/TeamRocket12th/Island-Of-Healing-BackStage)
 - [Swagger](https://islandofhealing.rocket-coding.com/swagger/index.html?url=/swagger/v1/swagger.json#/AdministratorSystem)
 - [後端 Repo](https://github.com/benlu38th/Project_WebAPI_IslandOfHealing)
+- [Demo 影片](https://www.youtube.com/watch?v=7Bhv-0q4n6U)
 
 ## 平台特色
 
@@ -85,6 +86,11 @@
   - 通知使用者追蹤的作家已發表新文章
   - 通知作家申請成功
   - 通知文章審核成功
+
+### 體驗試用
+
+帳號：demo27@mail.com
+密碼：Test0000
 
 ## 開發工具
 
