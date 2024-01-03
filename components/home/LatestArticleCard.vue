@@ -41,12 +41,12 @@ const formatTitle = (title: string) => {
         </div>
         <NuxtLink :to="`/article/${article.Id}`">
           <div class="flex h-[400px] flex-col">
-            <div class="mb-3 h-[267px] max-w-full overflow-hidden">
+            <div class="mb-3 max-w-full overflow-hidden">
               <NuxtImg
-                format="webp"
+                loading="lazy"
                 :src="article.ArticleImgUrl ? article.ArticleImgUrl : '/default-article-cover.jpg'"
                 alt="article-cover"
-                class="h-full object-cover duration-500 hover:scale-105"
+                class="h-[267px] object-cover duration-500 hover:scale-105"
                 width="460"
               />
             </div>
