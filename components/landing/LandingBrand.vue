@@ -29,19 +29,19 @@ onBeforeUnmount(() => {
       >
       <NuxtImg
         src="/landingpage/pen.png"
-        alt=""
+        alt="landing-pen"
         class="absolute bottom-[170px] z-10 hidden w-[248px] lg:right-[2%] lg:block 2xl:xl:right-[10%]"
         :data-aos="isMobile ? 'fade-up' : 'fade-left'"
       />
       <NuxtImg
         src="/landingpage/line.png"
-        alt=""
+        alt="landing-line"
         class="absolute bottom-[170px] z-0 hidden w-[500px] lg:right-[2%] lg:block 2xl:right-[4%]"
         :data-aos="isMobile ? 'fade-up' : 'fade-left'"
       />
       <NuxtImg
         src="/landingpage/note.png"
-        alt=""
+        alt="landing-note"
         class="absolute bottom-[160px] z-0 hidden w-[383px] lg:left-[5%] lg:block 2xl:left-[12%]"
         :data-aos="isMobile ? 'fade-up' : 'fade-right'"
       />

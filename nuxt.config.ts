@@ -42,7 +42,7 @@ export default defineNuxtConfig({
     config: {
       page_title: '小島聊癒所'
     },
-    loadingStrategy: 'async'
+    loadingStrategy: 'defer'
   },
   app: {
     head: {

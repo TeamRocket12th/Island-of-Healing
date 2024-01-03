@@ -34,7 +34,7 @@ const checkIsLogin = (roleId: string) => {
     @mouseleave="showDesc = false"
   >
     <div class="mb-3 flex items-center justify-center">
-      <NuxtImg :src="c.imgUrl" alt="chat-role" class="h-[100px] w-[100px] rounded-full" />
+      <NuxtImg :src="c.imgUrl" alt="chat-role" width="100" height="100" class="rounded-full" />
     </div>
     <div class="flex h-[220px] flex-col items-center transition-all duration-700">
       <h2 class="mb-3 font-serif-tc text-xl font-bold text-primary">{{ c.name }}</h2>
