@@ -39,8 +39,7 @@
                 src="/articlecover/cover2.jpeg"
                 alt="article-cover"
                 width="400"
-                height="400"
-                class="object-cover duration-500 hover:scale-105"
+                class="mx-auto h-[267px] object-cover duration-500 hover:scale-105 sm:aspect-square sm:h-auto"
               />
             </div>
 
