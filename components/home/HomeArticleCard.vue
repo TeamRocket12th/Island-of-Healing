@@ -43,16 +43,14 @@ const formatTitle = (title: string) => {
         <li v-for="article in articles" :key="article.id" class="col-span-4 p-4">
           <NuxtLink :to="`/article/${article.id}`">
             <div class="relative">
-              <div
-                class="mb-2 h-[260px] overflow-hidden sm:h-[110px] md:h-[140px] lg:h-[190px] xl:h-[260px]"
-              >
+              <div class="mb-2 overflow-hidden">
                 <NuxtImg
-                  format="webp"
+                  format="avif"
                   loading="lazy"
                   width="407"
                   :src="article.imgUrl"
                   alt="article-cover"
-                  class="duration-500 hover:scale-105"
+                  class="h-[260px] duration-500 hover:scale-105 sm:h-[110px] md:h-[140px] lg:h-[190px] xl:h-[260px]"
                 />
               </div>
               <span

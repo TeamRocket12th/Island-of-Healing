@@ -30,7 +30,7 @@ defineProps({
 <template>
   <div v-if="selectedCharacter">
     <div class="mb-2 flex items-center gap-2">
-      <NuxtImg class="mb-1 h-10 w-10 rounded-full" :src="selectedCharacter.imgUrl" />
+      <NuxtImg width="40" height="40" class="mb-1 rounded-full" :src="selectedCharacter.imgUrl" />
       <p class="text-xl text-primary">{{ selectedCharacter.name }}</p>
     </div>
     <div class="chatbubble-bg chat-bubble mb-6 text-primary-dark">
