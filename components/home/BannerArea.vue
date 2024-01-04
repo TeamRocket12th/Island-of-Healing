@@ -14,9 +14,8 @@
                 src="/articlecover/cover1.jpeg"
                 alt="article-cover"
                 format="webp"
-                width="400"
                 quality="80"
-                class="h-[267px] object-cover duration-500 hover:scale-105 sm:h-[175px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-105 sm:h-[175px]"
               />
             </div>
 
@@ -38,9 +37,8 @@
                 src="/articlecover/cover2.jpeg"
                 alt="article-cover"
                 format="webp"
-                width="400"
                 quality="80"
-                class="h-[267px] object-cover duration-500 hover:scale-105 sm:aspect-square sm:h-auto"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-105 sm:aspect-square sm:h-auto"
               />
             </div>
 
@@ -62,9 +60,8 @@
                 src="/articlecover/cover3.jpeg"
                 alt="article-cover"
                 format="webp"
-                width="400"
                 quality="80"
-                class="h-[267px] object-cover duration-500 hover:scale-105 sm:h-[175px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-105 sm:h-[175px]"
               />
             </div>
 
@@ -88,9 +85,8 @@
                 src="/articlecover/cover4.jpeg"
                 alt="article-cover"
                 format="webp"
-                width="400"
                 quality="80"
-                class="h-[267px] object-cover duration-500 hover:scale-105 sm:h-[175px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-105 sm:h-[175px]"
               />
             </div>
 
@@ -112,9 +108,8 @@
                 src="/articlecover/cover5.jpeg"
                 alt="article-cover"
                 format="webp"
-                width="400"
                 quality="80"
-                class="h-[267px] object-cover duration-500 hover:scale-105 sm:h-[175px]"
+                class="h-[267px] w-full object-cover duration-500 hover:scale-105 sm:h-[175px]"
               />
             </div>
 
