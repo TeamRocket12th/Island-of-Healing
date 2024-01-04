@@ -82,34 +82,21 @@ const lists = ref([
               class="flex h-7 w-7 items-center justify-center rounded-full bg-sand-100 text-secondary"
             >
               <NuxtLink to="/">
-                <NuxtImg
-                  width="16"
-                  height="16"
-                  src="/socialmediaicons/Facebook.svg"
-                  alt="ourfacebook"
-                />
+                <NuxtImg class="h-4 w-4" src="/socialmediaicons/Facebook.svg" alt="ourfacebook" />
               </NuxtLink>
             </span>
             <span
               class="flex h-7 w-7 items-center justify-center rounded-full bg-sand-100 text-secondary"
             >
               <NuxtLink to="/">
-                <NuxtImg
-                  width="16"
-                  height="16"
-                  src="/socialmediaicons/Youtube.svg"
-                  alt="ouryoutube"
+                <NuxtImg class="h-4 w-4" src="/socialmediaicons/Youtube.svg" alt="ouryoutube"
               /></NuxtLink>
             </span>
             <span
               class="flex h-7 w-7 items-center justify-center rounded-full bg-sand-100 text-secondary"
             >
               <NuxtLink to="/"
-                ><NuxtImg
-                  width="16"
-                  height="16"
-                  src="/socialmediaicons/Instagram.svg"
-                  alt="ourinstagram"
+                ><NuxtImg class="h-4 w-4" src="/socialmediaicons/Instagram.svg" alt="ourinstagram"
               /></NuxtLink>
             </span>
           </div>

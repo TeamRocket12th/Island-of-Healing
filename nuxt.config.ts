@@ -8,6 +8,9 @@ export default defineNuxtConfig({
     'nuxt-gtag',
     '@nuxt/image'
   ],
+  image: {
+    format: ['webp']
+  },
   // typescript: {
   //   typeCheck: true
   // },
@@ -44,6 +47,7 @@ export default defineNuxtConfig({
     },
     loadingStrategy: 'defer'
   },
+
   app: {
     head: {
       htmlAttrs: {

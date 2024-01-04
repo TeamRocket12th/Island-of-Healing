@@ -52,9 +52,7 @@ const { handleFollowAction } = useWriterActions()
               loading="lazy"
               :src="creater.Imgurl"
               alt="avatar"
-              width="95"
-              height="95"
-              class="rounded-full"
+              class="h-[95px] w-[95px] rounded-full"
             />
           </div>
         </NuxtLink>
