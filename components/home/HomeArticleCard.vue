@@ -45,7 +45,7 @@ const formatTitle = (title: string) => {
             <div class="relative">
               <div class="mb-2 overflow-hidden">
                 <NuxtImg
-                  format="avif"
+                  format="webp"
                   loading="lazy"
                   width="407"
                   :src="article.imgUrl"
