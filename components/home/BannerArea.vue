@@ -11,12 +11,12 @@
             <div class="relative mb-3 max-w-full overflow-hidden sm:h-auto">
               <span class="categoryTag absolute left-0 top-0 z-10 mb-1">情緒察覺</span>
               <NuxtImg
-                format="avif"
                 src="/articlecover/cover1.jpeg"
                 alt="article-cover"
+                format="webp"
                 width="400"
-                height="267"
-                class="object-cover duration-500 hover:scale-105 sm:h-[175px]"
+                quality="80"
+                class="h-[267px] object-cover duration-500 hover:scale-105 sm:h-[175px]"
               />
             </div>
 
@@ -35,11 +35,12 @@
             <div class="relative mb-3 max-w-full overflow-hidden sm:h-auto sm:w-auto">
               <span class="categoryTag absolute left-0 top-0 z-10 mb-1">日常練習</span>
               <NuxtImg
-                format="avif"
                 src="/articlecover/cover2.jpeg"
                 alt="article-cover"
+                format="webp"
                 width="400"
-                class="mx-auto h-[267px] object-cover duration-500 hover:scale-105 sm:aspect-square sm:h-auto"
+                quality="80"
+                class="h-[267px] object-cover duration-500 hover:scale-105 sm:aspect-square sm:h-auto"
               />
             </div>
 
@@ -58,12 +59,12 @@
             <div class="relative mb-3 h-[267px] max-w-full overflow-hidden sm:h-auto sm:w-auto">
               <span class="categoryTag absolute left-0 top-0 z-10 mb-1">個人成長</span>
               <NuxtImg
-                format="avif"
                 src="/articlecover/cover3.jpeg"
                 alt="article-cover"
+                format="webp"
                 width="400"
-                height="267"
-                class="object-cover duration-500 hover:scale-105 sm:h-[175px]"
+                quality="80"
+                class="h-[267px] object-cover duration-500 hover:scale-105 sm:h-[175px]"
               />
             </div>
 
@@ -84,12 +85,12 @@
             <div class="relative mb-3 max-w-full overflow-hidden sm:h-auto sm:w-auto">
               <span class="categoryTag absolute left-0 top-0 z-10 mb-1">個人成長</span>
               <NuxtImg
-                format="avif"
                 src="/articlecover/cover4.jpeg"
                 alt="article-cover"
+                format="webp"
                 width="400"
-                height="267"
-                class="object-cover duration-500 hover:scale-105 sm:h-[175px]"
+                quality="80"
+                class="h-[267px] object-cover duration-500 hover:scale-105 sm:h-[175px]"
               />
             </div>
 
@@ -108,12 +109,12 @@
             <div class="relative mb-3 max-w-full overflow-hidden sm:h-auto sm:w-auto">
               <span class="categoryTag absolute left-0 top-0 z-10 mb-1">親密關係</span>
               <NuxtImg
-                format="avif"
                 src="/articlecover/cover5.jpeg"
                 alt="article-cover"
+                format="webp"
                 width="400"
-                height="267"
-                class="object-cover duration-500 hover:scale-105 sm:h-[175px]"
+                quality="80"
+                class="h-[267px] object-cover duration-500 hover:scale-105 sm:h-[175px]"
               />
             </div>
 
